@@ -205,6 +205,28 @@ class BlogController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+     public function showLink(string $link)
+    {
+        try{
+
+            $blog = Blog::with('card')->where('link', $link)->first();
+
+            if (!$blog) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "Blog no encontrada"
+                ],400);
+            }
+
+            return response()->json([
+                "status" => 200,
+                'data' => $blog
+            ],200);
+
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
      /**
      * @OA\Delete(
      *     path="/api/blogs/{id}",

@@ -31,6 +31,7 @@ Route::post('/modales', [ModalesController::class, "create"]);
 
 // blogs públicos para ver los clientes
 Route::get('/cards', [CardController::class, "index"]);
+Route::get('/blogs/links/{link}', [BlogController::class, "showLink"]);
 Route::get('/blogs/{id}', [BlogController::class, "show"]);
 Route::get('/blogs', [BlogController::class, "index"]);
 Route::get('/blog_head/{id}', [BlogHeadController::class, "show"]);

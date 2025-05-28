@@ -32,6 +32,7 @@ class Blog extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'link',
         'id_blog_head',
         'id_blog_body',
         'id_blog_footer',
