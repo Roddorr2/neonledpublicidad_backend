@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restablecimiento de Contraseña - DIGIMEDIA MARKETING</title>
+    <title>Restablecimiento de Contraseña - NEON LED PUBLICIDAD</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #8A4FFF;
-            --primary-dark: #7340E0;
+            --primary-color: #0e1ca0;
+            --primary-dark: #0e1ca0;
             --primary-light: #F0EBFF;
             --text-on-primary: #FFFFFF;
             --text-primary: #333333;
@@ -39,7 +39,7 @@
         }
 
         .email-header {
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             padding: 30px;
             text-align: center;
         }
@@ -64,7 +64,7 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #8A4FFF;
+            color: #0e1ca0;
         }
 
         .message {
@@ -78,12 +78,12 @@
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 30px;
-            border-left: 4px solid #8A4FFF;
+            border-left: 4px solid #0e1ca0;
             text-align: center;
         }
 
         .reset-icon {
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -91,7 +91,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 25px;
-            box-shadow: 0 4px 12px rgba(138, 79, 255, 0.25);
+            box-shadow: 0 4px 12px rgba(57, 8, 156, 0.25);
         }
 
         .reset-icon svg {
@@ -108,7 +108,7 @@
 
         .cta-button {
             display: inline-block;
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             color: #ffffff !important;
             text-decoration: none !important;
             padding: 14px 30px;
@@ -117,11 +117,11 @@
             text-align: center;
             margin: 10px 0;
             transition: background-color 0.3s;
-            box-shadow: 0 4px 10px rgba(138, 79, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(71, 7, 199, 0.2);
         }
 
         .cta-button:hover {
-            background-color: #7340E0;
+            background-color: #0e1ca0;
         }
 
         .security-note {
@@ -161,7 +161,7 @@
 
         .company-info {
             font-size: 14px;
-            color: #64748b;
+            color: #0e1ca0;
             margin-bottom: 15px;
         }
 
@@ -193,7 +193,7 @@
         .digimedia-signature {
             margin-top: 20px;
             font-weight: 600;
-            color: #8A4FFF;
+            color: #0e1ca0;
         }
 
         @media only screen and (max-width: 600px) {
@@ -218,7 +218,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-v2gYpX1AexbpAeLB3A5QD7xRprduZF.png" alt="DIGIMEDIA MARKETING">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-v2gYpX1AexbpAeLB3A5QD7xRprduZF.png" alt="NEON LED PUBLICIDAD">
             <h1>Restablecimiento de Contraseña</h1>
         </div>
 
@@ -226,13 +226,13 @@
             <div class="greeting">Hola {{ $nombre }},</div>
 
             <p class="message">
-                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en DIGIMEDIA MARKETING. Si no has sido tú quien ha solicitado este cambio, puedes ignorar este mensaje.
+                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en NEON LED PUBLICIDAD. Si no has sido tú quien ha solicitado este cambio, puedes ignorar este mensaje.
             </p>
 
             <div class="reset-box">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: 0 auto 25px;">
                     <tr>
-                        <td style="background-color: #8A4FFF; width: 80px; height: 80px; border-radius: 50%; text-align: center; box-shadow: 0 4px 12px rgba(138, 79, 255, 0.25);">
+                        <td style="background-color: #0e1ca0 ; width: 80px; height: 80px; border-radius: 50%; text-align: center; box-shadow: 0 4px 12px rgba(138, 79, 255, 0.25);">
                             <img src="https://cdn-icons-png.flaticon.com/128/2889/2889676.png" alt="Reset icon" width="40" height="40" style="width: 40px; height: 40px; filter: brightness(0) invert(1); display: block; margin: 0 auto;">
                         </td>
                     </tr>
@@ -242,7 +242,7 @@
                     Para restablecer tu contraseña, haz clic en el botón de abajo:
                 </div>
 
-                <a href="{{ url('http://digimediamkt.com/login/res?token=' . $token) }}" class="cta-button">
+                <a href="{{ url('https://ledneonpublicidad.com/login/res?token=' . $token) }}" class="cta-button">
                     Restablecer contraseña
                 </a>
             </div>
@@ -265,19 +265,19 @@
 
             <p class="message">
                 Saludos,
-                <div class="digimedia-signature">El equipo de DIGIMEDIA MARKETING</div>
+                <div class="digimedia-signature">El equipo de NEON LED PUBLICIDAD</div>
             </p>
         </div>
 
         <div class="email-footer">
             <div class="company-info">
-                DIGIMEDIA MARKETING<br>
+                NEON LED PUBLICIDAD<br>
                 Av. Principal #123, Ciudad<br>
                 +52 (123) 456-7890
             </div>
 
             <div class="social-links">
-                <a href="#" class="social-link">
+                <a href="https://web.facebook.com/p/Neon-Led-store-100063474791455/?_rdc=1&_rdr#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Facebook">
                 </a>
                 <a href="#" class="social-link">
@@ -286,13 +286,13 @@
                 <a href="#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/2111/2111463.png" alt="Instagram">
                 </a>
-                <a href="#" class="social-link">
+                <a href="https://www.linkedin.com/company/neonhouseled/" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/3536/3536505.png" alt="LinkedIn">
                 </a>
             </div>
 
             <div class="copyright">
-                &copy; {{ date('Y') }} DIGIMEDIA MARKETING. Todos los derechos reservados.
+                &copy; {{ date('Y') }} NEON LED PUBLICIDAD. Todos los derechos reservados.
             </div>
         </div>
     </div>

@@ -16,13 +16,34 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
-
+/**
+ * @OA\Tag(
+ *     name="Cards",
+ *     description="Operaciones relacionadas con las tarjetas de presentación enlazadas a Blogs"
+ * )
+ */
 class CardController extends Controller
 {
 
     private const url_api = "http://localhost:8000";
     //private const url_api = "http://back.digimediamkt.com";
 
+
+     /**
+     * @OA\Get(
+     *     path="/api/cards",
+     *     tags={"Cards"},
+     *     summary="Listar todas las cards",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Listado completo de cards"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
+     *     )
+     * )
+     */
     public function index()
     {
         try {
@@ -36,7 +57,22 @@ class CardController extends Controller
             ], 500);
         }
     }
-
+     /**
+     * @OA\Get(
+     *     path="/api/cards/{id}",
+     *     tags={"Cards"},
+     *     summary="Obtener cards por ID de empleado",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del empleado",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Cards del empleado o todas"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function get($id = null)
     {
         try {
@@ -54,7 +90,29 @@ class CardController extends Controller
             ], 500);
         }
     }
-
+    /**
+     * @OA\Post(
+     *     path="/api/cards",
+     *     tags={"Cards"},
+     *     summary="Crear nueva card",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo","descripcion","public_image","id_plantilla","id_blog","id_empleado"},
+     *             @OA\Property(property="titulo", type="string"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="public_image", type="string"),
+     *             @OA\Property(property="url_image", type="string"),
+     *             @OA\Property(property="id_plantilla", type="integer"),
+     *             @OA\Property(property="id_blog", type="integer"),
+     *             @OA\Property(property="id_empleado", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Card creada correctamente"),
+     *     @OA\Response(response=400, description="Errores de validación"),
+     *     @OA\Response(response=500, description="Error interno al crear")
+     * )
+     */
     public function create(Request $request)
     {
         try {
@@ -93,7 +151,36 @@ class CardController extends Controller
             ], 500);
         }
     }
-
+     /**
+     * @OA\Put(
+     *     path="/api/cards/{id}",
+     *     tags={"Cards"},
+     *     summary="Actualizar una card existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo","descripcion","public_image","id_plantilla","id_blog","id_empleado"},
+     *             @OA\Property(property="titulo", type="string"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="public_image", type="string"),
+     *             @OA\Property(property="url_image", type="string"),
+     *             @OA\Property(property="id_plantilla", type="integer"),
+     *             @OA\Property(property="id_blog", type="integer"),
+     *             @OA\Property(property="id_empleado", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Card actualizada correctamente"),
+     *     @OA\Response(response=400, description="Errores de validación"),
+     *     @OA\Response(response=404, description="Card no encontrada"),
+     *     @OA\Response(response=500, description="Error interno al actualizar")
+     * )
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -139,7 +226,32 @@ class CardController extends Controller
             ],500);
         }
     }
-
+      /**
+     * @OA\Post(
+     *     path="/api/cards/{id}/image-header",
+     *     tags={"Cards"},
+     *     summary="Subir imagen de encabezado",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"file"},
+     *                 @OA\Property(property="file", type="file", format="binary")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Imagen subida correctamente"),
+     *     @OA\Response(response=404, description="Card o Blog no encontrado"),
+     *     @OA\Response(response=500, description="Error interno")
+     * )
+     */
     public function imageHeader(Request $request, int $id)
     {
         try {
@@ -209,6 +321,28 @@ class CardController extends Controller
         }
     }
 
+     /**
+     * @OA\Post(
+     *     path="/api/cards/{id}/image-body",
+     *     tags={"Cards"},
+     *     summary="Subir imagen para el cuerpo del blog",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"file", "name"},
+     *                 @OA\Property(property="file", type="file", format="binary"),
+     *                 @OA\Property(property="name", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Imagen subida correctamente"),
+     *     @OA\Response(response=404, description="Card o Blog no encontrado"),
+     *     @OA\Response(response=500, description="Error interno")
+     * )
+     */
     public function imagesBody(Request $request, int $id)
     {
         try {
@@ -288,6 +422,28 @@ class CardController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/cards/{id}/image-footer",
+     *     tags={"Cards"},
+     *     summary="Subir imagen para el footer del blog",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 required={"file", "name"},
+     *                 @OA\Property(property="file", type="file", format="binary"),
+     *                 @OA\Property(property="name", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Imagen subida correctamente"),
+     *     @OA\Response(response=404, description="Card o Blog no encontrado"),
+     *     @OA\Response(response=500, description="Error interno")
+     * )
+     */
     public function imagesFooter(Request $request, int $id)
     {
         try {
@@ -367,6 +523,17 @@ class CardController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/cards/{id}",
+     *     tags={"Cards"},
+     *     summary="Eliminar una card por ID",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Card eliminada correctamente"),
+     *     @OA\Response(response=404, description="Card no encontrada"),
+     *     @OA\Response(response=500, description="Error interno al eliminar")
+     * )
+     */
     public function destroy(int $id)
     {
         try {

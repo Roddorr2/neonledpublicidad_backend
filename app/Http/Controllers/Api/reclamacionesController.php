@@ -7,14 +7,55 @@ use App\Models\Reclamacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="Reclamaciones",
+ *     description="Operaciones relacionadas con la gestión de reclamaciones de usuarios"
+ * )
+ */
 class ReclamacionesController extends Controller
 {
+
+     /**
+     * @OA\Get(
+     *     path="/api/reclamaciones",
+     *     tags={"Reclamaciones"},
+     *     summary="Listar todas las reclamaciones paginadas",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de reclamaciones"
+     *     )
+     * )
+     */
     public function get(Request $request)
     {
         $reclamaciones = Reclamacion::orderBy('id_reclamacion', 'asc')->paginate(4);
         return response()->json($reclamaciones, 200);
     }
 
+
+    /**
+     * @OA\Get(
+     *     path="/api/reclamaciones/{id}",
+     *     tags={"Reclamaciones"},
+     *     summary="Obtener una reclamación por ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la reclamación",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reclamación encontrada"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Reclamación no encontrada"
+     *     )
+     * )
+     */
     public function getById($id){
         $reclamacion = Reclamacion::find($id);
 
@@ -28,7 +69,44 @@ class ReclamacionesController extends Controller
         ], 200);
     }
 
-    /* Guardar una reclamación */
+   /**
+     * @OA\Post(
+     *     path="/api/reclamaciones",
+     *     tags={"Reclamaciones"},
+     *     summary="Crear una nueva reclamación",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={
+     *                 "nombre", "apellido", "email", "telefono", "direccion", 
+     *                 "distrito", "id_servicio", "fechaIncidente", 
+     *                 "descripcionServicio", "checkReclamoForm", "aceptaPoliticaPrivacidad"
+     *             },
+     *             @OA\Property(property="nombre", type="string", example="Carlos"),
+     *             @OA\Property(property="apellido", type="string", example="Gómez"),
+     *             @OA\Property(property="email", type="string", example="carlos@example.com"),
+     *             @OA\Property(property="telefono", type="string", example="987654321"),
+     *             @OA\Property(property="departamento", type="string", example="Lima"),
+     *             @OA\Property(property="direccion", type="string", example="Av. Siempre Viva 123"),
+     *             @OA\Property(property="distrito", type="string", example="Miraflores"),
+     *             @OA\Property(property="id_servicio", type="integer", example=1),
+     *             @OA\Property(property="fechaIncidente", type="string", format="date", example="2024-05-01"),
+     *             @OA\Property(property="montoReclamado", type="number", example=150.50),
+     *             @OA\Property(property="descripcionServicio", type="string", example="Servicio de instalación defectuoso"),
+     *             @OA\Property(property="checkReclamoForm", type="boolean", example=true),
+     *             @OA\Property(property="aceptaPoliticaPrivacidad", type="boolean", example=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Reclamación creada exitosamente"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Error de validación"
+     *     )
+     * )
+     */
     public function create(Request $request)
     {
         // Validación de datos
@@ -64,6 +142,35 @@ class ReclamacionesController extends Controller
         ], 201);
     }
 
+     /**
+     * @OA\Put(
+     *     path="/api/reclamaciones/{id}",
+     *     tags={"Reclamaciones"},
+     *     summary="Actualizar el estado de una reclamación",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la reclamación",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"estadoReclamo"},
+     *             @OA\Property(property="estadoReclamo", type="string", enum={"PENDIENTE", "ATENDIDO"}, example="ATENDIDO")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Estado de reclamación actualizado"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Reclamación no encontrada"
+     *     )
+     * )
+     */
     public function update(Request $request, $id){
         $reclamacion = Reclamacion::find($id);
 
@@ -85,6 +192,28 @@ class ReclamacionesController extends Controller
         ], 200);
     }
 
+     /**
+     * @OA\Delete(
+     *     path="/api/reclamaciones/{id}",
+     *     tags={"Reclamaciones"},
+     *     summary="Eliminar una reclamación",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID de la reclamación",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Reclamación eliminada exitosamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Reclamación no encontrada"
+     *     )
+     * )
+     */
     public function delete($id)
     {
         $reclamacion = Reclamacion::find($id);

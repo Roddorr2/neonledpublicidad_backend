@@ -14,34 +14,6 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
 
-    public function getById($id)
-    {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
-        ]);
-
-        if ($validate->fails()) return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
-
-        $user = User::where("id", $id)->get();
-
-        return response()->json([
-            "status" => 200,
-            "data" => $user
-        ]);
-    }
-
-    public function getAllByPage(Request $request)
-    {
-
-        $users = User::orderBy('id', 'desc')->paginate(20);
-
-        return response()->json([
-            "status" => 200,
-            'data' => $users->items(),
-            'total' => $users->total(),
-            'page' => $users->currentPage()
-        ]);
-    }
 
     public function login(Request $request)
     {
@@ -86,6 +58,127 @@ class UserController extends Controller
         ], 200);
     }
 
+
+
+
+        /**
+     * @OA\Get(
+     *     path="/api/user/{id}",
+     *     summary="Obtener un usuario por su ID",
+     *     tags={"Usuarios"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del usuario",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Usuario obtenido correctamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/User"))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Error de validación",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=422),
+     *             @OA\Property(property="message", type="string", example="Error de validación"),
+     *             @OA\Property(property="Errors", type="object")
+     *         )
+     *     )
+     * )
+     */
+    public function getById($id)
+    {
+        $validate = Validator::make(["id" => $id], [
+            "id" => "required|numeric",
+        ]);
+
+        if ($validate->fails()) return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+
+        $user = User::where("id", $id)->get();
+
+        return response()->json([
+            "status" => 200,
+            "data" => $user
+        ]);
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Obtener todos los usuarios paginados",
+     *     tags={"Usuarios"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de usuarios",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/User")),
+     *             @OA\Property(property="total", type="integer", example=100),
+     *             @OA\Property(property="page", type="integer", example=1)
+     *         )
+     *     )
+     * )
+     */
+    public function getAllByPage(Request $request)
+    {
+
+        $users = User::orderBy('id', 'desc')->paginate(20);
+
+        return response()->json([
+            "status" => 200,
+            'data' => $users->items(),
+            'total' => $users->total(),
+            'page' => $users->currentPage()
+        ]);
+    }
+
+   
+  /**
+ * @OA\Post(
+ *     path="/api/users",
+ *     summary="Crear un nuevo usuario",
+ *     operationId="createUser",
+ *     tags={"Usuarios"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name", "email", "password"},
+ *             @OA\Property(property="name", type="string", example="Juan Pérez"),
+ *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+ *             @OA\Property(property="password", type="string", format="password", example="1234")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Registro creado correctamente",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="message", type="string", example="Registro creado correctamente")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=422),
+ *             @OA\Property(property="message", type="string", example="Error de validación"),
+ *             @OA\Property(
+ *                 property="Errors",
+ *                 type="object",
+ *                 additionalProperties=@OA\Property(type="array", @OA\Items(type="string")),
+ *                 example={"email": {"El campo email ya ha sido tomado."}}
+ *             )
+ *         )
+ *     )
+ * )
+ */
     public function create(Request $request)
     {
 
@@ -108,6 +201,35 @@ class UserController extends Controller
         if ($response) return response()->json(["status" => 200, "message" => "Registro creado correctamente"]);
     }
 
+    /**
+ * @OA\Put(
+ *     path="/api/user/{id}",
+ *     summary="Actualizar el nombre de un usuario",
+ *     tags={"Usuarios"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del usuario",
+ *         @OA\Schema(type="integer", example=5)
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name"},
+ *             @OA\Property(property="name", type="string", example="Carlos Mendoza")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Usuario actualizado correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación"
+ *     )
+ * )
+ */
     public function update(Request $request, $id)
     {
 
@@ -127,6 +249,35 @@ class UserController extends Controller
         if ($response) return response()->json(["status" => 200, "message" => "Registro actualizado correctamente"]);
     }
 
+    /**
+ * @OA\Put(
+ *     path="/api/user/update-pass/{id}",
+ *     summary="Actualizar la contraseña de un usuario",
+ *     tags={"Usuarios"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del usuario",
+ *         @OA\Schema(type="integer", example=5)
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"password"},
+ *             @OA\Property(property="password", type="string", format="password", example="nuevaPassword123")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Contraseña actualizada correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación"
+ *     )
+ * )
+ */
     public function updatePass(Request $request, $id)
     {
 
@@ -145,6 +296,28 @@ class UserController extends Controller
         if ($response) return response()->json(["status" => 200, "message" => "Registro actualizado correctamente"]);
     }
 
+    /**
+ * @OA\Delete(
+ *     path="/api/user/{id}",
+ *     summary="Eliminar un usuario",
+ *     tags={"Usuarios"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del usuario",
+ *         @OA\Schema(type="integer", example=7)
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Usuario eliminado correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación o intento de eliminar el administrador"
+ *     )
+ * )
+ */
     public function delete(Request $request, $id)
     {
 
@@ -161,6 +334,18 @@ class UserController extends Controller
         if ($response) return response()->json(["status" => 200, "message" => "Registro eliminado correctamente"]);
     }
 
+    /**
+ * @OA\Post(
+ *     path="/api/user/logout",
+ *     summary="Cerrar sesión del usuario actual y revocar sus tokens",
+ *     tags={"Usuarios"},
+ *     security={{"sanctum":{}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Tokens revocados correctamente"
+ *     )
+ * )
+ */
     public function logout(Request $request)
     {
 

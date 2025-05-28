@@ -15,7 +15,21 @@ use Cloudinary\Cloudinary;
 use App\Mail\CredencialesEmpleadoMail;
 use Illuminate\Support\Facades\Auth;
 
-
+/**
+ * @OA\Tag(
+ *     name="Empleados",
+ *     description="Controlador para la gestión de empleados, incluyendo operaciones de obtención y modificación con control de permisos basado en la autenticación y restricciones específicas por email."
+ * )
+ *
+ * Clase EmpleadoController
+ * 
+ * Esta clase gestiona las operaciones CRUD (lectura y modificación) sobre empleados.
+ * Incluye mecanismos de autorización que:
+ * - Permiten modificaciones solo a usuarios privilegiados o a los propios empleados sobre su perfil.
+ * - Restringen modificaciones a ciertos emails protegidos.
+ * 
+ * Además, provee endpoints seguros con validación de entrada y respuesta estructurada en JSON.
+ */
 class EmpleadoController extends Controller
 {
 
@@ -27,6 +41,7 @@ class EmpleadoController extends Controller
 
     private const PRIVILEGED_EMAIL = "tmlighting@hotmail.com";
 
+    
     private function hasPermissionToModify($employeeEmail, $employeeId)
     {
         $user = Auth::user();
@@ -42,7 +57,7 @@ class EmpleadoController extends Controller
         }
         return !in_array($employeeEmail, self::RESTRICTED_EMAILS);
     }
-
+     
     private function checkPermissionMiddleware($id)
     {
         $empleado = Empleado::where('id_empleado', $id)->first();
@@ -71,6 +86,37 @@ class EmpleadoController extends Controller
         return null;
     }
 
+        /**
+     * @OA\Get(
+     *     path="/empleados/{id}",
+     *     summary="Obtener un empleado por su ID",
+     *     tags={"Empleados"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del empleado",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Empleado encontrado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Empleado no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Error de validación"
+     *     )
+     * )
+     */
     public function getById($id)
     {
         $validate = Validator::make(["id" => $id], [
@@ -93,6 +139,28 @@ class EmpleadoController extends Controller
         ]);
     }
 
+        /**
+     * @OA\Get(
+     *     path="/empleados",
+     *     summary="Obtener todos los empleados paginados",
+     *     tags={"Empleados"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista paginada de empleados",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer"),
+     *             @OA\Property(property="data", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="total", type="integer"),
+     *             @OA\Property(property="page", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
+     *     )
+     * )
+     */
     public function getAllByPage(Request $request)
     {
         try {
@@ -123,7 +191,44 @@ class EmpleadoController extends Controller
             ], 500);
         }
     }
-
+        /**
+     * @OA\Post(
+     *     path="/empleados",
+     *     summary="Crear un nuevo empleado",
+     *     tags={"Empleados"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre","apellido","email","dni","id_rol"},
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="apellido", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="dni", type="string"),
+     *             @OA\Property(property="telefono", type="string"),
+     *             @OA\Property(property="id_rol", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Empleado creado correctamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="user", type="object"),
+     *             @OA\Property(property="empleado", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Errores de validación"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al crear empleado"
+     *     )
+     * )
+     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -180,7 +285,7 @@ class EmpleadoController extends Controller
             ], 500);
         }
     }
-
+     
     private function createPassword(string $dni, string $nombre, string $apellidos)
     {
 
@@ -202,6 +307,53 @@ class EmpleadoController extends Controller
         return $password;
     }
 
+        /**
+     * @OA\Put(
+     *     path="/empleados/{id}",
+     *     summary="Actualizar datos de un empleado",
+     *     tags={"Empleados"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID del empleado a actualizar",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=false,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="apellido", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="dni", type="string"),
+     *             @OA\Property(property="telefono", type="string"),
+     *             @OA\Property(property="id_rol", type="integer")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Empleado actualizado correctamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer"),
+     *             @OA\Property(property="message", type="string"),
+     *             @OA\Property(property="data", type="object")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="No tienes permiso para modificar este empleado"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Empleado no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Errores de validación"
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
         $validate = Validator::make(["id" => $id], [
@@ -271,7 +423,59 @@ class EmpleadoController extends Controller
         ]);
     }
 
-
+      /**
+     * @OA\Put(
+     *     path="/api/empleados/{id}/imagen",
+     *     summary="Actualizar imagen de perfil del empleado",
+     *     description="Actualiza la imagen de perfil de un empleado y elimina la imagen anterior si existe.",
+     *     tags={"Empleados"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del empleado",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"public_id", "secure_url"},
+     *             @OA\Property(property="public_id", type="string", example="empleados/perfil123"),
+     *             @OA\Property(property="secure_url", type="string", format="url", example="https://res.cloudinary.com/demo/image/upload/v1234567890/empleados/perfil123.jpg")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Imagen actualizada correctamente",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="Imagen actualizada correctamente"),
+     *             @OA\Property(property="empleado", type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="imagen", type="string", example="https://..."),
+     *                 @OA\Property(property="public_id", type="string", example="empleados/perfil123")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Empleado no encontrado",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=404),
+     *             @OA\Property(property="message", type="string", example="Empleado no encontrado")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al actualizar la imagen",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="integer", example=500),
+     *             @OA\Property(property="message", type="string", example="Error al actualizar la imagen"),
+     *             @OA\Property(property="error", type="string", example="Detalles del error")
+     *         )
+     *     )
+     * )
+     */
     public function updateProfileImage(Request $request, $id)
     {
         $validate = Validator::make($request->all(), [
@@ -343,7 +547,52 @@ class EmpleadoController extends Controller
         }
     }
 
-
+        /**
+ * @OA\Post(
+ *     path="/empleados/{id}/update-password",
+ *     summary="Actualizar contraseña de usuario asociado a un empleado",
+ *     tags={"Empleados"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID del empleado",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"password"},
+ *             @OA\Property(property="password", type="string", minLength=4, example="newpassword123")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Contraseña actualizada correctamente",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="message", type="string", example="Registro actualizado correctamente")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Empleado no encontrado",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=404),
+ *             @OA\Property(property="message", type="string", example="Empleado no encontrado")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=422),
+ *             @OA\Property(property="message", type="string", example="Error de validación"),
+ *             @OA\Property(property="Errors", type="object")
+ *         )
+ *     )
+ * )
+ */
     public function updatePass(Request $request, $id)
     {
         $validate = Validator::make(["id" => $id], [
@@ -365,6 +614,18 @@ class EmpleadoController extends Controller
         return $this->updatePass1($request, $userId);
     }
 
+    /**
+ * Actualiza la contraseña del usuario identificado por el ID proporcionado.
+ * 
+ * Valida que el ID y la nueva contraseña sean correctos. Luego encripta la contraseña 
+ * y actualiza el registro del usuario en la base de datos. Devuelve una respuesta JSON 
+ * indicando el resultado de la operación.
+ *
+ * @param \Illuminate\Http\Request $request Objeto con los datos de la solicitud, incluyendo 'password'.
+ * @param int $id ID del usuario cuya contraseña será actualizada.
+ * 
+ * @return \Illuminate\Http\JsonResponse Respuesta JSON con el estado y mensaje de la actualización.
+ */
     private function updatePass1(Request $request, $id)
     {
         $validate = Validator::make(["id" => $request->id], [
@@ -389,7 +650,53 @@ class EmpleadoController extends Controller
             return response()->json(["status" => 200, "message" => "Registro actualizado correctamente"]);
         }
     }
-
+    /**
+ * @OA\Post(
+ *     path="/empleados/verify-password",
+ *     summary="Verificar contraseña actual de usuario asociado a empleado",
+ *     tags={"Empleados"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"currentPassword", "id_empleado"},
+ *             @OA\Property(property="currentPassword", type="string", example="currentPass123"),
+ *             @OA\Property(property="id_empleado", type="integer", example=123)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Contraseña verificada correctamente",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="valid", type="boolean", example=true),
+ *             @OA\Property(property="message", type="string", example="Contraseña verificada correctamente")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Contraseña actual incorrecta",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="valid", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="La contraseña actual es incorrecta")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Usuario asociado no encontrado",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="valid", type="boolean", example=false),
+ *             @OA\Property(property="message", type="string", example="No se encontró el usuario asociado al empleado")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error interno del servidor",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Ocurrió un error al procesar la solicitud"),
+ *             @OA\Property(property="message", type="string", example="Detalle del error")
+ *         )
+ *     )
+ * )
+ */
     public function verifyPassword(Request $request)
     {
         try {
@@ -425,7 +732,45 @@ class EmpleadoController extends Controller
             ], 500);
         }
     }
-
+    /**
+ * @OA\Delete(
+ *     path="/empleados/{id}",
+ *     summary="Eliminar empleado y usuario asociado",
+ *     tags={"Empleados"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID del empleado a eliminar",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Empleado eliminado correctamente",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="message", type="string", example="Empleado eliminado correctamente")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Empleado no encontrado",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=404),
+ *             @OA\Property(property="message", type="string", example="Empleado no encontrado")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Error de validación",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=422),
+ *             @OA\Property(property="message", type="string", example="Error de validación"),
+ *             @OA\Property(property="errors", type="object")
+ *         )
+ *     )
+ * )
+ */
     public function delete(Request $request, $id)
     {
         $validate = Validator::make(["id" => $id], [
@@ -471,7 +816,45 @@ class EmpleadoController extends Controller
             "message" => "Empleado eliminado correctamente"
         ], 200);
     }
-
+    /**
+ * @OA\Delete(
+ *     path="/empleados/{id}/profile-image",
+ *     summary="Eliminar imagen de perfil del empleado",
+ *     tags={"Empleados"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID del empleado",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Imagen eliminada correctamente",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=200),
+ *             @OA\Property(property="message", type="string", example="Imagen eliminada correctamente")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Empleado no encontrado",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=404),
+ *             @OA\Property(property="message", type="string", example="Empleado no encontrado")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error al eliminar la imagen",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="status", type="integer", example=500),
+ *             @OA\Property(property="message", type="string", example="Error al eliminar la imagen"),
+ *             @OA\Property(property="error", type="string", example="Error interno del servidor")
+ *         )
+ *     )
+ * )
+ */
     public function deleteProfileImage($id)
     {
         try {

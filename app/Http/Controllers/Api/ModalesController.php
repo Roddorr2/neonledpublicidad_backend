@@ -12,15 +12,47 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+/**
+ * @OA\Tag(
+ *     name="Modales",
+ *     description="Operaciones relacionadas a modales y envío de correos/WhatsApp"
+ * )
+ */
 class ModalesController extends Controller
 {
+
+    /**
+ * @OA\Get(
+ *     path="/api/modales",
+ *     summary="Listar todos los modales paginados",
+ *     tags={"Modales"},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Listado exitoso de modales"
+ *     )
+ * )
+ */
     public function get(Request $request)
     {
         $modals = modalservicios::with('servicio')->orderBy('id_modalservicio', 'asc')->paginate(4);
 
         return response()->json($modals, 200);
     }
-
+/**
+ * @OA\Get(
+ *     path="/api/modales/send/{id}",
+ *     summary="Obtener correos y WhatsApp programados de un modal",
+ *     tags={"Modales"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del modal",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(response=200, description="Datos encontrados")
+ * )
+ */
     public function getSendModales($id){
 
         $modals_mails = EmailModal::where('id_modalservicio', $id)->get();
@@ -35,6 +67,27 @@ class ModalesController extends Controller
         return response()->json($data, 200);
     }
 
+
+    /**
+ * @OA\Post(
+ *     path="/api/modales",
+ *     summary="Crear un nuevo modal y agendar correos/WhatsApp",
+ *     tags={"Modales"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"nombre","telefono","correo","id_servicio"},
+ *             @OA\Property(property="nombre", type="string", maxLength=100),
+ *             @OA\Property(property="telefono", type="string", maxLength=9),
+ *             @OA\Property(property="correo", type="string", format="email", maxLength=200),
+ *             @OA\Property(property="id_servicio", type="integer", minimum=1, maximum=4)
+ *         )
+ *     ),
+ *     @OA\Response(response=201, description="Modal creado exitosamente"),
+ *     @OA\Response(response=400, description="Error en validación"),
+ *     @OA\Response(response=500, description="Error interno al crear")
+ * )
+ */
     public function create(Request $request)
     {
         try {
@@ -133,6 +186,22 @@ class ModalesController extends Controller
         }
     }
 
+    /**
+ * @OA\Get(
+ *     path="/api/modales/{id}",
+ *     summary="Obtener modal por ID",
+ *     tags={"Modales"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del modal",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(response=200, description="Modal encontrado"),
+ *     @OA\Response(response=404, description="Modal no encontrado")
+ * )
+ */
     public function getById($id)
     {
         $modal = modalservicios::where('id_modalservicio', $id)->with('servicio')->first();
@@ -147,6 +216,29 @@ class ModalesController extends Controller
         ], 200);
     }
 
+    /**
+ * @OA\Put(
+ *     path="/api/modales/{id}",
+ *     summary="Actualizar estado del modal",
+ *     tags={"Modales"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del modal",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"estado"},
+ *             @OA\Property(property="estado", type="boolean")
+ *         )
+ *     ),
+ *     @OA\Response(response=200, description="Estado actualizado"),
+ *     @OA\Response(response=404, description="Modal no encontrado")
+ * )
+ */
     public function update(Request $request, $id)
     {
         $modal = modalservicios::find($id);
@@ -169,6 +261,22 @@ class ModalesController extends Controller
         ], 200);
     }
 
+    /**
+ * @OA\Delete(
+ *     path="/api/modales/{id}",
+ *     summary="Eliminar un modal junto a sus correos y WhatsApp relacionados",
+ *     tags={"Modales"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         description="ID del modal",
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(response=200, description="Modal eliminado"),
+ *     @OA\Response(response=404, description="Modal no encontrado")
+ * )
+ */
     public function delete($id)
     {
         $modal = modalservicios::find($id);

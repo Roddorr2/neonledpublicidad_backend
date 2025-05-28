@@ -9,8 +9,32 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+/**
+ * @OA\Tag(
+ *     name="Permisos",
+ *     description="Operaciones relacionadas con permisos del sistema"
+ * )
+ */
 class PermisoController extends Controller
 {
+
+
+
+     /**
+     * @OA\Get(
+     *     path="/api/permisos",
+     *     tags={"Permisos"},
+     *     summary="Listar todos los permisos",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de permisos obtenida correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al obtener permisos"
+     *     )
+     * )
+     */
     public function index()
     {
         try {
@@ -28,6 +52,29 @@ class PermisoController extends Controller
         }
     }
 
+       /**
+     * @OA\Post(
+     *     path="/api/permisos",
+     *     tags={"Permisos"},
+     *     summary="Crear un nuevo permiso",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre"},
+     *             @OA\Property(property="nombre", type="string", example="Ver Usuarios"),
+     *             @OA\Property(property="descripcion", type="string", example="Permite ver la lista de usuarios")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Permiso creado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al crear permiso"
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         try {
@@ -54,6 +101,28 @@ class PermisoController extends Controller
         }
     }
 
+
+     /**
+     * @OA\Get(
+     *     path="/api/permisos/{id}",
+     *     tags={"Permisos"},
+     *     summary="Mostrar un permiso específico",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Permiso obtenido correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Permiso no encontrado"
+     *     )
+     * )
+     */
     public function show($id)
     {
         try {
@@ -70,6 +139,40 @@ class PermisoController extends Controller
         }
     }
 
+
+      /**
+     * @OA\Put(
+     *     path="/api/permisos/{id}",
+     *     tags={"Permisos"},
+     *     summary="Actualizar un permiso existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre"},
+     *             @OA\Property(property="nombre", type="string", example="Editar Usuarios"),
+     *             @OA\Property(property="descripcion", type="string", example="Permite editar usuarios")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Permiso actualizado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Permiso no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al actualizar permiso"
+     *     )
+     * )
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -105,6 +208,32 @@ class PermisoController extends Controller
         }
     }
 
+
+      /**
+     * @OA\Delete(
+     *     path="/api/permisos/{id}",
+     *     tags={"Permisos"},
+     *     summary="Eliminar un permiso",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Permiso eliminado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Permiso no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error al eliminar permiso"
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         try {

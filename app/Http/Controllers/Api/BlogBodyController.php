@@ -7,10 +7,42 @@ use Illuminate\Http\Request;
 use App\Models\BlogBody;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use OpenApi\Annotations as OA;
 
+
+/**
+ * @OA\Tag(
+ *     name="BlogBody",
+ *     description="Operaciones relacionadas con el contenido del cuerpo del blog"
+ * )
+ */
 class BlogBodyController extends Controller
 {
-
+    /**
+     * @OA\Post(
+     *     path="/api/blog-body",
+     *     summary="Crear un nuevo BlogBody",
+     *     tags={"BlogBody"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "descripcion"},
+     *             @OA\Property(property="titulo", type="string"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="id_commend_tarjeta", type="integer"),
+     *             @OA\Property(property="public_image1", type="string"),
+     *             @OA\Property(property="url_image1", type="string"),
+     *             @OA\Property(property="public_image2", type="string"),
+     *             @OA\Property(property="url_image2", type="string"),
+     *             @OA\Property(property="public_image3", type="string"),
+     *             @OA\Property(property="url_image3", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="BlogBody creado correctamente"),
+     *     @OA\Response(response=400, description="Errores de validación"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function create(Request $request)
     {
         try{
@@ -52,7 +84,38 @@ class BlogBodyController extends Controller
             ], 500);
         }
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/blog-body/{id}",
+     *     summary="Actualizar un BlogBody existente",
+     *     tags={"BlogBody"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "descripcion"},
+     *             @OA\Property(property="titulo", type="string"),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="id_commend_tarjeta", type="integer"),
+     *             @OA\Property(property="public_image1", type="string"),
+     *             @OA\Property(property="url_image1", type="string"),
+     *             @OA\Property(property="public_image2", type="string"),
+     *             @OA\Property(property="url_image2", type="string"),
+     *             @OA\Property(property="public_image3", type="string"),
+     *             @OA\Property(property="url_image3", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="BlogBody actualizado"),
+     *     @OA\Response(response=400, description="Errores de validación"),
+     *     @OA\Response(response=404, description="BlogBody no encontrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function update(Request $request, int $id){
         try{
             $validator =  Validator::make($request->all(), [
@@ -99,7 +162,22 @@ class BlogBodyController extends Controller
                 ],500);
             }
     }
-
+     /**
+     * @OA\Get(
+     *     path="/api/blog-body/{id}",
+     *     summary="Mostrar un BlogBody por ID",
+     *     tags={"BlogBody"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="BlogBody encontrado"),
+     *     @OA\Response(response=404, description="BlogBody no encontrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function show(int $id){
         try{
             $blogBody = BlogBody::with('commend_tarjeta','tarjetas')->find($id);
@@ -122,7 +200,22 @@ class BlogBodyController extends Controller
             ], 500);
         }
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/blog-body/{id}",
+     *     summary="Eliminar un BlogBody",
+     *     tags={"BlogBody"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="BlogBody eliminado correctamente"),
+     *     @OA\Response(response=404, description="BlogBody no encontrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function destroy(int $id)
     {
         try{

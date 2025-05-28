@@ -10,8 +10,35 @@ use Illuminate\Support\Facades\DB;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Log;
 
+
+/**
+ * @OA\Tag(
+ *     name="BlogHead",
+ *     description="Operaciones relacionadas con la cabecera de los blogs"
+ * )
+ */
 class BlogHeadController extends Controller
-{
+{   /**
+     * @OA\Post(
+     *     path="/api/blog-head",
+     *     summary="Crear un nuevo BlogHead",
+     *     tags={"BlogHead"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "texto_frase", "texto_descripcion", "public_image"},
+     *             @OA\Property(property="titulo", type="string", maxLength=50),
+     *             @OA\Property(property="texto_frase", type="string", maxLength=70),
+     *             @OA\Property(property="texto_descripcion", type="string", maxLength=120),
+     *             @OA\Property(property="public_image", type="string"),
+     *             @OA\Property(property="url_image", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="BlogHead creado correctamente"),
+     *     @OA\Response(response=400, description="Error de validación"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function create(Request $request)
     {
         try{
@@ -48,7 +75,34 @@ class BlogHeadController extends Controller
                 ], 500);
         }
     }
-
+    /**
+     * @OA\Put(
+     *     path="/api/blog-head/{id}",
+     *     summary="Actualizar un BlogHead existente",
+     *     tags={"BlogHead"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogHead"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "texto_frase", "texto_descripcion", "public_image"},
+     *             @OA\Property(property="titulo", type="string", maxLength=50),
+     *             @OA\Property(property="texto_frase", type="string", maxLength=70),
+     *             @OA\Property(property="texto_descripcion", type="string", maxLength=120),
+     *             @OA\Property(property="public_image", type="string"),
+     *             @OA\Property(property="url_image", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="BlogHead actualizado"),
+     *     @OA\Response(response=400, description="Error de validación"),
+     *     @OA\Response(response=404, description="BlogHead no encontrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function update(Request $request, int $id){
         try{
             $validator = Validator::make($request->all(), [
@@ -94,7 +148,22 @@ class BlogHeadController extends Controller
         }
     }
 
-
+     /**
+     * @OA\Get(
+     *     path="/api/blog-head/{id}",
+     *     summary="Obtener un BlogHead por ID",
+     *     tags={"BlogHead"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogHead"
+     *     ),
+     *     @OA\Response(response=200, description="Información del BlogHead"),
+     *     @OA\Response(response=404, description="BlogHead no encontrado"),
+     *     @OA\Response(response=500, description="Error interno del servidor")
+     * )
+     */
     public function show(int $id){
         try{
 
@@ -119,7 +188,22 @@ class BlogHeadController extends Controller
                 ], 500);
         }
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/blog-head/{id}",
+     *     summary="Eliminar un BlogHead",
+     *     tags={"BlogHead"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogHead"
+     *     ),
+     *     @OA\Response(response=200, description="BlogHead eliminado correctamente"),
+     *     @OA\Response(response=404, description="BlogHead no encontrado"),
+     *     @OA\Response(response=500, description="Error al eliminar el BlogHead")
+     * )
+     */
     public function destroy($id)
     {
         try{

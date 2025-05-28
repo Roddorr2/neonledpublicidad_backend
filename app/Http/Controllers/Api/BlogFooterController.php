@@ -7,9 +7,47 @@ use Illuminate\Http\Request;
 use App\Models\BlogFooter;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+/**
+ * @OA\Tag(
+ *     name="BlogFooter",
+ *     description="Operaciones relacionadas con el pie de página de los blogs"
+ * )
+ */
 class BlogFooterController extends Controller
 {
+     /**
+     * @OA\Post(
+     *     path="/api/blog-footer",
+     *     summary="Crear un nuevo BlogFooter",
+     *     tags={"BlogFooter"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "descripcion", "public_image1", "public_image2", "public_image3"},
+     *             @OA\Property(property="titulo", type="string", maxLength=255),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="public_image1", type="string"),
+     *             @OA\Property(property="url_image1", type="string"),
+     *             @OA\Property(property="public_image2", type="string"),
+     *             @OA\Property(property="url_image2", type="string"),
+     *             @OA\Property(property="public_image3", type="string"),
+     *             @OA\Property(property="url_image3", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="BlogFooter creado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Error de validación"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
+     *     )
+     * )
+     */
     public function create(Request $request)
     {
         try{
@@ -49,7 +87,49 @@ class BlogFooterController extends Controller
                 ], 500);
         }
     }
-
+     /**
+     * @OA\Put(
+     *     path="/api/blog-footer/{id}",
+     *     summary="Actualizar un BlogFooter existente",
+     *     tags={"BlogFooter"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogFooter"
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"titulo", "descripcion", "public_image1", "public_image2", "public_image3"},
+     *             @OA\Property(property="titulo", type="string", maxLength=255),
+     *             @OA\Property(property="descripcion", type="string"),
+     *             @OA\Property(property="public_image1", type="string"),
+     *             @OA\Property(property="url_image1", type="string"),
+     *             @OA\Property(property="public_image2", type="string"),
+     *             @OA\Property(property="url_image2", type="string"),
+     *             @OA\Property(property="public_image3", type="string"),
+     *             @OA\Property(property="url_image3", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="BlogFooter actualizado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Error de validación"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="BlogFooter no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
+     *     )
+     * )
+     */
     public function update(Request $request, int $id)
     {
         try{
@@ -96,7 +176,31 @@ class BlogFooterController extends Controller
             ], 500);
         }
     }
-
+     /**
+     * @OA\Get(
+     *     path="/api/blog-footer/{id}",
+     *     summary="Obtener un BlogFooter por ID",
+     *     tags={"BlogFooter"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogFooter"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Información del BlogFooter"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="BlogFooter no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno del servidor"
+     *     )
+     * )
+     */
     public function show(int $id){
         try{
 
@@ -121,7 +225,31 @@ class BlogFooterController extends Controller
                 ], 500);
         }
     }
-
+    /**
+     * @OA\Delete(
+     *     path="/api/blog-footer/{id}",
+     *     summary="Eliminar un BlogFooter",
+     *     tags={"BlogFooter"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID del BlogFooter"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="BlogFooter eliminado correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="BlogFooter no encontrado"
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error interno al eliminar el BlogFooter"
+     *     )
+     * )
+     */
     public function destroy($id)
     {
         try{

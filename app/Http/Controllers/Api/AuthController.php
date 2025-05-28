@@ -15,9 +15,44 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPassword;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use OpenApi\Annotations as OA;
 
+
+/**
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Endpoints para autenticación y gestión de usuarios"
+ * )
+ */
 class AuthController extends Controller
 {
+        /**
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Registrar nuevo usuario y empleado",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre","apellido","email","dni","id_rol"},
+     *             @OA\Property(property="nombre", type="string", example="Juan"),
+     *             @OA\Property(property="apellido", type="string", example="Pérez"),
+     *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+     *             @OA\Property(property="dni", type="string", example="12345678"),
+     *             @OA\Property(property="telefono", type="string", example="123456789"),
+     *             @OA\Property(property="id_rol", type="integer", example=2)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Usuario registrado exitosamente"
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Datos inválidos"
+     *     )
+     * )
+     */
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -80,6 +115,30 @@ class AuthController extends Controller
         }
     }
 
+
+        /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Iniciar sesión",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password"},
+     *             @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="1234")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Inicio de sesión exitoso"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Credenciales incorrectas"
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -133,7 +192,18 @@ class AuthController extends Controller
     }
 
 
-    //logout
+            /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Cerrar sesión",
+     *     tags={"Auth"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Sesión cerrada exitosamente"
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -144,6 +214,29 @@ class AuthController extends Controller
         ]);
     }
 
+        /**
+     * @OA\Post(
+     *     path="/api/forgot-password",
+     *     summary="Solicitar restablecimiento de contraseña",
+     *     description="Envía un correo con un token para restablecer la contraseña.",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="user@example.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Token de restablecimiento enviado"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Usuario no encontrado"
+     *     )
+     * )
+     */
     public function forgotPassword(Request $request)
     {
         $request->validate([
@@ -177,6 +270,31 @@ class AuthController extends Controller
         ]);
     }
 
+        /**
+     * @OA\Post(
+     *     path="/api/update-password",
+     *     summary="Actualizar contraseña",
+     *     description="Permite restablecer la contraseña usando un token enviado por correo.",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"token", "password", "password_confirmation"},
+     *             @OA\Property(property="token", type="string", example="token123"),
+     *             @OA\Property(property="password", type="string", format="password", example="newPassword123"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password", example="newPassword123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Contraseña actualizada correctamente"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Token inválido o usuario no encontrado"
+     *     )
+     * )
+     */
     public function updatePassword(Request $request){
         $validator = Validator::make($request->all(), [
             'token' => 'required|string',
@@ -224,6 +342,23 @@ class AuthController extends Controller
         return response()->json(['message' => 'Contraseña actualizada correctamente, ingresa desde el login'], 200);
     }
 
+        /**
+     * @OA\Get(
+     *     path="/api/me",
+     *     summary="Obtener información del usuario autenticado",
+     *     description="Retorna información del usuario logueado, su empleado, rol y permisos.",
+     *     tags={"Auth"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Datos del usuario autenticado"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="No autenticado"
+     *     )
+     * )
+     */
     public function me(Request $request)
     {
         $user = $request->user();

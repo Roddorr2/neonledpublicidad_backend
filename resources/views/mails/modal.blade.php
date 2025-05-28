@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DigiMedia Marketing</title>
+    <title>NEON LED PUBLICIDAD</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -22,7 +22,7 @@
             overflow: hidden;
         }
         .header {
-            background-color: #8a2be2;
+            background-color: #0e1ca0;
             padding: 24px 0;
             text-align: center;
         }
@@ -46,7 +46,7 @@
         .message-title {
             font-size: 22px;
             font-weight: 600;
-            color: #8a2be2;
+            color: #0e1ca0;
             margin-bottom: 20px;
         }
         .message-content {
@@ -60,7 +60,7 @@
             padding: 25px;
             border-radius: 8px;
             margin-bottom: 30px;
-            border-left: 3px solid #8a2be2;
+            border-left: 3px solid #0e1ca0;
         }
         .user-info-title {
             font-weight: 600;
@@ -85,7 +85,7 @@
         }
         .cta-button {
             display: inline-block;
-            background-color: #8a2be2;
+            background-color: #0e1ca0;
             color: #fefefe;
             text-decoration: none;
             padding: 14px 30px;
@@ -95,7 +95,7 @@
             transition: background-color 0.3s;
         }
         .cta-button:hover {
-            background-color: #7825c1;
+            background-color: #0e1ca0;
         }
         .footer {
             background-color: #f9f9f9;
@@ -135,12 +135,12 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="header-title">DigiMedia Marketing</h1>
+            <h1 class="header-title">NEON LED PUBLICIDAD</h1>
         </div>
 
         <div class="content">
             @if(isset($image))
-            <img src="{{ $image }}" alt="DigiMedia Marketing" class="featured-image">
+            <img src="{{ $image }}" alt="NEON LED PUBLICIDAD" class="featured-image">
             @endif
 
             @if(isset($title))
@@ -161,26 +161,26 @@
             </div>
 
             <div class="cta-container">
-                <a href="https://www.digimediamkt.com/" class="cta-button" style="color:white;">Visitar Nuestro Sitio</a>
+                <a href="https://ledneonpublicidad.com/" class="cta-button" style="color:white;">Visitar Nuestro Sitio</a>
             </div>
         </div>
 
         <div class="footer">
             <div class="social-links">
-                <a href="#" class="social-link">
+                <a href="https://web.facebook.com/p/Neon-Led-store-100063474791455/?_rdc=1&_rdr" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
                 </a>
-                <a href="#" class="social-link">
+                <a href="" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
                 </a>
                 <a href="#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
                 </a>
-                <a href="#" class="social-link">
+                <a href="https://www.linkedin.com/company/neonhouseled/" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" alt="LinkedIn">
                 </a>
             </div>
-            <p>&copy; {{ date('Y') }} DigiMedia Marketing. Todos los derechos reservados.</p>
+            <p>&copy; {{ date('Y') }} NEON LED PUBLICIDAD. Todos los derechos reservados.</p>
         </div>
     </div>
 </body>

@@ -10,8 +10,37 @@ use App\Mail\MailService;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * @OA\Tag(
+ *     name="ModalWat",
+ *     description="Operaciones relacionadas con el envío de mensajes de WhatsApp para servicios y gestión de estados"
+ * )
+ */
 class ModalWatController extends Controller
 {
+
+    /**
+ * @OA\Get(
+ *     path="/modal-wat/send/{id}",
+ *     summary="Redirige a WhatsApp con un mensaje personalizado según el servicio",
+ *     tags={"ModalWat"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID del registro WatModal",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=302,
+ *         description="Redirección a WhatsApp exitosa"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Mensaje no encontrado"
+ *     )
+ * )
+ */
     public function sendWat(int $id)
     {
         $data = [
@@ -53,6 +82,37 @@ class ModalWatController extends Controller
         return redirect()->away($url);
     }
 
+    /**
+ * @OA\Post(
+ *     path="/modal-wat/estado/{id}",
+ *     summary="Actualiza el estado de un mensaje de WhatsApp",
+ *     tags={"ModalWat"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         description="ID del registro WatModal",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"estado"},
+ *             @OA\Property(property="estado", type="integer", example=1, description="1 para exitoso, 0 para error"),
+ *             @OA\Property(property="error", type="string", example="Número incorrecto", description="Motivo del error si estado = 0")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Estado actualizado correctamente",
+ *         @OA\JsonContent(ref="#/components/schemas/WatModal")
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Mensaje no encontrado"
+ *     )
+ * )
+ */
     public function cambiarEstado(Request $request, $id)
     {
         $modal_wat = WatModal::find($id);

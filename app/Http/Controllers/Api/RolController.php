@@ -9,11 +9,34 @@ use Illuminate\Validation\Rule;
 use App\Models\Permiso;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+
+/**
+ * @OA\Tag(
+ *     name="Roles",
+ *     description="Operaciones relacionadas con la gestión de roles y sus permisos en el sistema"
+ * )
+ */
 class RolController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+     /**
+ * @OA\Get(
+ *     path="/api/roles",
+ *     summary="Listar todos los roles",
+ *     tags={"Roles"},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lista de roles obtenida exitosamente"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error al obtener roles"
+ *     )
+ * )
+ */
     public function index()
     {
         try {
@@ -33,6 +56,30 @@ class RolController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+     /**
+ * @OA\Post(
+ *     path="/api/roles",
+ *     summary="Crear un nuevo rol",
+ *     tags={"Roles"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"nombre"},
+ *             @OA\Property(property="nombre", type="string", example="Administrador"),
+ *             @OA\Property(property="permisos", type="array", @OA\Items(type="integer"))
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Rol creado correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error al crear rol"
+ *     )
+ * )
+ */
     public function store(Request $request)
     {
         try {
@@ -67,6 +114,29 @@ class RolController extends Controller
     /**
      * Display the specified resource.
      */
+
+
+     /**
+ * @OA\Get(
+ *     path="/api/roles/{id}",
+ *     summary="Obtener un rol por ID",
+ *     tags={"Roles"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Rol obtenido correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Rol no encontrado"
+ *     )
+ * )
+ */
     public function show($id)
     {
         try {
@@ -86,6 +156,40 @@ class RolController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+     /**
+ * @OA\Put(
+ *     path="/api/roles/{id}",
+ *     summary="Actualizar un rol",
+ *     tags={"Roles"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"nombre"},
+ *             @OA\Property(property="nombre", type="string", example="Editor"),
+ *             @OA\Property(property="permisos", type="array", @OA\Items(type="integer"))
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Rol actualizado correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Rol no encontrado"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error al actualizar rol"
+ *     )
+ * )
+ */
     public function update(Request $request, $id)
     {
         try {
@@ -127,6 +231,32 @@ class RolController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+     /**
+ * @OA\Delete(
+ *     path="/api/roles/{id}",
+ *     summary="Eliminar un rol",
+ *     tags={"Roles"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Rol eliminado correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="El rol tiene empleados asociados"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Rol no encontrado"
+ *     )
+ * )
+ */
     public function destroy($id)
     {
         try {
@@ -157,6 +287,28 @@ class RolController extends Controller
         }
     }
 
+
+    /**
+ * @OA\Get(
+ *     path="/api/roles/{id}/permisos",
+ *     summary="Obtener permisos asociados a un rol",
+ *     tags={"Roles"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Permisos obtenidos correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Rol no encontrado"
+ *     )
+ * )
+ */
     public function getPermisos($id)
     {
         try {
@@ -175,6 +327,38 @@ class RolController extends Controller
         }
     }
 
+    /**
+ * @OA\Post(
+ *     path="/api/roles/{id}/permisos",
+ *     summary="Sincronizar permisos de un rol",
+ *     tags={"Roles"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"permisos"},
+ *             @OA\Property(property="permisos", type="array", @OA\Items(type="integer"))
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Permisos actualizados correctamente"
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Rol no encontrado"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error al actualizar permisos"
+ *     )
+ * )
+ */
     public function syncPermisos(Request $request, $id)
     {
         try {

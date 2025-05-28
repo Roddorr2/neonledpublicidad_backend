@@ -4,7 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+/**
+ * @OA\Schema(
+ *     schema="Rol",
+ *     type="object",
+ *     title="Rol",
+ *     required={"nombre"},
+ *     @OA\Property(
+ *         property="id_rol",
+ *         type="integer",
+ *         format="int64",
+ *         description="ID único del rol"
+ *     ),
+ *     @OA\Property(
+ *         property="nombre",
+ *         type="string",
+ *         description="Nombre del rol"
+ *     )
+ * )
+ */
 class Rol extends Model
 {
     use HasFactory;
