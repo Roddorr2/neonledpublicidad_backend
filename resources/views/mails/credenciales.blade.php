@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido a DIGIMEDIA MARKETING</title>
+    <title>Bienvenido a NEON LED PUBLICIDAD</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #8A4FFF;
-            --primary-dark: #7340E0;
+            --primary-color: #0e1ca0;
+            --primary-dark: #062066;
             --primary-light: #F0EBFF;
             --text-on-primary: #FFFFFF;
             --text-primary: #333333;
@@ -39,7 +39,7 @@
         }
 
         .email-header {
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             padding: 30px;
             text-align: center;
         }
@@ -64,7 +64,7 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #8A4FFF;
+            color:#0e1ca0;
         }
 
         .message {
@@ -78,7 +78,7 @@
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
-            border-left: 4px solid #8A4FFF;
+            border-left: 4px solid #0e1ca0;
         }
 
         .credential-item {
@@ -98,7 +98,7 @@
         }
 
         .credential-icon {
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -107,7 +107,7 @@
             min-height: 36px;
             max-width: 36px;
             max-height: 36px;
-            box-shadow: 0 2px 8px rgba(138, 79, 255, 0.3);
+            box-shadow: 0 2px 8px rgba(8, 4, 214, 0.3);
         }
 
         .icon-cell {
@@ -133,7 +133,7 @@
 
         .credential-label {
             font-weight: 600;
-            color: #8A4FFF;
+            color: #0e1ca0;
             margin-bottom: 3px;
             font-size: 14px;
         }
@@ -147,7 +147,7 @@
 
         .cta-button {
             display: block;
-            background-color: #8A4FFF;
+            background-color: #0e1ca0;
             color: #ffffff !important;
             text-decoration: none !important;
             padding: 14px 24px;
@@ -156,11 +156,11 @@
             text-align: center;
             margin: 30px 0;
             transition: background-color 0.3s;
-            box-shadow: 0 4px 10px rgba(138, 79, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(3, 17, 143, 0.2);
         }
 
         .cta-button:hover {
-            background-color: #7340E0;
+            background-color: #0e1ca0;
         }
 
         .security-note {
@@ -211,7 +211,7 @@
 
         .company-info {
             font-size: 14px;
-            color: #64748b;
+            color: #0e1ca0;
             margin-bottom: 15px;
         }
 
@@ -237,13 +237,13 @@
 
         .copyright {
             font-size: 12px;
-            color: #94a3b8;
+            color: #0e1ca0;
         }
 
         .digimedia-signature {
             margin-top: 20px;
             font-weight: 600;
-            color: #8A4FFF;
+            color: #0e1ca0;
         }
 
         @media only screen and (max-width: 600px) {
@@ -309,7 +309,7 @@
                 </div>
             </div>
 
-            <a href="{{ url('http://digimediamkt.com/login') }}" class="cta-button">
+            <a href="{{ url('http://neonledmkt.com/login') }}" class="cta-button">
                 Iniciar sesión ahora
             </a>
 
@@ -333,19 +333,19 @@
 
             <p class="message">
                 ¡Esperamos que disfrutes de nuestra plataforma!
-                <div class="digimedia-signature">El equipo de DIGIMEDIA MARKETING</div>
+                <div class="digimedia-signature">El equipo de NEON LED PUBLICIDAD</div>
             </p>
         </div>
 
         <div class="email-footer">
             <div class="company-info">
-                DIGIMEDIA MARKETING<br>
+                NEON LED PUBLICIDAD<br>
                 Av. Principal #123, Ciudad<br>
                 +52 (123) 456-7890
             </div>
 
             <div class="social-links">
-                <a href="#" class="social-link">
+                <a href="https://web.facebook.com/p/Neon-Led-store-100063474791455/?_rdc=1&_rdr#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/733/733547.png" alt="Facebook">
                 </a>
                 <a href="#" class="social-link">
@@ -354,7 +354,7 @@
                 <a href="#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/2111/2111463.png" alt="Instagram">
                 </a>
-                <a href="#" class="social-link">
+                <a href="https://www.linkedin.com/company/neonhouseled/" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/3536/3536505.png" alt="LinkedIn">
                 </a>
             </div>
