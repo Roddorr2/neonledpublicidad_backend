@@ -7,23 +7,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-        :root {
-            --primary-color: #0e1ca0;
-            --primary-dark: #0e1ca0;
-            --primary-light: #F0EBFF;
-            --text-on-primary: #FFFFFF;
-            --text-primary: #333333;
-            --text-secondary: #555555;
-            --background-light: #F8F6FF;
-            --warning-color: #ef4444;
-            --warning-dark: #b91c1c;
-            --warning-light: #fee2e2;
-        }
-
         body {
             font-family: 'Poppins', Arial, sans-serif;
             line-height: 1.6;
-            color: var(--text-primary);
+            color: #333333;
             background-color: #f5f5f5;
             margin: 0;
             padding: 0;
@@ -50,7 +37,7 @@
         }
 
         .email-header h1 {
-            color: var(--text-on-primary);
+            color: #FFFFFF;
             margin: 20px 0 0;
             font-weight: 600;
             font-size: 24px;
@@ -69,12 +56,12 @@
 
         .message {
             margin-bottom: 30px;
-            color: var(--text-secondary);
+            color: #555555;
             font-size: 16px;
         }
 
         .reset-box {
-            background-color: var(--background-light);
+            background-color: #F8F6FF;
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 30px;
@@ -102,7 +89,7 @@
 
         .reset-text {
             font-size: 16px;
-            color: var(--text-secondary);
+            color: #555555;
             margin-bottom: 25px;
         }
 
@@ -125,10 +112,10 @@
         }
 
         .security-note {
-            background-color: var(--warning-light);
+            background-color: #fee2e2;
             border-radius: 12px;
             padding: 18px;
-            border-left: 4px solid var(--warning-color);
+            border-left: 4px solid #ef4444;
             margin: 30px 0;
         }
 
@@ -136,14 +123,14 @@
             display: flex;
             align-items: center;
             font-weight: 600;
-            color: var(--warning-dark);
+            color: #b91c1c;
             margin-bottom: 8px;
         }
 
         .security-note-title svg {
             width: 20px;
             height: 20px;
-            fill: var(--warning-color);
+            fill: #ef4444;
             margin-right: 10px;
         }
 
@@ -153,7 +140,7 @@
         }
 
         .email-footer {
-            background-color: var(--background-light);
+            background-color: #F8F6FF;
             padding: 25px 30px;
             text-align: center;
             border-top: 1px solid #E9E4FF;
@@ -218,7 +205,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-v2gYpX1AexbpAeLB3A5QD7xRprduZF.png" alt="NEON LED PUBLICIDAD">
+            <img src="https://i.ibb.co/tw50mj20/logo-azul-letra-Blanco.png" alt="NEON LED PUBLICIDAD" style="width: 100px">
             <h1>Restablecimiento de Contraseña</h1>
         </div>
 
@@ -232,7 +219,7 @@
             <div class="reset-box">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: 0 auto 25px;">
                     <tr>
-                        <td style="background-color: #0e1ca0 ; width: 80px; height: 80px; border-radius: 50%; text-align: center; box-shadow: 0 4px 12px rgba(138, 79, 255, 0.25);">
+                        <td style="background-color: #0e1ca0; width: 80px; height: 80px; border-radius: 50%; text-align: center; box-shadow: 0 4px 12px rgba(138, 79, 255, 0.25);">
                             <img src="https://cdn-icons-png.flaticon.com/128/2889/2889676.png" alt="Reset icon" width="40" height="40" style="width: 40px; height: 40px; filter: brightness(0) invert(1); display: block; margin: 0 auto;">
                         </td>
                     </tr>
@@ -298,4 +285,3 @@
     </div>
 </body>
 </html>
-
