@@ -190,7 +190,7 @@
             color: #94a3b8;
         }
 
-        .digimedia-signature {
+        .nenpubli-signature {
             margin-top: 20px;
             font-weight: 600;
             color: #0e1ca0;
@@ -265,7 +265,7 @@
 
             <p class="message">
                 Saludos,
-                <div class="digimedia-signature">El equipo de NEON LED PUBLICIDAD</div>
+                <div class="nenpubli-signature">El equipo de NEON LED PUBLICIDAD</div>
             </p>
         </div>
 

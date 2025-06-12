@@ -240,7 +240,7 @@
             color: #0e1ca0;
         }
 
-        .digimedia-signature {
+        .nenpubli-signature {
             margin-top: 20px;
             font-weight: 600;
             color: #0e1ca0;
@@ -268,7 +268,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-v2gYpX1AexbpAeLB3A5QD7xRprduZF.png" alt="DIGIMEDIA MARKETING" />
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-v2gYpX1AexbpAeLB3A5QD7xRprduZF.png" alt="NEON LED PUBLICIDAD" />
             <h1>¡Bienvenido a nuestra plataforma!</h1>
         </div>
 
@@ -276,7 +276,7 @@
             <div class="greeting">Hola {{ $nombre }},</div>
 
             <p class="message">
-                Estamos encantados de darte la bienvenida a DIGIMEDIA MARKETING. Hemos creado tu cuenta y a continuación encontrarás tus credenciales de acceso:
+                Estamos encantados de darte la bienvenida a NEON LED PUBLICIDAD. Hemos creado tu cuenta y a continuación encontrarás tus credenciales de acceso:
             </p>
 
             <div class="credentials-box">
@@ -333,7 +333,7 @@
 
             <p class="message">
                 ¡Esperamos que disfrutes de nuestra plataforma!
-                <div class="digimedia-signature">El equipo de NEON LED PUBLICIDAD</div>
+                <div class="nenpubli-signature">El equipo de NEON LED PUBLICIDAD</div>
             </p>
         </div>
 
@@ -360,7 +360,7 @@
             </div>
 
             <div class="copyright">
-                &copy; {{ date('Y') }} DIGIMEDIA MARKETING. Todos los derechos reservados.
+                &copy; {{ date('Y') }} NEON LED PUBLICIDAD. Todos los derechos reservados.
             </div>
         </div>
     </div>
