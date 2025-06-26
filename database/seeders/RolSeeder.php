@@ -22,7 +22,10 @@ class RolSeeder extends Seeder
             ],
             [
                 'nombre' => 'marketing',
-            ]
+            ],
+            [
+                'nombre' => 'cliente',
+            ],
         ];
         DB::table('roles')->insert($roles);
     }
