@@ -61,6 +61,12 @@ class PermisosSeeder extends Seeder
             // Tarjetas
             'Crear tarjetas' => 'Permite crear tarjetas',
             'Eliminar tarjetas' => 'Permite eliminar tarjetas',
+
+            //Propuestas
+            'Ver propuestas'=>'Permite  ver propuestas',
+            'Crear propuestas'=>'Permite crear propuestas',
+            'Editar propuestas'=>'Permite editar propuestas',
+            'Eliminar propuestas'=>'Permite eliminar propuestas',
             
             'Permisos generales' => 'Permite acceder a los permisos básicos',
         ];
@@ -106,6 +112,12 @@ class PermisosSeeder extends Seeder
                 'Crear tarjetas',
 
                 'Permisos generales',
+            ],
+           'cliente' => [
+                'Ver propuestas',
+                'Crear propuestas', 
+                'Editar propuestas',
+                'Eliminar propuestas',
             ],
         ];
 

@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\BlogFooterController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
+use App\Http\Controllers\Api\PropuestaController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -42,6 +43,18 @@ Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs púb
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
+
+
+    Route::get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    Route::post('/propuesta',[PropuestaController::class, "create"]);
+    Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+
+
+ 
 
 
 // rutas autenticadas
@@ -100,6 +113,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-tarjetas')->delete('/commend_tarjeta/{id}', [CommendTarjetaController::class, "destroy"]);
     Route::middleware('permission:eliminar-tarjetas')->delete('/tarjetas_delete/{id}', [TarjetaController::class, "destroyAll"]);
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
+
+    //rutas propuesta
+    // Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
+    // Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "load"]);
+    // Route::middelware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
+    // Route::middelware('permission:editar-propuestas')->get('/propuesta',[PropuestaController::class, "update"]);
+    // Route::middelware('permission:eliminar-propuestas')->get('/propuesta',[PropuestaController::class, "delete"]);
 
     // rutas update
     Route::middleware('permission:editar-contactos')->put('/contactanos/{id}', [ContactanosController::class, "update"]);

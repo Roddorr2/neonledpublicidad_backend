@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Cliente extends Model
+{
+
+    use HasFactory;
+    protected $table = 'clientes';
+    protected $primaryKey = 'id_cliente';
+    
+    protected $fillable = [
+        'nombre',
+        'apellido',
+        'email',
+        'dni',
+        'telefono',
+        'imagen_perfil',
+        'imagen_perfil_url',
+        'id_user',
+        'id_rol',
+    ];
+
+      public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'id_rol', 'id_rol');
+    }
+}

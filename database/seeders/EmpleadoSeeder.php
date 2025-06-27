@@ -67,6 +67,14 @@ class EmpleadoSeeder extends Seeder
                 'telefono' => '985237799',
                 'id_user' => 6,
                 'id_rol' => 1,
+            ] , [
+                'nombre' => 'Diego Arturo',
+                'apellido' => 'Torres Pacherres',
+                'email' => 'diego_torres_11@hotmail.com',
+                'dni' => '48314547',
+                'telefono' => '986377441',
+                'id_user' => 7,
+                'id_rol' => 1,
             ]
         ];
         DB::table('empleados')->insert($empleados);
