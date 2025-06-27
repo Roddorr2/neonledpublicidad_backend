@@ -36,7 +36,21 @@ class BlogController extends Controller
 
             DB::beginTransaction();
 
-            $blog = Blog::create($request->all());
+            $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
+            $titulo = $blogHead->titulo ?? "blog";
+
+            $link = Str::slug($titulo);
+
+            $counter = 1;
+            while (Blog::where("link", $link)->exists()) {
+                $link = $link . '-' . $counter;
+                $counter++;
+            }
+
+            $data = $request->all();
+            $data["link"] = $link;
+
+            $blog = Blog::create($data);
 
             DB::commit();
 
@@ -76,7 +90,24 @@ class BlogController extends Controller
 
             DB::beginTransaction();
 
-            $blog->update($request->all());
+            $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
+            $titulo = $blogHead->titulo ?? "blog";
+
+            $link = Str::slug($titulo);
+
+            $counter = 1;
+            while (Blog::where("link", $link)
+                       ->where("id_blog", "!=", $id)
+                       ->exists()) 
+            {
+                $link = $link . '-' . $counter;
+                $counter++;
+            }
+
+            $data = $request->all();
+            $data["link"] = $link;
+
+            $blog->update($data);
 
             DB::commit();
 
@@ -112,6 +143,24 @@ class BlogController extends Controller
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+    public function showByLink(string $link)
+    {
+        $blog = Blog::with(['card', 'body'])->where('link', $link)->first();
+
+        if(!$blog) {
+            return response()->json([
+                "status" => 400,
+                "message" => "Blog no encontrado"
+            ], 400);
+        }
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Blog encontrado",
+            "blog" => $blog
+        ], 200);
     }
 
     public function destroy(int $id)
