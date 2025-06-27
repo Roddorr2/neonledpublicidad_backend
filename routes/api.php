@@ -49,6 +49,8 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
     Route::post('/propuesta',[PropuestaController::class, "create"]);
     Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
     Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 
  
