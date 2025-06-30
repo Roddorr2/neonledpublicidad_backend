@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Mail\CredencialesEmpleadoMail;
 use App\Models\Cliente;
+use App\Models\Rol;
 use App\Models\User;
 use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -43,15 +45,14 @@ class ClienteController extends Controller
                 "nombre" => "required|string|max:191",
                 "apellido" => "required|string|max:191",
                 "email" => "required|email|unique:users|unique:clientes",
-                "dni" => "required|string|unique:users|unique:clientes|max:8",
-                "telefono" => "required|string|max:",
-                // "id_rol" => "required|exists:roles,id_rol",
+                "dni" => "required|string|unique:empleados|unique:clientes|max:8",
+                "telefono" => "required|string|max:14",
             ]);
 
             if($validate->fails()) {
                 return response()->json([
                     "status" => 400,
-                    "message" => "Error al intentar crear empleado",
+                    "message" => "Error al intentar crear cliente",
                     "errors" => $validate->errors()
                 ], 400);
             }
@@ -73,7 +74,7 @@ class ClienteController extends Controller
                 "dni" => $request->dni,
                 "telefono" => $request->telefono,
                 "id_user" => $user->id,
-                "id_rol" => "cliente"
+                "id_rol" => Rol::where('nombre', 'cliente')->first()->id_rol
             ]);
 
             /**
@@ -127,7 +128,7 @@ class ClienteController extends Controller
             $clientes = Cliente::with('rol')->orderBy('id', 'asc')->paginate(5);
             $clientes->getCollection()->transform(function ($cliente) {
                 return [
-                    'id_empleado' => $cliente->id,
+                    'id_cliente' => $cliente->id,
                     'nombre' => $cliente->nombre,
                     'apellido' => $cliente->apellido,
                     'email' => $cliente->email,
@@ -180,41 +181,40 @@ class ClienteController extends Controller
         $validator = Validator::make($request->all(), [
             'nombre'    => 'sometimes|string|max:255',
             'apellido'  => 'sometimes|string|max:255',
-            'email'     => 'sometimes|string|email|max:255|unique:empleados,email,' . $id . ',id|unique:users,email,' . $cliente->id,
-            'dni'       => 'sometimes|string|max:20|unique:empleados,dni,' . $id . ',id_empleado',
-            'telefono'  => 'nullable|string|max:20',
-            'id_rol'    => 'sometimes|exists:roles,id_rol',
+            "email" => "sometimes|email|unique:users|unique:clientes",
+            "dni" => "sometimes|string|unique:empleados|unique:clientes|max:8",
+            'telefono'  => 'nullable|string|max:14',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = User::find($empleado->id_user);
+        $user = User::find($cliente->id_user);
 
         if ($user) {
-            if ($request->has('email') && $request->email != $empleado->email) {
+            if ($request->has('email') && $request->email != $cliente->email) {
                 $user->email = $request->email;
             }
 
             if (
-                ($request->has('nombre') && $request->nombre != $empleado->nombre) ||
-                ($request->has('apellido') && $request->apellido != $empleado->apellido)
+                ($request->has('nombre') && $request->nombre != $cliente->nombre) ||
+                ($request->has('apellido') && $request->apellido != $cliente->apellido)
             ) {
-                $nombre   = $request->has('nombre') ? $request->nombre : $empleado->nombre;
-                $apellido = $request->has('apellido') ? $request->apellido : $empleado->apellido;
+                $nombre   = $request->has('nombre') ? $request->nombre : $cliente->nombre;
+                $apellido = $request->has('apellido') ? $request->apellido : $cliente->apellido;
                 $user->name = $nombre . ' ' . $apellido;
             }
 
             $user->save();
         }
 
-        $empleado->update($request->all());
+        $cliente->update($request->all());
 
         return response()->json([
             "status"  => 200,
-            "message" => "Empleado actualizado correctamente",
-            "data"    => $empleado
+            "message" => "Cliente actualizado correctamente",
+            "data"    => $cliente
         ]);
     }
 
@@ -235,32 +235,32 @@ class ClienteController extends Controller
         }
 
         try {
-            $empleado = Empleado::where('id_empleado', $id)->first();
-            if (!$empleado) {
+            $cliente = Cliente::where('id', $id)->first();
+            if (!$cliente) {
                 return response()->json([
                     "status" => 404,
-                    "message" => "Empleado no encontrado"
+                    "message" => "Cliente no encontrado"
                 ], 404);
             }
 
             DB::beginTransaction();
 
-            if ($empleado->imagen_perfil) {
+            if ($cliente->imagen_perfil) {
                 try {
 
                     $cloudinary = new Cloudinary();
 
-                    $result = $cloudinary->uploadApi()->destroy($empleado->imagen_perfil);
+                    $result = $cloudinary->uploadApi()->destroy($cliente->imagen_perfil);
 
                 } catch (\Exception $e) {
                     Log::warning("Error al eliminar imagen anterior, continuando con actualización: " . $e->getMessage());
                 }
             }
 
-            $empleado->imagen_perfil_url = null;
-            $empleado->imagen_perfil = $request->public_id;
-            $empleado->imagen_perfil_url = $request->secure_url;
-            $empleado->save();
+            $cliente->imagen_perfil_url = null;
+            $cliente->imagen_perfil = $request->public_id;
+            $cliente->imagen_perfil_url = $request->secure_url;
+            $cliente->save();
 
             DB::commit();
 
@@ -268,8 +268,8 @@ class ClienteController extends Controller
                 "status" => 200,
                 "message" => "Imagen actualizada correctamente",
                 "data" => [
-                    'public_id' => $empleado->imagen_perfil,
-                    'url' => $empleado->imagen_perfil_url,
+                    'public_id' => $cliente->imagen_perfil,
+                    'url' => $cliente->imagen_perfil_url,
                     'version' => time()
                 ]
             ]);
@@ -301,13 +301,13 @@ class ClienteController extends Controller
             return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
         }
 
-        $empleado = Empleado::where('id_empleado', $id)->first();
+        $cliente = Cliente::where('id', $id)->first();
 
-        if (!$empleado) {
-            return response()->json(["status" => 404, "message" => "Empleado no encontrado"]);
+        if (!$cliente) {
+            return response()->json(["status" => 404, "message" => "Cliente no encontrado"]);
         }
 
-        $userId = $empleado->id_user;
+        $userId = $cliente->id_user;
 
         return $this->updatePass1($request, $userId);
     }
@@ -342,19 +342,19 @@ class ClienteController extends Controller
         try {
             $request->validate([
                 'currentPassword' => 'required',
-                'id_empleado' => 'required|exists:empleados,id_empleado'
+                'id' => 'required|exists:clientes'
             ]);
 
-            $empleado = Empleado::with('user')->findOrFail($request->id_empleado);
+            $cliente = Cliente::with('user')->findOrFail($request->id);
 
-            if (!$empleado->user) {
+            if (!$cliente->user) {
                 return response()->json([
                     'valid' => false,
                     'message' => 'No se encontró el usuario asociado al empleado'
                 ], 404);
             }
 
-            if (!Hash::check($request->currentPassword, $empleado->user->password)) {
+            if (!Hash::check($request->currentPassword, $cliente->user->password)) {
                 return response()->json([
                     'valid' => false,
                     'message' => 'La contraseña actual es incorrecta'
@@ -424,7 +424,7 @@ class ClienteController extends Controller
             if (!$cliente) {
                 return response()->json([
                     'status' => 404,
-                    'message' => 'Empleado no encontrado'
+                    'message' => 'Cliente no encontrado'
                 ], 404);
             }
 

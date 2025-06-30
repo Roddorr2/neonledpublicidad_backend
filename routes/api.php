@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ModalWatController;
 
 use App\Http\Controllers\Api\ModalMailController;
 use App\Http\Controllers\Api\BlogFooterController;
+use App\Http\Controllers\API\ClienteController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
@@ -43,8 +44,9 @@ Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs púb
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
-
-
+/**
+ * Endpoints de propuestas sin middleware (temporal)
+ */
     Route::get('/propuesta',[PropuestaController::class, "getall"]);
     Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
     Route::post('/propuesta',[PropuestaController::class, "create"]);
@@ -53,9 +55,12 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
     Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
-
- 
-
+/**
+ * Enpoints de gestion de clientes
+ */
+    Route::post('/cliente', [ClienteController::class, "create"]);
+    Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
+    Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
 
 // rutas autenticadas
 Route::middleware('auth:sanctum')->group(function () {
