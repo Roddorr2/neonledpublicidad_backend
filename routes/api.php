@@ -121,13 +121,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //rutas propuesta
    
-    Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
-    Route::middelware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    Route::middelware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
-    Route::middelware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    Route::middelware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    Route::middelware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    Route::middelware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
+    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
     // rutas update
     Route::middleware('permission:editar-contactos')->put('/contactanos/{id}', [ContactanosController::class, "update"]);
