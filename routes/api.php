@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ModalWatController;
 
 use App\Http\Controllers\Api\ModalMailController;
 use App\Http\Controllers\Api\BlogFooterController;
+use App\Http\Controllers\API\ClienteController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
@@ -43,8 +44,9 @@ Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs púb
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
-
-
+/**
+ * Endpoints de propuestas sin middleware (temporal)
+ */
     Route::get('/propuesta',[PropuestaController::class, "getall"]);
     Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
     Route::post('/propuesta',[PropuestaController::class, "create"]);
@@ -53,9 +55,12 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
     Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
-
- 
-
+/**
+ * Enpoints de gestion de clientes
+ */
+    Route::post('/cliente', [ClienteController::class, "create"]);
+    Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
+    Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
 
 // rutas autenticadas
 Route::middleware('auth:sanctum')->group(function () {
@@ -115,17 +120,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
 
     //rutas propuesta
-    // Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
-    // Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "load"]);
-    // Route::middelware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
-    // Route::middelware('permission:editar-propuestas')->get('/propuesta',[PropuestaController::class, "update"]);
-    // Route::middelware('permission:eliminar-propuestas')->get('/propuesta',[PropuestaController::class, "delete"]);
+   
+    Route::middelware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::middelware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    Route::middelware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
+    Route::middelware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    Route::middelware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::middelware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::middelware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
     // rutas update
     Route::middleware('permission:editar-contactos')->put('/contactanos/{id}', [ContactanosController::class, "update"]);
     Route::middleware('permission:editar-reclamaciones')->put('/reclamaciones/{id}', [ReclamacionesController::class, "update"]);
     Route::middleware('permission:editar-modales')->put('/modales/{id}', [ModalesController::class, "update"]);
-
 
     // rutas delete/destroy
     Route::middleware('permission:eliminar-contactos')->delete('/contactanos/{id}', [ContactanosController::class, "delete"]);
