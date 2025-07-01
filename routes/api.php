@@ -61,6 +61,10 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
     Route::post('/cliente', [ClienteController::class, "create"]);
     Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
     Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
+    Route::put('/cliente/{id}', [ClienteController::class, "update"]);
+    Route::delete('/cliente/{id}', [ClienteController::class, "delete"]);
+    Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
+    Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
 // rutas autenticadas
 Route::middleware('auth:sanctum')->group(function () {
