@@ -20,8 +20,13 @@ use Intervention\Image\Laravel\Facades\Image;
 class CardController extends Controller
 {
 
-    private const url_api = "http://localhost:8000";
-    //private const url_api = "http://back.ledneonpublicidad.com";
+    private string $url_api;
+    private const localURL = 'http://localhost:8000';
+
+    public function __construct()
+    {
+        $this->url_api = config("app.url");
+    }
 
     public function index()
     {
@@ -169,7 +174,8 @@ class CardController extends Controller
                 $blog_header = BlogHead::find($blog->id_blog_head);
 
                 $file = $request->file('file');
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" . Str::slug($blog_header->titulo) . "{$card->id_blog}/head";
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+                . "{$card->id_blog}/head";
                 $fileName = "imagenPrincipal.webp";
                 $filePath = $relativePath . "/" . $fileName;
 
@@ -180,8 +186,12 @@ class CardController extends Controller
                 $image = Image::read($file)->cover(1900, 800);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
-                $basePath = '/storage/';
-                $fullUrl = self::url_api . $basePath . $relativePath . '/' . $fileName;
+                if($this->url_api != self::localURL) {
+                    $basePath = '/storage/app/public';
+                } else {
+                    $basePath = '/storage/';
+                }
+                $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
                 $card->public_image = $fullUrl;
@@ -210,22 +220,11 @@ class CardController extends Controller
     }
 
 
-     public function deleteCarpetaImages(int $id)
+     public function deleteCarpetaImages(Card $card)
     {
         try {
-            $card = Card::find($id);
-
-            if (!$card) {
-                return response()->json([
-                    "status" => 404,
-                    "message" => "Blog no encontrado"
-                ], 404);
-            }
-
-            $blog = Blog::find($card->id_blog);
-            $blog_header = BlogHead::find($blog->id_blog_head);
-
-            $relativePath = "images/templates/plantilla{$card->id_plantilla}/" . Str::slug($blog_header->titulo) . "{$card->id_blog}";
+            $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+            . "{$card->id_blog}";
 
             Storage::disk('public')->deleteDirectory($relativePath);
 
@@ -276,7 +275,9 @@ class CardController extends Controller
                 $file = $request->file('file');
                 $fileName = $request->name . ".webp";
 
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" . Str::slug($blog_header->titulo) . "{$card->id_blog}/body";
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+                // . Str::slug($blog_header->titulo) 
+                . "{$card->id_blog}/body";
                 $filePath = $relativePath . "/" . $fileName;
 
                 if (Storage::disk('public')->exists($filePath)) {
@@ -286,8 +287,12 @@ class CardController extends Controller
                 $image = Image::read($file)->cover(600, 350);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
-                $basePath = '/storage/';
-                $fullUrl = self::url_api . $basePath . $relativePath . '/' . $fileName;
+                if($this->url_api != self::localURL) {
+                    $basePath = '/storage/app/public';
+                } else {
+                    $basePath = '/storage/';
+                }
+                $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
                 switch ($request->name) {
@@ -355,7 +360,9 @@ class CardController extends Controller
                 $file = $request->file('file');
                 $fileName = $request->name . ".webp";
 
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" . Str::slug($blog_header->titulo) . "{$card->id_blog}/footer";
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+                // . Str::slug($blog_header->titulo) 
+                . "{$card->id_blog}/footer";
                 $filePath = $relativePath . "/" . $fileName;
 
                 if (Storage::disk('public')->exists($filePath)) {
@@ -365,8 +372,12 @@ class CardController extends Controller
                 $image = Image::read($file)->cover(250, 200);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
-                $basePath = '/storage/';
-                $fullUrl = self::url_api . $basePath . $relativePath . '/' . $fileName;
+                if($this->url_api != self::localURL) {
+                    $basePath = '/storage/app/public';
+                } else {
+                    $basePath = '/storage/';
+                }
+                $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
                 switch ($request->name) {
@@ -412,6 +423,8 @@ class CardController extends Controller
                     "message" => "Card no encontrada"
                 ]);
             }
+
+            $this->deleteCarpetaImages($card);
 
             $card->delete();
             return response()->json([

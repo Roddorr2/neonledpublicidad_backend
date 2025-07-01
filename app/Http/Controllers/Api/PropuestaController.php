@@ -68,7 +68,7 @@ class PropuestaController extends Controller
         try {
             //VALIDANDO
             $validator = Validator::make($request->all(), [
-                'id_user' => 'required|string',
+                'id_user' => 'required|string', //Tipo de dato incorrecto?
                 'titulo' => 'required|string',
                 'descripcion1' => 'required|string',
                 'descripcion2' => 'nullable|string',
@@ -87,26 +87,27 @@ class PropuestaController extends Controller
                 return response()->json([
                     'errors' => $validator->errors()
                 ], 422);
-            } else {
-                //GUARDANDO LOS DATOS
-                DB::beginTransaction();
-                $propuesta = new Propuesta();
-                $propuesta->fill($request->except(['file']));
-                $propuesta->save();
-                $file = $request->file('file');
-                if ($file) {
-                    $image = Image::read($file)->cover(1900, 800);
-                    $relativePath = "cliente/{$propuesta->id_user}/propuestas/{$propuesta->id}";
-                    Storage::disk('public')->put("{$relativePath}/portada.webp", (string) $image->toWebp());
-                }
-                DB::commit();
-                return response()->json([
-                    "status" => 200,
-                    "message" => "Propuesta registrada y imagen subida correctamente",
-                    "id" => $propuesta->id,
-                ], 200);
             }
+
+            //GUARDANDO LOS DATOS
+            DB::beginTransaction();
+            $propuesta = new Propuesta();
+            $propuesta->fill($request->except(['file']));
+            $propuesta->save();
+            $file = $request->file('file');
+            if ($file) {
+                $image = Image::read($file)->cover(1900, 800);
+                $relativePath = "cliente/{$propuesta->id_user}/propuestas/{$propuesta->id}";
+                Storage::disk('public')->put("{$relativePath}/portada.webp", (string) $image->toWebp());
+            }
+            DB::commit();
+            return response()->json([
+                "status" => 200,
+                "message" => "Propuesta registrada y imagen subida correctamente",
+                "id" => $propuesta->id,
+            ], 200);
         } catch (\Exception $ex) {
+            DB::rollBack();
             Log::info($ex->getMessage());
             return response()->json([
                 "status" => 500,
@@ -114,9 +115,18 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+    
     public function Load(Request $request, int $id)
     {
         try {
+            $propuesta = Propuesta::find($id);
+            if (!$propuesta) {
+                return response()->json([
+                    "status" => 422,
+                    "message" => "Propuesta no encontrada"
+                ], 422);
+            }
+            
             $imagenes = collect();
             $allDirs = Storage::disk('public')->allDirectories('cliente');
             foreach ($allDirs as $dir) {
@@ -131,13 +141,7 @@ class PropuestaController extends Controller
                     break;
                 }
             }
-            $propuesta = Propuesta::find($id);
-            if (!$propuesta) {
-                return response()->json([
-                    "status" => 422,
-                    "message" => "Propuesta no encontrada"
-                ], 422);
-            }
+            
             return response()->json([
                 'status' => 200,
                 'message' => $propuesta,
@@ -151,6 +155,7 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+
     public function Update(Request $request, int $id)
     {
         try {
@@ -209,6 +214,7 @@ class PropuestaController extends Controller
                 "data" => $propuesta
             ], 200);
         } catch (\Exception $ex) {
+            DB::rollBack();
             return response()->json([
                 "status" => 500,
                 "error" => $ex->getMessage()
@@ -315,6 +321,7 @@ class PropuestaController extends Controller
                 "message" => "Propuesta eliminada"
             ], 200);
         } catch (\Exception $ex) {
+            DB::rollBack();
             return response()->json([
                 'status' => 500,
                 'error' => $ex->getMessage()

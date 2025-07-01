@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
-
     private function createPassword(string $dni, string $nombre, string $apellidos)
     {
 

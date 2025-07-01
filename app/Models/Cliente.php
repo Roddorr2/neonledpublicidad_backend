@@ -10,7 +10,7 @@ class Cliente extends Model
 
     use HasFactory;
     protected $table = 'clientes';
-    protected $primaryKey = 'id_cliente';
+    // protected $primaryKey = 'id_cliente';
     
     protected $fillable = [
         'nombre',
@@ -32,5 +32,10 @@ class Cliente extends Model
     public function rol()
     {
         return $this->belongsTo(Rol::class, 'id_rol', 'id_rol');
+    }
+
+    public function propuestas()
+    {
+        return $this->hasMany(Propuesta::class, 'id_cliente', 'id');
     }
 }

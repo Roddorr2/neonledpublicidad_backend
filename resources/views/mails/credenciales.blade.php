@@ -255,7 +255,7 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="https://i.ibb.co/tw50mj20/logo-azul-letra-Blanco.png" alt="NEON LED PUBLICIDAD" style="100px"/>
+            <img src="https://i.ibb.co/tw50mj20/logo-azul-letra-Blanco.png" alt="Logo de la empresa" style="100px"/>
             <h1>¡Bienvenido a nuestra plataforma!</h1>
         </div>
 
