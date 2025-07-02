@@ -288,7 +288,7 @@ class CardController extends Controller
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
                 if($this->url_api != self::localURL) {
-                    $basePath = '/storage/app/public';
+                    $basePath = '/storage/app/public/';
                 } else {
                     $basePath = '/storage/';
                 }
@@ -373,7 +373,7 @@ class CardController extends Controller
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
                 if($this->url_api != self::localURL) {
-                    $basePath = '/storage/app/public';
+                    $basePath = '/storage/app/public/';
                 } else {
                     $basePath = '/storage/';
                 }
