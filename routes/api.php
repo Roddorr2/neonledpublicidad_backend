@@ -72,10 +72,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/empleados/verify-password', [EmpleadoController::class, 'verifyPassword']);
+    //  Route::post('/cliente/verify-password', [ClienteController::class, 'verifyPassword']);
 
     // imágenes
     Route::post('/empleados/{id}/image', [EmpleadoController::class, 'updateProfileImage']);
     Route::delete('/empleados/{id}/image', [EmpleadoController::class, 'deleteProfileImage']);
+    // Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
+    // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
     Route::middleware('permission:ver-contactos')->get('/contactanos', [ContactanosController::class, "get"]);
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones', [ReclamacionesController::class, "get"]);
@@ -123,16 +126,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-tarjetas')->delete('/tarjetas_delete/{id}', [TarjetaController::class, "destroyAll"]);
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
 
-    //rutas propuesta
-   
-    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
-    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
-    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
-
     // rutas update
     Route::middleware('permission:editar-contactos')->put('/contactanos/{id}', [ContactanosController::class, "update"]);
     Route::middleware('permission:editar-reclamaciones')->put('/reclamaciones/{id}', [ReclamacionesController::class, "update"]);
@@ -143,12 +136,31 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-reclamaciones')->delete('/reclamaciones/{id}', [ReclamacionesController::class, "delete"]);
     Route::middleware('permission:eliminar-modales')->delete('/modales/{id}', [ModalesController::class, "delete"]);
 
+    //rutas empleados
     Route::middleware('permission:ver-empleados')->get('/empleados', [EmpleadoController::class, "getAllByPage"]);
     Route::middleware('permission:ver-empleados')->get('/empleados/{id}', [EmpleadoController::class, "getById"]);
     Route::middleware('permission:crear-empleados')->post('/empleados', [EmpleadoController::class, "create"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/{id}', [EmpleadoController::class, "update"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/pass/{id}', [EmpleadoController::class, "updatePass"]);
     Route::middleware('permission:eliminar-empleados')->delete('/empleados/{id}', [EmpleadoController::class, "delete"]);
+    
+    //rutas propuesta
+    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
+    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+
+
+    //rutas clientes
+    // Route::post('/cliente', [ClienteController::class, "create"]);
+    // Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
+    // Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
+    // Route::put('/cliente/{id}', [ClienteController::class, "update"]);
+    // Route::delete('/cliente/{id}', [ClienteController::class, "delete"]);
+    // Route::put('/empleados/pass/{id}', [ClienteController::class, "updatePass"]);
 
     // roles
     Route::middleware('permission:ver-roles')->get('/roles', [RolController::class, "index"]);
