@@ -92,6 +92,14 @@ class PermisosSeeder extends Seeder
 
                 'Enviar mensajes', 
                 'Permisos generales',
+                
+                /**
+                 * Empleados de ventas podrán ver y gestionar propuestas a clientes
+                 */
+                'Ver propuestas',
+                'Crear propuestas',
+                'Editar propuestas',
+                'Eliminar propuestas',
             ],
             'marketing' => [
                 'Ver contactos', 
@@ -115,9 +123,9 @@ class PermisosSeeder extends Seeder
             ],
            'cliente' => [
                 'Ver propuestas',
-                'Crear propuestas', 
-                'Editar propuestas',
-                'Eliminar propuestas',
+                // 'Crear propuestas', 
+                // 'Editar propuestas',
+                // 'Eliminar propuestas',
             ],
         ];
 

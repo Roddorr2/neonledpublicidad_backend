@@ -31,7 +31,7 @@ class CardController extends Controller
     public function index()
     {
         try {
-            $cards = Card::orderBy('id_card', 'asc')->get();
+            $cards = Card::with('blog')->orderBy('id_card', 'asc')->get();
             return response()->json($cards, 200);
         } catch (\Exception $ex) {
             return response()->json([
@@ -46,9 +46,9 @@ class CardController extends Controller
     {
         try {
             if (!$id) {
-                $cards = Card::with('empleado')->get();
+                $cards = Card::with('empleado', 'blog')->get();
             } else {
-                $cards = Card::with('empleado')->where('id_empleado', $id)->get();
+                $cards = Card::with('empleado', 'blog')->where('id_empleado', $id)->get();
             }
             return response()->json($cards, 200);
         } catch (\Exception $ex) {
@@ -288,13 +288,6 @@ class CardController extends Controller
                 $basePath = '/storage/';
                 
                 $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
-                $relativeUrl = $basePath . $relativePath . '/' . $fileName;
-
-                switch ($request->name) {
-                    case "image1":
-                        $blog_body->public_image1 = $fullUrl;
-                        $blog_body->url_image1 = $relativeUrl;
-                        break;
                     case "image2":
                         $blog_body->public_image2 = $fullUrl;
                         $blog_body->url_image2 = $relativeUrl;
