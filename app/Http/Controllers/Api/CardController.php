@@ -285,9 +285,16 @@ class CardController extends Controller
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
                
-                $basePath = '/storage/';
-                
+                    $basePath = '/storage/';
+             
                 $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
+                $relativeUrl = $basePath . $relativePath . '/' . $fileName;
+
+                switch ($request->name) {
+                    case "image1":
+                        $blog_body->public_image1 = $fullUrl;
+                        $blog_body->url_image1 = $relativeUrl;
+                        break;
                     case "image2":
                         $blog_body->public_image2 = $fullUrl;
                         $blog_body->url_image2 = $relativeUrl;
