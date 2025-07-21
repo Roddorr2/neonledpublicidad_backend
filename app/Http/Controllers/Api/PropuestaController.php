@@ -32,7 +32,7 @@ class PropuestaController extends Controller
 
             //BUSCANDO PROPUESTAS
             $propuestas = Propuesta::where("id_cliente", $request->id_cliente)
-                ->select("id", "titulo", "descripcion1", "created_at")
+                ->select("id", "nombre", "descripcion1", "created_at")
                 ->get();
             if ($propuestas->isEmpty()) {
                 return response()->json([
@@ -76,17 +76,8 @@ class PropuestaController extends Controller
             //VALIDANDO
             $validator = Validator::make($request->all(), [
                 'id_cliente' => 'required|string', //Tipo de dato incorrecto?
-                'titulo' => 'required|string',
-                'descripcion1' => 'required|string',
-                'descripcion2' => 'nullable|string',
-                'descripcion3' => 'nullable|string',
-                'descripcion4' => 'nullable|string',
-                'descripcion5' => 'nullable|string',
-                'descripcion6' => 'nullable|string',
-                'descripcion7' => 'nullable|string',
-                'descripcion8' => 'nullable|string',
-                'descripcion9' => 'nullable|string',
-                'descripcion10' => 'nullable|string',
+                'nombre' => 'required|string',
+                'descripcion' => 'required|string',
                 'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
             ]);
             if ($validator->fails()) {
@@ -124,7 +115,7 @@ class PropuestaController extends Controller
     }
     
     public function Load(Request $request, int $id)
-    {
+    { 
         try {
             $propuesta = Propuesta::find($id);
             if (!$propuesta) {
@@ -167,17 +158,8 @@ class PropuestaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'titulo' => 'nullable|string',
-                'descripcion1' => 'nullable|string',
-                'descripcion2' => 'nullable|string',
-                'descripcion3' => 'nullable|string',
-                'descripcion4' => 'nullable|string',
-                'descripcion5' => 'nullable|string',
-                'descripcion6' => 'nullable|string',
-                'descripcion7' => 'nullable|string',
-                'descripcion8' => 'nullable|string',
-                'descripcion9' => 'nullable|string',
-                'descripcion10' => 'nullable|string',
+                'nombre' => 'nullable|string',
+                'descipcion' => 'nullable|string',
             ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
@@ -196,17 +178,8 @@ class PropuestaController extends Controller
             }
             DB::beginTransaction();
             $campos = [
-                'titulo',
-                'descripcion1',
-                'descripcion2',
-                'descripcion3',
-                'descripcion4',
-                'descripcion5',
-                'descripcion6',
-                'descripcion7',
-                'descripcion8',
-                'descripcion9',
-                'descripcion10'
+                'nombre',
+                'descripcion'
             ];
             foreach ($campos as $campo) {
                 if ($request->filled($campo)) { // verifica que existe y no es null

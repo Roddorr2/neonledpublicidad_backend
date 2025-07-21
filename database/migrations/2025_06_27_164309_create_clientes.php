@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nombre'); 
             $table->string('apellido'); 
             $table->string('email')->unique(); 
-            $table->string('dni')->unique();
             $table->string('telefono')->nullable(); 
+            $table->string('distrito')->nullable(); 
             $table->string('imagen_perfil')->nullable();
             $table->string('imagen_perfil_url')->nullable();
             $table->foreignId('id_user')->nullable()->references('id')->on('users')->onDelete('cascade');
