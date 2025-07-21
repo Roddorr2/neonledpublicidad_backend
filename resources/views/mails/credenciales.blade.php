@@ -20,13 +20,13 @@
             max-width: 600px;
             margin: 20px auto;
             background-color: #ffffff;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(138, 79, 255, 0.1);
         }
 
         .email-header {
-            background-color: #0e1ca0;
+            background-color: #2563eb;
             padding: 30px;
             text-align: center;
         }
@@ -34,6 +34,10 @@
         .email-header img {
             max-width: 220px;
             height: auto;
+            border-radius: 50%;
+            background-color: 1E5BFF;
+            object-fit: contain;
+
         }
 
         .email-header h1 {
@@ -51,7 +55,7 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #0e1ca0;
+            color: #2563eb;
         }
 
         .message {
@@ -65,7 +69,7 @@
             border-radius: 12px;
             padding: 25px;
             margin-bottom: 30px;
-            border-left: 4px solid #0e1ca0;
+            border-left: 4px solid #2563eb;
         }
 
         .credential-item {
@@ -85,7 +89,7 @@
         }
 
         .credential-icon {
-            background-color: #0e1ca0;
+            background-color: #2563eb;
             width: 36px;
             height: 36px;
             border-radius: 50%;
@@ -120,7 +124,7 @@
 
         .credential-label {
             font-weight: 600;
-            color: #0e1ca0;
+            color: #2563eb;
             margin-bottom: 3px;
             font-size: 14px;
         }
@@ -134,7 +138,7 @@
 
         .cta-button {
             display: block;
-            background-color: #0e1ca0;
+            background-color: #2563eb;
             color: #ffffff !important;
             text-decoration: none !important;
             padding: 14px 24px;
@@ -147,7 +151,7 @@
         }
 
         .cta-button:hover {
-            background-color: #0e1ca0;
+            background-color: #2563eb;
         }
 
         .security-note {
@@ -190,20 +194,29 @@
         }
 
         .email-footer {
-            background-color: #F8F6FF;
+            background-color: #2563eb;
             padding: 25px 30px;
             text-align: center;
-            border-top: 1px solid #E9E4FF;
+            border-top: 1px solid #2563eb;
         }
 
         .company-info {
             font-size: 14px;
-            color: #0e1ca0;
+            color: #ffffff;
             margin-bottom: 15px;
         }
 
-        .social-links {
-            margin-bottom: 15px;
+       
+
+        .social-link img {
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            background: #fff;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+            padding: 5px;
+            box-sizing: border-box;
         }
 
         .social-link {
@@ -212,9 +225,9 @@
         }
 
         .social-link img {
-            width: 24px;
-            height: 24px;
-            opacity: 0.7;
+            width: 40x;
+            height: 40px;
+            opacity: 1.2;
             transition: opacity 0.3s;
         }
 
@@ -224,13 +237,13 @@
 
         .copyright {
             font-size: 12px;
-            color: #0e1ca0;
+            color: #ffffff;
         }
 
         .nenpubli-signature {
             margin-top: 20px;
             font-weight: 600;
-            color: #0e1ca0;
+            color: #2563eb;
         }
 
         @media only screen and (max-width: 600px) {
@@ -296,7 +309,7 @@
                 </div>
             </div>
 
-            <a href="{{ url('http://neonledmkt.com/login') }}" class="cta-button">
+            <a href="{{ url('https://www.ledneonpublicidad.com/login/') }}" class="cta-button">
                 Iniciar sesión ahora
             </a>
 
@@ -338,7 +351,7 @@
                 <a href="#" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/733/733579.png" alt="Twitter">
                 </a>
-                <a href="#" class="social-link">
+                <a href="https://www.instagram.com/neonledpublicidad.oficial/" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/2111/2111463.png" alt="Instagram">
                 </a>
                 <a href="https://www.linkedin.com/company/neonhouseled/" class="social-link">
