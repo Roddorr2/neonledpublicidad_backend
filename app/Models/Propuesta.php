@@ -10,6 +10,10 @@ class Propuesta extends Model
   protected $fillable = [
     'id_cliente','titulo','descripcion1','descripcion2','descripcion3','descripcion4','descripcion5','descripcion6','descripcion7','descripcion8','descripcion9','descripcion10',
   ];
+  
+  // Titulo
+  // Descripción
+  // Comentario
  
   public function cliente() :BelongsTo
   {
