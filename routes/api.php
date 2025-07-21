@@ -44,28 +44,6 @@ Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs púb
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
-/**
- * Endpoints de propuestas sin middleware (temporal)
- */
-    // Route::get('/propuesta',[PropuestaController::class, "getall"]);
-    // Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    // Route::post('/propuesta',[PropuestaController::class, "create"]);
-    // Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    // Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    // Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    // Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
-
-/**
- * Enpoints de gestion de clientes
- */
-    Route::post('/cliente', [ClienteController::class, "create"]);
-    Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
-    Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
-    Route::put('/cliente/{id}', [ClienteController::class, "update"]);
-    Route::delete('/cliente/{id}', [ClienteController::class, "delete"]);
-    Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
-    Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
-
 // rutas autenticadas
 Route::middleware('auth:sanctum')->group(function () {
     // autenticación
@@ -154,13 +132,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 
-    //rutas clientes
-    // Route::post('/cliente', [ClienteController::class, "create"]);
-    // Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
-    // Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
-    // Route::put('/cliente/{id}', [ClienteController::class, "update"]);
-    // Route::delete('/cliente/{id}', [ClienteController::class, "delete"]);
-    // Route::put('/empleados/pass/{id}', [ClienteController::class, "updatePass"]);
+    Route::middleware('permission:crear-cliente')->post('/cliente', [ClienteController::class, "create"]);
+    Route::middleware('permission:ver-cliente')->get('/cliente/{id}', [ClienteController::class, "getById"]);
+    Route::middleware('permission:ver-cliente')->get('/cliente', [ClienteController::class, "getAllByPage"]);
+    Route::middleware('permission:editar-cliente')->put('/cliente/{id}', [ClienteController::class, "update"]);
+    Route::middleware('permission:eliminar-cliente')->delete('/cliente/{id}', [ClienteController::class, "delete"]);
+    Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
+    Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
     // roles
     Route::middleware('permission:ver-roles')->get('/roles', [RolController::class, "index"]);
