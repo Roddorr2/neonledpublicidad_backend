@@ -20,7 +20,7 @@ class PropuestaController extends Controller
         try {
             //VALIDANDO
             $validator = Validator::make($request->all(), [
-                "id" => "required|string"
+                "id_cliente" => "required|string"
             ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
@@ -31,7 +31,7 @@ class PropuestaController extends Controller
             }
 
             //BUSCANDO PROPUESTAS
-            $propuestas = Propuesta::where("id_user", $request->id)
+            $propuestas = Propuesta::where("id_cliente", $request->id_cliente)
                 ->select("id", "titulo", "descripcion1", "created_at")
                 ->get();
             if ($propuestas->isEmpty()) {
@@ -41,15 +41,22 @@ class PropuestaController extends Controller
                 ], 404);
             }
             //BUSCANDO LA IMAGEN
-            $propuestasConPortada = $propuestas->map(function ($propuesta) use ($request) {
-                $relativePath = "cliente/{$request->id}/propuestas/{$propuesta->id}/portada.webp";
-                if (Storage::disk('public')->exists($relativePath)) {
-                    $propuesta->image = Storage::url($relativePath);
-                } else {
-                    $propuesta->image = [];
-                }
-                return $propuesta;
-            });
+           $propuestasConPortada = $propuestas->map(function ($propuesta) use ($request) {
+            $folderPath = "cliente/{$request->id_cliente}/propuestas/{$propuesta->id}/";
+            
+            // Obtener todos los archivos dentro de esa carpeta
+            $files = Storage::disk('public')->files($folderPath);
+
+            // Convertir las rutas a URLs accesibles públicamente
+            $urls = collect($files)->map(function ($filePath) {
+                return Storage::url($filePath);
+            })->toArray();
+
+            // Guardamos todas las URLs en el atributo "images"
+            $propuesta->images = $urls;
+
+            return $propuesta;
+        });
 
             return response()->json([
                 "status" => 200,
@@ -68,7 +75,7 @@ class PropuestaController extends Controller
         try {
             //VALIDANDO
             $validator = Validator::make($request->all(), [
-                'id_user' => 'required|string', //Tipo de dato incorrecto?
+                'id_cliente' => 'required|string', //Tipo de dato incorrecto?
                 'titulo' => 'required|string',
                 'descripcion1' => 'required|string',
                 'descripcion2' => 'nullable|string',
@@ -156,7 +163,7 @@ class PropuestaController extends Controller
         }
     }
 
-    public function Update(Request $request, int $id)
+    public function Update(Request $request, int $id)//busca por id de propuesta
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -239,7 +246,8 @@ class PropuestaController extends Controller
                 ],422);
             };
 
-            $image = Image::read($request->file)->cover(1900, 800);
+            // $image = Image::read($request->file)->cover(1900, 800);
+            $image = Image::read($request->file('file'))->cover(1900, 800);
             $relativePath = "cliente/{$request->id_user}/propuestas/{$id}";
             Storage::disk('public')->put("{$relativePath}/{$request->filename}.webp", (string) $image->toWebp());
 

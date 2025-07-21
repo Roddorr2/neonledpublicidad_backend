@@ -87,7 +87,8 @@ class ClienteController extends Controller
             return response()->json([
                 "status" => 201,
                 "message" => "Cliente creado exitosamente",
-                "cliente" => $customer
+                "cliente" => $customer,
+                "password"=>$generatedPassword//borrar ;v
             ], 201);
 
         } catch(\Exception $e) {
