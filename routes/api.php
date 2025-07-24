@@ -121,14 +121,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
 
     //rutas propuesta
-   
-    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall_Cliente"]);
+    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
     Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
     Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
     Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
     Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+
+
+    Route::middleware('permission:crear-cliente')->post('/cliente', [ClienteController::class, "create"]);
+    Route::middleware('permission:ver-cliente')->get('/cliente/{id}', [ClienteController::class, "getById"]);
+    Route::middleware('permission:ver-cliente')->get('/cliente', [ClienteController::class, "getAllByPage"]);
+    Route::middleware('permission:editar-cliente')->put('/cliente/{id}', [ClienteController::class, "update"]);
+    Route::middleware('permission:eliminar-cliente')->delete('/cliente/{id}', [ClienteController::class, "delete"]);
+    Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
+    Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
     // rutas update
     Route::middleware('permission:editar-contactos')->put('/contactanos/{id}', [ContactanosController::class, "update"]);
