@@ -122,7 +122,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //rutas propuesta
    
-    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall_Cliente"]);
     Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
     Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
     Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);

@@ -15,7 +15,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function GetAll(Request $request)
+    public function GetAll_Cliente(Request $request)//retorna todas las propuestas de un cliente
     {
         try {
             //VALIDANDO
@@ -69,7 +69,41 @@ class PropuestaController extends Controller
             ],500);
         }
     }
+   public function GetAll(Request $request)
+{
+    try {
+        //obtiene todas las propuestas
+        $propuestas = Propuesta::select("id", "id_cliente", "nombre", "descripcion1", "created_at")->get();
+        if ($propuestas->isEmpty()) {
+            return response()->json([
+                "status" => 404,
+                "message" => "No se encontraron propuestas",
+            ], 404);
+        }
+        //BUSCANDO LA IMAGEN PARA CADA PROPUESTA
+        $propuestasConPortada = $propuestas->map(function ($propuesta) {
+            $folderPath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/";
+            $files = Storage::disk('public')->files($folderPath);
 
+            $urls = collect($files)->map(function ($filePath) {
+                return Storage::url($filePath);
+            })->toArray();
+
+            $propuesta->images = $urls;
+            return $propuesta;
+        });
+
+        return response()->json([
+            "status" => 200,
+            "message" => $propuestasConPortada
+        ]);
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ],500);
+    }
+}
     public function Create(Request $request)
     {
         try {
@@ -203,25 +237,30 @@ class PropuestaController extends Controller
     }
 
 
-    public function UploadImage(Request $request, int $id)
+    public function UploadImage(Request $request, int $id)//envio de datos de imagen y id de propuesta
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'id_user' => 'required|string',
+            $validator = Validator::make($request->all(), [//se valida que esten los datos de la imagen
                 'filename' => 'required|string',
                 'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
             ]);
-            if ($validator->fails()) {
+            if ($validator->fails()) {//retorna error si no estan los datos
                 Log::info($validator->errors());
                 return response()->json([
                     'status' => 422,
                     "message" => $validator->errors()
                 ],422);
             };
-
+            $propuesta = Propuesta::find($id);//busca la propuesta por id de la propuesta
+            if (!$propuesta) {//retorna error si no se encuentra la propuesta
+                return response()->json([
+                    "status" => 404,
+                    "message" => "Propuesta no encontrada"
+                ],404);
+            }
             // $image = Image::read($request->file)->cover(1900, 800);
             $image = Image::read($request->file('file'))->cover(1900, 800);
-            $relativePath = "cliente/{$request->id_user}/propuestas/{$id}";
+            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}";//genera la ruta para el guardado de la imagen
             Storage::disk('public')->put("{$relativePath}/{$request->filename}.webp", (string) $image->toWebp());
 
             return response()->json([
