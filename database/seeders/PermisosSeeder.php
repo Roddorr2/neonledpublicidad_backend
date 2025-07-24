@@ -51,6 +51,12 @@ class PermisosSeeder extends Seeder
             'Crear empleados' => 'Permite crear nuevos empleados',
             'Editar empleados' => 'Permite modificar empleados existentes',
             'Eliminar empleados' => 'Permite eliminar empleados existentes',
+            
+            // Clientes
+            'Ver cliente' => 'Permite ver la lista de clientes',
+            'Crear cliente' => 'Permite crear nuevos clientes',
+            'Editar cliente' => 'Permite modificar clientes existentes',
+            'Eliminar cliente' => 'Permite eliminar clientes existentes',
 
             // Blogs
             'Ver blogs' => 'Permite ver la gestión de blogs',
