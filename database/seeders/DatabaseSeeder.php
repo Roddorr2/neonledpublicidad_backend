@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
             EmpleadoSeeder::class,
             CardSeeder::class,
             ContactanosSeeder::class,
+            ClienteSeeder::class,
+            PropuestaSeeder::class,
         ]);
     }
 }

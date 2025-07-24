@@ -32,7 +32,7 @@ class PropuestaController extends Controller
 
             //BUSCANDO PROPUESTAS
             $propuestas = Propuesta::where("id_cliente", $request->id_cliente)
-                ->select("id", "nombre", "descripcion1", "created_at")
+                ->select("id", "nombre", "descripcion", "created_at")
                 ->get();
             if ($propuestas->isEmpty()) {
                 return response()->json([
@@ -69,11 +69,11 @@ class PropuestaController extends Controller
             ],500);
         }
     }
-   public function GetAll(Request $request)
+   public function GetAll()
 {
     try {
         //obtiene todas las propuestas
-        $propuestas = Propuesta::select("id", "id_cliente", "nombre", "descripcion1", "created_at")->get();
+        $propuestas = Propuesta::select("id", "id_cliente", "nombre", "descripcion", "created_at")->get();
         if ($propuestas->isEmpty()) {
             return response()->json([
                 "status" => 404,

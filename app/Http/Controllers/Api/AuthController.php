@@ -80,57 +80,65 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
+  public function login(Request $request)
+{
+    $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $user = User::where('email', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Esta cuenta no está registrada en Neon Led Publicidad.'
-            ], 404);
-        }
-
-        if (!Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'El email o la contraseña son incorrectos.'
-            ], 401);
-        }
-
-
-        $empleado = $user->empleado;
-        if (!$empleado || !$empleado->rol) {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'El usuario no tiene un rol asignado'
-            ], 403);
-        }
-
-        $rol = $empleado->rol;
-        $abilities = [$rol->nombre];
-
-        $permisos = $rol->permisos->pluck('slug')->toArray();
-
-        // quitar tokens anteriores
-        $user->tokens()->delete();
-        // token incluyendo rol (capcidad)
-        $token = $user->createToken('auth_token', $abilities)->plainTextToken;
-
+    if (!$user) {
         return response()->json([
-            'status'   => 'success',
-            'user'     => $user,
-            'empleado' => $empleado,
-            'rol'      => $rol->nombre,
-            'permisos' => $permisos,
-            'token'    => $token,
-        ]);
+            'status'  => 'error',
+            'message' => 'Esta cuenta no está registrada en Neon Led Publicidad.'
+        ], 404);
     }
+
+    if (!Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'El email o la contraseña son incorrectos.'
+        ], 401);
+    }
+
+    $empleado = $user->empleado;
+    $cliente = $user->cliente;
+
+    if ($empleado && $empleado->rol) {
+        $rol = $empleado->rol;
+        $permisos = $rol->permisos->pluck('slug')->toArray();
+        $tipo = 'empleado';
+        $info = $empleado;
+    } elseif ($cliente && $cliente->rol) {
+        $rol = $cliente->rol;
+        $permisos = $rol->permisos->pluck('slug')->toArray();
+        $tipo = 'cliente';
+        $info = $cliente;
+    } else {
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'El usuario no tiene un rol asignado'
+        ], 403);
+    }
+
+    // Eliminar tokens anteriores
+    $user->tokens()->delete();
+
+    // Crear nuevo token con el nombre del rol como ability
+    $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
+
+    return response()->json([
+        'status'   => 'success',
+        'user'     => $user,
+        $tipo      => $info,
+        'rol'      => $rol->nombre,
+        'permisos' => $permisos,
+        'token'    => $token,
+    ]);
+}
+
 
 
     //logout
