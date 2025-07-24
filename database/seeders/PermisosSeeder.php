@@ -102,6 +102,15 @@ class PermisosSeeder extends Seeder
                 /**
                  * Empleados de ventas podrán ver y gestionar propuestas a clientes
                  */
+
+                 // 'Crear propuestas', 
+                // 'Editar propuestas',
+                // 'Eliminar propuestas',
+                'Ver cliente',
+                'Crear cliente',
+                'Editar cliente',
+                'Eliminar cliente',
+
                 'Ver propuestas',
                 'Crear propuestas',
                 'Editar propuestas',

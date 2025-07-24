@@ -15,7 +15,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function GetAll_Cliente(Request $request)//retorna todas las propuestas de un cliente
+    public function GetAll_Cliente(Request $request)//retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
             //VALIDANDO
