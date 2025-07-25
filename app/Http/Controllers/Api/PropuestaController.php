@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Laravel\Facades\Image;
 
+
 class PropuestaController extends Controller
 {
     public function GetAll_Cliente(Request $request)//retorna todas las propuestas de un cliente ,necesita de id_cliente
@@ -148,7 +149,7 @@ class PropuestaController extends Controller
         }
     }
     
-    public function Load(Request $request, int $id)
+    public function Load(int $id)
     { 
         try {
             $propuesta = Propuesta::find($id);
@@ -162,7 +163,7 @@ class PropuestaController extends Controller
             $imagenes = collect();
             $allDirs = Storage::disk('public')->allDirectories('cliente');
             foreach ($allDirs as $dir) {
-                if (Str::is("cliente/*/propuestas/{$request->id}", $dir)) {
+                if (Str::is("cliente/*/propuestas/{$id}", $dir)) {
                     $files = Storage::disk('public')->files($dir);
                     $imagenes = collect($files)->filter(function ($file) {
                         return preg_match('/\.(webp)$/i', $file);
@@ -260,8 +261,9 @@ class PropuestaController extends Controller
             }
             // $image = Image::read($request->file)->cover(1900, 800);
             $image = Image::read($request->file('file'))->cover(1900, 800);
-            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}";//genera la ruta para el guardado de la imagen
-            Storage::disk('public')->put("{$relativePath}/{$request->filename}.webp", (string) $image->toWebp());
+            $filename = Str::slug($request->filename); // elimina espacios y caracteres raros
+            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}";
+            Storage::disk('public')->put("{$relativePath}/{$filename}.webp", (string) $image->toWebp());
 
             return response()->json([
                 'status' => 200,
@@ -278,7 +280,7 @@ class PropuestaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'id_user' => 'required|string',
+                'id_cliente' => 'required|string',
                 'filename' => 'required|string',
             ]);
             if ($validator->fails()) {
@@ -288,7 +290,7 @@ class PropuestaController extends Controller
                     "message" => $validator->errors()
                 ],422);
             }
-            $path = "cliente/{$request->id_user}/propuestas/{$id}/{$request->filename}.webp";
+            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/{$request->filename}.webp";
 
             if (Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);
