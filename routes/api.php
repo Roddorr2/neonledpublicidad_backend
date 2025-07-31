@@ -121,7 +121,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
 
     //rutas propuesta
-    Route::middleware('permission:ver-propuestas-cliente')->get('/propuesta',[PropuestaController::class, "getAll_Cliente"]);//propuestas de un cliente
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id}/propuestas',[PropuestaController::class, "getAll_Cliente"]);//propuestas de un cliente solucion:cambiara post o agregar el parametor id por la ruta
     Route::middleware('permission:ver-propuestas')->get('/propuestas',[PropuestaController::class, "getAll"]);//todas las propuestas
     Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);//propuesta por id
     Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);

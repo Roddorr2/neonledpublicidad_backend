@@ -16,12 +16,12 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function GetAll_Cliente(Request $request)//retorna todas las propuestas de un cliente ,necesita de id_cliente
+    public function GetAll_Cliente( $id_cliente)//retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
             //VALIDANDO
-            $validator = Validator::make($request->all(), [
-                "id_cliente" => "required|string"
+            $validator = Validator::make(["id_cliente" => $id_cliente], [
+                "id_cliente" => "required|numeric|exists:clientes,id" //verifica que el id_cliente sea un numero y exista en la tabla clientes
             ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
@@ -32,7 +32,7 @@ class PropuestaController extends Controller
             }
 
             //BUSCANDO PROPUESTAS
-            $propuestas = Propuesta::where("id_cliente", $request->id_cliente)
+            $propuestas = Propuesta::where("id_cliente", $id_cliente)
                 ->select("id", "nombre", "descripcion", "created_at")
                 ->get();
             if ($propuestas->isEmpty()) {
@@ -42,8 +42,8 @@ class PropuestaController extends Controller
                 ], 404);
             }
             //BUSCANDO LA IMAGEN
-           $propuestasConPortada = $propuestas->map(function ($propuesta) use ($request) {
-            $folderPath = "cliente/{$request->id_cliente}/propuestas/{$propuesta->id}/";
+           $propuestasConPortada = $propuestas->map(function ($propuesta) use ($id_cliente) {
+            $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/";
             
             // Obtener todos los archivos dentro de esa carpeta
             $files = Storage::disk('public')->files($folderPath);
