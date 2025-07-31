@@ -130,7 +130,7 @@ class PropuestaController extends Controller
             $file = $request->file('file');
             if ($file) {
                 $image = Image::read($file)->cover(1900, 800);
-                $relativePath = "cliente/{$propuesta->id_user}/propuestas/{$propuesta->id}";
+                $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}";
                 Storage::disk('public')->put("{$relativePath}/portada.webp", (string) $image->toWebp());
             }
             DB::commit();
