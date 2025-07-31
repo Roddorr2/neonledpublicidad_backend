@@ -11,9 +11,33 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('propuestas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
+       Schema::table('propuestas', function (Blueprint $table) {
+            $table->dropColumn([
+                'titulo',
+                'descripcion1',
+                'descripcion2',
+                'descripcion3',
+                'descripcion4',
+                'descripcion5',
+                'descripcion6',
+                'descripcion7',
+                'descripcion8',
+                'descripcion9',
+                'descripcion10',
+            ]);
+            $table->string('nombre');
+            $table->string('descripcion');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('propuestas', function (Blueprint $table) {
+            $table->dropColumn(['nombre', 'descripcion']);
+            
             $table->string('titulo');
             $table->string('descripcion1');
             $table->string('descripcion2')->nullable();
@@ -25,15 +49,6 @@ return new class extends Migration
             $table->string('descripcion8')->nullable();
             $table->string('descripcion9')->nullable();
             $table->string('descripcion10')->nullable();
-            $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('propuesta');
     }
 };
