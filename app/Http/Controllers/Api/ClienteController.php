@@ -125,7 +125,10 @@ class ClienteController extends Controller
     public function getAllByPage(Request $request)
     {
         try {
-            $clientes = Cliente::with('rol')->orderBy('id', 'asc')->paginate(5);
+            $clientes = Cliente::with('rol')
+            ->withCount('propuestas')
+            ->orderBy('id', 'asc')
+            ->paginate(5);
             $clientes->getCollection()->transform(function ($cliente) {
                 return [
                     'id_cliente' => $cliente->id,
@@ -135,6 +138,7 @@ class ClienteController extends Controller
                     'telefono' => $cliente->telefono,
                     'rol' => $cliente->rol->nombre,
                     'distrito' => $cliente->distrito,
+                    'propuestas' => $cliente->propuestas_count
                 ];
             });
 
