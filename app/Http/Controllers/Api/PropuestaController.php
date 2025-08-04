@@ -105,16 +105,18 @@ class PropuestaController extends Controller
         ],500);
     }
 }
-    public function Create(Request $request)
+   public function Create(Request $request)
     {
         try {
-            //VALIDANDO
+            // VALIDACIÓN
             $validator = Validator::make($request->all(), [
-                'id_cliente' => 'required|string', //Tipo de dato incorrecto?
+                'id_cliente' => 'required|string',
                 'nombre' => 'required|string',
                 'descripcion' => 'required|string',
-                'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
+                'files' => 'nullable|array',
+                'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
             ]);
+
             if ($validator->fails()) {
                 Log::info($validator->errors());
                 return response()->json([
@@ -122,21 +124,39 @@ class PropuestaController extends Controller
                 ], 422);
             }
 
-            //GUARDANDO LOS DATOS
+            // GUARDAR DATOS PRINCIPALES
             DB::beginTransaction();
             $propuesta = new Propuesta();
-            $propuesta->fill($request->except(['file']));
+            $propuesta->fill($request->except(['files']));
             $propuesta->save();
-            $file = $request->file('file');
-            if ($file) {
-                $image = Image::read($file)->cover(1900, 800);
-                $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}";
-                Storage::disk('public')->put("{$relativePath}/portada.webp", (string) $image->toWebp());
+
+            // GUARDAR IMÁGENES
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $image = Image::read($file)->cover(1900, 800);
+
+                    // Nombre original sin extensión
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $cleanName = Str::slug($originalName);
+                    $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}";
+                    $baseFilename = "{$relativePath}/{$cleanName}.webp";
+
+                    // Verificar si ya existe y agregar sufijo incremental
+                    $finalFilename = $baseFilename;
+                    $counter = 2;
+                    while (Storage::disk('public')->exists($finalFilename)) {
+                        $finalFilename = "{$relativePath}/{$cleanName}-{$counter}.webp";
+                        $counter++;
+                    }
+
+                    Storage::disk('public')->put($finalFilename, (string) $image->toWebp());
+                }
             }
+
             DB::commit();
             return response()->json([
                 "status" => 200,
-                "message" => "Propuesta registrada y imagen subida correctamente",
+                "message" => "Propuesta registrada y todas las imágenes guardadas correctamente",
                 "id" => $propuesta->id,
             ], 200);
         } catch (\Exception $ex) {
@@ -148,6 +168,7 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+
     
     public function Load(int $id)
     { 
