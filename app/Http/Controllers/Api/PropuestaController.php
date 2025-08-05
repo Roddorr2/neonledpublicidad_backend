@@ -16,7 +16,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function GetAll_Cliente( $id_cliente)//retorna todas las propuestas de un cliente ,necesita de id_cliente
+    public function     GetAll_Cliente( $id_cliente)//retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
             //VALIDANDO
@@ -33,7 +33,7 @@ class PropuestaController extends Controller
 
             //BUSCANDO PROPUESTAS
             $propuestas = Propuesta::where("id_cliente", $id_cliente)
-                ->select("id", "nombre", "descripcion", "created_at")
+                ->select("id", "nombre", "descripcion", "created_at", "id_cliente")
                 ->get();
             if ($propuestas->isEmpty()) {
                 return response()->json([
@@ -43,7 +43,7 @@ class PropuestaController extends Controller
             }
             //BUSCANDO LA IMAGEN
            $propuestasConPortada = $propuestas->map(function ($propuesta) use ($id_cliente) {
-            $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/";
+            $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/imagenes/";
             
             // Obtener todos los archivos dentro de esa carpeta
             $files = Storage::disk('public')->files($folderPath);
@@ -83,7 +83,7 @@ class PropuestaController extends Controller
         }
         //BUSCANDO LA IMAGEN PARA CADA PROPUESTA
         $propuestasConPortada = $propuestas->map(function ($propuesta) {
-            $folderPath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/";
+            $folderPath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes/";
             $files = Storage::disk('public')->files($folderPath);
 
             $urls = collect($files)->map(function ($filePath) {
@@ -138,7 +138,7 @@ class PropuestaController extends Controller
                     // Nombre original sin extensión
                     $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                     $cleanName = Str::slug($originalName);
-                    $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}";
+                    $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes";
                     $baseFilename = "{$relativePath}/{$cleanName}.webp";
 
                     // Verificar si ya existe y agregar sufijo incremental
@@ -184,7 +184,7 @@ class PropuestaController extends Controller
             $imagenes = collect();
             $allDirs = Storage::disk('public')->allDirectories('cliente');
             foreach ($allDirs as $dir) {
-                if (Str::is("cliente/*/propuestas/{$id}", $dir)) {
+                if (Str::is("cliente/*/propuestas/{$id}/imagenes", $dir)) {
                     $files = Storage::disk('public')->files($dir);
                     $imagenes = collect($files)->filter(function ($file) {
                         return preg_match('/\.(webp)$/i', $file);
@@ -209,6 +209,57 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+    public function load_cliente(int $id_cliente, int $id_propuesta)
+{
+    try {
+        $propuesta = Propuesta::find($id_propuesta);
+
+        if (!$propuesta) {
+            return response()->json([
+                'status' => 422,
+                'message' => 'Propuesta no encontrada'
+            ], 422);
+        }
+
+        if ($propuesta->id_cliente !== $id_cliente) {
+            return response()->json([
+                'status' => 403,
+                'message' => 'No tienes permiso para acceder a esta propuesta'
+            ], 403);
+        }
+
+        $imagenes = collect();
+        $allDirs = Storage::disk('public')->allDirectories('cliente');
+
+        foreach ($allDirs as $dir) {
+            if (Str::is("cliente/*/propuestas/{$id_propuesta}/imagenes", $dir)) {
+                $files = Storage::disk('public')->files($dir);
+                $imagenes = collect($files)->filter(function ($file) {
+                    return preg_match('/\.(webp)$/i', $file);
+                })->map(function ($file) {
+                    return Storage::url($file);
+                })->values();
+
+                break;
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => $propuesta,
+            'images' => $imagenes
+        ], 200);
+
+    } catch (\Exception $ex) {
+        Log::error('Error al cargar propuesta: ' . $ex->getMessage());
+
+        return response()->json([
+            'status' => 500,
+            'error' => $ex->getMessage()
+        ], 500);
+    }
+}
+
 
     public function Update(Request $request, int $id)//busca por id de propuesta
     {
@@ -283,7 +334,7 @@ class PropuestaController extends Controller
             // $image = Image::read($request->file)->cover(1900, 800);
             $image = Image::read($request->file('file'))->cover(1900, 800);
             $filename = Str::slug($request->filename); // elimina espacios y caracteres raros
-            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}";
+            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/imagenes";
             Storage::disk('public')->put("{$relativePath}/{$filename}.webp", (string) $image->toWebp());
 
             return response()->json([
@@ -311,7 +362,7 @@ class PropuestaController extends Controller
                     "message" => $validator->errors()
                 ],422);
             }
-            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/{$request->filename}.webp";
+            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/imagenes/{$request->filename}.webp";
 
             if (Storage::disk('public')->exists($path)) {
                 Storage::disk('public')->delete($path);

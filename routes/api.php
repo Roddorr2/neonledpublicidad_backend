@@ -121,12 +121,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:editar-blogs')->delete('/delete_carpet/{id}', [CardController::class, "deleteCarpetaImages"]);
 
     //rutas propuesta
-    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id}/propuestas',[PropuestaController::class, "getAll_Cliente"]);//propuestas de un cliente solucion:cambiara post o agregar el parametor id por la ruta
-    Route::middleware('permission:ver-propuestas')->get('/propuestas',[PropuestaController::class, "getAll"]);//todas las propuestas
-    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);//propuesta por id
-    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
-    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id}/propuestas',[PropuestaController::class, "getAll_Cliente"]);//retorna propuestas por id del cliente
+    Route::middleware('permission:ver-propuestas')->get('/propuestas',[PropuestaController::class, "getAll"]);//todas las propuestas en general
+    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);//busca una propuesta por id_propuesta
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}',[PropuestaController::class, "load_cliente"]);//propuestas por cliente
+    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);//ya
+    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);//ya
+    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);//
     Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
@@ -150,11 +151,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-modales')->delete('/modales/{id}', [ModalesController::class, "delete"]);
 
     Route::middleware('permission:ver-empleados')->get('/empleados', [EmpleadoController::class, "getAllByPage"]);
-    Route::middleware('permission:ver-empleados')->get('/empleados/{id}', [EmpleadoController::class, "getById"]);
+    Route::middleware('permission:ver-empleados')->get('/empleados/{id}', [EmpleadoController::class, "getById"]);  
     Route::middleware('permission:crear-empleados')->post('/empleados', [EmpleadoController::class, "create"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/{id}', [EmpleadoController::class, "update"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/pass/{id}', [EmpleadoController::class, "updatePass"]);
     Route::middleware('permission:eliminar-empleados')->delete('/empleados/{id}', [EmpleadoController::class, "delete"]);
+
 
     // roles
     Route::middleware('permission:ver-roles')->get('/roles', [RolController::class, "index"]);
