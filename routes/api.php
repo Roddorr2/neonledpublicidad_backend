@@ -47,13 +47,13 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 /**
  * Endpoints de propuestas sin middleware (temporal)
  */
-    // Route::get('/propuesta',[PropuestaController::class, "getall"]);
-    // Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    // Route::post('/propuesta',[PropuestaController::class, "create"]);
-    // Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    // Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    // Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    // Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+    Route::get('/propuesta',[PropuestaController::class, "getall"]);
+    Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    Route::post('/propuesta',[PropuestaController::class, "create"]);
+    Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 /**
  * Enpoints de gestion de clientes
@@ -62,6 +62,7 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
     Route::get('/cliente/{id}', [ClienteController::class, "getById"]);
     Route::get('/cliente', [ClienteController::class, "getAllByPage"]);
     Route::delete('/cliente/{id}', [ClienteController::class, "delete"]);
+    Route::put('/cliente/{id}', [ClienteController::class, "update"]);
 
 // rutas autenticadas
 Route::middleware('auth:sanctum')->group(function () {

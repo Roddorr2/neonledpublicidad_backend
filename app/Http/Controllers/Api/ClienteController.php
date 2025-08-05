@@ -125,11 +125,27 @@ class ClienteController extends Controller
     public function getAllByPage(Request $request)
     {
         try {
-            $clientes = Cliente::with('rol')
-            ->withCount('propuestas')
-            ->orderBy('id', 'asc')
-            ->paginate(5);
-            $clientes->getCollection()->transform(function ($cliente) {
+            $searchTerm = $request->input('search');
+
+            $query = Cliente::with('rol')
+                ->withCount('propuestas')
+                ->orderBy('id', 'asc');
+
+            if ($searchTerm) {
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('nombre', 'like', "%$searchTerm%")
+                        ->orWhere('apellido', 'like', "%$searchTerm%")
+                        ->orWhereRaw("CONCAT(nombre, ' ', apellido) like ?", ["%$searchTerm%"]);
+                });
+            }
+
+            if ($request->has('all') && $request->input('all') === 'true') {
+                $clientes = $query->get();
+            } else {
+                $clientes = $query->paginate(5);
+            }
+
+            $clientesData = $clientes->map(function ($cliente) {
                 return [
                     'id_cliente' => $cliente->id,
                     'nombre' => $cliente->nombre,
@@ -144,9 +160,9 @@ class ClienteController extends Controller
 
             return response()->json([
                 "status" => 200,
-                'data' => $clientes->items(),
-                'total' => $clientes->total(),
-                'page' => $clientes->currentPage()
+                'data' => $clientesData,
+                'total' => $request->has('all') ? count($clientesData) : $clientes->total(),
+                'page' => $request->has('all') ? 1 : $clientes->currentPage()
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -156,8 +172,6 @@ class ClienteController extends Controller
             ], 500);
         }
     }
-
-    
 
     public function update(Request $request, $id)
     {
