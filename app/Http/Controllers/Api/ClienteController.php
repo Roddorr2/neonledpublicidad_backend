@@ -18,17 +18,16 @@ use Illuminate\Support\Facades\Validator;
 class ClienteController extends Controller
 {
 
-    private function createPassword(string $dni, string $nombre, string $apellidos)
+    private function createPassword(string $nombre, string $apellidos)
     {
 
         $apellidoIniciales = strtoupper(substr($nombre, 0, 2));
         $nombreIniciales = strtolower(substr($apellidos, 0, 2));
-        $dniParte = substr($dni, -3);
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
 
-        $password= "{$apellidoIniciales}{$dniParte}";
+        $password= "{$apellidoIniciales}";
 
         for ($i = 0; $i < 5; $i++) {
             $password .= $characters[rand(0, $charactersLength - 1)];
@@ -45,8 +44,8 @@ class ClienteController extends Controller
                 "nombre" => "required|string|max:191",
                 "apellido" => "required|string|max:191",
                 "email" => "required|email|unique:users|unique:clientes",
-                "dni" => "required|string|unique:empleados|unique:clientes|max:8",
                 "telefono" => "required|string|max:14",
+                "distrito" => "nullable|string|max:191",
             ]);
 
             if($validate->fails()) {
@@ -59,7 +58,7 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
 
-            $generatedPassword = $this->createPassword($request->dni, $request->nombre, $request->apellido);
+            $generatedPassword = $this->createPassword($request->nombre, $request->apellido);
 
             $user = \App\Models\User::create([
                 "name" => $request->nombre . " " . $request->apellido,
@@ -71,8 +70,8 @@ class ClienteController extends Controller
                 "nombre" => $request->nombre,
                 "apellido" => $request->apellido,
                 "email" => $request->email,
-                "dni" => $request->dni,
                 "telefono" => $request->telefono,
+                "distrito" => $request->distrito,
                 "id_user" => $user->id,
                 "id_rol" => Rol::where('nombre', 'cliente')->first()->id_rol
             ]);
@@ -126,24 +125,44 @@ class ClienteController extends Controller
     public function getAllByPage(Request $request)
     {
         try {
-            $clientes = Cliente::with('rol')->orderBy('id', 'asc')->paginate(5);
-            $clientes->getCollection()->transform(function ($cliente) {
+            $searchTerm = $request->input('search');
+
+            $query = Cliente::with('rol')
+                ->withCount('propuestas')
+                ->orderBy('id', 'asc');
+
+            if ($searchTerm) {
+                $query->where(function ($q) use ($searchTerm) {
+                    $q->where('nombre', 'like', "%$searchTerm%")
+                        ->orWhere('apellido', 'like', "%$searchTerm%")
+                        ->orWhereRaw("CONCAT(nombre, ' ', apellido) like ?", ["%$searchTerm%"]);
+                });
+            }
+
+            if ($request->has('all') && $request->input('all') === 'true') {
+                $clientes = $query->get();
+            } else {
+                $clientes = $query->paginate(5);
+            }
+
+            $clientesData = $clientes->map(function ($cliente) {
                 return [
                     'id_cliente' => $cliente->id,
                     'nombre' => $cliente->nombre,
                     'apellido' => $cliente->apellido,
                     'email' => $cliente->email,
-                    'dni' => $cliente->dni,
                     'telefono' => $cliente->telefono,
                     'rol' => $cliente->rol->nombre,
+                    'distrito' => $cliente->distrito,
+                    'propuestas' => $cliente->propuestas_count
                 ];
             });
 
             return response()->json([
                 "status" => 200,
-                'data' => $clientes->items(),
-                'total' => $clientes->total(),
-                'page' => $clientes->currentPage()
+                'data' => $clientesData,
+                'total' => $request->has('all') ? count($clientesData) : $clientes->total(),
+                'page' => $request->has('all') ? 1 : $clientes->currentPage()
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -153,8 +172,6 @@ class ClienteController extends Controller
             ], 500);
         }
     }
-
-    
 
     public function update(Request $request, $id)
     {
@@ -183,8 +200,8 @@ class ClienteController extends Controller
             'nombre'    => 'sometimes|string|max:255',
             'apellido'  => 'sometimes|string|max:255',
             "email" => "sometimes|email|unique:users|unique:clientes",
-            "dni" => "sometimes|string|unique:empleados|unique:clientes|max:8",
             'telefono'  => 'nullable|string|max:14',
+            'distrito'  => 'nullable|string|max:191',
         ]);
 
         if ($validator->fails()) {

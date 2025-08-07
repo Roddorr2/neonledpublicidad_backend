@@ -51,6 +51,12 @@ class PermisosSeeder extends Seeder
             'Crear empleados' => 'Permite crear nuevos empleados',
             'Editar empleados' => 'Permite modificar empleados existentes',
             'Eliminar empleados' => 'Permite eliminar empleados existentes',
+            
+            // Clientes
+            'Ver cliente' => 'Permite ver la lista de clientes',
+            'Crear cliente' => 'Permite crear nuevos clientes',
+            'Editar cliente' => 'Permite modificar clientes existentes',
+            'Eliminar cliente' => 'Permite eliminar clientes existentes',
 
             // Blogs
             'Ver blogs' => 'Permite ver la gestión de blogs',
@@ -63,6 +69,7 @@ class PermisosSeeder extends Seeder
             'Eliminar tarjetas' => 'Permite eliminar tarjetas',
 
             //Propuestas
+            'ver propuestas cliente' => 'Permite ver sus propuestas al cliente',
             'Ver propuestas'=>'Permite  ver propuestas',
             'Crear propuestas'=>'Permite crear propuestas',
             'Editar propuestas'=>'Permite editar propuestas',
@@ -96,6 +103,16 @@ class PermisosSeeder extends Seeder
                 /**
                  * Empleados de ventas podrán ver y gestionar propuestas a clientes
                  */
+
+                 // 'Crear propuestas', 
+                // 'Editar propuestas',
+                // 'Eliminar propuestas',
+                'Ver cliente',
+                'Crear cliente',
+                'Editar cliente',
+                'Eliminar cliente',
+
+                'Ver propuestas cliente',
                 'Ver propuestas',
                 'Crear propuestas',
                 'Editar propuestas',
@@ -122,7 +139,7 @@ class PermisosSeeder extends Seeder
                 'Permisos generales',
             ],
            'cliente' => [
-                'Ver propuestas',
+                'Ver propuestas cliente'
                 // 'Crear propuestas', 
                 // 'Editar propuestas',
                 // 'Eliminar propuestas',
