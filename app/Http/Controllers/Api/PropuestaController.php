@@ -44,7 +44,7 @@ class PropuestaController extends Controller
             //BUSCANDO LA IMAGEN
            $propuestasConPortada = $propuestas->map(function ($propuesta) use ($id_cliente) {
             $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/imagenes/";
-            
+
             // Obtener todos los archivos dentro de esa carpeta
             $files = Storage::disk('public')->files($folderPath);
 
@@ -169,9 +169,9 @@ class PropuestaController extends Controller
         }
     }
 
-    
+
     public function Load(int $id)
-    { 
+    {
         try {
             $propuesta = Propuesta::find($id);
             if (!$propuesta) {
@@ -180,7 +180,7 @@ class PropuestaController extends Controller
                     "message" => "Propuesta no encontrada"
                 ], 422);
             }
-            
+
             $imagenes = collect();
             $allDirs = Storage::disk('public')->allDirectories('cliente');
             foreach ($allDirs as $dir) {
@@ -195,7 +195,7 @@ class PropuestaController extends Controller
                     break;
                 }
             }
-            
+
             return response()->json([
                 'status' => 200,
                 'message' => $propuesta,
@@ -422,4 +422,45 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+    public function descargarImagenes($id_cliente, $id_propuesta)
+{
+    try {
+        $folderPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/imagenes/";
+
+        $files = Storage::disk('public')->files($folderPath);
+
+        if (empty($files)) {
+            return response()->json([
+                "status" => 404,
+                "message" => "No se encontraron imágenes"
+            ], 404);
+        }
+
+        $zipFileName = "imagenes_propuesta_{$id_propuesta}.zip";
+        $zipFilePath = storage_path("app/public/{$zipFileName}");
+
+        $zip = new \ZipArchive;
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            foreach ($files as $filePath) {
+                $absolutePath = Storage::disk('public')->path($filePath);
+                $zip->addFile($absolutePath, basename($absolutePath));
+            }
+            $zip->close();
+        } else {
+            return response()->json([
+                "status" => 500,
+                "message" => "No se pudo crear el archivo ZIP"
+            ], 500);
+        }
+
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
+
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ], 500);
+    }
+}
+
 }

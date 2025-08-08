@@ -131,7 +131,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);//
     Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
-
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-imagenes',
+    [PropuestaController::class, 'descargarImagenes']);
 
     Route::middleware('permission:crear-cliente')->post('/cliente', [ClienteController::class, "create"]);
     Route::middleware('permission:ver-cliente')->get('/cliente/{id}', [ClienteController::class, "getById"]);
@@ -152,7 +153,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-modales')->delete('/modales/{id}', [ModalesController::class, "delete"]);
 
     Route::middleware('permission:ver-empleados')->get('/empleados', [EmpleadoController::class, "getAllByPage"]);
-    Route::middleware('permission:ver-empleados')->get('/empleados/{id}', [EmpleadoController::class, "getById"]);  
+    Route::middleware('permission:ver-empleados')->get('/empleados/{id}', [EmpleadoController::class, "getById"]);
     Route::middleware('permission:crear-empleados')->post('/empleados', [EmpleadoController::class, "create"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/{id}', [EmpleadoController::class, "update"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/pass/{id}', [EmpleadoController::class, "updatePass"]);
