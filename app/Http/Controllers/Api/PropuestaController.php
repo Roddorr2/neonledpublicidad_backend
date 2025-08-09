@@ -16,7 +16,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function     GetAll_Cliente( $id_cliente)//retorna todas las propuestas de un cliente ,necesita de id_cliente
+    public function     GetAll_Cliente($id_cliente) //retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
             //VALIDANDO
@@ -42,22 +42,28 @@ class PropuestaController extends Controller
                 ], 404);
             }
             //BUSCANDO LA IMAGEN
-           $propuestasConPortada = $propuestas->map(function ($propuesta) use ($id_cliente) {
-            $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/imagenes/";
+            $propuestasConPortada = $propuestas->map(function ($propuesta) use ($id_cliente) {
+                $folderPath = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/imagenes/";
 
-            // Obtener todos los archivos dentro de esa carpeta
-            $files = Storage::disk('public')->files($folderPath);
+                // Obtener todos los archivos dentro de esa carpeta
+                $files = Storage::disk('public')->files($folderPath);
 
-            // Convertir las rutas a URLs accesibles públicamente
-            $urls = collect($files)->map(function ($filePath) {
-                return Storage::url($filePath);
-            })->toArray();
+                // Convertir las rutas a URLs accesibles públicamente
+                $urls = collect($files)->map(function ($filePath) {
+                    return Storage::url($filePath);
+                })->toArray();
 
-            // Guardamos todas las URLs en el atributo "images"
-            $propuesta->images = $urls;
+                // Guardamos todas las URLs en el atributo "images"
+                $propuesta->images = $urls;
 
-            return $propuesta;
-        });
+                $folderVideos = "cliente/{$id_cliente}/propuestas/{$propuesta->id}/videos/";
+                $videoFiles = Storage::disk('public')->files($folderVideos);
+                $propuesta->videos = collect($videoFiles)->map(function ($filePath) {
+                    return Storage::url($filePath);
+                })->toArray();
+
+                return $propuesta;
+            });
 
             return response()->json([
                 "status" => 200,
@@ -67,45 +73,51 @@ class PropuestaController extends Controller
             return response()->json([
                 "status" => 500,
                 "message" => $ex->getMessage()
-            ],500);
+            ], 500);
         }
     }
-   public function GetAll()
-{
-    try {
-        //obtiene todas las propuestas
-        $propuestas = Propuesta::select("id", "id_cliente", "nombre", "descripcion", "created_at")->get();
-        if ($propuestas->isEmpty()) {
+    public function GetAll()
+    {
+        try {
+            //obtiene todas las propuestas
+            $propuestas = Propuesta::select("id", "id_cliente", "nombre", "descripcion", "created_at")->get();
+            if ($propuestas->isEmpty()) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "No se encontraron propuestas",
+                ], 404);
+            }
+            //BUSCANDO LA IMAGEN PARA CADA PROPUESTA
+            $propuestasConPortada = $propuestas->map(function ($propuesta) {
+                $folderPath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes/";
+                $files = Storage::disk('public')->files($folderPath);
+
+                $urls = collect($files)->map(function ($filePath) {
+                    return Storage::url($filePath);
+                })->toArray();
+
+                $propuesta->images = $urls;
+
+                $folderVideos = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/videos/";
+                $videoFiles = Storage::disk('public')->files($folderVideos);
+                $propuesta->videos = collect($videoFiles)->map(function ($filePath) {
+                    return Storage::url($filePath);
+                })->toArray();
+                return $propuesta;
+            });
+
             return response()->json([
-                "status" => 404,
-                "message" => "No se encontraron propuestas",
-            ], 404);
+                "status" => 200,
+                "message" => $propuestasConPortada
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                "status" => 500,
+                "message" => $ex->getMessage()
+            ], 500);
         }
-        //BUSCANDO LA IMAGEN PARA CADA PROPUESTA
-        $propuestasConPortada = $propuestas->map(function ($propuesta) {
-            $folderPath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes/";
-            $files = Storage::disk('public')->files($folderPath);
-
-            $urls = collect($files)->map(function ($filePath) {
-                return Storage::url($filePath);
-            })->toArray();
-
-            $propuesta->images = $urls;
-            return $propuesta;
-        });
-
-        return response()->json([
-            "status" => 200,
-            "message" => $propuestasConPortada
-        ]);
-    } catch (\Exception $ex) {
-        return response()->json([
-            "status" => 500,
-            "message" => $ex->getMessage()
-        ],500);
     }
-}
-   public function Create(Request $request)
+    public function Create(Request $request)
     {
         try {
             // VALIDACIÓN
@@ -115,8 +127,11 @@ class PropuestaController extends Controller
                 'descripcion' => 'required|string',
                 'files' => 'nullable|array',
                 'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
-            ]);
+                'videos' => 'nullable|array',
 
+                'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
+
+            ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
                 return response()->json([
@@ -127,7 +142,8 @@ class PropuestaController extends Controller
             // GUARDAR DATOS PRINCIPALES
             DB::beginTransaction();
             $propuesta = new Propuesta();
-            $propuesta->fill($request->except(['files']));
+            // $propuesta->fill($request->except(['files']));
+            $propuesta->fill($request->except(['files', 'videos']));
             $propuesta->save();
 
             // GUARDAR IMÁGENES
@@ -150,6 +166,26 @@ class PropuestaController extends Controller
                     }
 
                     Storage::disk('public')->put($finalFilename, (string) $image->toWebp());
+                }
+            }
+            // 🎥 GUARDAR VIDEOS
+            if ($request->hasFile('videos')) {
+                foreach ($request->file('videos') as $video) {
+                    $originalName = pathinfo($video->getClientOriginalName(), PATHINFO_FILENAME);
+                    $cleanName = Str::slug($originalName);
+                    $extension = $video->getClientOriginalExtension();
+
+                    $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/videos";
+                    $baseFilename = "{$relativePath}/{$cleanName}.{$extension}";
+
+                    $finalFilename = $baseFilename;
+                    $counter = 2;
+                    while (Storage::disk('public')->exists($finalFilename)) {
+                        $finalFilename = "{$relativePath}/{$cleanName}-{$counter}.{$extension}";
+                        $counter++;
+                    }
+
+                    Storage::disk('public')->putFileAs($relativePath, $video, basename($finalFilename));
                 }
             }
 
@@ -210,58 +246,57 @@ class PropuestaController extends Controller
         }
     }
     public function load_cliente(int $id_cliente, int $id_propuesta)
-{
-    try {
-        $propuesta = Propuesta::find($id_propuesta);
+    {
+        try {
+            $propuesta = Propuesta::find($id_propuesta);
 
-        if (!$propuesta) {
-            return response()->json([
-                'status' => 422,
-                'message' => 'Propuesta no encontrada'
-            ], 422);
-        }
-
-        if ($propuesta->id_cliente !== $id_cliente) {
-            return response()->json([
-                'status' => 403,
-                'message' => 'No tienes permiso para acceder a esta propuesta'
-            ], 403);
-        }
-
-        $imagenes = collect();
-        $allDirs = Storage::disk('public')->allDirectories('cliente');
-
-        foreach ($allDirs as $dir) {
-            if (Str::is("cliente/*/propuestas/{$id_propuesta}/imagenes", $dir)) {
-                $files = Storage::disk('public')->files($dir);
-                $imagenes = collect($files)->filter(function ($file) {
-                    return preg_match('/\.(webp)$/i', $file);
-                })->map(function ($file) {
-                    return Storage::url($file);
-                })->values();
-
-                break;
+            if (!$propuesta) {
+                return response()->json([
+                    'status' => 422,
+                    'message' => 'Propuesta no encontrada'
+                ], 422);
             }
+
+            if ($propuesta->id_cliente !== $id_cliente) {
+                return response()->json([
+                    'status' => 403,
+                    'message' => 'No tienes permiso para acceder a esta propuesta'
+                ], 403);
+            }
+
+            $imagenes = collect();
+            $allDirs = Storage::disk('public')->allDirectories('cliente');
+
+            foreach ($allDirs as $dir) {
+                if (Str::is("cliente/*/propuestas/{$id_propuesta}/imagenes", $dir)) {
+                    $files = Storage::disk('public')->files($dir);
+                    $imagenes = collect($files)->filter(function ($file) {
+                        return preg_match('/\.(webp)$/i', $file);
+                    })->map(function ($file) {
+                        return Storage::url($file);
+                    })->values();
+
+                    break;
+                }
+            }
+
+            return response()->json([
+                'status' => 200,
+                'message' => $propuesta,
+                'images' => $imagenes
+            ], 200);
+        } catch (\Exception $ex) {
+            Log::error('Error al cargar propuesta: ' . $ex->getMessage());
+
+            return response()->json([
+                'status' => 500,
+                'error' => $ex->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'status' => 200,
-            'message' => $propuesta,
-            'images' => $imagenes
-        ], 200);
-
-    } catch (\Exception $ex) {
-        Log::error('Error al cargar propuesta: ' . $ex->getMessage());
-
-        return response()->json([
-            'status' => 500,
-            'error' => $ex->getMessage()
-        ], 500);
     }
-}
 
 
-    public function Update(Request $request, int $id)//busca por id de propuesta
+    public function Update(Request $request, int $id) //busca por id de propuesta
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -310,26 +345,26 @@ class PropuestaController extends Controller
     }
 
 
-    public function UploadImage(Request $request, int $id)//envio de datos de imagen y id de propuesta
+    public function UploadImage(Request $request, int $id) //envio de datos de imagen y id de propuesta
     {
         try {
-            $validator = Validator::make($request->all(), [//se valida que esten los datos de la imagen
+            $validator = Validator::make($request->all(), [ //se valida que esten los datos de la imagen
                 'filename' => 'required|string',
                 'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
             ]);
-            if ($validator->fails()) {//retorna error si no estan los datos
+            if ($validator->fails()) { //retorna error si no estan los datos
                 Log::info($validator->errors());
                 return response()->json([
                     'status' => 422,
                     "message" => $validator->errors()
-                ],422);
+                ], 422);
             };
-            $propuesta = Propuesta::find($id);//busca la propuesta por id de la propuesta
-            if (!$propuesta) {//retorna error si no se encuentra la propuesta
+            $propuesta = Propuesta::find($id); //busca la propuesta por id de la propuesta
+            if (!$propuesta) { //retorna error si no se encuentra la propuesta
                 return response()->json([
                     "status" => 404,
                     "message" => "Propuesta no encontrada"
-                ],404);
+                ], 404);
             }
             // $image = Image::read($request->file)->cover(1900, 800);
             $image = Image::read($request->file('file'))->cover(1900, 800);
@@ -360,7 +395,7 @@ class PropuestaController extends Controller
                 return response()->json([
                     'status' => 422,
                     "message" => $validator->errors()
-                ],422);
+                ], 422);
             }
             $path = "cliente/{$request->id_cliente}/propuestas/{$id}/imagenes/{$request->filename}.webp";
 
@@ -372,11 +407,11 @@ class PropuestaController extends Controller
                     'message' => 'Imagen eliminada correctamente',
                     'path' => Storage::url($path),
                 ]);
-            }else{
+            } else {
                 return response()->json([
-                    'status'=>422,
-                    'message'=>"No se encontró la imagen"
-                ],422);
+                    'status' => 422,
+                    'message' => "No se encontró la imagen"
+                ], 422);
             }
         } catch (\Exception $ex) {
             return response()->json([
@@ -397,7 +432,7 @@ class PropuestaController extends Controller
                 return response()->json([
                     "status" => 404,
                     "message" => "Propuesta no encontrada"
-                ],404);
+                ], 404);
             }
             $allDirs = Storage::disk('public')->allDirectories('cliente');
             foreach ($allDirs as $dir) {
@@ -423,44 +458,42 @@ class PropuestaController extends Controller
         }
     }
     public function descargarImagenes($id_cliente, $id_propuesta)
-{
-    try {
-        $folderPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/imagenes/";
+    {
+        try {
+            $folderPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/imagenes/";
 
-        $files = Storage::disk('public')->files($folderPath);
+            $files = Storage::disk('public')->files($folderPath);
 
-        if (empty($files)) {
-            return response()->json([
-                "status" => 404,
-                "message" => "No se encontraron imágenes"
-            ], 404);
-        }
-
-        $zipFileName = "imagenes_propuesta_{$id_propuesta}.zip";
-        $zipFilePath = storage_path("app/public/{$zipFileName}");
-
-        $zip = new \ZipArchive;
-        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
-            foreach ($files as $filePath) {
-                $absolutePath = Storage::disk('public')->path($filePath);
-                $zip->addFile($absolutePath, basename($absolutePath));
+            if (empty($files)) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "No se encontraron imágenes"
+                ], 404);
             }
-            $zip->close();
-        } else {
+
+            $zipFileName = "imagenes_propuesta_{$id_propuesta}.zip";
+            $zipFilePath = storage_path("app/public/{$zipFileName}");
+
+            $zip = new \ZipArchive;
+            if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+                foreach ($files as $filePath) {
+                    $absolutePath = Storage::disk('public')->path($filePath);
+                    $zip->addFile($absolutePath, basename($absolutePath));
+                }
+                $zip->close();
+            } else {
+                return response()->json([
+                    "status" => 500,
+                    "message" => "No se pudo crear el archivo ZIP"
+                ], 500);
+            }
+
+            return response()->download($zipFilePath)->deleteFileAfterSend(true);
+        } catch (\Exception $ex) {
             return response()->json([
                 "status" => 500,
-                "message" => "No se pudo crear el archivo ZIP"
+                "message" => $ex->getMessage()
             ], 500);
         }
-
-        return response()->download($zipFilePath)->deleteFileAfterSend(true);
-
-    } catch (\Exception $ex) {
-        return response()->json([
-            "status" => 500,
-            "message" => $ex->getMessage()
-        ], 500);
     }
-}
-
 }
