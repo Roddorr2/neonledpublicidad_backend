@@ -16,7 +16,7 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class PropuestaController extends Controller
 {
-    public function     GetAll_Cliente($id_cliente) //retorna todas las propuestas de un cliente ,necesita de id_cliente
+    public function GetAll_Cliente($id_cliente) //retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
             //VALIDANDO
@@ -231,11 +231,24 @@ class PropuestaController extends Controller
                     break;
                 }
             }
+            $videos = collect();
+            foreach ($allDirs as $dir) {
+                if (Str::is("cliente/*/propuestas/{$id}/videos", $dir)) {
+                    $files = Storage::disk('public')->files($dir);
+                    $videos = collect($files)->filter(function ($file) {
+                        return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                    })->map(function ($file) {
+                        return Storage::url($file);
+                    })->values();
+                    break;
+                }
+            }
 
             return response()->json([
                 'status' => 200,
                 'message' => $propuesta,
-                'images' => $imagenes
+                'images' => $imagenes,
+                'videos' => $videos
             ], 200);
         } catch (\Exception $ex) {
             Log::error('Error al cargar imágenes: ' . $ex->getMessage());
@@ -280,10 +293,24 @@ class PropuestaController extends Controller
                 }
             }
 
+            $videos = collect();
+            foreach ($allDirs as $dir) {
+                if (Str::is("cliente/{$id_cliente}/propuestas/{$id_propuesta}/videos", $dir)) {
+                    $files = Storage::disk('public')->files($dir);
+                    $videos = collect($files)->filter(function ($file) {
+                        return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                    })->map(function ($file) {
+                        return Storage::url($file);
+                    })->values();
+                    break;
+                }
+            }
+
             return response()->json([
                 'status' => 200,
                 'message' => $propuesta,
-                'images' => $imagenes
+                'images' => $imagenes,
+                'videos' => $videos
             ], 200);
         } catch (\Exception $ex) {
             Log::error('Error al cargar propuesta: ' . $ex->getMessage());

@@ -13,7 +13,7 @@ class Propuesta extends Model
         'nombre',
         'descripcion'
     ];
-    protected $appends = ['cantidad_imagenes', 'cantidad_videos'];
+    protected $appends = ['cantidad_imagenes', 'cantidad_videos','fecha_formateada'];
 
     public function cliente(): BelongsTo
     {
@@ -28,5 +28,9 @@ class Propuesta extends Model
     {
         $path = "cliente/{$this->id_cliente}/propuestas/{$this->id}/videos/";
         return count(Storage::disk('public')->files($path));
+    }
+        public function getFechaFormateadaAttribute()
+    {
+        return $this->created_at ? $this->created_at->format('d/m/Y') : null;
     }
 }
