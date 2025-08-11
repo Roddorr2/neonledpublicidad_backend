@@ -10,8 +10,8 @@ class Cliente extends Model
 
     use HasFactory;
     protected $table = 'clientes';
-    // protected $primaryKey = 'id_cliente';
     public $timestamps = false;
+    // protected $primaryKey = 'id_cliente';
     protected $fillable = [
         'nombre',
         'apellido',
