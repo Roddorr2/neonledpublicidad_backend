@@ -448,6 +448,114 @@ class PropuestaController extends Controller
         }
     }
 
+    public function UploadVideo(Request $request, int $id) // id = id de la propuesta
+{
+    try {
+        // Validación
+        $validator = Validator::make($request->all(), [
+            'filename' => 'required|string',
+            'file' => 'required|file|max:51200|mimetypes:
+                video/mp4,
+                video/webm,
+                video/ogg,
+                video/x-msvideo,
+                video/x-flv,
+                video/quicktime,
+                video/x-ms-wmv,
+                video/avi,
+                application/octet-stream
+            ',
+        ]);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        // Buscar propuesta
+        $propuesta = Propuesta::find($id);
+        if (!$propuesta) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Propuesta no encontrada"
+            ], 404);
+        }
+
+        // Preparar nombre y ruta
+        $filename = Str::slug($request->filename);
+        $extension = $request->file('file')->getClientOriginalExtension();
+        $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/videos";
+
+        // Evitar sobrescribir: si existe, agregar sufijo incremental
+        $finalFilename = "{$filename}.{$extension}";
+        $counter = 2;
+        while (Storage::disk('public')->exists("{$relativePath}/{$finalFilename}")) {
+            $finalFilename = "{$filename}-{$counter}.{$extension}";
+            $counter++;
+        }
+
+        // Guardar archivo
+        Storage::disk('public')->putFileAs($relativePath, $request->file('file'), $finalFilename);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Video guardado correctamente',
+            'filename' => $finalFilename
+        ], 200);
+
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ], 500);
+    }
+}
+    public function EraseVideo(Request $request, int $id)
+{
+    try {
+        // Validar datos
+        $validator = Validator::make($request->all(), [
+            'id_cliente' => 'required|string',
+            'filename' => 'required|string', // nombre con extensión incluida
+        ]);
+
+        if ($validator->fails()) {
+            Log::info($validator->errors());
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()
+            ], 422);
+        }
+
+        // Ruta del video
+        $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}";
+
+        // Eliminar si existe
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Video eliminado correctamente',
+                'path' => Storage::url($path),
+            ]);
+        } else {
+            return response()->json([
+                'status' => 422,
+                'message' => "No se encontró el video"
+            ], 422);
+        }
+
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ], 500);
+    }
+}
 
     public function Delete(int $id)
     {
