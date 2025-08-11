@@ -47,13 +47,13 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 /**
  * Endpoints de propuestas sin middleware (temporal)
  */
-    Route::get('/propuesta',[PropuestaController::class, "getall"]);
-    Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    Route::post('/propuesta',[PropuestaController::class, "create"]);
-    Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
+    // Route::get('/propuesta',[PropuestaController::class, "getall"]);
+    // Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
+    // Route::post('/propuesta',[PropuestaController::class, "create"]);
+    // Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
+    // Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
+    // Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    // Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 /**
  * Enpoints de gestion de clientes
@@ -167,14 +167,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:permisos-generales')->put('/empleados/pass/{id}', [EmpleadoController::class, "updatePass"]);
     Route::middleware('permission:eliminar-empleados')->delete('/empleados/{id}', [EmpleadoController::class, "delete"]);
     
-    //rutas propuesta
-    Route::middleware('permission:ver-propuestas')->get('/propuesta',[PropuestaController::class, "getall"]);
-    Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);
-    Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);
-    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);
-    Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
-    Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
-    Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 
     //rutas clientes
