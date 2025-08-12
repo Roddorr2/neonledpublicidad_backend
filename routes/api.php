@@ -47,12 +47,14 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 /**
  * Endpoints de propuestas sin middleware (temporal)
  */
-    // Route::get('/propuesta',[PropuestaController::class, "getall"]);
+    // Route::get('/propuestas',[PropuestaController::class, "getAll"]);
     // Route::get('/propuesta/{id}',[PropuestaController::class, "load"]);
     // Route::post('/propuesta',[PropuestaController::class, "create"]);
     // Route::put('/propuesta/{id}',[PropuestaController::class, "update"]);
     // Route::delete('/propuesta/{id}',[PropuestaController::class, "delete"]);
     // Route::post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
+    // Route::post('/video_propuesta/{id}',[PropuestaController::class, "uploadvideo"]);
+    // Route::delete('/video_propuesta/{id}',[PropuestaController::class, "erasevideo"]);
     // Route::delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
 
 /**
@@ -138,10 +140,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:crear-propuestas')->post('/video_propuesta/{id}',[PropuestaController::class, "uploadvideo"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/video_propuesta/{id}',[PropuestaController::class, "erasevideo"]);
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
-    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-imagenes',
-    [PropuestaController::class, 'descargarImagenes']);
-        Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-videos',
-    [PropuestaController::class, 'descargarVideos']);
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-imagenes',[PropuestaController::class, 'descargarImagenes']);
+    Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-videos',[PropuestaController::class, 'descargarVideos']);
 
     //rutas clientes
     Route::middleware('permission:crear-cliente')->post('/cliente', [ClienteController::class, "create"]);
