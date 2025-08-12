@@ -140,6 +140,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-propuestas')->delete('/imagen_propuesta/{id}',[PropuestaController::class, "eraseimage"]);
     Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-imagenes',
     [PropuestaController::class, 'descargarImagenes']);
+        Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-videos',
+    [PropuestaController::class, 'descargarVideos']);
 
     //rutas clientes
     Route::middleware('permission:crear-cliente')->post('/cliente', [ClienteController::class, "create"]);
@@ -167,7 +169,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:permisos-generales')->put('/empleados/{id}', [EmpleadoController::class, "update"]);
     Route::middleware('permission:permisos-generales')->put('/empleados/pass/{id}', [EmpleadoController::class, "updatePass"]);
     Route::middleware('permission:eliminar-empleados')->delete('/empleados/{id}', [EmpleadoController::class, "delete"]);
-    
+
     // roles
     Route::middleware('permission:ver-roles')->get('/roles', [RolController::class, "index"]);
     Route::middleware('permission:crear-roles')->post('/roles', [RolController::class, "store"]);
