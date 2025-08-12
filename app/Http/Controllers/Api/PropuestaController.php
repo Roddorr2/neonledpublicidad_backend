@@ -222,7 +222,7 @@ class PropuestaController extends Controller
     public function Load(int $id)
     {
         try {
-            $propuesta = Propuesta::find($id);
+            $propuesta = Propuesta::with('cliente')->find($id);
             if (!$propuesta) {
                 return response()->json([
                     "status" => 422,
@@ -259,7 +259,7 @@ class PropuestaController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'message' => $propuesta,
+                'data' => $propuesta,
                 'images' => $imagenes,
                 'videos' => $videos
             ], 200);
