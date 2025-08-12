@@ -631,4 +631,44 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+    public function descargarVideos($id_cliente, $id_propuesta)
+{
+    try {
+        $folderPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/videos/";
+
+        $files = Storage::disk('public')->files($folderPath);
+
+        if (empty($files)) {
+            return response()->json([
+                "status" => 404,
+                "message" => "No se encontraron videos"
+            ], 404);
+        }
+
+        $zipFileName = "videos_propuesta_{$id_propuesta}.zip";
+        $zipFilePath = storage_path("app/public/{$zipFileName}");
+
+        $zip = new \ZipArchive;
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            foreach ($files as $filePath) {
+                $absolutePath = Storage::disk('public')->path($filePath);
+                $zip->addFile($absolutePath, basename($absolutePath));
+            }
+            $zip->close();
+        } else {
+            return response()->json([
+                "status" => 500,
+                "message" => "No se pudo crear el archivo ZIP"
+            ], 500);
+        }
+
+        return response()->download($zipFilePath)->deleteFileAfterSend(true);
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ], 500);
+    }
+}
+
 }
