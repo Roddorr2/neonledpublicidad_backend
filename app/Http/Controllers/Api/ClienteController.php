@@ -27,7 +27,7 @@ class ClienteController extends Controller
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
 
-        $password= "{$apellidoIniciales}";
+        $password = "{$apellidoIniciales}";
 
         for ($i = 0; $i < 5; $i++) {
             $password .= $characters[rand(0, $charactersLength - 1)];
@@ -38,7 +38,8 @@ class ClienteController extends Controller
         return $password;
     }
 
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         try {
             $validate = Validator::make($request->all(), [
                 "nombre" => "required|string|max:191",
@@ -46,9 +47,11 @@ class ClienteController extends Controller
                 "email" => "required|email|unique:users|unique:clientes",
                 "telefono" => "required|string|max:14",
                 "distrito" => "nullable|string|max:191",
+            ], [
+                'email.unique' => 'El correo electrónico ya está en uso por otro cliente, porfavor ingrese otro correo',
             ]);
 
-            if($validate->fails()) {
+            if ($validate->fails()) {
                 return response()->json([
                     "status" => 400,
                     "message" => "Error al intentar crear cliente",
@@ -87,10 +90,9 @@ class ClienteController extends Controller
                 "status" => 201,
                 "message" => "Cliente creado exitosamente",
                 "cliente" => $customer,
-                "password"=>$generatedPassword//borrar ;v
+                "password" => $generatedPassword //borrar ;v
             ], 201);
-
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 "status" => 500,
@@ -99,7 +101,7 @@ class ClienteController extends Controller
             ], 500);
         }
     }
-    
+
     public function getById($id)
     {
         $validate = Validator::make(["id" => $id], [
@@ -269,7 +271,6 @@ class ClienteController extends Controller
                     $cloudinary = new Cloudinary();
 
                     $result = $cloudinary->uploadApi()->destroy($cliente->imagen_perfil);
-
                 } catch (\Exception $e) {
                     Log::warning("Error al eliminar imagen anterior, continuando con actualización: " . $e->getMessage());
                 }
@@ -291,7 +292,6 @@ class ClienteController extends Controller
                     'version' => time()
                 ]
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -408,7 +408,7 @@ class ClienteController extends Controller
             ], 422);
         }
 
-       $cliente = Cliente::find($id);
+        $cliente = Cliente::find($id);
 
         if (!$cliente) {
             return response()->json([
@@ -468,7 +468,6 @@ class ClienteController extends Controller
                 'status' => 200,
                 'message' => 'Imagen eliminada correctamente'
             ]);
-
         } catch (\Exception $e) {
             Log::error("Error eliminando imagen de perfil: " . $e->getMessage(), [
                 'exception' => $e,
