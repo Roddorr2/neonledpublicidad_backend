@@ -389,7 +389,7 @@ class PropuestaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [ //se valida que esten los datos de la imagen
-                'filename' => 'required|string',
+                // 'filename' => 'required|string',
                 'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
             ]);
             if ($validator->fails()) { //retorna error si no estan los datos
@@ -408,7 +408,10 @@ class PropuestaController extends Controller
             }
             // $image = Image::read($request->file)->cover(1900, 800);
             $image = Image::read($request->file('file'))->cover(1900, 800);
-            $filename = Str::slug($request->filename); // elimina espacios y caracteres raros
+            // $filename = Str::slug($request->filename); // elimina espacios y caracteres raros
+            // $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/imagenes";
+            $originalName = pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME);
+            $filename = Str::slug($originalName);
             $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/imagenes";
             Storage::disk('public')->put("{$relativePath}/{$filename}.webp", (string) $image->toWebp());
 
@@ -466,18 +469,8 @@ class PropuestaController extends Controller
         try {
             // Validación
             $validator = Validator::make($request->all(), [
-                'filename' => 'required|string',
-                'file' => 'required|file|max:51200|mimetypes:
-                video/mp4,
-                video/webm,
-                video/ogg,
-                video/x-msvideo,
-                video/x-flv,
-                video/quicktime,
-                video/x-ms-wmv,
-                video/avi,
-                application/octet-stream
-            ',
+                // 'filename' => 'required|string',
+            'video'=>'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
             ]);
 
             if ($validator->fails()) {
@@ -498,8 +491,12 @@ class PropuestaController extends Controller
             }
 
             // Preparar nombre y ruta
-            $filename = Str::slug($request->filename);
-            $extension = $request->file('file')->getClientOriginalExtension();
+            // $filename = Str::slug($request->filename);
+            $originalName = pathinfo($request->file('video')->getClientOriginalName(), PATHINFO_FILENAME);
+            $filename = Str::slug($originalName);
+
+
+            $extension = $request->file('video')->getClientOriginalExtension();
             $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/videos";
 
             // Evitar sobrescribir: si existe, agregar sufijo incremental
@@ -511,7 +508,7 @@ class PropuestaController extends Controller
             }
 
             // Guardar archivo
-            Storage::disk('public')->putFileAs($relativePath, $request->file('file'), $finalFilename);
+            Storage::disk('public')->putFileAs($relativePath, $request->file('video'), $finalFilename);
 
             return response()->json([
                 'status' => 200,
@@ -543,7 +540,7 @@ class PropuestaController extends Controller
             }
 
             // Ruta del video
-            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}";
+            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}.mp4";
 
             // Eliminar si existe
             if (Storage::disk('public')->exists($path)) {
