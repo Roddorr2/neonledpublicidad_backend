@@ -162,7 +162,7 @@ class PropuestaController extends Controller
             // GUARDAR IMÁGENES
             if ($request->hasFile('files')) {
                 foreach ($request->file('files') as $file) {
-                    $image = Image::read($file)->cover(1900, 800);
+                    $image = Image::read($file);
 
                     // Nombre original sin extensión
                     $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -385,44 +385,75 @@ class PropuestaController extends Controller
     }
 
 
-    public function UploadImage(Request $request, int $id) //envio de datos de imagen y id de propuesta
-    {
-        try {
-            $validator = Validator::make($request->all(), [ //se valida que esten los datos de la imagen
-                'filename' => 'required|string',
-                'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
-            ]);
-            if ($validator->fails()) { //retorna error si no estan los datos
-                Log::info($validator->errors());
-                return response()->json([
-                    'status' => 422,
-                    "message" => $validator->errors()
-                ], 422);
-            };
-            $propuesta = Propuesta::find($id); //busca la propuesta por id de la propuesta
-            if (!$propuesta) { //retorna error si no se encuentra la propuesta
-                return response()->json([
-                    "status" => 404,
-                    "message" => "Propuesta no encontrada"
-                ], 404);
-            }
-            // $image = Image::read($request->file)->cover(1900, 800);
-            $image = Image::read($request->file('file'))->cover(1900, 800);
-            $filename = Str::slug($request->filename); // elimina espacios y caracteres raros
-            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/imagenes";
-            Storage::disk('public')->put("{$relativePath}/{$filename}.webp", (string) $image->toWebp());
+    public function UploadImage(Request $request, int $id)
+{
+    try {
+        // VALIDACIÓN
+        $validator = Validator::make($request->all(), [
+            'files' => 'nullable|array',
+            'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
+        ]);
 
+        if ($validator->fails()) {
+            Log::info($validator->errors());
             return response()->json([
-                'status' => 200,
-                'message' => 'Imagen guardada correctamente',
-            ]);
-        } catch (\Exception $ex) {
-            return response()->json([
-                "status" => 500,
-                "message" => $ex->getMessage()
-            ], 500);
+                'status' => 422,
+                "message" => $validator->errors()
+            ], 422);
         }
+
+        // BUSCAR PROPUESTA
+        $propuesta = Propuesta::find($id);
+        if (!$propuesta) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Propuesta no encontrada"
+            ], 404);
+        }
+
+        $savedFiles = []; // lista de archivos guardados
+
+        // GUARDAR IMÁGENES
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                // Redimensionar imagen
+                $image = Image::read($file);
+
+                // Nombre original sin extensión
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $cleanName = Str::slug($originalName);
+
+                $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes";
+                $baseFilename = "{$relativePath}/{$cleanName}.webp";
+
+                // Verificar si ya existe y aplicar sufijo incremental
+                $finalFilename = $baseFilename;
+                $counter = 2;
+                while (Storage::disk('public')->exists($finalFilename)) {
+                    $finalFilename = "{$relativePath}/{$cleanName}-{$counter}.webp";
+                    $counter++;
+                }
+
+                // Guardar archivo
+                Storage::disk('public')->put($finalFilename, (string) $image->toWebp());
+
+                $savedFiles[] = $finalFilename;
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Imágenes guardadas correctamente',
+            'files' => $savedFiles
+        ]);
+    } catch (\Exception $ex) {
+        return response()->json([
+            "status" => 500,
+            "message" => $ex->getMessage()
+        ], 500);
     }
+}
+
     public function EraseImage(Request $request, int $id)
     {
         try {
