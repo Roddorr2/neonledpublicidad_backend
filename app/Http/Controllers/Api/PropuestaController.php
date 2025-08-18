@@ -339,8 +339,9 @@ class PropuestaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nombre' => 'required|string',
-                'descripcion' => 'required|string',
+                'nombre' => 'nullable|string',
+                'descripcion' => 'nullable|string',
+                'id_cliente' => 'nullable|numeric|exists:clientes,id'
             ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
