@@ -138,10 +138,9 @@ class PropuestaController extends Controller
                 'id_cliente' => 'required|string',
                 'nombre' => 'required|string',
                 'descripcion' => 'required|string',
-                'files' => 'nullable|array',
+                'files' => 'nullable|array|max:10',
                 'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
-                'videos' => 'nullable|array',
-
+                'videos' => 'nullable|array|max:5',
                 'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
 
             ]);
@@ -340,8 +339,8 @@ class PropuestaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nombre' => 'nullable|string',
-                'descipcion' => 'nullable|string',
+                'nombre' => 'required|string',
+                'descripcion' => 'required|string',
             ]);
             if ($validator->fails()) {
                 Log::info($validator->errors());
@@ -359,16 +358,17 @@ class PropuestaController extends Controller
                 ], 404);
             }
             DB::beginTransaction();
-            $campos = [
-                'nombre',
-                'descripcion'
-            ];
-            foreach ($campos as $campo) {
-                if ($request->filled($campo)) { // verifica que existe y no es null
-                    $propuesta->$campo = $request->$campo;
-                }
-            }
-            $propuesta->save();
+            // $campos = [
+            //     'nombre',
+            //     'descripcion'
+            // ];
+            // foreach ($campos as $campo) {
+            //     if ($request->filled($campo)) { // verifica que existe y no es null
+            //         $propuesta->$campo = $request->$campo;
+            //     }
+            // }
+            // $propuesta->save();
+            $propuesta->update($request->all());
             DB::commit();
             return response()->json([
                 "status" => 200,
@@ -386,73 +386,83 @@ class PropuestaController extends Controller
 
 
     public function UploadImage(Request $request, int $id)
-{
-    try {
-        // VALIDACIÓN
-        $validator = Validator::make($request->all(), [
-            'files' => 'nullable|array',
-            'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
-        ]);
+    {
+        try {
+            // VALIDACIÓN
+            $validator = Validator::make($request->all(), [
+                'files' => 'nullable|array',
+                'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
+            ]);
 
-        if ($validator->fails()) {
-            Log::info($validator->errors());
-            return response()->json([
-                'status' => 422,
-                "message" => $validator->errors()
-            ], 422);
-        }
-
-        // BUSCAR PROPUESTA
-        $propuesta = Propuesta::find($id);
-        if (!$propuesta) {
-            return response()->json([
-                "status" => 404,
-                "message" => "Propuesta no encontrada"
-            ], 404);
-        }
-
-        $savedFiles = []; // lista de archivos guardados
-
-        // GUARDAR IMÁGENES
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                // Redimensionar imagen
-                $image = Image::read($file);
-
-                // Nombre original sin extensión
-                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $cleanName = Str::slug($originalName);
-
-                $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes";
-                $baseFilename = "{$relativePath}/{$cleanName}.webp";
-
-                // Verificar si ya existe y aplicar sufijo incremental
-                $finalFilename = $baseFilename;
-                $counter = 2;
-                while (Storage::disk('public')->exists($finalFilename)) {
-                    $finalFilename = "{$relativePath}/{$cleanName}-{$counter}.webp";
-                    $counter++;
-                }
-
-                // Guardar archivo
-                Storage::disk('public')->put($finalFilename, (string) $image->toWebp());
-
-                $savedFiles[] = $finalFilename;
+            if ($validator->fails()) {
+                Log::info($validator->errors());
+                return response()->json([
+                    'status' => 422,
+                    "message" => $validator->errors()
+                ], 422);
             }
-        }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Imágenes guardadas correctamente',
-            'files' => $savedFiles
-        ]);
-    } catch (\Exception $ex) {
-        return response()->json([
-            "status" => 500,
-            "message" => $ex->getMessage()
-        ], 500);
+            // BUSCAR PROPUESTA
+            $propuesta = Propuesta::find($id);
+            if (!$propuesta) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "Propuesta no encontrada"
+                ], 404);
+            }
+            $imagenesActuales = $propuesta->cantidad_imagenes;
+            $nuevas = $request->hasFile('files') ? count($request->file('files')) : 0;
+            $maxImagenes = 10;
+
+            if ($imagenesActuales + $nuevas > $maxImagenes) {
+                return response()->json([
+                    "status" => 422,
+                    "message" => "La propuesta ya tiene {$imagenesActuales} imágenes. Solo puedes subir " . ($maxImagenes - $imagenesActuales) . " más."
+                ], 422);
+            }
+
+            $savedFiles = []; // lista de archivos guardados
+
+            // GUARDAR IMÁGENES
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    // Redimensionar imagen
+                    $image = Image::read($file);
+
+                    // Nombre original sin extensión
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $cleanName = Str::slug($originalName);
+
+                    $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$propuesta->id}/imagenes";
+                    $baseFilename = "{$relativePath}/{$cleanName}.webp";
+
+                    // Verificar si ya existe y aplicar sufijo incremental
+                    $finalFilename = $baseFilename;
+                    $counter = 2;
+                    while (Storage::disk('public')->exists($finalFilename)) {
+                        $finalFilename = "{$relativePath}/{$cleanName}-{$counter}.webp";
+                        $counter++;
+                    }
+
+                    // Guardar archivo
+                    Storage::disk('public')->put($finalFilename, (string) $image->toWebp());
+
+                    $savedFiles[] = $finalFilename;
+                }
+            }
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Imágenes guardadas correctamente',
+                'files' => $savedFiles
+            ]);
+        } catch (\Exception $ex) {
+            return response()->json([
+                "status" => 500,
+                "message" => $ex->getMessage()
+            ], 500);
+        }
     }
-}
 
     public function EraseImage(Request $request, int $id)
     {
@@ -497,8 +507,8 @@ class PropuestaController extends Controller
         try {
             // Validación
             $validator = Validator::make($request->all(), [
-                // 'filename' => 'required|string',
-            'video'=>'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
+                'videos' => 'required|array',
+                'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
             ]);
 
             if ($validator->fails()) {
@@ -518,30 +528,43 @@ class PropuestaController extends Controller
                 ], 404);
             }
 
-            // Preparar nombre y ruta
-            // $filename = Str::slug($request->filename);
-            $originalName = pathinfo($request->file('video')->getClientOriginalName(), PATHINFO_FILENAME);
-            $filename = Str::slug($originalName);
+            $videosActuales = $propuesta->cantidad_videos;
+            $maxVideos = 5;
 
-
-            $extension = $request->file('video')->getClientOriginalExtension();
-            $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/videos";
-
-            // Evitar sobrescribir: si existe, agregar sufijo incremental
-            $finalFilename = "{$filename}.{$extension}";
-            $counter = 2;
-            while (Storage::disk('public')->exists("{$relativePath}/{$finalFilename}")) {
-                $finalFilename = "{$filename}-{$counter}.{$extension}";
-                $counter++;
+            if ($videosActuales + count($request->file('videos')) > $maxVideos) {
+                return response()->json([
+                    "status" => 422,
+                    "message" => "La propuesta solo permite un máximo de {$maxVideos} videos. Actualmente tiene {$videosActuales}."
+                ], 422);
             }
+            $savedVideos = [];
 
-            // Guardar archivo
-            Storage::disk('public')->putFileAs($relativePath, $request->file('video'), $finalFilename);
+            foreach ($request->file('videos') as $video) {
+                $originalName = pathinfo($video->getClientOriginalName(), PATHINFO_FILENAME);
+                $filename = Str::slug($originalName);
+                $extension = $video->getClientOriginalExtension();
+
+                $relativePath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/videos";
+
+                // Evitar sobrescribir
+                $finalFilename = "{$filename}.{$extension}";
+                $counter = 2;
+                while (Storage::disk('public')->exists("{$relativePath}/{$finalFilename}")) {
+                    $finalFilename = "{$filename}-{$counter}.{$extension}";
+                    $counter++;
+                }
+
+                // Guardar archivo
+                Storage::disk('public')->putFileAs($relativePath, $video, $finalFilename);
+
+                $savedVideos[] = $finalFilename;
+            }
 
             return response()->json([
                 'status' => 200,
                 'message' => 'Video guardado correctamente',
-                'filename' => $finalFilename
+                // 'filename' => $finalFilename
+                'videos' => $savedVideos,
             ], 200);
         } catch (\Exception $ex) {
             return response()->json([
