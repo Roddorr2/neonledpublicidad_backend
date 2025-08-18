@@ -134,7 +134,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:ver-propuestas')->get('/propuesta/{id}',[PropuestaController::class, "load"]);//busca una propuesta por id_propuesta
     Route::middleware('permission:ver-propuestas-cliente')->get('/cliente/{id_cliente}/propuesta/{id_propuesta}',[PropuestaController::class, "load_cliente"]);//propuestas por cliente
     Route::middleware('permission:crear-propuestas')->post('/propuesta',[PropuestaController::class, "create"]);//ya
-    Route::middleware('permission:editar-propuestas')->put('/propuesta/{id}',[PropuestaController::class, "update"]);//ya
+    Route::middleware('permission:editar-propuestas')->patch('/propuesta/{id}',[PropuestaController::class, "update"]);//ya
     Route::middleware('permission:eliminar-propuestas')->delete('/propuesta/{id}',[PropuestaController::class, "delete"]);//
     Route::middleware('permission:crear-propuestas')->post('/imagen_propuesta/{id}',[PropuestaController::class, "uploadimage"]);
     Route::middleware('permission:crear-propuestas')->post('/video_propuesta/{id}',[PropuestaController::class, "uploadvideo"]);
