@@ -580,7 +580,8 @@ class PropuestaController extends Controller
             // Validar datos
             $validator = Validator::make($request->all(), [
                 'id_cliente' => 'required|string',
-                'filename' => 'required|string', // nombre con extensión incluida
+                'filename' => 'required|string', // nombre del video sin extensión
+                'extension' => 'required|string',// extensión del video
             ]);
 
             if ($validator->fails()) {
@@ -592,7 +593,7 @@ class PropuestaController extends Controller
             }
 
             // Ruta del video
-            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}.mp4";
+            $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}.{$request->extension}";
 
             // Eliminar si existe
             if (Storage::disk('public')->exists($path)) {

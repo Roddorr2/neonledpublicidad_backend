@@ -90,7 +90,6 @@ class ClienteController extends Controller
                 "status" => 201,
                 "message" => "Cliente creado exitosamente",
                 "cliente" => $customer,
-                "password" => $generatedPassword //borrar ;v
             ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
