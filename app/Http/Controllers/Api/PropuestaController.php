@@ -139,7 +139,7 @@ class PropuestaController extends Controller
                 'nombre' => 'required|string',
                 'descripcion' => 'required|string',
                 'files' => 'nullable|array|max:10',
-                'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
+                'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif',
                 'videos' => 'nullable|array|max:5',
                 'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
 
@@ -392,7 +392,8 @@ class PropuestaController extends Controller
             // VALIDACIÓN
             $validator = Validator::make($request->all(), [
                 'files' => 'nullable|array',
-                'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp,avif,jfif|max:20480',
+                'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif',
+
             ]);
 
             if ($validator->fails()) {
