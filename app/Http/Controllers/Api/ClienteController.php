@@ -501,4 +501,72 @@ class ClienteController extends Controller
             ], 500);
         }
     }
+    public function updateProfile(Request $request)
+{
+    try {
+    // $user = auth()->user();
+        $user = $request->user();
+        $cliente = Cliente::where('id_user', $user->id)->first();
+
+        if (!$cliente) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Cliente no encontrado"
+            ], 404);
+        }
+
+        // Validación
+        $validate = Validator::make($request->all(), [
+            "nombre"   => "required|string|max:191",
+            "apellido" => "required|string|max:191",
+            "email"    => "required|email|unique:users,email,".$user->id."|unique:clientes,email,".$cliente->id,
+            "telefono" => "required|string|max:14",
+            "distrito" => "nullable|string|max:191",
+        ], [
+            'email.unique' => 'El correo electrónico ya está en uso por otro cliente, porfavor ingrese otro correo',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "status" => 400,
+                "message" => "Error al intentar actualizar perfil",
+                "errors" => $validate->errors()
+            ], 400);
+        }
+
+        DB::beginTransaction();
+
+        // Actualizar tabla users
+        $user->update([
+            "name"  => $request->nombre . " " . $request->apellido,
+            "email" => $request->email
+        ]);
+
+        // Actualizar tabla clientes
+        $cliente->update([
+            "nombre"   => $request->nombre,
+            "apellido" => $request->apellido,
+            "email"    => $request->email,
+            "telefono" => $request->telefono,
+            "distrito" => $request->distrito
+        ]);
+
+        DB::commit();
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Perfil actualizado exitosamente",
+            "cliente" => $cliente
+        ], 200);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            "status" => 500,
+            "message" => "Error al actualizar perfil",
+            "error" => $e->getMessage()
+        ], 500);
+    }
+}
+
 }
