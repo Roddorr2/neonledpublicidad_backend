@@ -190,45 +190,45 @@ class AuthController extends Controller
             'token' => 'required|string',
             'password' => 'required|min:6|confirmed',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first()], 400);
         }
-    
+
         Log::info('Token recibido: ' . $request->token);
-        
+
         $tokenUser = DB::table('password_reset_tokens')
             ->whereRaw('LOWER(token) = ?', [strtolower($request->token)])
             ->first();
-    
+
         if (!$tokenUser) {
             $exactToken = DB::table('password_reset_tokens')
                 ->where('token', $request->token)
                 ->first();
-                
-            Log::info('Token no encontrado. Tokens disponibles: ' . 
+
+            Log::info('Token no encontrado. Tokens disponibles: ' .
                 json_encode(DB::table('password_reset_tokens')->pluck('token')->toArray()));
-                
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Token inválido o expirado'
             ], 404);
         }
-    
+
         $user = User::where('email', $tokenUser->email)->first();
-    
+
         if (!$user) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Usuario no encontrado'
             ], 404);
         }
-    
+
         $user->password = Hash::make($request->password);
         $user->save();
-    
+
         DB::table('password_reset_tokens')->where('token', $request->token)->delete();
-    
+
         return response()->json(['message' => 'Contraseña actualizada correctamente, ingresa desde el login'], 200);
     }
 
@@ -246,6 +246,42 @@ class AuthController extends Controller
             'rol' => $rol ? $rol->nombre : null,
             'abilities' => $user->currentAccessToken()->abilities,
             'permisos' => $permisos
+        ]);
+    }
+
+     public function changePassword(Request $request)
+    {
+
+         $validator = Validator::make($request->all(), [
+            'currentPassword' => 'required',
+            'newPassword' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'error' => 'Usuario no autenticado'
+            ], 401);
+        }
+
+        // Verificar contraseña actual
+        if (!Hash::check($request->currentPassword, $user->password)) {
+            return response()->json([
+                'error' => 'La contraseña actual es incorrecta'
+            ], 400);
+        }
+
+        // Cambiar contraseña
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Contraseña cambiada exitosamente'
         ]);
     }
 }
