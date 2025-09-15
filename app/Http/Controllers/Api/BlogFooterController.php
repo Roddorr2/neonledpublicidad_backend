@@ -21,7 +21,14 @@ class BlogFooterController extends Controller
                 'public_image2' => 'required|string',
                 'url_image2' => 'nullable|string',
                 'public_image3' => 'required|string',
-                'url_image3' => 'nullable|string'
+                'url_image3' => 'nullable|string',
+                'alt_image1' => 'nullable|string',
+                'title_image1' => 'nullable|string',
+                'alt_image2' => 'nullable|string',
+                'title_image2' => 'nullable|string',
+                'alt_image3' => 'nullable|string',
+                'title_image3' => 'nullable|string',
+                'estado' => 'nullable|boolean',
             ]);
 
             if ($validator->fails()) {
@@ -61,7 +68,14 @@ class BlogFooterController extends Controller
                 'public_image2' => 'required|string',
                 'url_image2' => 'nullable|string',
                 'public_image3' => 'required|string',
-                'url_image3' => 'nullable|string'
+                'url_image3' => 'nullable|string',
+                'alt_image1' => 'nullable|string',
+                'title_image1' => 'nullable|string',
+                'alt_image2' => 'nullable|string',
+                'title_image2' => 'nullable|string',
+                'alt_image3' => 'nullable|string',
+                'title_image3' => 'nullable|string',
+                'estado' => 'nullable|boolean',
             ]);
 
             if ($validator->fails()) {
