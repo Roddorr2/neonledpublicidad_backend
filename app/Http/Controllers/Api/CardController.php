@@ -31,7 +31,8 @@ class CardController extends Controller
     public function index()
     {
         try {
-            $cards = Card::with('blog')->orderBy('id_card', 'asc')->get();
+            // $cards = Card::with('blog')->orderBy('id_card', 'asc')->get();
+            $cards = Card::with(['blog.head'])->orderBy('id_card', 'asc')->get();
             return response()->json($cards, 200);
         } catch (\Exception $ex) {
             return response()->json([
@@ -174,7 +175,7 @@ class CardController extends Controller
                 $blog_header = BlogHead::find($blog->id_blog_head);
 
                 $file = $request->file('file');
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
                 . "{$card->id_blog}/head";
                 $fileName = "imagenPrincipal.webp";
                 $filePath = $relativePath . "/" . $fileName;
@@ -187,7 +188,7 @@ class CardController extends Controller
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
                 $basePath = '/storage/';
-               
+
                 $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
@@ -220,7 +221,7 @@ class CardController extends Controller
      public function deleteCarpetaImages(Card $card)
     {
         try {
-            $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
+            $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
             . "{$card->id_blog}";
 
             Storage::disk('public')->deleteDirectory($relativePath);
@@ -272,8 +273,8 @@ class CardController extends Controller
                 $file = $request->file('file');
                 $fileName = $request->name . ".webp";
 
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
-                // . Str::slug($blog_header->titulo) 
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
+                // . Str::slug($blog_header->titulo)
                 . "{$card->id_blog}/body";
                 $filePath = $relativePath . "/" . $fileName;
 
@@ -284,9 +285,9 @@ class CardController extends Controller
                 $image = Image::read($file)->cover(600, 350);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
 
-               
+
                     $basePath = '/storage/';
-             
+
                 $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
@@ -355,8 +356,8 @@ class CardController extends Controller
                 $file = $request->file('file');
                 $fileName = $request->name . ".webp";
 
-                $relativePath = "images/templates/plantilla{$card->id_plantilla}/" 
-                // . Str::slug($blog_header->titulo) 
+                $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
+                // . Str::slug($blog_header->titulo)
                 . "{$card->id_blog}/footer";
                 $filePath = $relativePath . "/" . $fileName;
 
@@ -366,9 +367,9 @@ class CardController extends Controller
 
                 $image = Image::read($file)->cover(250, 200);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
-              
+
                 $basePath = '/storage/';
-               
+
                 $fullUrl = $this->url_api . $basePath . $relativePath . '/' . $fileName;
                 $relativeUrl = $basePath . $relativePath . '/' . $fileName;
 
