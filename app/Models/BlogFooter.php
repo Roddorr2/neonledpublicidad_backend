@@ -18,10 +18,17 @@ class BlogFooter extends Model
         'descripcion',
         'public_image1',
         'url_image1',
+        'alt_image1',
+        'title_image1',
         'public_image2',
         'url_image2',
+        'alt_image2',
+        'title_image2',
         'public_image3',
         'url_image3',
+        'alt_image3',
+        'title_image3',
+        'estado',
     ];
 
     public function blog(){

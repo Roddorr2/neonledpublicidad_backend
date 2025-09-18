@@ -73,8 +73,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // autenticación
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
-    Route::post('/empleados/verify-password', [EmpleadoController::class, 'verifyPassword']);
+    // Route::post('/empleados/verify-password', [EmpleadoController::class, 'verifyPassword']);
     //  Route::post('/cliente/verify-password', [ClienteController::class, 'verifyPassword']);
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
 
     // imágenes
     Route::post('/empleados/{id}/image', [EmpleadoController::class, 'updateProfileImage']);
@@ -148,6 +149,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:ver-cliente')->get('/cliente/{id}', [ClienteController::class, "getById"]);
     Route::middleware('permission:ver-cliente')->get('/cliente', [ClienteController::class, "getAllByPage"]);
     Route::middleware('permission:editar-cliente')->put('/cliente/{id}', [ClienteController::class, "update"]);
+    Route::put('/mi-perfil', [ClienteController::class, "updateProfile"]);
     Route::middleware('permission:eliminar-cliente')->delete('/cliente/{id}', [ClienteController::class, "delete"]);
     Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
     Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);

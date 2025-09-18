@@ -21,10 +21,19 @@ class BlogBodyController extends Controller
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
                 'public_image1' => 'nullable|string',
                 'url_image1' => 'nullable|string',
+                'alt_image1' => 'nullable|string',
+                'title_image1' => 'nullable|string',
                 'public_image2' => 'nullable|string',
                 'url_image2' => 'nullable|string',
+                'alt_image2' => 'nullable|string',
+                'title_image2' => 'nullable|string',
                 'public_image3' => 'nullable|string',
                 'url_image3' => 'nullable|string',
+                'alt_image3' => 'nullable|string',
+                'title_image3' => 'nullable|string',
+                'flag_galeria' => 'nullable|boolean',
+                'flag_consejos' => 'nullable|boolean',
+                'flag_informacion' => 'nullable|boolean',
             ]);
 
             if ($validator->fails()) {
@@ -61,10 +70,19 @@ class BlogBodyController extends Controller
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
                 'public_image1' => 'nullable|string',
                 'url_image1' => 'nullable|string',
+                'alt_image1' => 'nullable|string',
+                'title_image1' => 'nullable|string',
                 'public_image2' => 'nullable|string',
                 'url_image2' => 'nullable|string',
+                'alt_image2' => 'nullable|string',
+                'title_image2' => 'nullable|string',
                 'public_image3' => 'nullable|string',
                 'url_image3' => 'nullable|string',
+                'alt_image3' => 'nullable|string',
+                'title_image3' => 'nullable|string',
+                'flag_galeria' => 'nullable|boolean',
+                'flag_consejos' => 'nullable|boolean',
+                'flag_informacion' => 'nullable|boolean',
             ]);
 
             if ($validator->fails()) {

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
@@ -416,21 +417,41 @@ class ClienteController extends Controller
             ], 404);
         }
 
+        DB::beginTransaction();
+        try {
+            $folderPath = "cliente/{$id}/";
 
-        $user = User::find($cliente->id_user);
-        if ($user) {
-            Log::info("Eliminando usuario vinculado con ID: " . $user->id);
-            $user->delete();
+            if (Storage::disk('public')->exists($folderPath)) {
+                Log::info("Eliminando carpeta del cliente: " . $folderPath);
+                Storage::disk('public')->deleteDirectory($folderPath);
+            }
+
+            $user = User::find($cliente->id_user);
+            if ($user) {
+                Log::info("Eliminando usuario vinculado con ID: " . $user->id);
+                $user->delete();
+            }
+
+            Log::info("Eliminando cliente con ID: $id");
+            $cliente->delete();
+
+            DB::commit();
+
+            Log::info("Cliente eliminado correctamente");
+            return response()->json([
+                "status" => 200,
+                "message" => "Cliente eliminado correctamente"
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Error al eliminar cliente: " . $e->getMessage());
+
+            return response()->json([
+                "status" => 500,
+                "message" => "Error al eliminar el cliente",
+                "error" => $e->getMessage()
+            ], 500);
         }
-
-        Log::info("Eliminando cliente con ID: $id");
-        $cliente->delete();
-
-        Log::info("Cliente eliminado correctamente");
-        return response()->json([
-            "status" => 200,
-            "message" => "Cliente eliminado correctamente"
-        ], 200);
     }
 
     public function deleteProfileImage($id)
@@ -480,4 +501,72 @@ class ClienteController extends Controller
             ], 500);
         }
     }
+    public function updateProfile(Request $request)
+{
+    try {
+    // $user = auth()->user();
+        $user = $request->user();
+        $cliente = Cliente::where('id_user', $user->id)->first();
+
+        if (!$cliente) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Cliente no encontrado"
+            ], 404);
+        }
+
+        // Validación
+        $validate = Validator::make($request->all(), [
+            "nombre"   => "required|string|max:191",
+            "apellido" => "required|string|max:191",
+            "email"    => "required|email|unique:users,email,".$user->id."|unique:clientes,email,".$cliente->id,
+            "telefono" => "required|string|max:14",
+            "distrito" => "nullable|string|max:191",
+        ], [
+            'email.unique' => 'El correo electrónico ya está en uso por otro cliente, porfavor ingrese otro correo',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                "status" => 400,
+                "message" => "Error al intentar actualizar perfil",
+                "errors" => $validate->errors()
+            ], 400);
+        }
+
+        DB::beginTransaction();
+
+        // Actualizar tabla users
+        $user->update([
+            "name"  => $request->nombre . " " . $request->apellido,
+            "email" => $request->email
+        ]);
+
+        // Actualizar tabla clientes
+        $cliente->update([
+            "nombre"   => $request->nombre,
+            "apellido" => $request->apellido,
+            "email"    => $request->email,
+            "telefono" => $request->telefono,
+            "distrito" => $request->distrito
+        ]);
+
+        DB::commit();
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Perfil actualizado exitosamente",
+            "cliente" => $cliente
+        ], 200);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            "status" => 500,
+            "message" => "Error al actualizar perfil",
+            "error" => $e->getMessage()
+        ], 500);
+    }
+}
+
 }
