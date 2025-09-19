@@ -18,9 +18,17 @@ class BlogHead extends Model
         'texto_descripcion',
         'public_image',
         'url_image',
+        'alt',
+        'title',
+        'meta_title',
+        'meta_descripcion'
     ];
 
-    public function blog(){
-        return $this->belongsTo(Blog::class, 'id_blog_head', 'id_blog_head');
+    // public function blog(){
+    //     return $this->belongsTo(Blog::class, 'id_blog_head', 'id_blog_head');
+    // }
+    public function blog()
+    {
+        return $this->hasOne(Blog::class, 'id_blog_head', 'id_blog_head');
     }
 }

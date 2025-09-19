@@ -22,11 +22,16 @@ class Card extends Model
         'id_empleado'
     ];
 
-    public function blog(){
-        return $this->hasOne(Blog::class, 'id_blog', 'id_blog');
-    }
+    // public function blog(){
+    //     return $this->hasOne(Blog::class, 'id_blog', 'id_blog');
+    // }
 
     public function empleado(){
         return $this->hasOne(Empleado::class, 'id_empleado', 'id_empleado');
+    }
+
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class, 'id_blog', 'id_blog');
     }
 }
