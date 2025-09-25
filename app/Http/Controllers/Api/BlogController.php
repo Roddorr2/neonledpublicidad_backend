@@ -98,7 +98,7 @@ class BlogController extends Controller
             $counter = 1;
             while (Blog::where("link", $link)
                        ->where("id_blog", "!=", $id)
-                       ->exists()) 
+                       ->exists())
             {
                 $link = $link . '-' . $counter;
                 $counter++;
@@ -147,7 +147,7 @@ class BlogController extends Controller
 
     public function showByLink(string $link)
     {
-        $blog = Blog::with(['card', 'body'])->where('link', $link)->first();
+        $blog = Blog::with(['card', 'body', 'head'])->where('link', $link)->first();
 
         if(!$blog) {
             return response()->json([
