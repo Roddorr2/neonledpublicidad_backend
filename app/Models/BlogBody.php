@@ -34,7 +34,7 @@ class BlogBody extends Model
     ];
 
     public function blog(){
-        return $this->belongsTo(Blog::class, 'id_blog_body', 'id_blog_body');
+        return $this->hasOne(Blog::class, 'id_blog_body', 'id_blog_body');
     }
 
     public function commend_tarjeta(){

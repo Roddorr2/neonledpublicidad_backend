@@ -24,7 +24,7 @@ class Cliente extends Model
         'id_rol',
     ];
 
-      public function user()
+    public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }

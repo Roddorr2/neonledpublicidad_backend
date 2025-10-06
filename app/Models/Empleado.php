@@ -44,8 +44,13 @@ class   Empleado extends Model
         });
     }
 
-    public function blog()
+    // public function blog()
+    // {
+    //     return $this->hasMany(Blog::class, 'id_empleado', 'id_empleado');
+    // }
+
+    public function card()
     {
-        return $this->hasMany(Blog::class, 'id_empleado', 'id_empleado');
+        return $this->hasMany(Card::class, 'id_empleado', 'id_empleado');
     }
 }
