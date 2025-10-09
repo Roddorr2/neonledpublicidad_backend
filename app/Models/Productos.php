@@ -11,9 +11,26 @@ class Productos extends Model
     protected $primaryKey = 'id_producto';
 
     protected $fillable = [
+        'id_empleado',
         'nombre',
-        'descripcion'
+        'descripcion',
+        'path_main',
+        'path_background',
+        'path1', 'tituloimg1', 'descripcionimg1',
+        'path2', 'tituloimg2', 'descripcionimg2',
+        'path3', 'tituloimg3', 'descripcionimg3',
+        'caracteristicas_descrip',
+        'ventajas_descrip',
+        'consumoenergetico_descrip',
+        'iluminacion_descrip',
+        'durabilidad_descrip',
+        'estado'
     ];
 
     public $timestamps = false;
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
+    }
 }

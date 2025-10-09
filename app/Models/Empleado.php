@@ -53,4 +53,9 @@ class   Empleado extends Model
     {
         return $this->hasMany(Card::class, 'id_empleado', 'id_empleado');
     }
+
+    public function producto()
+    {
+        return $this->hasMany(Producto::class, 'id_empleado', 'id_empleado');
+    }
 }

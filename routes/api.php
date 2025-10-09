@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\PropuestaController;
+use App\Http\Controllers\Api\productosController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -39,8 +40,6 @@ Route::get('/blogs', [BlogController::class, "index"]);
 Route::get('/blog_head/{id}', [BlogHeadController::class, "show"]);
 Route::get('/blog_footer/{id}', [BlogFooterController::class, "show"]);
 Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs públicos
-
-
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
@@ -187,4 +186,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:crear-permisos')->post('/permisos', [PermisoController::class, "store"]);
     Route::middleware('permission:editar-permisos')->put('/permisos/{id}', [PermisoController::class, "update"]);
     Route::middleware('permission:eliminar-permisos')->delete('/permisos/{id}', [PermisoController::class, "destroy"]);
+
+    Route::middleware('permission:ver-productos')->get('/productos', [ProductosController::class, 'get']);
+    Route::middleware('permission:ver-productos')->get('/productos/{id}', [ProductosController::class, 'getById']);
+    Route::middleware('permission:ver-productos')->get('/productos_compacto', [ProductosController::class, 'getCompact']);
+    Route::middleware('permission:crear-productos')->post('/productos', [ProductosController::class, 'create']);
+    Route::middleware('permission:editar-productos')->put('/productos/{id}', [ProductosController::class, 'update']);
+    Route::middleware('permission:eliminar-productos')->delete('/productos/{id}', [ProductosController::class, 'destroy']);
 });
