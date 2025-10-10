@@ -20,10 +20,8 @@ class ProductosController extends Controller
     public function get()
     {
         try {
-            // $productos = Productos::orderBy('id_producto', 'asc')->get();
-            $productos = Productos::with('empleado')->orderBy('id_producto', 'asc')->get();
-
-            $productosMapeados = $productos->map(function ($producto) {
+            $productosPaginados = Productos::with('empleado')->orderBy('id_producto', 'asc')->paginate(7);
+            $productosMapeados = $productosPaginados->getCollection()->map(function ($producto) {
                 $images = [];
 
                 if ($producto->path_main) {
@@ -61,6 +59,7 @@ class ProductosController extends Controller
 
                 $producto->images = $images;
 
+                // Eliminamos las columnas originales para limpiar la respuesta
                 unset($producto->path1, $producto->tituloimg1, $producto->descripcionimg1);
                 unset($producto->path2, $producto->tituloimg2, $producto->descripcionimg2);
                 unset($producto->path3, $producto->tituloimg3, $producto->descripcionimg3);
@@ -69,9 +68,11 @@ class ProductosController extends Controller
                 return $producto;
             });
 
+            $productosPaginados->setCollection($productosMapeados);
+
             return response()->json([
                 'status' => 200,
-                'data' => $productosMapeados
+                'data' => $productosPaginados
             ], 200);
         } catch (\Exception $ex) {
             return response()->json([
@@ -85,9 +86,9 @@ class ProductosController extends Controller
     public function getById(int $id)
     {
         try{
-            // $producto = Productos::findOrFail($id);
-            $producto = Productos::with('empleado')->findOrFail($id);
-
+            $producto = Productos::with(['empleado' => function ($query) {
+                $query->select('id_empleado');
+            }])->findOrFail($id);
             $images = [];
 
             if ($producto->path_main) {
@@ -154,18 +155,19 @@ class ProductosController extends Controller
     public function getCompact()
     {
         try {
-            $productos = Productos::select('id_producto', 'id_empleado','nombre', 'descripcion', 'path_main', 'estado')->orderBy('id_producto', 'asc')->get();
-
-            $productosMapeados = $productos->map(function ($producto) {
+            $productosPaginados = Productos::select('id_producto', 'id_empleado','nombre', 'descripcion', 'path_main', 'estado')->orderBy('id_producto', 'asc')->paginate(7);
+            $productosMapeados = $productosPaginados->getCollection()->map(function ($producto) {
                 if ($producto->path_main && !Str::contains($producto->path_main, 'http')) {
                     $producto->path_main = Storage::url($producto->path_main);
                 }
                 return $producto;
             });
 
+            $productosPaginados->setCollection($productosMapeados);
+
             return response()->json([
                 'status' => 200,
-                'data' => $productosMapeados
+                'data' => $productosPaginados
             ], 200);
         } catch (\Exception $ex) {
             return response()->json([

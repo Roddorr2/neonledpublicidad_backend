@@ -28,6 +28,8 @@ class Productos extends Model
     ];
 
     public $timestamps = false;
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = null;
 
     public function empleado()
     {
