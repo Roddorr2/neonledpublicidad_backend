@@ -16,24 +16,24 @@ class BlogBodyController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
+                'titulo' => 'required|string|min:4|max:50',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
-                'public_image1' => 'nullable|string',
-                'url_image1' => 'nullable|string',
-                'alt_image1' => 'nullable|string',
-                'title_image1' => 'nullable|string',
-                'public_image2' => 'nullable|string',
+                'public_image1' => 'required|string', // no nullable MIGRACION???
+                'url_image1' => 'nulable|string', // required MIGRACION???
+                'alt_image1' => 'nullable|string|min:60|max:120', //alt 60 - 120
+                'title_image1' => 'nullable|string|min:50|max:70', //title 50 - 70
+                'public_image2' => 'required|string', //no nullable
                 'url_image2' => 'nullable|string',
-                'alt_image2' => 'nullable|string',
-                'title_image2' => 'nullable|string',
+                'alt_image2' => 'nullable|string|min:60|max:120',
+                'title_image2' => 'nullable|string|min:50|max:70',
                 'public_image3' => 'nullable|string',
                 'url_image3' => 'nullable|string',
-                'alt_image3' => 'nullable|string',
-                'title_image3' => 'nullable|string',
-                'flag_galeria' => 'nullable|boolean',
-                'flag_consejos' => 'nullable|boolean',
-                'flag_informacion' => 'nullable|boolean',
+                'alt_image3' => 'nullable|string|min:60|max:120',
+                'title_image3' => 'nullable|string|min:50|max:70',
+                'flag_galeria' => 'nullable|boolean', // no nullable ???
+                'flag_consejos' => 'nullable|boolean', // no nullable ???
+                'flag_informacion' => 'nullable|boolean', // no nullable ???
             ]);
 
             if ($validator->fails()) {
@@ -65,6 +65,25 @@ class BlogBodyController extends Controller
     public function update(Request $request, int $id){
         try{
             $validator =  Validator::make($request->all(), [
+                'titulo' => 'required|string|min:4|max:50',
+                'descripcion' => 'required|string',
+                'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
+                'public_image1' => 'nullable|string', // yes nullable
+                'url_image1' => 'nullable|string',
+                'alt_image1' => 'nullable|string|min:60|max:120', //alt 60 - 120
+                'title_image1' => 'nullable|string|min:50|max:70', //title 50 - 70
+                'public_image2' => 'string', //no nullable
+                'url_image2' => 'nullable|string',
+                'alt_image2' => 'nullable|string|min:60|max:120',
+                'title_image2' => 'nullable|string|min:50|max:70',
+                'public_image3' => 'nullable|string',
+                'url_image3' => 'nullable|string',
+                'alt_image3' => 'nullable|string|min:60|max:120',
+                'title_image3' => 'nullable|string|min:50|max:70',
+                'flag_galeria' => 'nullable|boolean',
+                'flag_consejos' => 'nullable|boolean',
+                'flag_informacion' => 'nullable|boolean',
+                /*
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
@@ -83,6 +102,7 @@ class BlogBodyController extends Controller
                 'flag_galeria' => 'nullable|boolean',
                 'flag_consejos' => 'nullable|boolean',
                 'flag_informacion' => 'nullable|boolean',
+                */
             ]);
 
             if ($validator->fails()) {
