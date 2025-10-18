@@ -16,15 +16,15 @@ class BlogHeadController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:50',
+                'titulo' => 'required|string',
                 'texto_frase' => 'required|string|max:70',
                 'texto_descripcion' => 'required|string|max:120',
                 'public_image' => 'required|string',
                 'url_image' => 'nullable|string',
-                'alt'=> 'nullable|string',
-                'title'=> 'nullable|string',
-                'meta_title'=> 'nullable|string',
-                'meta_descripcion'=> 'nullable|string'
+                'alt'=> 'nullable|string|min:60|max:120',
+                'title'=> 'nullable|string|min:50|max:70',
+                'meta_title'=> 'nullable|string|min:50|max:60',
+                'meta_descripcion'=> 'nullable|string|min:150|max:160'
             ]);
 
             if ($validator->fails()) {
@@ -56,15 +56,15 @@ class BlogHeadController extends Controller
     public function update(Request $request, int $id){
         try{
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:50',
+                'titulo' => 'required|string',
                 'texto_frase' => 'required|string|max:70',
                 'texto_descripcion' => 'required|string|max:120',
                 'public_image' => 'required|string',
                 'url_image' => 'nullable|string',
-                'alt'=> 'nullable|string',
-                'title'=> 'nullable|string',
-                'meta_title'=> 'nullable|string',
-                'meta_descripcion'=> 'nullable|string'
+                'alt'=> 'nullable|string|min:60|max:120',
+                'title'=> 'nullable|string|min:50|max:70',
+                'meta_title'=> 'nullable|string|min:50|max:60',
+                'meta_descripcion'=> 'nullable|string|min:150|max:160'
             ]);
 
             if ($validator->fails()) {
