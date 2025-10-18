@@ -16,7 +16,7 @@ class BlogBodyController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|min:4|max:50',
+                'titulo' => 'required|string',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
                 'public_image1' => 'required|string', // no nullable MIGRACION???

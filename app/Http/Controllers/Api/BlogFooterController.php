@@ -14,7 +14,7 @@ class BlogFooterController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|min:2|max:50', // min max ? 
+                'titulo' => 'required|string', // min max ? 
                 'descripcion' => 'required|string',
                 'public_image1' => 'nullable|string',//'required|string',
                 'url_image1' => 'nullable|string',
@@ -61,7 +61,7 @@ class BlogFooterController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:191', // min max ? 
+                'titulo' => 'required|string', // min max ? 
                 'descripcion' => 'required|string',
                 'public_image1' => 'nullable|string',//'required|string',
                 'url_image1' => 'nullable|string',
