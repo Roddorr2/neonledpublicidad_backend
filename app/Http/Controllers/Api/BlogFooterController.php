@@ -29,6 +29,8 @@ class BlogFooterController extends Controller
                 'alt_image3' => 'nullable|string|min:60|max:120',
                 'title_image3' => 'nullable|string|min:50|max:70',
                 'estado' => 'nullable|boolean',// no nullable ???
+                'keyword' => 'nullable|string', // nuevos campos
+                'link' => 'nullable|string' // nuevos campos
             ]);
 
             if ($validator->fails()) {
@@ -76,6 +78,8 @@ class BlogFooterController extends Controller
                 'alt_image3' => 'nullable|string|min:60|max:120',
                 'title_image3' => 'nullable|string|min:50|max:70',
                 'estado' => 'nullable|boolean',// no nullable ???
+                'keyword' => 'nullable|string',
+                'link' => 'nullable|string'
                 /*
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',

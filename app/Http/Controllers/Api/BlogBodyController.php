@@ -13,17 +13,16 @@ class BlogBodyController extends Controller
 
     public function create(Request $request)
     {
-        try{
-
+        try {
             $validator = Validator::make($request->all(), [
                 'titulo' => 'required|string',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
-                'public_image1' => 'required|string', // no nullable MIGRACION???
-                'url_image1' => 'nulable|string', // required MIGRACION???
-                'alt_image1' => 'nullable|string|min:60|max:120', //alt 60 - 120
-                'title_image1' => 'nullable|string|min:50|max:70', //title 50 - 70
-                'public_image2' => 'required|string', //no nullable
+                'public_image1' => 'required|string', // no nullable
+                'url_image1' => 'nullable|string', // puede ser nullable
+                'alt_image1' => 'nullable|string|min:60|max:120', // alt 60 - 120
+                'title_image1' => 'nullable|string|min:50|max:70', // title 50 - 70
+                'public_image2' => 'required|string', // no nullable
                 'url_image2' => 'nullable|string',
                 'alt_image2' => 'nullable|string|min:60|max:120',
                 'title_image2' => 'nullable|string|min:50|max:70',
@@ -31,9 +30,9 @@ class BlogBodyController extends Controller
                 'url_image3' => 'nullable|string',
                 'alt_image3' => 'nullable|string|min:60|max:120',
                 'title_image3' => 'nullable|string|min:50|max:70',
-                'flag_galeria' => 'nullable|boolean', // no nullable ???
-                'flag_consejos' => 'nullable|boolean', // no nullable ???
-                'flag_informacion' => 'nullable|boolean', // no nullable ???
+                'flag_galeria' => 'nullable|boolean', // puede ser nullable
+                'flag_consejos' => 'nullable|boolean', // puede ser nullable
+                'flag_informacion' => 'nullable|boolean', // puede ser nullable
             ]);
 
             if ($validator->fails()) {
@@ -51,8 +50,7 @@ class BlogBodyController extends Controller
                 "message" => "BlogBody creado correctamente",
                 "id" => $blogBody->id_blog_body
             ], 200);
-
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             DB::rollback();
             return response()->json([
                 "status" => 500,
@@ -65,14 +63,14 @@ class BlogBodyController extends Controller
     public function update(Request $request, int $id){
         try{
             $validator =  Validator::make($request->all(), [
-                'titulo' => 'required|string|min:4|max:50',
+                'titulo' => 'required|string',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
-                'public_image1' => 'nullable|string', // yes nullable
-                'url_image1' => 'nullable|string',
-                'alt_image1' => 'nullable|string|min:60|max:120', //alt 60 - 120
-                'title_image1' => 'nullable|string|min:50|max:70', //title 50 - 70
-                'public_image2' => 'string', //no nullable
+                'public_image1' => 'required|string', // no nullable
+                'url_image1' => 'nullable|string', // puede ser nullable
+                'alt_image1' => 'nullable|string|min:60|max:120', // alt 60 - 120
+                'title_image1' => 'nullable|string|min:50|max:70', // title 50 - 70
+                'public_image2' => 'required|string', // no nullable
                 'url_image2' => 'nullable|string',
                 'alt_image2' => 'nullable|string|min:60|max:120',
                 'title_image2' => 'nullable|string|min:50|max:70',
@@ -80,9 +78,9 @@ class BlogBodyController extends Controller
                 'url_image3' => 'nullable|string',
                 'alt_image3' => 'nullable|string|min:60|max:120',
                 'title_image3' => 'nullable|string|min:50|max:70',
-                'flag_galeria' => 'nullable|boolean',
-                'flag_consejos' => 'nullable|boolean',
-                'flag_informacion' => 'nullable|boolean',
+                'flag_galeria' => 'nullable|boolean', // puede ser nullable
+                'flag_consejos' => 'nullable|boolean', // puede ser nullable
+                'flag_informacion' => 'nullable|boolean', // puede ser nullable
                 /*
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
