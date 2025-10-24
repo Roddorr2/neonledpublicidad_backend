@@ -21,6 +21,6 @@ class Servicio extends Model
     public $timestamps = false;
 
     public function reclamacion(){
-        return $this->belongsTo(Reclamacion::class, 'id_servicio');
+        return $this->hasMany(Reclamacion::class, 'id_servicio');
     }
 }

@@ -27,7 +27,7 @@ class Card extends Model
     // }
 
     public function empleado(){
-        return $this->hasOne(Empleado::class, 'id_empleado', 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
     }
 
     public function blog()

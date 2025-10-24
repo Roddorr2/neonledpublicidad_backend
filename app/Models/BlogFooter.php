@@ -34,6 +34,6 @@ class BlogFooter extends Model
     ];
 
     public function blog(){
-        return $this->belongsTo(Blog::class, 'id_blog_footer', 'id_blog_footer');
+        return $this->hasOne(Blog::class, 'id_blog_footer', 'id_blog_footer');
     }
 }
