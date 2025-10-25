@@ -27,13 +27,13 @@ return new class extends Migration
             $table->string('tituloimg3')->nullable();
             $table->text('descripcionimg3')->nullable();
 
-
             $table->text('caracteristicas_descrip')->nullable();
             $table->text('ventajas_descrip')->nullable();
             $table->text('consumoenergetico_descrip')->nullable();
             $table->text('iluminacion_descrip')->nullable();
             $table->text('durabilidad_descrip')->nullable();
 
+            $table->timestamp('created_at')->nullable();
             $table->tinyInteger('estado')->default(1)->comment('1=activo, 0=inactivo');
         });
     }
@@ -55,6 +55,7 @@ return new class extends Migration
                 'path3','tituloimg3','descripcionimg3',
                 'caracteristicas_descrip','ventajas_descrip',
                 'consumoenergetico_descrip','iluminacion_descrip','durabilidad_descrip',
+                'created_at',
                 'estado'
             ]);
         });

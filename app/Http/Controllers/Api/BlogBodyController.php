@@ -18,11 +18,11 @@ class BlogBodyController extends Controller
                 'titulo' => 'required|string',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
-                'public_image1' => 'required|string', // no nullable
+                'public_image1' => 'nullable|string', // no nullable
                 'url_image1' => 'nullable|string', // puede ser nullable
                 'alt_image1' => 'nullable|string|min:60|max:120', // alt 60 - 120
                 'title_image1' => 'nullable|string|min:50|max:70', // title 50 - 70
-                'public_image2' => 'required|string', // no nullable
+                'public_image2' => 'nullable|string', // no nullable
                 'url_image2' => 'nullable|string',
                 'alt_image2' => 'nullable|string|min:60|max:120',
                 'title_image2' => 'nullable|string|min:50|max:70',
@@ -66,11 +66,11 @@ class BlogBodyController extends Controller
                 'titulo' => 'required|string',
                 'descripcion' => 'required|string',
                 'id_commend_tarjeta' => 'nullable|integer|exists:commend_tarjetas,id_commend_tarjeta',
-                'public_image1' => 'required|string', // no nullable
+                'public_image1' => 'nullable|string', // no nullable
                 'url_image1' => 'nullable|string', // puede ser nullable
                 'alt_image1' => 'nullable|string|min:60|max:120', // alt 60 - 120
                 'title_image1' => 'nullable|string|min:50|max:70', // title 50 - 70
-                'public_image2' => 'required|string', // no nullable
+                'public_image2' => 'nullable|string', // no nullable
                 'url_image2' => 'nullable|string',
                 'alt_image2' => 'nullable|string|min:60|max:120',
                 'title_image2' => 'nullable|string|min:50|max:70',

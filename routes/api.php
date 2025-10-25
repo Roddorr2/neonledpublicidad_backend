@@ -43,7 +43,7 @@ Route::get('/blog_body/{id}', [BlogBodyController::class, "show"]);// blogs púb
 
 Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 
-Route::get('/productos', [ProductosController::class, 'get']);
+// Route::get('/productos', [ProductosController::class, 'get']);
 Route::get('/productos/{id}', [ProductosController::class, 'getById']);
 Route::get('/productos_compacto', [ProductosController::class, 'getCompact']);
 
@@ -192,7 +192,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-permisos')->delete('/permisos/{id}', [PermisoController::class, "destroy"]);
 
     // productos
-    // Route::middleware('permission:ver-productos')->get('/productos', [ProductosController::class, 'get']);
+    Route::middleware('permission:ver-productos')->get('/productos', [ProductosController::class, 'get']);
     // Route::middleware('permission:ver-productos')->get('/productos/{id}', [ProductosController::class, 'getById']);
     // Route::middleware('permission:ver-productos')->get('/productos_compacto', [ProductosController::class, 'getCompact']);
     Route::middleware('permission:crear-productos')->post('/productos', [ProductosController::class, 'create']);

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
-
+use Illuminate\Support\Carbon;
 
 class CardController extends Controller
 {
@@ -174,15 +174,30 @@ class CardController extends Controller
 
                 $blog_header = BlogHead::find($blog->id_blog_head);
 
+                $oldRelativeUrl = $card->url_image;
+
+                if ($oldRelativeUrl) {
+                    $oldFilePath = str_replace('/storage/', '', $oldRelativeUrl);
+
+                    if (Storage::disk('public')->exists($oldFilePath)) {
+                        Storage::disk('public')->delete($oldFilePath);
+                        Log::info("Archivo antiguo eliminado: " . $oldFilePath);
+                    }
+                }
+
                 $file = $request->file('file');
                 $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
                 . "{$card->id_blog}/head";
-                $fileName = "imagenPrincipal.webp";
+
+                $baseName = "imagenPrincipal";
+                $timestamp = Carbon::now()->format('Ymd_His');
+
+                $fileName = "{$baseName}_{$timestamp}.webp";
                 $filePath = $relativePath . "/" . $fileName;
 
-                if (Storage::disk('public')->exists($filePath)) {
-                    Storage::disk('public')->delete($filePath);
-                }
+                // if (Storage::disk('public')->exists($filePath)) {
+                //     Storage::disk('public')->delete($filePath);
+                // }
 
                 $image = Image::read($file)->cover(1900, 800);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
@@ -270,17 +285,32 @@ class CardController extends Controller
                 $blog_header = BlogHead::find($blog->id_blog_head);
                 $blog_body = BlogBody::find($blog->id_blog_body);
 
+                $oldRelativeUrl = $blog_body->{'url_' . $request->name} ?? null;
+
+                if ($oldRelativeUrl) {
+                    $oldFilePath = str_replace('/storage/', '', $oldRelativeUrl);
+
+                    if (Storage::disk('public')->exists($oldFilePath)) {
+                        Storage::disk('public')->delete($oldFilePath);
+                        Log::info("Archivo antiguo del Body eliminado: " . $oldFilePath);
+                    }
+                }
+
                 $file = $request->file('file');
-                $fileName = $request->name . ".webp";
+
+                $baseName = $request->name;
+                $timestamp = Carbon::now()->format('Ymd_His');
+
+                $fileName = "{$baseName}_{$timestamp}.webp";
 
                 $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
                 // . Str::slug($blog_header->titulo)
                 . "{$card->id_blog}/body";
                 $filePath = $relativePath . "/" . $fileName;
 
-                if (Storage::disk('public')->exists($filePath)) {
-                    Storage::disk('public')->delete($filePath);
-                }
+                // if (Storage::disk('public')->exists($filePath)) {
+                //     Storage::disk('public')->delete($filePath);
+                // }
 
                 $image = Image::read($file)->cover(600, 350);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());
@@ -353,17 +383,32 @@ class CardController extends Controller
                 $blog_header = BlogHead::find($blog->id_blog_head);
                 $blog_footer = BlogFooter::find($blog->id_blog_footer);
 
+                $oldRelativeUrl = $blog_footer->{'url_' . $request->name} ?? null;
+
+                if ($oldRelativeUrl) {
+                    $oldFilePath = str_replace('/storage/', '', $oldRelativeUrl);
+
+                    if (Storage::disk('public')->exists($oldFilePath)) {
+                        Storage::disk('public')->delete($oldFilePath);
+                        Log::info("Archivo antiguo del Footer eliminado: " . $oldFilePath);
+                    }
+                }
+
                 $file = $request->file('file');
-                $fileName = $request->name . ".webp";
+
+                $baseName = $request->name;
+                $timestamp = Carbon::now()->format('Ymd_His');
+
+                $fileName = "{$baseName}_{$timestamp}.webp";
 
                 $relativePath = "images/templates/plantilla{$card->id_plantilla}/"
                 // . Str::slug($blog_header->titulo)
                 . "{$card->id_blog}/footer";
                 $filePath = $relativePath . "/" . $fileName;
 
-                if (Storage::disk('public')->exists($filePath)) {
-                    Storage::disk('public')->delete($filePath);
-                }
+                // if (Storage::disk('public')->exists($filePath)) {
+                //     Storage::disk('public')->delete($filePath);
+                // }
 
                 $image = Image::read($file)->cover(250, 200);
                 Storage::disk('public')->put("{$relativePath}/{$fileName}", (string) $image->toWebp());

@@ -58,4 +58,9 @@ class   Empleado extends Model
     {
         return $this->hasMany(Producto::class, 'id_empleado', 'id_empleado');
     }
+
+    public function blogAuditoria()
+    {
+        return $this->hasMany(BlogAuditoria::class, 'id_empleado', 'id_empleado');
+    }
 }
