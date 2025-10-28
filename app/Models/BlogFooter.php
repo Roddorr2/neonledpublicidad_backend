@@ -29,9 +29,11 @@ class BlogFooter extends Model
         'alt_image3',
         'title_image3',
         'estado',
+        'keyword',
+        'link'
     ];
 
     public function blog(){
-        return $this->belongsTo(Blog::class, 'id_blog_footer', 'id_blog_footer');
+        return $this->hasOne(Blog::class, 'id_blog_footer', 'id_blog_footer');
     }
 }

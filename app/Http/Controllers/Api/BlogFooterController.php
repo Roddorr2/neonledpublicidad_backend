@@ -14,21 +14,23 @@ class BlogFooterController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
+                'titulo' => 'required|string', // min max ? 
                 'descripcion' => 'required|string',
-                'public_image1' => 'required|string',
+                'public_image1' => 'nullable|string',//'required|string',
                 'url_image1' => 'nullable|string',
-                'public_image2' => 'required|string',
-                'url_image2' => 'nullable|string',
-                'public_image3' => 'required|string',
+                'public_image2' => 'nullable|string',//'required|string',
+                'url_image2' => 'nullable|string',//'required|string',
+                'public_image3' => 'nullable|string',//'required|string',
                 'url_image3' => 'nullable|string',
-                'alt_image1' => 'nullable|string',
-                'title_image1' => 'nullable|string',
-                'alt_image2' => 'nullable|string',
-                'title_image2' => 'nullable|string',
-                'alt_image3' => 'nullable|string',
-                'title_image3' => 'nullable|string',
-                'estado' => 'nullable|boolean',
+                'alt_image1' => 'nullable|string|min:60|max:120',
+                'title_image1' => 'nullable|string|min:50|max:70',
+                'alt_image2' => 'nullable|string|min:60|max:120',
+                'title_image2' => 'nullable|string|min:50|max:70',
+                'alt_image3' => 'nullable|string|min:60|max:120',
+                'title_image3' => 'nullable|string|min:50|max:70',
+                'estado' => 'nullable|boolean',// no nullable ???
+                'keyword' => 'nullable|string', // nuevos campos
+                'link' => 'nullable|string' // nuevos campos
             ]);
 
             if ($validator->fails()) {
@@ -61,6 +63,24 @@ class BlogFooterController extends Controller
     {
         try{
             $validator = Validator::make($request->all(), [
+                'titulo' => 'required|string', // min max ? 
+                'descripcion' => 'required|string',
+                'public_image1' => 'nullable|string',//'required|string',
+                'url_image1' => 'nullable|string',
+                'public_image2' => 'nullable|string',//'required|string',
+                'url_image2' => 'nullable|string',//'required|string',
+                'public_image3' => 'nullable|string',//'required|string',
+                'url_image3' => 'nullable|string',
+                'alt_image1' => 'nullable|string|min:60|max:120',
+                'title_image1' => 'nullable|string|min:50|max:70',
+                'alt_image2' => 'nullable|string|min:60|max:120',
+                'title_image2' => 'nullable|string|min:50|max:70',
+                'alt_image3' => 'nullable|string|min:60|max:120',
+                'title_image3' => 'nullable|string|min:50|max:70',
+                'estado' => 'nullable|boolean',// no nullable ???
+                'keyword' => 'nullable|string',
+                'link' => 'nullable|string'
+                /*
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
                 'public_image1' => 'required|string',
@@ -76,6 +96,7 @@ class BlogFooterController extends Controller
                 'alt_image3' => 'nullable|string',
                 'title_image3' => 'nullable|string',
                 'estado' => 'nullable|boolean',
+                */
             ]);
 
             if ($validator->fails()) {

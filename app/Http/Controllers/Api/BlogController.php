@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogBody;
+use App\Services\AuditoriaService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -27,12 +28,15 @@ class BlogController extends Controller
                 'id_blog_head' => 'required|integer|exists:blog_heads,id_blog_head',
                 'id_blog_body' => 'required|integer|exists:blog_bodies,id_blog_body',
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
-                'fecha' => 'required|date'
+                'fecha' => 'required|date',
+                'id_empleado' => 'required|integer|exists:empleados,id_empleado'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 400);
             }
+
+            $id_empleado = $request->id_empleado;
 
             DB::beginTransaction();
 
@@ -51,6 +55,12 @@ class BlogController extends Controller
             $data["link"] = $link;
 
             $blog = Blog::create($data);
+
+            AuditoriaService::registrar(
+                $blog->id_blog,
+                $id_empleado,
+                'CREAR'
+            );
 
             DB::commit();
 
@@ -72,12 +82,15 @@ class BlogController extends Controller
                 'id_blog_head' => 'required|integer|exists:blog_heads,id_blog_head',
                 'id_blog_body' => 'required|integer|exists:blog_bodies,id_blog_body',
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
-                'fecha' => 'required|date'
+                'fecha' => 'required|date',
+                'id_empleado' => 'required|integer|exists:empleados,id_empleado'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors'=> $validator->errors()], 400);
             }
+
+            $id_empleado = $request->id_empleado;
 
             $blog = Blog::find($id);
 
@@ -98,7 +111,7 @@ class BlogController extends Controller
             $counter = 1;
             while (Blog::where("link", $link)
                        ->where("id_blog", "!=", $id)
-                       ->exists()) 
+                       ->exists())
             {
                 $link = $link . '-' . $counter;
                 $counter++;
@@ -108,6 +121,12 @@ class BlogController extends Controller
             $data["link"] = $link;
 
             $blog->update($data);
+
+            AuditoriaService::registrar(
+                $blog->id_blog,
+                $id_empleado,
+                'ACTUALIZAR'
+            );
 
             DB::commit();
 
@@ -147,7 +166,7 @@ class BlogController extends Controller
 
     public function showByLink(string $link)
     {
-        $blog = Blog::with(['card', 'body'])->where('link', $link)->first();
+        $blog = Blog::with(['card', 'body', 'head'])->where('link', $link)->first();
 
         if(!$blog) {
             return response()->json([
@@ -163,16 +182,38 @@ class BlogController extends Controller
         ], 200);
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id, Request $request)
     {
         try{
+            $validator = Validator::make($request->all(), [
+                'id_empleado' => 'required|integer|exists:empleados,id_empleado',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors'=> $validator->errors()], 400);
+            }
+
+            $id_empleado = $request->id_empleado;
 
             $blog = Blog::with(['card', 'head'])->find($id);
 
+            if (!$blog){
+                return response()->json([
+                    'status'=> 404,
+                    'message'=> 'Blog no encontrado'
+                ], 404);
+            }
+
+            DB::beginTransaction();
+
+            AuditoriaService::registrar(
+                $id,
+                $id_empleado,
+                'ELIMINAR'
+            );
+
             $id_header_blog = $blog->id_blog_head;
-
             $id_body_blog = $blog->id_blog_body;
-
             $id_footer_blog = $blog->id_blog_footer;
 
             $relativePath = "images/templates/plantilla{$blog->card->id_plantilla}/" . Str::slug($blog->head->titulo) . $blog->id_blog;
@@ -184,7 +225,6 @@ class BlogController extends Controller
 
             //primero card
             $card_object = new CardController();
-
             $card_object->destroy($blog->card->id_card);
 
             //segundo blog
@@ -210,12 +250,15 @@ class BlogController extends Controller
             //por ultimo blog_body
             $blog_body_model->delete();
 
+            DB::commit();
+
             return response()->json([
                 "status" => 200,
                 "message" => "Blog eliminado correctamente"
             ],200);
 
         }catch(\Exception $e){
+            DB::rollback();
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

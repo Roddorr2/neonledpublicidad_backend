@@ -25,6 +25,6 @@ class EmailModal extends Model
     public $timestamps = false;
 
     public function modalServicio(){
-        return $this->belongsTo(modalservicios::class,'id_modal_servicio');
+        return $this->belongsTo(modalservicios::class,'id_modalservicio', 'id_modalservicio');
     }
 }
