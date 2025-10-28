@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\PropuestaController;
 use App\Http\Controllers\Api\productosController;
+use App\Http\Controllers\Api\BlogAuditoriaController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -90,6 +91,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones', [ReclamacionesController::class, "get"]);
     Route::middleware('permission:ver-modales')->get('/modales', [ModalesController::class, "get"]);
     Route::middleware('permission:ver-blogs')->get('/cards/blog/{id?}', [CardController::class, "get"]);
+    Route::middleware('permission:ver-blogs')->get('/blogs_auditoria', [BlogAuditoriaController::class, 'show']);
     Route::middleware('permission:ver-contactos')->get('/contactanos/{id}', [ContactanosController::class, "getById"]);
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones/{id}', [ReclamacionesController::class, "getById"]);
     Route::middleware('permission:ver-modales')->get('/modales/{id}', [ModalesController::class, "getById"]);
