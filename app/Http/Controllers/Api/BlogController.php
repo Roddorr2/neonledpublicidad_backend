@@ -83,7 +83,8 @@ class BlogController extends Controller
                 'id_blog_body' => 'required|integer|exists:blog_bodies,id_blog_body',
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
                 'fecha' => 'required|date',
-                'id_empleado' => 'required|integer|exists:empleados,id_empleado'
+                'id_empleado' => 'required|integer|exists:empleados,id_empleado',
+                'descripcion' => 'nullable|string',
             ]);
 
             if ($validator->fails()) {
@@ -91,6 +92,7 @@ class BlogController extends Controller
             }
 
             $id_empleado = $request->id_empleado;
+            $descripcion = $request->descripcion;
 
             $blog = Blog::find($id);
 
@@ -125,7 +127,8 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
-                'ACTUALIZAR'
+                'ACTUALIZAR',
+                $descripcion
             );
 
             DB::commit();
