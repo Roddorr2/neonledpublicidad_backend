@@ -33,6 +33,7 @@ class BlogBodyController extends Controller
                 'flag_galeria' => 'nullable|boolean', // puede ser nullable
                 'flag_consejos' => 'nullable|boolean', // puede ser nullable
                 'flag_informacion' => 'nullable|boolean', // puede ser nullable
+                'titulo_tarjeta'=>'nullable|string', // titulo tarjetas
             ]);
 
             if ($validator->fails()) {
@@ -81,6 +82,7 @@ class BlogBodyController extends Controller
                 'flag_galeria' => 'nullable|boolean', // puede ser nullable
                 'flag_consejos' => 'nullable|boolean', // puede ser nullable
                 'flag_informacion' => 'nullable|boolean', // puede ser nullable
+                'titulo_tarjeta'=>'nullable|string|max:255', // titulo tarjetas
                 /*
                 'titulo' => 'required|string|max:255',
                 'descripcion' => 'required|string',
