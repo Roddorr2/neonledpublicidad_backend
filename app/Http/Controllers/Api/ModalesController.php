@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendEmailJob;
+
 class ModalesController extends Controller
 {
     public function get(Request $request)
     {
-        $modals = modalservicios::with('servicio')->orderBy('id_modalservicio', 'asc')->paginate(4);
+        // $modals = modalservicios::with('servicio')->orderBy('id_modalservicio', 'asc')->paginate(4);
+        $modals = Modalservicios::orderBy('id_modalservicio', 'asc')->paginate(4);
 
         return response()->json($modals, 200);
     }
@@ -42,7 +45,7 @@ class ModalesController extends Controller
                 'nombre' => 'required|string|max:100',
                 'telefono' => 'required|string|max:9',
                 'correo' => 'required|email|max:200',
-                'id_servicio' => 'required|integer|min:1|max:4',
+                'id_producto' => 'required|integer|min:1|max:15',
             ]);
 
             DB::beginTransaction();
@@ -90,9 +93,16 @@ class ModalesController extends Controller
                     'telefono' => $request->telefono
                 ];
 
-                Mail::to($request->correo)->send(
-                    new MailService(1, $data, $request->id_servicio)
-                );
+                //AQUI SE ENVÍA EL PRIMER CORREO (inmediato)
+                dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,1));
+
+                //AQUI SE ENVÍA EL SEGUNDO CORREO (+2 días después)
+                dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,2))
+                        ->delay(now()->addDays(2));
+
+                //AQUI SE ENVÍA EL TERCER CORREO (+4 días después)
+                dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,3))
+                        ->delay(now()->addDays(4));
 
                 if (isset($first_email_modal)) {
                     $first_email_modal->update([
@@ -135,7 +145,8 @@ class ModalesController extends Controller
 
     public function getById($id)
     {
-        $modal = modalservicios::where('id_modalservicio', $id)->with('servicio')->first();
+        // $modal = modalservicios::where('id_modalservicio', $id)->with('servicio')->first();
+        $modal = Modalservicios::where('id_modalservicio', $id)->first();
 
         if (!$modal) {
             return response()->json(['error' => 'Modal no encontrado'], 404);

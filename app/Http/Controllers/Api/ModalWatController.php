@@ -46,7 +46,7 @@ class ModalWatController extends Controller
 
         $telefono = $modal->telefono;
 
-        $mensaje = urlencode($data[$modal->id_servicio - 1][$modal_wat->number_message - 1]);
+        $mensaje = urlencode($data[$modal->id_producto - 1][$modal_wat->number_message - 1]);
 
         $url = "https://wa.me/51$telefono?text=$mensaje";
 

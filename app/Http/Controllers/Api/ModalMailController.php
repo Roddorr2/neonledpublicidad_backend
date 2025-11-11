@@ -32,7 +32,7 @@ class ModalMailController extends Controller
             ];
 
             Mail::to($modal->correo)->send(
-                new MailService($modal_mail->number_message, $data, $modal->id_servicio)
+                new MailService($modal_mail->number_message, $data, $modal->id_producto)
             );
 
             $modal_mail->update([

@@ -13,17 +13,18 @@ class modalservicios extends Model
         'nombre',
         'telefono',
         'correo',
-        'id_servicio',
+        'id_producto',
         'fecha',
         'estado'
     ];
 
     public $timestamps = false;
 
-    public function servicio()
-    {
-        return $this->belongsTo(Servicio::class, 'id_servicio');
-    }
+    // COMENTADO HASTA QUE LA TABLA PRODUCTOS SE USE
+    // public function producto()
+    // {
+    //     return $this->belongsTo(Producto::class, 'id_producto');
+    // }
 
     public function watModal()
     {
