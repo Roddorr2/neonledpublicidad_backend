@@ -14,7 +14,9 @@ class BlogAuditoriaController extends Controller
     public function show()
     {
         try {
-            $auditorias = BlogAuditoria::with(['empleado:id_empleado,nombre,apellido'])
+            $auditorias = BlogAuditoria::with([
+                'empleado:id_empleado,nombre,apellido',
+                'blog.card:id_card,titulo,descripcion,public_image,url_image,id_blog',])
                 ->orderBy('fecha_hora', 'desc')
                 ->get();
 
