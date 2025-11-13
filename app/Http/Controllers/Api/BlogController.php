@@ -29,7 +29,8 @@ class BlogController extends Controller
                 'id_blog_body' => 'required|integer|exists:blog_bodies,id_blog_body',
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
                 'fecha' => 'required|date',
-                'id_empleado' => 'required|integer|exists:empleados,id_empleado'
+                'id_empleado' => 'required|integer|exists:empleados,id_empleado',
+                'link' => 'nullable|string|max:255' // Campo opcional para el link
             ]);
 
             if ($validator->fails()) {
@@ -40,14 +41,20 @@ class BlogController extends Controller
 
             DB::beginTransaction();
 
-            $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
-            $titulo = $blogHead->titulo ?? "blog";
+            // Generar link desde el request o usar blog_heads.titulo como fallback
+            if ($request->has('link') && !empty($request->link)) {
+                $link = Str::slug($request->link);
+            } else {
+                $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
+                $titulo = $blogHead->titulo ?? "blog";
+                $link = Str::slug($titulo);
+            }
 
-            $link = Str::slug($titulo);
-
+            // Asegurar unicidad del link
+            $baseLink = $link;
             $counter = 1;
             while (Blog::where("link", $link)->exists()) {
-                $link = $link . '-' . $counter;
+                $link = $baseLink . '-' . $counter;
                 $counter++;
             }
 
@@ -66,8 +73,9 @@ class BlogController extends Controller
 
             return response()->json([
                 "status" => 200,
-                "message" => "Blog creada correctamente",
-                "id" => $blog->id_blog
+                "message" => "Blog creado correctamente",
+                "id" => $blog->id_blog,
+                "link" => $link
             ], 200);
 
         }catch(\Exception $e){
@@ -85,6 +93,7 @@ class BlogController extends Controller
                 'fecha' => 'required|date',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
                 'descripcion' => 'nullable|string',
+                'link' => 'nullable|string|max:255'
             ]);
 
             if ($validator->fails()) {
@@ -105,17 +114,23 @@ class BlogController extends Controller
 
             DB::beginTransaction();
 
-            $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
-            $titulo = $blogHead->titulo ?? "blog";
+            // Generar link desde el request o usar blog_heads.titulo como fallback
+            if ($request->has('link') && !empty($request->link)) {
+                $link = Str::slug($request->link);
+            } else {
+                $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
+                $titulo = $blogHead->titulo ?? "blog";
+                $link = Str::slug($titulo);
+            }
 
-            $link = Str::slug($titulo);
-
+            // Asegurar unicidad del link (excluyendo el blog actual)
+            $baseLink = $link;
             $counter = 1;
             while (Blog::where("link", $link)
                        ->where("id_blog", "!=", $id)
                        ->exists())
             {
-                $link = $link . '-' . $counter;
+                $link = $baseLink . '-' . $counter;
                 $counter++;
             }
 
@@ -137,6 +152,7 @@ class BlogController extends Controller
                 'status'=> 200,
                 'message'=> 'Blog actualizado',
                 'id'=> $blog->id_blog,
+                'link' => $link
             ],200);
         }catch(\Exception $e){
             DB::rollback();
@@ -153,7 +169,7 @@ class BlogController extends Controller
             if (!$blog) {
                 return response()->json([
                     "status" => 404,
-                    "message" => "Blog no encontrada"
+                    "message" => "Blog no encontrado"
                 ],400);
             }
 
@@ -233,7 +249,7 @@ class BlogController extends Controller
             //segundo blog
             $blog->delete();
 
-            //tecero blog_head
+            //tercero blog_head
             $blog_head = new BlogHeadController();
             $blog_head->destroy($id_header_blog);
 
