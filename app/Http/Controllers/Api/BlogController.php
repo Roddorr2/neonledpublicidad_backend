@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+
 class BlogController extends Controller
 {
     public function index()
@@ -67,11 +68,9 @@ class BlogController extends Controller
                 $blog->id_blog,
                 $id_empleado,
                 'CREAR',
-                $blog->blog_head->titulo,
+                (\App\Models\BlogHead::findOrFail($request->id_blog_head))->titulo,
             );
-
             DB::commit();
-
             return response()->json([
                 "status" => 200,
                 "message" => "Blog creado correctamente",
@@ -146,7 +145,7 @@ class BlogController extends Controller
                 $blog->id_blog,
                 $id_empleado,
                 'ACTUALIZAR',
-                $titulo = $request->id_blog_head->titulo, 
+                (\App\Models\BlogHead::findOrFail($request->id_blog_head))->titulo, 
                 $descripcion,
             );
 
@@ -231,6 +230,7 @@ class BlogController extends Controller
                 $id,
                 $id_empleado,
                 'ELIMINAR',
+                (\App\Models\BlogHead::findOrFail((\App\Models\Blog::findOrFail($id))->id_blog_head))->titulo,
             );
 
             $id_header_blog = $blog->id_blog_head;
