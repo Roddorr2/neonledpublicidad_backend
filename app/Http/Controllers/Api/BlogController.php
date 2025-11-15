@@ -66,7 +66,8 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
-                'CREAR'
+                'CREAR',
+                $blog->blog_head->titulo,
             );
 
             DB::commit();
@@ -139,14 +140,15 @@ class BlogController extends Controller
 
             $blog->update($data);
 
+            DB::commit();
+
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
                 'ACTUALIZAR',
-                $descripcion
+                $titulo = $request->id_blog_head->titulo, 
+                $descripcion,
             );
-
-            DB::commit();
 
             return response()->json([
                 'status'=> 200,
@@ -228,7 +230,7 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $id,
                 $id_empleado,
-                'ELIMINAR'
+                'ELIMINAR',
             );
 
             $id_header_blog = $blog->id_blog_head;
