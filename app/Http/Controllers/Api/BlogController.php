@@ -92,11 +92,8 @@ class BlogController extends Controller
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
                 'fecha' => 'required|date',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
-<<<<<<< HEAD
-                'link' => 'nullable|string|max:255'
-=======
-                'descripcion' => 'nullable|string',
->>>>>>> 46523363c730229a16579baedd253f2c0e5de95c
+                'link' => 'nullable|string|max:255', // Campo opcional para el link
+                'descripcion' => 'nullable|string', // Descripción para la auditoría
             ]);
 
             if ($validator->fails()) {
