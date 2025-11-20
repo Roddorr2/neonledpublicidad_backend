@@ -13,167 +13,23 @@ class SendEmailJob implements ShouldQueue
 {
     use Queueable;
 
-    public $indice;
-    public $servicio_id;
-    public $mailto;
+    public $correo;
+    public $data;
+    public $idProducto;
+    public $tipoCorreo;
 
-    public function __construct($indice, $servicio_id, $mailto)
+    public function __construct($correo, $data, $idProducto, $tipoCorreo)
     {
-
-        $this->indice = $indice;
-        $this->servicio_id = $servicio_id;
-        $this->mailto = $mailto;
+        $this->correo = $correo;
+        $this->data = $data;
+        $this->idProducto = $idProducto;
+        $this->tipoCorreo = $tipoCorreo;
     }
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
+    public function handle()
     {
-
-
-        $imagenes_main = [
-            // Desarrollo y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-            // Gestión de Redes Sociales
-            [
-                "",
-                "",
-                ""
-            ],
-            // Marketing y Gestión Digital
-            [
-                "",
-                "",
-                ""
-            ],
-            // Branding y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-        ];
-
-        $title = [
-            // Desarrollo y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-            // Gestión de Redes Sociales
-            [
-                "",
-                "",
-                ""
-            ],
-            // Marketing y Gestión Digital
-            [
-                "",
-                "",
-                ""
-            ],
-            // Branding y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-        ];
-
-        $subject = [
-            // Desarrollo y Diseño
-
-            [
-                "",
-                "",
-                ""
-            ],
-            // Gestión de Redes Sociales
-            [
-                "",
-                "",
-                ""
-            ],
-            // Marketing y Gestión Digital
-            [
-                "",
-                "",
-                ""
-            ],
-            // Branding y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-        ];
-
-        $menssage = [
-            // Desarrollo y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-            // Gestión de Redes Sociales
-            [
-                "",
-                "",
-                ""
-            ],
-            // Marketing y Gestión Digital
-            [
-                "",
-                "",
-                ""
-            ],
-            // Branding y Diseño
-            [
-                "",
-                "",
-                ""
-            ],
-        ];
-
-        try {
-            // Validar índices
-            if (!isset($this->servicio_id) || $this->servicio_id < 1 || $this->servicio_id > 4) {
-                throw new \Exception("servicio_id inválido");
-            }
-
-            $serviceIndex = $this->servicio_id - 1;
-            $messageIndex = $this->indice;
-
-            // Validar existencia de datos
-            if (
-                !isset($menssage[$serviceIndex][$messageIndex]) ||
-                !isset($title[$serviceIndex][$messageIndex]) ||
-                !isset($imagenes_main[$serviceIndex][$messageIndex]) ||
-                !isset($subject[$serviceIndex][$messageIndex])
-            ) {
-                throw new \Exception("Índices no válidos para los arrays de contenido");
-            }
-
-            // Un solo envío de email con datos validados
-            Mail::to($this->mailto)->send(new MailService(
-                strval($menssage[$serviceIndex][$messageIndex]),
-                strval($title[$serviceIndex][$messageIndex]),
-                strval($imagenes_main[$serviceIndex][$messageIndex]),
-                strval($subject[$serviceIndex][$messageIndex])
-            ));
-        } catch (\Exception $e) {
-            Log::error("Error en SendEmailJob: {$this->servicio_id} - " . $e->getMessage());
-        }
-    }
-
-    public function failed(Throwable $exception)
-    {
-        Log::error("Error en SendEmailJob: " . $this->servicio_id);
+        Mail::to($this->correo)->send(
+            new MailService($this->tipoCorreo, $this->data, $this->idProducto)
+        );
     }
 }
