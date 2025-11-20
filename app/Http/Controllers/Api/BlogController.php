@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogBody;
-use App\Models\BlogHead;
 use App\Services\AuditoriaService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +45,7 @@ class BlogController extends Controller
             if ($request->has('link') && !empty($request->link)) {
                 $link = Str::slug($request->link);
             } else {
-                $blogHead = BlogHead::findOrFail($request->id_blog_head);
+                $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
                 $titulo = $blogHead->titulo ?? "blog";
                 $link = Str::slug($titulo);
             }
@@ -93,11 +92,8 @@ class BlogController extends Controller
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
                 'fecha' => 'required|date',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
-<<<<<<< HEAD
                 'descripcion' => 'nullable|string',
-=======
                 'link' => 'nullable|string|max:255'
->>>>>>> 2d88ab0129cc0282876a75a660a2d4b417ebcabd
             ]);
 
             if ($validator->fails()) {
@@ -122,7 +118,7 @@ class BlogController extends Controller
             if ($request->has('link') && !empty($request->link)) {
                 $link = Str::slug($request->link);
             } else {
-                $blogHead = BlogHead::findOrFail($request->id_blog_head);
+                $blogHead = \App\Models\BlogHead::findOrFail($request->id_blog_head);
                 $titulo = $blogHead->titulo ?? "blog";
                 $link = Str::slug($titulo);
             }
