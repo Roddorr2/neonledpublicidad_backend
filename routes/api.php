@@ -34,7 +34,9 @@ Route::post('/reclamaciones', [ReclamacionesController::class, "create"]);
 Route::post('/modales', [ModalesController::class, "create"]);
 
 // blogs públicos para ver los clientes
-Route::get('/cards', [CardController::class, "index"]);
+Route::get('/cards_public', [CardController::class, "index_public"]);
+// Route::get('/cards', [CardController::class, "index"]);
+
 Route::get('/blogs/{id}', [BlogController::class, "show"]);
 Route::get('/blogs/links/{link}', [BlogController::class, "showByLink"]);
 Route::get('/blogs', [BlogController::class, "index"]);
@@ -86,6 +88,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/empleados/{id}/image', [EmpleadoController::class, 'deleteProfileImage']);
     // Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
     // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
+
+    Route::middleware('permission:ver-blogs')->get('/cards', [CardController::class, "index"]);
 
     Route::middleware('permission:ver-contactos')->get('/contactanos', [ContactanosController::class, "get"]);
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones', [ReclamacionesController::class, "get"]);
