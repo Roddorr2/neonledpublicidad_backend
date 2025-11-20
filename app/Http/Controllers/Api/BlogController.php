@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-
 class BlogController extends Controller
 {
     public function index()
@@ -67,10 +66,11 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
-                'CREAR',
-                (\App\Models\BlogHead::findOrFail($request->id_blog_head))->titulo,
+                'CREAR'
             );
+
             DB::commit();
+
             return response()->json([
                 "status" => 200,
                 "message" => "Blog creado correctamente",
@@ -92,8 +92,8 @@ class BlogController extends Controller
                 'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
                 'fecha' => 'required|date',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
-                'link' => 'nullable|string|max:255', // Campo opcional para el link
-                'descripcion' => 'nullable|string', // Descripción para la auditoría
+                'descripcion' => 'nullable|string',
+                'link' => 'nullable|string|max:255'
             ]);
 
             if ($validator->fails()) {
@@ -139,15 +139,14 @@ class BlogController extends Controller
 
             $blog->update($data);
 
-            DB::commit();
-
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
                 'ACTUALIZAR',
-                (\App\Models\BlogHead::findOrFail($request->id_blog_head))->titulo, 
-                $descripcion,
+                $descripcion
             );
+
+            DB::commit();
 
             return response()->json([
                 'status'=> 200,
@@ -229,8 +228,7 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $id,
                 $id_empleado,
-                'ELIMINAR',
-                (\App\Models\BlogHead::findOrFail((\App\Models\Blog::findOrFail($id))->id_blog_head))->titulo,
+                'ELIMINAR'
             );
 
             $id_header_blog = $blog->id_blog_head;
