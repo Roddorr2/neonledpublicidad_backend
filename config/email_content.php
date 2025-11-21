@@ -8,74 +8,103 @@ return [
         1 => [
             'messages' => [
                 1 => [
-                    'subject' => "IMAGEN PREMIUM: Letras de Acrílico para una Marca que Destaca.",
-                    'title' => "¡Dale un Toque Moderno y Profesional con Acrílico! ✨",
-                    'message' => "Las <strong>Letras de Acrílico</strong> son la opción ideal para proyectar una imagen <strong>moderna y profesional</strong>. Perfectas para interiores y exteriores, garantizan que tu marca sea inolvidable.<br><br>Lo que obtendrás:<br><br>* 🛡️ <strong>Resistencia y Durabilidad</strong> para todo ambiente.<br>* 🏙️ Estética moderna y un <strong>acabado de alto impacto</strong>.<br>* 📏 Diseño totalmente a la medida de tu identidad visual.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;"> Gracias por sumarte a nuestra comunidad.<br>
+                                En Neón Led Publicidad transformamos ideas en elementos visuales llamativos gracias a nuestras letras acrílicas personalizadas, fabricadas con materiales resistentes y disponibles en una gran variedad de colores y acabados, desde neón hasta tonos metálicos.<br>
+                                Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
+                    'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
+                                No olvides seguirnos en Facebook, Twitter e Instagram para estar al día con nuestras novedades.</p>',
                 ],
                 2 => [
-                    'subject' => "COTIZA YA: La Elegancia, Resistencia y Diseño del Acrílico.",
-                    'title' => "ACRÍLICO: La Estética Profesional que tu Negocio Merece.",
-                    'message' => "Eleva la percepción de tu marca con la **elegancia y el look moderno** del acrílico. Es una inversión duradera que tus clientes notarán al instante. ¡Podemos diseñarlas justo a la medida de tu marca!<br><br>Beneficios clave:<br><br>* ✅ Material <strong>ligero y muy resistente</strong>.<br>* 🎨 Múltiples opciones de color y acabado (mate/brillante).<br>* 🚀 Instalación profesional para una <strong>imagen impecable</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Haz que tu marca brille como nunca antes',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
+                                Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y cuentan con tecnología LED que ilumina tu mensaje en cualquier momento.
+                                Son ideales para tiendas, eventos y señalización interior, asegurando que tu marca se destaque con elegancia.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br><br>
+                                Consulta cómo podemos ayudarte a crear la exhibición perfecta</p>',
                 ],
                 3 => [
-                    'subject' => "IMAGEN PROFESIONAL: Resistencia y Estilo en Letras de Acrílico.",
-                    'title' => "¡Destaca con la Modernidad y Versatilidad del Acrílico! 🚀",
-                    'message' => "Diseñamos, fabricamos e instalamos **letras de acrílico 3D** que realmente capturan la atención. ¿Tienes una idea? ¡Conversemos y hagámosla realidad con la mejor calidad!<br><br>Te ofrecemos:<br><br>* 🛠️ Servicio completo de **diseño, fabricación e instalación**.<br>* 🏆 Acabados premium que realzan tu logotipo.<br>* 🎯 La solución más <strong>versátil</strong> para cualquier tipo de negocio.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Es hora de darle vida a tu marca!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">Estamos emocionados de acompañarte en tu proyecto.
+                                No esperes más y da el primer paso para transformar tu espacio con nuestras letras acrílicas luminosas.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-3.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La diferencia está en los detalles que brillan. ¿Listo para destacar?”</em>📞<br><br>
+                                Contáctanos hoy mismo a través de www.ledneonpublicidad.com.<br>
+                                Síguenos para inspirarte con nuevas ideas</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 2. Letreros De Aluminio Dorados
+        // 2. Letreros De Aluminio Dorados 3D
         // ----------------------------------------------------
         2 => [
             'messages' => [
                 1 => [
-                    'subject' => "EXCLUSIVIDAD: Letras de Aluminio Doradas para un Toque de Lujo.",
-                    'title' => "¡Aluminio Dorado: La Elegancia y Lujo que Impulsa tu Marca! 🏆",
-                    'message' => "Añade un toque de **elegancia y lujo** inigualable a tu espacio con nuestras **letras de aluminio doradas**. Son la opción sofisticada que tu marca de alto nivel necesita.<br><br>Razones para elegirlas:<br><br>* 🥇 Acabado <strong>brillante y sofisticado</strong> que proyecta prestigio.<br>* 🛡️ Material de **alta resistencia y durabilidad**.<br>* 🏢 Ideales para oficinas, vitrinas y recepción de alto standing.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad! ✨',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Bienvenido a Neon Led Publicidad,
+                                Nos alegra que te unas a nosotros. Nuestras letras de aluminio dorado 3D combinan sofisticación y precisión para darle a tu marca un aspecto profesional y moderno.
+                                Son perfectas para oficinas, centros comerciales y cualquier espacio que busque resaltar con estilo.</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-1.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La elegancia no se muestra, se siente. Demos brillo a tu marca.”</em>
+                                Explora algunos de nuestros proyectos más destacados <a href="https://ledneonpublicidad.com/productos/letras-doradas/" target="_blank">aquí</a>.</p>',
                 ],
                 2 => [
-                    'subject' => "IMPACTO PREMIUM: Letras Doradas para Proyectar Calidad.",
-                    'title' => "Dale un Toque de Lujo y Distinción a tu Marca. 🌟",
-                    'message' => "Nuestro aluminio dorado ofrece un acabado **Premium** que inmediatamente comunica calidad, exclusividad y éxito. Es la inversión en imagen que garantiza un impacto visual único. ¡Cotiza tu proyecto hoy mismo!<br><br>Tu marca obtendrá:<br><br>* 💫 **Impacto visual** y memorabilidad instantánea.<br>* 📈 Posicionamiento como una marca <strong>distinguida y exclusiva</strong>.<br>* 📐 Fabricación precisa y a la medida de tu identidad corporativa.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Transforma tu espacio y negocio con ese brillo elegante dorado que deseas',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
+                                Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
+                                🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que marca la diferencia.</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“El lujo está en los detalles que reflejan tu identidad.”</em>
+                                Déjanos ayudarte a transformar tus espacios</p>',
                 ],
                 3 => [
-                    'subject' => "BRILLO SOFISTICADO: Aluminio Dorado, Sinónimo de Prestigio.",
-                    'title' => "El Oro que Hace Brillar tu Negocio y Atrae Clientes. 💰",
-                    'message' => "Las letras doradas no solo decoran, sino que **posicionan tu marca** como sinónimo de prestigio. Somos expertos en diseño e instalación en Lima, Perú. ¡Eleva tu estándar visual!<br><br>Servicios exclusivos:<br><br>* 🚚 <strong>Diseño, fabricación e instalación</strong> en Lima, Perú.<br>* 💯 Materiales de máxima calidad para un brillo duradero.<br>* 💼 Solución <strong>ideal para negocios exclusivos</strong> y marcas de lujo.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Autenticidad para tu marca 🌟!',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Queremos que tu marca destaque con elegancia. Por eso te ofrecemos un 10% de descuento en tu próxima compra con el código: LUJO10<br><br>
+                                No dudes en contactarnos y aprovechar esta oportunidad → www.ledneonpublicidad.com.<br>
+                                Síguenos en nuestras redes para no perderte nada:<br>
+                                📸 Instagram: @neonledpublicidad<br>
+                                📘 Facebook: Neón LED Publicidad<br>
+                                🎥 TikTok: @neonledpublicidad</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-3.jpg',
+                    'extra' => ' ',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 3. Letreros Doradas y Plateadas
+        // 3. Letreros Aluminio Plateadas 3D
         // ----------------------------------------------------
         3 => [
             'messages' => [
                 1 => [
-                    'subject' => "EFECTO METÁLICO: La combinación de Oro y Plata para tu Negocio.",
-                    'title' => "¡Brillo y Distinción con Letras Doradas y Plateadas! 💎",
-                    'message' => "La combinación de tonos **dorados y plateados** crea un efecto <strong>metálico de alto impacto</strong> que no pasará desapercibido. Es la elección perfecta para la sofisticación visual. ¡Atrévete a brillar!<br><br>Ventajas de la combinación:<br><br>* 🌟 Un <strong>efecto visual dinámico</strong> y de alta sofisticación.<br>* 🖼️ Ideales para vitrinas y decoración interior de lujo.<br>* 💯 Acabado <strong>Premium</strong> que realza la calidad de tu marca.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "DISTINCIÓN ÚNICA: Letras Doradas y Plateadas para una Imagen Premium.",
-                    'title' => "Tu Marca en los Tonos de la Elegancia: Oro y Plata. ✨",
-                    'message' => "Con nuestras letras en acabado metálico, conseguirás que tu marca tenga la **elegancia y el toque Premium** que la diferencian de la competencia. Pídenos tu cotización sin compromiso y sorpréndete.<br><br>Te garantizamos:<br><br>* 💼 Imagen de <strong>alto nivel y profesionalismo</strong>.<br>* 💰 El mejor retorno de inversión en tu publicidad.<br>* ✍️ <strong>Cotización rápida</strong> y sin compromiso.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "BRILLO METÁLICO: La Solución Perfecta para Vitrinas Impresionantes.",
-                    'title' => "Efecto Metálico Premium para un Impacto Visual Máximo. 💯",
-                    'message' => "Ofrecemos la más alta calidad en el acabado de letras. Dale a tu negocio la **imagen memorable** que merece y atrae más clientes con un look inconfundible. ¡Te esperamos!<br><br>Usos ideales:<br><br>* 🛍️ Perfectas para **vitrinas de tiendas de moda o joyerías**.<br>* 💎 Materiales duraderos con brillo que perdura.<br>* 💡 Opción de retroiluminación para un efecto aún más espectacular.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -86,22 +115,25 @@ return [
         4 => [
             'messages' => [
                 1 => [
-                    'subject' => "VISIBILIDAD 24/7: Letreros Luminosos de Alto Impacto.",
-                    'title' => "¡Ilumina y Haz Visible tu Marca 24/7 con Letreros Luminosos! 💡",
-                    'message' => "Un **letrero luminoso** es la herramienta más efectiva para asegurar que tu marca sea visible a toda hora. Creamos diseños personalizados con **iluminación impactante** y máxima durabilidad. ¡Destaca siempre!<br><br>¿Por qué elegir Luminosos?<br><br>* 🌃 **Alta visibilidad** garantizada de día y de noche.<br>* 🔋 Tecnología LED de <strong>bajo consumo</strong> y larga vida útil.<br>* ✍️ Diseños <strong>personalizados</strong> con luz y color.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "TU MARCA NOCTURNA: Máxima Visibilidad en Lima, Perú.",
-                    'title' => "Máxima Visibilidad y Brillo de Día y de Noche. 🌙",
-                    'message' => "Nuestros letreros luminosos son la solución ideal para <strong>farmacias, tiendas, restaurantes</strong> y negocios que operan en horario nocturno. Inversión en un producto moderno y de **alta calidad** en Lima, Perú.<br><br>Ideales para:<br><br>* 🏪 Negocios con <strong>horario extendido</strong>.<br>* 🏆 Materiales resistentes a la intemperie.<br>* ⚡ El <strong>mayor impacto visual</strong> en la calle.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "DURABILIDAD Y DISEÑO: Letreros Luminosos que Capturan la Atención.",
-                    'title' => "¡Letreros Luminosos: El Impacto que Convierte Clientes! 💥",
-                    'message' => "La **iluminación impactante** de nuestros letreros captura la atención a kilómetros. ¡Convierte más transeúntes en clientes con una presencia visual insuperable!<br><br>Ventajas de la iluminación:<br><br>* 🤩 Llama la atención y genera <strong>tráfico instantáneo</strong>.<br>* 📈 Aumenta la <strong>recordación de marca</strong>.<br>* 🏗️ Fabricación con materiales robustos y acabados de precisión.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -112,22 +144,25 @@ return [
         5 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL VINTAGE CAUTIVADOR: Neón Clásico en Tubos de Vidrio.",
-                    'title' => "¡El Encanto Clásico y Cautivador del Neón de Vidrio! 💖",
-                    'message' => "El **Neón en Tubos de Vidrio** es un clásico atemporal que **cautiva**. Su luz vibrante es perfecta para crear un ambiente único, destacando tu marca en <strong>bares, restaurantes o eventos especiales</strong>.<br><br>Lo que te ofrece el Neón Clásico:<br><br>* 💡 <strong>Brillo e intensidad de color</strong> insuperables.<br>* 📸 Estética <strong>Vintage</strong> ideal para crear ambientes 'instagrameables'.<br>* ✍️ Curvado artesanal de precisión para un diseño perfecto.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "CAUTIVA CON ESTILO: Neón Auténtico, una Declaración Audaz.",
-                    'title' => "Neón Auténtico: Una Declaración de Estilo que Cautiva. 🎯",
-                    'message' => "Si buscas un estilo <strong>Vintage</strong> o quieres hacer una declaración audaz, el neón tradicional es insuperable. **Llama la atención** y genera un recuerdo inolvidable en tus visitantes.<br><br>Beneficios de la luz de Neón:<br><br>* ✨ Luz <strong>vibrante y profunda</strong> que el LED no puede replicar.<br>* 🗣️ Genera un <strong>fuerte impacto emocional y visual</strong>.<br>* 🏭 Fabricado por expertos artesanos en vidrio.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "ARTE EN LUZ: Neón Artesanal para Espacios Únicos.",
-                    'title' => "El Arte y la Luz se Unen en tu Letrero de Neón. 🖼️",
-                    'message' => "Desde diseños sencillos hasta obras de arte, fabricamos tus letreros de neón en vidrio con la **máxima calidad**. ¡Cotiza tu diseño más original y dale vida a tu espacio!<br><br>Te ofrecemos:<br><br>* 📐 Total <strong>personalización</strong> de diseño y color.<br>* 🏗️ Instalación segura y garantizada.<br>* 💼 Solución para **decoración de eventos y hostelería**.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -138,22 +173,25 @@ return [
         6 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL FUTURO ES LED: Diseño Atractivo, Seguro y Bajo Consumo.",
-                    'title' => "¡Diseño Vibrante y Ahorro Inteligente con Neón LED! 🌈",
-                    'message' => "Descubre la versatilidad y eficiencia de nuestros **Neones LED**. Obtén **diseños atractivos** y la vibración del neón clásico, pero con **bajo consumo** y alta durabilidad. ¡La opción inteligente y segura!<br><br>Ventajas del Neón LED:<br><br>* 💸 **Ahorro energético** significativo frente al neón de vidrio.<br>* 🛡️ <strong>Seguro al tacto</strong>, no genera calor ni contiene gases.<br>* 🎨 Gran variedad de colores personalizables.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "BAJO CONSUMO Y VERSATILIDAD: Neón LED Personalizable.",
-                    'title' => "Personalización Total, Seguro y Ecológico con Neón LED. ✅",
-                    'message' => "Ideales para negocios, eventos, decoración del hogar y más. Los Neones LED son **personalizables** en color, forma y tamaño. ¡Ilumina tu idea con eficiencia y estilo!<br><br>Beneficios clave:<br><br>* 📏 **Máxima flexibilidad** en la forma de diseño.<br>* 🚀 <strong>Fácil instalación</strong> en casi cualquier superficie.<br>* ♻️ Opción <strong>ecológica y duradera</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "DISEÑOS VIBRANTES: La Mejor Tecnología Neón LED en Lima.",
-                    'title' => "Bajo Consumo, Alta Visibilidad: Tu Marca con Neón LED. 🔋",
-                    'message' => "Te ofrecemos la mejor tecnología Neón LED en Lima, Perú. **Menos calor, más vida útil y un diseño increíble** para que tu marca no pase desapercibida. ¡Llama la atención con luz!<br><br>Nuestro compromiso:<br><br>* 💡 <strong>Mayor vida útil</strong> del producto.<br>* 🔧 Mejor soporte y <strong>garantía de calidad</strong>.<br>* 💥 El <strong>efecto Neón</strong> con la modernidad del LED.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
