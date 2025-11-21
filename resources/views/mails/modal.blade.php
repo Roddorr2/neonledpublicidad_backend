@@ -135,34 +135,30 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="header-title">NEON LED PUBLICIDAD</h1>
+            @if(isset($title))
+            <h1 class="header-title">{!! $title !!}</h1>
+            @endif
         </div>
 
         <div class="content">
-            @if(isset($image))
-            <img src="{{ $image }}" alt="NEON LED PUBLICIDAD" class="featured-image">
-            @endif
-
-            @if(isset($title))
-            <h2 class="message-title">{!! $title !!}</h2>
-            @endif
-
             @if(isset($send_message))
             <div class="message-content">
+                <p>¡Hola {{ $data["nombre"] }}! 👋🏼</p>
                 {!! $send_message !!}
             </div>
             @endif
 
-            <div class="user-info">
-                <h3 class="user-info-title">Información del Cliente</h3>
-                <p class="user-detail"><span class="user-label">Nombre:</span> {{ $data["nombre"] ?? 'No proporcionado' }}</p>
-                <p class="user-detail"><span class="user-label">Teléfono:</span> {{ $data["telefono"] ?? 'No proporcionado' }}</p>
-                <p class="user-detail"><span class="user-label">Email:</span> {{ $data["correo"] ?? 'No proporcionado' }}</p>
+            @if(isset($image))
+            <img src="{{ $image }}" alt="NEON LED PUBLICIDAD" class="featured-image">
+            @endif
+
+            <div class="extra-message">
+                {!! $extra_message !!}
             </div>
 
-            <div class="cta-container">
+            {{-- <div class="cta-container">
                 <a href="https://ledneonpublicidad.com/" class="cta-button" style="color:white;">Visitar Nuestro Sitio</a>
-            </div>
+            </div> --}}
         </div>
 
         <div class="footer">
@@ -180,7 +176,7 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png" alt="LinkedIn">
                 </a>
             </div>
-            <p>&copy; {{ date('Y') }} NEON LED PUBLICIDAD. Todos los derechos reservados.</p>
+            <p>&copy; {{ date('Y') }} Desde Lima, Perú a tu proyecto. <br>Todos los derechos reservados.</p>
         </div>
     </div>
 </body>

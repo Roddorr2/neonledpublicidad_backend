@@ -8,74 +8,103 @@ return [
         1 => [
             'messages' => [
                 1 => [
-                    'subject' => "DALE ESTILO A TU MARCA: Letras de Acrílico.",
-                    'title' => "¡Dale estilo a tu marca con Letras de Acrílico! ✨",
-                    'message' => "Dale estilo a tu marca con nuestras <strong>letras de acrílico</strong>. Son la opción perfecta para destacar en cualquier ambiente gracias a su resistencia y acabado moderno. Ideal para interiores y exteriores. ¿Listo para una imagen profesional?",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;"> Gracias por sumarte a nuestra comunidad.<br>
+                                En Neón Led Publicidad transformamos ideas en elementos visuales llamativos gracias a nuestras letras acrílicas personalizadas, fabricadas con materiales resistentes y disponibles en una gran variedad de colores y acabados, desde neón hasta tonos metálicos.<br>
+                                Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
+                    'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
+                                No olvides seguirnos en Facebook, Twitter e Instagram para estar al día con nuestras novedades.</p>',
                 ],
                 2 => [
-                    'subject' => "COTIZA AHORA: Acrílico para destacar en interiores/exteriores.",
-                    'title' => "ACRÍLICO: La Elegancia que tu Negocio Necesita.",
-                    'message' => "El acrílico no solo es <strong>resistente</strong>, sino que ofrece una estética <strong>moderna y profesional</strong>. Tus clientes notarán la diferencia. ¡Podemos diseñarlas justo a la medida de tu marca!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Haz que tu marca brille como nunca antes',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
+                                Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y cuentan con tecnología LED que ilumina tu mensaje en cualquier momento.
+                                Son ideales para tiendas, eventos y señalización interior, asegurando que tu marca se destaque con elegancia.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br><br>
+                                Consulta cómo podemos ayudarte a crear la exhibición perfecta</p>',
                 ],
                 3 => [
-                    'subject' => "MODERNIDAD Y RESISTENCIA en Letras de Acrílico.",
-                    'title' => "¡Destaca con la modernidad del Acrílico! 🚀",
-                    'message' => "Diseñamos, fabricamos e instalamos <strong>letras de acrílico</strong> que capturan la atención. ¿Tienes una idea? ¡Conversemos y hagámosla realidad!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Es hora de darle vida a tu marca!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">Estamos emocionados de acompañarte en tu proyecto.
+                                No esperes más y da el primer paso para transformar tu espacio con nuestras letras acrílicas luminosas.</p>',
+                    'image' => '/assets/letras-acrilicas-luminosa/flyer-modal-1-3.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La diferencia está en los detalles que brillan. ¿Listo para destacar?”</em>📞<br><br>
+                                Contáctanos hoy mismo a través de www.ledneonpublicidad.com.<br>
+                                Síguenos para inspirarte con nuevas ideas</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 2. Letreros De Aluminio Dorados
+        // 2. Letreros De Aluminio Dorados 3D
         // ----------------------------------------------------
         2 => [
             'messages' => [
                 1 => [
-                    'subject' => "LUJO Y ELEGANCIA: Letras de Aluminio Doradas.",
-                    'title' => "¡Elegancia máxima con Letras de Aluminio Doradas! 🏆",
-                    'message' => "Añade un toque de <strong>elegancia y lujo</strong> a tu espacio con nuestras <strong>letras de aluminio doradas</strong>. Perfectas para marcas, oficinas y vitrinas que buscan un impacto sofisticado. ¡La inversión en imagen que vale la pena!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad! ✨',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Bienvenido a Neon Led Publicidad,
+                                Nos alegra que te unas a nosotros. Nuestras letras de aluminio dorado 3D combinan sofisticación y precisión para darle a tu marca un aspecto profesional y moderno.
+                                Son perfectas para oficinas, centros comerciales y cualquier espacio que busque resaltar con estilo.</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-1.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La elegancia no se muestra, se siente. Demos brillo a tu marca.”</em>
+                                Explora algunos de nuestros proyectos más destacados <a href="https://ledneonpublicidad.com/productos/letras-doradas/" target="_blank">aquí</a>.</p>',
                 ],
                 2 => [
-                    'subject' => "IMPACTO VISUAL: Letras Doradas para tu Negocio.",
-                    'title' => "Dale un toque de Lujo a tu Marca. 🌟",
-                    'message' => "Nuestro aluminio dorado da un acabado <strong>Premium</strong> que refleja calidad y exclusividad. Es la opción ideal para destacar con <strong>distinción</strong>. ¡Cotiza tu proyecto hoy mismo!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Transforma tu espacio y negocio con ese brillo elegante dorado que deseas',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
+                                Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
+                                🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que marca la diferencia.</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“El lujo está en los detalles que reflejan tu identidad.”</em>
+                                Déjanos ayudarte a transformar tus espacios</p>',
                 ],
                 3 => [
-                    'subject' => "PREMIUM: Aluminio Dorado para Marcas Exclusivas.",
-                    'title' => "El Oro que hace brillar tu Negocio. 💰",
-                    'message' => "Las letras doradas no solo decoran, sino que <strong>posicionan tu marca</strong> como sinónimo de prestigio. Diseñamos e instalamos en tu ubicación en Lima, Perú.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Autenticidad para tu marca 🌟!',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Queremos que tu marca destaque con elegancia. Por eso te ofrecemos un 10% de descuento en tu próxima compra con el código: LUJO10<br><br>
+                                No dudes en contactarnos y aprovechar esta oportunidad → www.ledneonpublicidad.com.<br>
+                                Síguenos en nuestras redes para no perderte nada:<br>
+                                📸 Instagram: @neonledpublicidad<br>
+                                📘 Facebook: Neón LED Publicidad<br>
+                                🎥 TikTok: @neonledpublicidad</p>',
+                    'image' => '/assets/letras-aluminio-doradas-3d/flyer-modal-2-3.jpg',
+                    'extra' => ' ',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 3. Letreros Doradas y Plateadas
+        // 3. Letreros Aluminio Plateadas 3D
         // ----------------------------------------------------
         3 => [
             'messages' => [
                 1 => [
-                    'subject' => "BRILLO METÁLICO: Letras Doradas y Plateadas.",
-                    'title' => "¡Brillo y distinción con Letras Doradas y Plateadas! 💎",
-                    'message' => "Combina el <strong>brillo y la sofisticación</strong> de los tonos dorados y plateados. Estas letras son ideales para crear un efecto <strong>metálico</strong> de alto impacto visual. ¡Atrévete a brillar!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "DISTINCIÓN: Letras Plateadas y Doradas. ¡Cotiza ya!",
-                    'title' => "Tu Marca en tonos Plateados y Dorados. ✨",
-                    'message' => "Con nuestras letras doradas y plateadas, conseguirás que tu marca tenga la <strong>elegancia y el toque Premium</strong> que la diferencian de la competencia. Pídenos tu cotización sin compromiso.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "ACABADO PREMIUM: La combinación perfecta para vitrinas.",
-                    'title' => "Efecto Metálico Premium para un impacto visual. 💯",
-                    'message' => "Ofrecemos la más alta calidad en el acabado de letras metálicas. Dale a tu negocio la <strong>imagen memorable</strong> que merece. ¡Te esperamos!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -86,22 +115,25 @@ return [
         4 => [
             'messages' => [
                 1 => [
-                    'subject' => "ALTA VISIBILIDAD: Letreros Luminosos de impacto.",
-                    'title' => "¡Ilumina tu Marca con Letreros Luminosos! 💡",
-                    'message' => "Un <strong>letrero luminoso</strong> es la mejor forma de asegurar que tu marca sea visible 24/7. Creamos diseños personalizados con <strong>iluminación impactante</strong> y alta durabilidad. ¡Destaca siempre!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "TU MARCA NOCTURNA: Iluminación moderna en Lima.",
-                    'title' => "Máxima Visibilidad de día y de noche. 🌙",
-                    'message' => "Nuestros letreros luminosos son la solución ideal para <strong>farmacias, tiendas y negocios</strong> que operan de noche. Garantizamos un producto moderno y de <strong>alta calidad</strong> en Lima, Perú.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "LETREROS LUMINOSOS: Durabilidad y diseño espectacular.",
-                    'title' => "¡Letreros Luminosos: El impacto que estabas buscando! 💥",
-                    'message' => "La <strong>iluminación impactante</strong> de nuestros letreros luminosos capturará la atención de todos. ¡Convierte más transeúntes en clientes!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -112,22 +144,25 @@ return [
         5 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL CLÁSICO QUE VUELVE: Letreros de Neón en Vidrio.",
-                    'title' => "¡El Encanto Clásico del Neón en Tubo de Vidrio! 💖",
-                    'message' => "El <strong>Neón en Tubos de Vidrio</strong> es un clásico que <strong>cautiva</strong>. Su luz vibrante es ideal para crear un ambiente único, destacando tu marca en <strong>eventos y decoraciones especiales</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "CAUTIVA AL PÚBLICO: Neón auténtico para tu marca.",
-                    'title' => "Neón Auténtico: Cautiva a tu Público. 🎯",
-                    'message' => "Si buscas un estilo <strong>Vintage</strong> o una declaración audaz, el neón tradicional es insuperable. <strong>Llama la atención</strong> y genera un recuerdo inolvidable en tus visitantes.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "ARTE EN LUZ: Letreros de Neón para eventos y decoración.",
-                    'title' => "El arte y la luz se unen en tu Letrero de Neón. 🖼️",
-                    'message' => "Desde diseños sencillos hasta obras de arte, fabricamos tus letreros de neón en vidrio con la <strong>máxima calidad</strong>. ¡Cotiza tu diseño más original!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -138,22 +173,25 @@ return [
         6 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL FUTURO ES AHORA: Neón LED Personalizado.",
-                    'title' => "¡Diseño Moderno y Ahorro con Neón LED! 🌈",
-                    'message' => "Descubre la versatilidad de nuestros <strong>Neones LED</strong>. Obtén <strong>diseños atractivos</strong> y la misma vibración del neón clásico, pero con <strong>bajo consumo</strong> y alta durabilidad. ¡La opción inteligente!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 2 => [
-                    'subject' => "BAJO CONSUMO Y ALTA VISIBILIDAD: Neón LED.",
-                    'title' => "Personalización Total con Neón LED. ✅",
-                    'message' => "Ideales para negocios, eventos y decoración, los Neones LED son <strong>personalizables</strong> en color, forma y tamaño. ¡Ilumina tu idea con eficiencia!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
                 3 => [
-                    'subject' => "DISEÑOS ATRACTIVOS: Descubre nuestros Neones LED.",
-                    'title' => "Bajo Consumo, Alta Visibilidad: Neón LED. 🔋",
-                    'message' => "Te ofrecemos la mejor tecnología Neón LED en Lima, Perú. <strong>Menos calor, más vida útil y un diseño increíble</strong> para que tu marca no pase desapercibida.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '',
+                    'title' => '',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => '',
                 ],
             ],
         ],
@@ -164,21 +202,21 @@ return [
         7 => [
             'messages' => [
                 1 => [
-                    'subject' => "VINILOS: La mejor opción para comunicar tu mensaje.",
-                    'title' => "¡La mejor opción para tu Mensaje: Impresión en Vinilo! 🖼️",
-                    'message' => "La <strong>Impresión en Vinilo</strong> es la forma más versátil y económica de comunicar tu <strong>mensaje, logotipo o promoción</strong>. Tenemos una gran variedad de estilos y acabados disponibles.",
+                    'subject' => "VERSATILIDAD Y AHORRO: Impresión en Vinilo de Alta Calidad.",
+                    'title' => "¡La Forma Más Versátil de Comunicar tu Mensaje: Vinilo! 🖼️",
+                    'message' => "La **Impresión en Vinilo** es la forma más versátil y económica de comunicar tu <strong>mensaje, logotipo o promoción</strong> en cualquier superficie. ¡Tenemos una gran variedad de estilos y acabados disponibles!<br><br>¿Qué puedes lograr con Vinilo?<br><br>* 🎨 <strong>Colores vibrantes</strong> y alta resolución de impresión.<br>* 🏷️ La opción más <strong>económica</strong> para promociones temporales o permanentes.<br>* 🧱 Se adhiere a <strong>paredes, vidrios, vehículos</strong> y más.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
                 ],
                 2 => [
-                    'subject' => "GRAN VARIEDAD: Impresión en Vinilo para tu logotipo.",
-                    'title' => "Vinilos de Alta Resolución para todo lo que imaginas. 🎨",
-                    'message' => "Desde vinilos para paredes hasta vehículos, te ofrecemos <strong>alta calidad de impresión</strong> y durabilidad para cualquier superficie. ¡El límite es tu imaginación!",
+                    'subject' => "ALTA RESOLUCIÓN: Vinilo para Logotipos y Gráficos Impactantes.",
+                    'title' => "Vinilos de Alta Resolución para Todo lo que Imaginas. 🎨",
+                    'message' => "Desde vinilos para paredes hasta rotulación de vehículos, te ofrecemos **alta calidad de impresión** y durabilidad para cualquier superficie. ¡El límite es tu imaginación para transformar tus espacios!<br><br>Te ofrecemos:<br><br>* 🚗 <strong>Rotulación de vehículos</strong> para publicidad móvil.<br>* 🛡️ Materiales resistentes a la intemperie.<br>* ✂️ <strong>Corte a medida</strong> y formas personalizadas.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
                 ],
                 3 => [
-                    'subject' => "TRANSFORMA ESPACIOS: Vinilos de alta calidad a tu medida.",
-                    'title' => "¡Transforma Espacios con Vinilo Adhesivo! 🧱",
-                    'message' => "<strong>Transforma tus vitrinas y espacios</strong> con nuestros vinilos adhesivos. Muestra tus productos y promociones de manera clara y profesional.",
+                    'subject' => "TRANSFORMA ESPACIOS: Vinilos Adhesivos para Vitrinas y Paredes.",
+                    'title' => "¡Transforma tus Vitrinas y Espacios con Vinilo Adhesivo! 🧱",
+                    'message' => "**Transforma tus vitrinas y espacios** de forma rápida y profesional con nuestros vinilos adhesivos. Muestra tus productos y promociones de manera clara y llamativa.<br><br>Ideal para:<br><br>* 🏢 <strong>Decoración de oficinas</strong> y tiendas.<br>* 📢 Campañas de <strong>promociones de temporada</strong>.<br>* 🪟 Vinilo microperforado para vidrios.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
                 ],
             ],
@@ -190,21 +228,21 @@ return [
         8 => [
             'messages' => [
                 1 => [
-                    'subject' => "MENÚ BOARD: Muestra tus productos y precios fácilmente.",
-                    'title' => "¡Organiza tu Oferta con un Menú Board Dinámico! 🍔",
-                    'message' => "Optimiza el proceso de pedido en tu establecimiento de comida con nuestros <strong>Menú Boards</strong>. Son pantallas visuales que muestran <strong>productos, precios e imágenes</strong> de forma clara y atractiva.",
+                    'subject' => "MENU BOARD DIGITAL: Optimiza Pedidos y Muestra Precios Claros.",
+                    'title' => "¡Organiza y Vende Más con un Menú Board Dinámico! 🍔",
+                    'message' => "Optimiza el proceso de pedido en tu restaurante o cafetería con nuestros **Menú Boards**. Son pantallas visuales que muestran **productos, precios e imágenes** de forma clara y muy atractiva.<br><br>Beneficios de un Menú Board:<br><br>* ⚡ **Agiliza el servicio** y reduce el tiempo de espera.<br>* 📈 Permite <strong>mostrar promociones dinámicas</strong> y videos.<br>* 🖼️ Muestra tus platos con <strong>imágenes de alta calidad</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
                 ],
                 2 => [
-                    'subject' => "ORGANIZACIÓN Y VENTAS: Menú Boards para restaurantes.",
-                    'title' => "Menú Boards: Claridad y Venta Rápida. ⚡",
-                    'message' => "Un Menú Board eficiente ayuda a tus clientes a <strong>elegir fácilmente qué ordenar</strong>, agilizando el servicio y <strong>aumentando la venta</strong> de productos estrella. ¡Moderniza tu punto de venta!",
+                    'subject' => "CLARIDAD Y VENTAS: Menú Boards para Restaurantes Modernos.",
+                    'title' => "Menú Boards: Claridad en la Oferta y Venta Rápida. ⚡",
+                    'message' => "Un Menú Board eficiente ayuda a tus clientes a **elegir fácilmente qué ordenar**, agilizando el servicio y **aumentando la venta** de tus productos estrella. ¡Moderniza tu punto de venta!<br><br>Ventajas para tu negocio:<br><br>* 💰 **Aumenta la venta impulsiva** al destacar productos clave.<br>* 🔄 <strong>Cambia tus precios y ofertas</strong> al instante.<br>* 🖥️ Diseño de pantallas totalmente <strong>personalizable</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
                 ],
                 3 => [
-                    'subject' => "MEJORA LA EXPERIENCIA: Paneles visuales de Menú Board.",
-                    'title' => "Mejora la experiencia del cliente con tu Menú Board. 🍽️",
-                    'message' => "Diseñamos y montamos tu <strong>Menú Board</strong> para que sea totalmente visible y estético, mejorando la experiencia del cliente. ¡Pide tu cotización especializada para restaurantes!",
+                    'subject' => "MEJORA LA EXPERIENCIA: Paneles Visuales de Menú Board Profesional.",
+                    'title' => "Mejora la Experiencia del Cliente con un Menú Board Estético. 🍽️",
+                    'message' => "Diseñamos y montamos tu **Menú Board** para que sea totalmente visible y estético, mejorando la experiencia del cliente. ¡Pide tu cotización especializada para restaurantes hoy!<br><br>Nuestro servicio incluye:<br><br>* 🛠️ <strong>Instalación y configuración</strong> profesional.<br>* ✍️ Diseño de la <strong>interfaz y diagramación</strong>.<br>* 🏆 Garantía de <strong>calidad y soporte técnico</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
                 ],
             ],
@@ -216,21 +254,21 @@ return [
         9 => [
             'messages' => [
                 1 => [
-                    'subject' => "AHORRO CON ESTILO: Letras Pintadas en MDF.",
-                    'title' => "¡Identidad Visual con Letras MDF Pintadas! 🎨",
-                    'message' => "Las <strong>Letras Pintadas en MDF</strong> son la solución perfecta para negocios que buscan <strong>destacar su identidad visual sin un gran presupuesto</strong>. Ideal para decoración de paredes y vitrinas.",
+                    'subject' => "PRESUPUESTO AMIGABLE: Letras Pintadas en MDF con Gran Estilo.",
+                    'title' => "¡Identidad Visual Sólida con Letras MDF Pintadas! 🎨",
+                    'message' => "Las **Letras Pintadas en MDF** son la solución perfecta para negocios que buscan **destacar su identidad visual sin un gran presupuesto**. Ideal para decoración de paredes y vitrinas interiores.<br><br>Beneficios del MDF:<br><br>* 💰 La opción más <strong>económica</strong> y accesible.<br>* 🎨 <strong>Pintadas a mano</strong> y a tu color exacto.<br>* 🏡 Perfecto para <strong>interiores</strong> o stands de ferias.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
                 ],
                 2 => [
-                    'subject' => "IDEAL PARA VITRINAS: Letras en MDF a medida.",
-                    'title' => "Destaca tu Marca sin gastar de más. 🏷️",
-                    'message' => "Fabricamos letras en MDF <strong>pintadas a medida</strong> y en el color exacto de tu marca. Son una opción robusta, económica y totalmente personalizable. ¡La mejor relación calidad-precio!",
+                    'subject' => "CALIDAD Y PRECIO: Letras en MDF a la Medida de tu Marca.",
+                    'title' => "Destaca tu Marca en Interiores sin Gastar de Más. 🏷️",
+                    'message' => "Fabricamos letras en MDF **pintadas a medida** y en el color exacto de tu marca. Son una opción robusta, económica y totalmente personalizable. ¡La mejor relación calidad-precio en rotulación!<br><br>Ventajas del producto:<br><br>* 🎯 <strong>Personalización total</strong> en tipografía y tamaño.<br>* 🛠️ Material <strong>robusto y fácil de instalar</strong>.<br>* 🏆 Opción ideal para <strong>logotipos grandes en recepción</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
                 ],
                 3 => [
-                    'subject' => "IDENTIDAD VISUAL SIN GASTAR DE MÁS: Letras MDF.",
-                    'title' => "Solución Económica y Personalizable: Letras en MDF. 📐",
-                    'message' => "Dale un toque <strong>cálido y artesanal</strong> a tu negocio con letras en MDF. Perfectas para stands de ferias o decoración interior. ¡Contáctanos y cotiza sin compromiso!",
+                    'subject' => "LOOK CÁLIDO: Solución Económica y Personalizable en Letras MDF.",
+                    'title' => "Solución Económica y Artesanal: Letras en MDF. 📐",
+                    'message' => "Dale un toque **cálido y artesanal** a tu negocio con letras en MDF. Perfectas para crear un ambiente acogedor. ¡Contáctanos y cotiza sin compromiso la imagen de tu marca!<br><br>Te ofrecemos:<br><br>* ✍️ Un <strong>look cálido y natural</strong>.<br>* 🚀 <strong>Entrega rápida</strong> en diseños sencillos.<br>* 📞 <strong>Cotización sin compromiso</strong>, ¡contáctanos!",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
                 ],
             ],
@@ -242,21 +280,21 @@ return [
         10 => [
             'messages' => [
                 1 => [
-                    'subject' => "PUBLICA CON IMPACTO: Monitores de Publicidad Digital.",
-                    'title' => "¡Comunica con Impacto con Monitores de Publicidad! 🖥️",
-                    'message' => "Destaca tu marca con nuestros <strong>Monitores de Publicidad Digital</strong>. Son <strong>modernos, sostenibles y versátiles</strong>, permitiéndote comunicar con dinamismo cualquier mensaje o promoción.",
+                    'subject' => "PUBLICIDAD DINÁMICA: Monitores Digitales para Mayor Impacto.",
+                    'title' => "¡Comunica con Impacto con Monitores de Publicidad Digital! 🖥️",
+                    'message' => "Destaca tu marca con nuestros **Monitores de Publicidad Digital**. Son **modernos, sostenibles y versátiles**, permitiéndote comunicar con dinamismo cualquier mensaje o promoción.<br><br>Beneficios de la Publicidad Digital:<br><br>* 🔄 <strong>Cambia tus campañas</strong> al instante sin costos de impresión.<br>* 💥 Muestra videos y animaciones para un <strong>mayor impacto</strong>.<br>* ♻️ Opción <strong>sostenible y ecológica</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
                 ],
                 2 => [
-                    'subject' => "VERSATILIDAD Y SOSTENIBILIDAD: Monitores Digitales.",
-                    'title' => "Publicidad Digital Sostenible y Moderna. ♻️",
-                    'message' => "Ofrecemos <strong>displays interactivos y monitores táctiles</strong> que garantizan una experiencia inolvidable para el usuario. ¡Dale a tus clientes el poder de interactuar con tu marca!",
+                    'subject' => "INTERACCIÓN: Monitores Táctiles y Displays Modernos.",
+                    'title' => "Publicidad Digital Sostenible, Moderna y Versátil. ♻️",
+                    'message' => "Ofrecemos **displays interactivos y monitores táctiles** que garantizan una experiencia inolvidable para el usuario. ¡Dale a tus clientes el poder de interactuar con tu marca!<br><br>Tipos de Monitores:<br><br>* 👋 Monitores <strong>Táctiles</strong> para interacción directa.<br>* 🏢 Ideales para **puntos de venta, recepciones y vitrinas**.<br>* 🚀 Sistemas de <strong>gestión de contenido fácil</strong> de usar.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
                 ],
                 3 => [
-                    'subject' => "COMUNICA CON DINAMISMO: Monitores Táctiles y Displays.",
+                    'subject' => "AHORRO EN IMPRESIONES: Dinamismo con Monitores Táctiles.",
                     'title' => "Monitores Táctiles: La Interacción que tu Marca Necesita. 👋",
-                    'message' => "Cambia tu publicidad al instante y <strong>ahorra en impresiones</strong> con nuestros monitores. El futuro de la comunicación visual está aquí.",
+                    'message' => "Cambia tu publicidad al instante y **ahorra en impresiones** con nuestros monitores. El futuro de la comunicación visual está aquí. ¡Moderniza la experiencia de compra!<br><br>Te garantizamos:<br><br>* 💰 **Ahorro a largo plazo** en costos operativos.<br>* ⚙️ Tecnología de <strong>alta durabilidad y calidad de imagen</strong>.<br>* 📈 Mejora la <strong>experiencia del cliente</strong> e impulsa ventas.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
                 ],
             ],
@@ -268,21 +306,21 @@ return [
         11 => [
             'messages' => [
                 1 => [
-                    'subject' => "ALTA RESOLUCIÓN: Pantallas LED para tu negocio.",
+                    'subject' => "LA MEJOR VISIBILIDAD: Pantallas LED para tu Negocio.",
                     'title' => "¡Máxima Resolución y Dinamismo con Pantallas LED! 📺",
-                    'message' => "Las <strong>Pantallas LED</strong> son la herramienta visual más potente para mostrar diseños, <strong>videos y promociones en alta resolución</strong>. ¡Transmite tu mensaje con el máximo impacto y dinamismo!",
+                    'message' => "Las **Pantallas LED** son la herramienta visual más potente para mostrar diseños, **videos y promociones en alta resolución**. ¡Transmite tu mensaje con el máximo impacto y dinamismo!<br><br>¿Por qué elegir Pantallas LED?<br><br>* 💥 **Máximo impacto visual** para atraer la atención desde lejos.<br>* 📽️ Reproducción de <strong>videos en calidad HD</strong>.<br>* ☀️ Brillo visible incluso <strong>bajo la luz del sol</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
                 ],
                 2 => [
-                    'subject' => "DINAMISMO VISUAL: Muestra promociones en Pantalla LED.",
+                    'subject' => "DINAMISMO VISUAL: Pantalla LED para Fachadas e Interiores.",
                     'title' => "Tu Marca en Pantallas LED de Alto Impacto. 🌟",
-                    'message' => "Ideal para fachadas o interiores, nuestras pantallas LED aseguran que tu marca se <strong>vea y se recuerde</strong>. ¡Te asesoramos en el tamaño y pitch perfecto para tu negocio!",
+                    'message' => "Ideal para fachadas o interiores, nuestras pantallas LED aseguran que tu marca se **vea y se recuerde**. ¡Te asesoramos en el tamaño y pitch perfecto para tu negocio y la distancia de visión!<br><br>Servicios:<br><br>* ⚙️ Asesoría en <strong>tamaño y `pitch`</strong> (resolución).<br>* 🏢 Solución ideal para <strong>fachadas exteriores y grandes espacios</strong>.<br>* 🛠️ Instalación y mantenimiento con <strong>garantía de calidad</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
                 ],
                 3 => [
-                    'subject' => "MÁXIMO IMPACTO: La herramienta visual más potente.",
-                    'title' => "Transmite Videos y Promociones en Calidad HD. 📽️",
-                    'message' => "Instalamos <strong>Pantallas LED</strong> en Lima, Perú, con garantía de calidad y el mejor soporte. Muestra tus campañas con la <strong>claridad y el brillo</strong> que merecen.",
+                    'subject' => "VISUAL MÁXIMO: Muestra Videos y Promociones en Calidad HD.",
+                    'title' => "Transmite Videos y Promociones con Claridad y Brillo. 📽️",
+                    'message' => "Instalamos **Pantallas LED** en Lima, Perú, con garantía de calidad y el mejor soporte. Muestra tus campañas con la **claridad y el brillo** que merecen. ¡La mejor inversión publicitaria!<br><br>Beneficios únicos:<br><br>* 🌐 Gestión de contenido **remota y sencilla**.<br>* 📈 Atrae y retiene la <strong>atención de más clientes</strong>.<br>* 🏆 Tecnología de <strong>última generación</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
                 ],
             ],
@@ -294,21 +332,21 @@ return [
         12 => [
             'messages' => [
                 1 => [
-                    'subject' => "PUBLICIDAD DEL FUTURO: Productos Holográficos en Lima.",
-                    'title' => "¡Tecnología Holográfica 3D: Publicidad del Futuro! 🔮",
-                    'message' => "<strong>Holografía 3D</strong>: La tecnología <strong>innovadora</strong> que transforma tu publicidad en una experiencia mágica. ¡Proyecta tus productos en el aire y sorpréndete!",
+                    'subject' => "FUTURO Y MAGIA: Holografía 3D para una Publicidad Inolvidable.",
+                    'title' => "¡Tecnología Holográfica 3D: La Publicidad del Futuro! 🔮",
+                    'message' => "**Holografía 3D**: La tecnología **innovadora** que transforma tu publicidad en una experiencia mágica. ¡Proyecta tus productos en el aire y sorpréndete a ti y a tus clientes!<br><br>Lo que lograrás:<br><br>* 🤯 <strong>Experiencia Inmersiva</strong> que cautiva al público.<br>* 🚀 Destaca por la **innovación y modernidad**.<br>* 🖼️ Muestra <strong>productos en 3D</strong> sin necesidad de gafas.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
                 ],
                 2 => [
-                    'subject' => "TECNOLOGÍA INNOVADORA: Efectos 3D para tu marca.",
-                    'title' => "Innovación que Cautiva: Productos Holográficos. ✨",
-                    'message' => "Destaca en ferias, lanzamientos o vitrinas con nuestros <strong>productos holográficos</strong>. Es la forma más futurista de <strong>cautivar y atraer</strong> todas las miradas.",
+                    'subject' => "INNOVACIÓN: Efectos 3D que Atraen Todas las Miradas.",
+                    'title' => "Innovación que Cautiva y Genera Recuerdo de Marca. ✨",
+                    'message' => "Destaca en ferias, lanzamientos o vitrinas con nuestros **productos holográficos**. Es la forma más futurista de **cautivar y atraer** todas las miradas a tu marca.<br><br>Usos ideales:<br><br>* 📢 Lanzamiento de **nuevos productos**.<br>* 🎪 <strong>Stands de ferias</strong> y exposiciones.<br>* 🛍️ Vitrinas y <strong>puntos de venta</strong> de alta gama.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
                 ],
                 3 => [
-                    'subject' => "CAUTIVA CON 3D: Proyectores Holográficos.",
-                    'title' => "¡Sorprende a tu Audiencia con Efectos 3D! 🤯",
-                    'message' => "Somos líderes en tecnología holográfica en Lima, Perú. Deja de lado lo tradicional y atrévete a la <strong>publicidad inmersiva</strong>.",
+                    'subject' => "EFECTOS 3D: La Publicidad Inmersiva para tu Marca.",
+                    'title' => "¡Sorprende a tu Audiencia con Efectos 3D Espectaculares! 🤯",
+                    'message' => "Somos líderes en tecnología holográfica en Lima, Perú. Deja de lado lo tradicional y atrévete a la **publicidad inmersiva** que te diferenciará de la competencia.<br><br>Te ofrecemos:<br><br>* 🏆 La <strong>última tecnología</strong> en proyección holográfica.<br>* 🤝 Asesoría para la <strong>creación de contenido 3D</strong>.<br>* 🛠️ Instalación y soporte técnico especializado.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
                 ],
             ],
@@ -320,21 +358,21 @@ return [
         13 => [
             'messages' => [
                 1 => [
-                    'subject' => "ILUMINACIÓN AVANZADA: Productos Pixel LED.",
-                    'title' => "¡Iluminación Innovadora con Pixel LED! 💡",
-                    'message' => "Descubre la versatilidad de la <strong>Iluminación Pixel LED</strong>. Permite crear <strong>diseños y patrones de luz</strong> dinámicos, perfectos para publicidad y decoración de alto nivel.",
+                    'subject' => "DINAMISMO TOTAL: Pixel LED para Diseños de Luz Personalizables.",
+                    'title' => "¡Iluminación Innovadora y Dinámica con Pixel LED! 💡",
+                    'message' => "Descubre la versatilidad de la **Iluminación Pixel LED**. Permite crear **diseños y patrones de luz** dinámicos con efectos de movimiento, perfectos para publicidad y decoración de alto nivel.<br><br>Características Pixel LED:<br><br>* 🎨 <strong>Control total</strong> sobre el color y el movimiento de cada pixel.<br>* 💥 Posibilidad de crear <strong>animaciones y efectos visuales</strong> únicos.<br>* 🚀 Tecnología de <strong>vanguardia</strong> para proyectos especiales.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
                 ],
                 2 => [
-                    'subject' => "DISEÑOS PERSONALIZABLES: Pixel LED en Lima, Perú.",
-                    'title' => "Diseños Únicos y Control de Color con Pixel LED. 🌈",
-                    'message' => "Nuestros productos <strong>Pixel LED</strong> te ofrecen un control total sobre el color y el movimiento, permitiendo una <strong>personalización sin límites</strong>. ¡Ilumina con inteligencia!",
+                    'subject' => "ILUMINA CON INTELIGENCIA: Diseños Personalizables con Pixel LED.",
+                    'title' => "Diseños Únicos y Control de Color y Movimiento. 🌈",
+                    'message' => "Nuestros productos **Pixel LED** te ofrecen un control total sobre el color y el movimiento, permitiendo una **personalización sin límites**. ¡Ilumina con inteligencia y un espectáculo visual!<br><br>Ideal para:<br><br>* 🏢 <strong>Fachadas que cambian</strong> de color y animación.<br>* 🥳 Decoración de <strong>discotecas y bares</strong>.<br>* ✍️ <strong>Rótulos y logotipos</strong> con efectos visuales complejos.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
                 ],
                 3 => [
-                    'subject' => "DECORACIÓN Y PUBLICIDAD: Tecnología Pixel LED.",
-                    'title' => "Pixel LED: Tecnología Avanzada para Decoración. 🚀",
-                    'message' => "Tecnología Pixel LED para fachadas, rótulos o interiores. Obtén una <strong>iluminación avanzada y de vanguardia</strong> con bajo consumo energético.",
+                    'subject' => "VANGUARDIA: Tecnología Pixel LED de Bajo Consumo.",
+                    'title' => "Pixel LED: Tecnología Avanzada para Proyectos Exclusivos. 🚀",
+                    'message' => "Tecnología Pixel LED para fachadas, rótulos o interiores. Obtén una **iluminación avanzada y de vanguardia** con bajo consumo energético y un impacto que nadie olvidará.<br><br>Te ofrecemos:<br><br>* 🔋 <strong>Bajo consumo</strong> y gran eficiencia energética.<br>* 🏆 <strong>Calidad de iluminación</strong> superior y duradera.<br>* 🛠️ Servicio de <strong>diseño e instalación</strong> especializado.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
                 ],
             ],
@@ -346,21 +384,21 @@ return [
         14 => [
             'messages' => [
                 1 => [
-                    'subject' => "EVENTOS INOLVIDABLES: Sillas Luminosas.",
-                    'title' => "¡Transforma tus Eventos con Sillas Luminosas! 🥳",
-                    'message' => "<strong>Transforma el ambiente de tus eventos</strong> y espacios con nuestras <strong>Sillas Luminosas</strong>. Ofrecen un diseño innovador y la posibilidad de cambiar de color para adaptarse a cualquier temática.",
+                    'subject' => "AMBIENTE INOLVIDABLE: Sillas Luminosas para Eventos y Bares.",
+                    'title' => "¡Transforma el Ambiente de tus Eventos con Sillas Luminosas! 🥳",
+                    'message' => "**Transforma el ambiente de tus eventos** y espacios con nuestras **Sillas Luminosas**. Ofrecen un diseño innovador y la posibilidad de cambiar de color para adaptarse a cualquier temática o decoración.<br><br>Características de las Sillas LED:<br><br>* 🎨 <strong>Cambio de color</strong> mediante control remoto.<br>* 💧 **Resistentes** al agua e ideales para exteriores.<br>* 🛋️ Diseño <strong>innovador y futurista</strong> para tus invitados.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
                 ],
                 2 => [
-                    'subject' => "DISEÑO INNOVADOR: Sillas LED para tu espacio.",
-                    'title' => "Diseño Innovador y Ambiente Único. 🛋️",
-                    'message' => "Perfectas para bares, discotecas, terrazas o eventos corporativos. Nuestras sillas LED son <strong>resistentes y visualmente impactantes</strong>. ¡Crea un espacio único!",
+                    'subject' => "DISEÑO CHIC: Sillas LED para Bares, Terrazas y Discotecas.",
+                    'title' => "Diseño Innovador para un Ambiente Único y Chic. 🛋️",
+                    'message' => "Perfectas para bares, discotecas, terrazas o eventos corporativos. Nuestras sillas LED son **resistentes y visualmente impactantes**. ¡Crea un espacio único y memorable para tus clientes!<br><br>Usos sugeridos:<br><br>* 🥂 <strong>Bares y Terrazas</strong> de estilo moderno.<br>* 🎪 <strong>Alquiler</strong> para eventos y matrimonios.<br>* 💥 Generan un <strong>fuerte atractivo visual</strong> para fotos y redes.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
                 ],
                 3 => [
-                    'subject' => "AMBIENTE ÚNICO: Sillas Luminosas a tu medida.",
-                    'title' => "Sillas LED: Personalización y Estilo para tu Espacio. 💫",
-                    'message' => "Dale un toque de <strong>modernidad y diversión</strong> a tu decoración. Sillas luminosas a tu medida, disponibles para compra o alquiler en Lima.",
+                    'subject' => "PERSONALIZACIÓN Y ESTILO: Sillas Luminosas a tu Medida.",
+                    'title' => "Sillas LED: La Personalización y el Estilo que tu Espacio Pide. 💫",
+                    'message' => "Dale un toque de **modernidad y diversión** a tu decoración. Ofrecemos sillas luminosas a tu medida, disponibles para compra o alquiler en Lima. ¡Pregunta por todos nuestros modelos!<br><br>Te ofrecemos:<br><br>* 🛍️ Disponibilidad para <strong>compra o alquiler</strong>.<br>* 🔧 <strong>Batería de larga duración</strong> y recargable.<br>* ✍️ La opción más original para la <strong>decoración de eventos</strong>.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
                 ],
             ],
@@ -372,21 +410,21 @@ return [
         15 => [
             'messages' => [
                 1 => [
-                    'subject' => "TECHO LED: Elegancia y alto impacto visual.",
-                    'title' => "¡Elegancia y Alto Impacto con Techos LED!  छत",
-                    'message' => "Instala <strong>Techos LED</strong> y transforma por completo cualquier espacio. Su diseño moderno y la <strong>iluminación uniforme</strong> crean un ambiente de elegancia y alto impacto.",
+                    'subject' => "ARQUITECTURA DE LUZ: Techos LED para Elegancia y Alto Impacto.",
+                    'title' => "¡Elegancia y Alto Impacto con Techos LED Uniformes! 💡",
+                    'message' => "Instala **Techos LED** y transforma por completo cualquier espacio. Su diseño moderno y la **iluminación uniforme** crean un ambiente de elegancia y un impacto visual superior.<br><br>Beneficios clave:<br><br>* ☀️ <strong>Iluminación uniforme y sin sombras</strong>.<br>* 🏢 Crea una <strong>estética de lujo y modernidad</strong> en cualquier espacio.<br>* 🛠️ <strong>Diseño totalmente integrable</strong> en tu arquitectura.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
                 ],
                 2 => [
-                    'subject' => "DISEÑO MODERNO: La solución de iluminación que buscas.",
-                    'title' => "El Diseño Moderno que tu Negocio Merece. 🏢",
-                    'message' => "Ideal para oficinas, tiendas de lujo o espacios comerciales. Un Techo LED es una <strong>solución de iluminación decorativa</strong> que garantiza la máxima distinción.",
+                    'subject' => "DISEÑO MINIMALISTA: Iluminación LED para Oficinas y Tiendas.",
+                    'title' => "El Diseño Moderno y Minimalista que tu Negocio Merece. 🏢",
+                    'message' => "Ideal para oficinas, tiendas de lujo o espacios comerciales. Un Techo LED es una **solución de iluminación decorativa** que garantiza la máxima distinción y una visibilidad perfecta.<br><br>Usos ideales:<br><br>* 💼 <strong>Oficinas y salas de reuniones</strong> de alta gama.<br>* 🛍️ <strong>Tiendas de moda</strong> o joyerías.<br>* 💰 <strong>Ahorro energético</strong> gracias a la tecnología LED.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
                 ],
                 3 => [
-                    'subject' => "DESTACA CON ELEGANCIA: Techos LED personalizados.",
-                    'title' => "Techos LED: La Solución de Iluminación Definitiva. ☀️",
-                    'message' => "Personalizamos el diseño de tu Techo LED para que se integre perfectamente con la arquitectura de tu negocio. <strong>Elegancia, modernidad y la mejor iluminación</strong>.",
+                    'subject' => "LUZ Y ESTILO: Techos LED Personalizados en Lima, Perú.",
+                    'title' => "Techos LED: La Solución de Iluminación de Vanguardia. ☀️",
+                    'message' => "Personalizamos el diseño de tu Techo LED para que se integre perfectamente con la arquitectura de tu negocio. **Elegancia, modernidad y la mejor iluminación** garantizada.<br><br>Nuestro servicio:<br><br>* 📐 <strong>Diseño y fabricación</strong> a la medida de tu techo.<br>* 🛠️ <strong>Instalación profesional</strong> en Lima, Perú.<br>* 🏆 Garantía de <strong>iluminación de alta calidad</strong> y durabilidad.",
                     'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
                 ],
             ],
