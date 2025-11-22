@@ -115,82 +115,195 @@ return [
         4 => [
             'messages' => [
                 1 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Letreros luminosos!',
+                    'message' =>  '<p style="text-align: center;">¡Qué alegría tenerte con nosotros!
+                                 En Neon LED Publicidad, creemos que cada marca tiene una historia que merece ser vista, admirada y recordada. 💡
+                                  Nos especializamos en darle vida a tus ideas a través de soluciones visuales que impactan y atraen.
+                                Desde letreros luminosos personalizados, neones LED decorativos, hasta impresiones en vinilo de alta calidad, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.
+                                 Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.
+                                Cada detalle cuenta cuando se trata de captar miradas.<br><br>
+                                Con energía y creatividad,
+                                <strong>Equipo Neon LED Publicidad</strong>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                📍 Lima – Perú
+                                Síguenos y descubre más ideas:
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>
+                                📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>
+                                🎥 TikTok</p>',
+                    'image' => '/assets/letreros-luminosos/flyer-modal-4-1.jpg',
                     'extra' => '',
                 ],
                 2 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
-                    'extra' => '',
+                    'subject' => '✨ Haz que tu marca brille día y noche con nuestros Letreros Luminosos 💡',
+                    'title' => '¡Letreros luminosos!',
+                    'message' => '<p style="text-align: center;">Tu marca merece ser vista incluso desde lejos.
+                                Con nuestros letreros luminosos personalizados, logramos que tu negocio destaque sin importar la hora.
+                                Usamos materiales de alta calidad y tecnología LED para garantizar brillo, durabilidad y bajo consumo de energía.
+                                Cada diseño se adapta a tu estilo: moderno, elegante o minimalista.
+                                💭 Imagina tu fachada iluminada, atrayendo clientes y proyectando una imagen profesional y moderna.
+                                Un letrero bien diseñado <strong>no solo informa, sino que inspira confianza.<strong><br><br>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                📍 Lima – Perú
+                                Síguenos y descubre más ideas:
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>
+                                📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>
+                                🎥 TikTok</p>',
+                    'image' => 'assets/letreros-luminosos/flyer-modal-4-2.jpg',
+                    'extra' => '👉 Escríbenos y solicita tu diseño personalizado hoy mismo.
+                                <em>¡Tu marca merece brillar con identidad propia!</em>',
                 ],
                 3 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '✨ De un letrero común... a una marca que ilumina su camino',
+                    'title' => '¡Letreros luminosos!',
+                    'message' =>  '<p style="text-align: center;">Sabemos que muchos negocios aún usan carteles opacos o sin vida.
+                                Se pierden entre la competencia y no logran captar la atención del público.
+                                Imagina tu fachada con un letrero luminoso LED personalizado, con colores intensos y un acabado impecable.
+                                💡 Tu marca no solo se verá, ¡resaltará incluso desde la distancia!
+                                En <strong>Neon LED Publicidad</strong>, creamos letreros a medida con tecnología de iluminación eficiente, resistentes y de gran impacto visual.
+                                <br><br>
+                                <em>👉 Da el paso hacia una identidad visual moderna</em>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>
+                                📍 Lima – Perú</p>',
+                    'image' => 'assets/letreros-luminosos/flyer-modal-4-3.jpg',
                     'extra' => '',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 5. Letreros de Neon en Tubos de Vidrio
+        // 5. Neon led   Ya No Letreros de Neon en Tubos de Vidrio
         // ----------------------------------------------------
         5 => [
             'messages' => [
                 1 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Neón LED!',
+                    'message' =>  '<p style="text-align: center;">¡Qué alegría tenerte con nosotros!
+                                 En Neon LED Publicidad, creemos que cada marca tiene una historia que merece ser vista, admirada y recordada. 💡
+                                  Nos especializamos en darle vida a tus ideas a través de soluciones visuales que impactan y atraen.
+                                Desde letreros luminosos personalizados, neones LED decorativos, hasta impresiones en vinilo de alta calidad, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.
+                                 Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.
+                                Cada detalle cuenta cuando se trata de captar miradas.<br><br>
+                                Con energía y creatividad,
+                                <strong>Equipo Neon LED Publicidad</strong>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                📍 Lima – Perú
+                                Síguenos y descubre más ideas:
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>
+                                📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>
+                                🎥 TikTok</p>',
+                    'image' => '/assets/neon-led/flyer-modal-5-1.jpg',
                     'extra' => '',
                 ],
                 2 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '💡 Dale personalidad a tu espacio con nuestros Neones LED Personalizados ✨',
+                    'title' => '¡Neón LED!',
+                    'message' =>  '<p style="text-align: center;">¿Quieres un espacio con estilo, actitud y luz propia?
+                                Nuestros <strong>neones LED personalizados</strong> son el toque que transforma cualquier ambiente.
+                                Cada diseño es 100% personalizable: frases, logos, íconos o figuras.
+                                Perfectos para locales, estudios, habitaciones o eventos.
+                                Con bajo consumo y materiales resistentes, duran miles de horas brillando.
+                                Imagina tu logo o una frase inspiradora iluminando tu pared.
+                                💫 Un detalle moderno, elegante y fotogénico que todos recordarán.
+                                <br><br>
+                                <em>👉 Cuéntanos tu idea y la convertiremos en luz.
+                                Haz que tu espacio hable por ti.</em>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                📞 +51 994 078 320
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>
+                                🎥 TikTok
+                                📍 Lima – Perú</p>',
+                    'image' => '/assets/neon-led/flyer-modal-5-2.jpg',
                     'extra' => '',
                 ],
                 3 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '✨ De paredes vacías... a espacios con alma y color 🌈',
+                    'title' => '¡Neón LED!',
+                    'message' =>  '<p style="text-align: center;">¿Sientes que a tu espacio le falta vida o un toque distintivo?
+                                Una pared sin diseño puede pasar desapercibida, sin reflejar tu estilo ni el de tu marca.
+                                Imagina ese mismo lugar iluminado con un neón LED personalizado, vibrante y con tu toque personal.
+                                💡 Frases, íconos o logos que inspiran y comunican tu esencia.
+                                En <strong>Neon LED Publicidad</strong>, combinamos diseño, color y tecnología para que tu ambiente brille con identidad.
+                                <br><br>
+                                <em>👉 Personaliza el tuyo hoy y transforma tu espacio.</em>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>
+                                📍 Lima – Perú</p>',
+                    'image' => '/assets/neon-led/flyer-modal-5-3.jpg',
                     'extra' => '',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 6. Letreros de Neón LED
+        // 6. Impresion en Vinilo Ya no => Letreros de Neón LED 
         // ----------------------------------------------------
         6 => [
             'messages' => [
                 1 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Impresión en vinilo!',
+                    'message' =>  '<p style="text-align: center;">¡Qué alegría tenerte con nosotros!
+                                 En Neon LED Publicidad, creemos que cada marca tiene una historia que merece ser vista, admirada y recordada. 💡
+                                  Nos especializamos en darle vida a tus ideas a través de soluciones visuales que impactan y atraen.
+                                Desde letreros luminosos personalizados, neones LED decorativos, hasta impresiones en vinilo de alta calidad, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.
+                                 Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.
+                                Cada detalle cuenta cuando se trata de captar miradas.<br><br>
+                                Con energía y creatividad,<br>
+                                <strong>Equipo Neon LED Publicidad</strong>
+                                💡 Iluminamos tus ideas
+                                📞 +51 994 078 320
+                                📍 Lima – Perú
+                                Síguenos y descubre más ideas:
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>
+                                📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>
+                                🎥 TikTok</p>',
+                    'image' => '/assets/general/flyer.jpg',
                     'extra' => '',
                 ],
                 2 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '🎨 Transforma tus paredes con nuestra Impresión en Vinilo Premium',
+                    'title' => '¡Impresión en vinilo!',
+                    'message' =>  '<p style="text-align: center;">Tus paredes, vitrinas o vehículos pueden ser mucho más que simples superficies.
+                                Con nuestra impresión en <strong>vinilo</strong>, los convertimos en herramientas de comunicación visual poderosas.
+                                Trabajamos con vinilos adhesivos de alta calidad, resistentes y con colores intensos.
+                                Perfectos para oficinas, locales, eventos o decoración de interiores.
+                                💭 Imagina tu logo, frase o diseño favorito plasmado con precisión y brillo.
+                                Con nuestra tecnología de impresión, cada detalle se ve profesional y duradero.
+                                👉 Escríbenos y dale una nueva vida a tus espacios con vinilos personalizados.<br>
+                                <strong>Equipo Neon LED Publicidad</strong>
+                                📞 +51 994 078 320
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>
+                                📍 Lima – Perú
+                                Síguenos y descubre más ideas:
+                                📸 <a href="https://www.instagram.com/neonledpublicidad" target="_blank">Instagram</a>|📘 <a href="https://www.facebook.com/neonledpublicidad" target="_blank">Facebook</a>|🎥 TikTok</p>',
+                    'image' => 'assets/impresion-en-vinilo/flyer-modal-6-1.jpg',
                     'extra' => '',
                 ],
                 3 => [
-                    'subject' => '',
-                    'title' => '',
-                    'message' => '',
-                    'image' => '',
+                    'subject' => '✨ De paredes vacías... a espacios llenos de identidad',
+                    'title' => '¡Impresión en vinilo!',
+                    'message' =>  '<p style="text-align: center;">Muchos negocios tienen espacios sin personalidad o carteles que no representan su marca.
+                                Eso limita la conexión con sus clientes y la recordación de su imagen.
+                                Con nuestra <strong>impresión en vinilo de alta resolución</strong>, cada rincón puede reflejar tu esencia.
+                                💡 Diseños nítidos, colores vibrantes y acabados profesionales que transforman ambientes.
+                                En Neon LED Publicidad, plasmamos tus ideas con precisión, estilo y durabilidad.<br><br>
+                                👉 Dale voz a tus paredes. ¡Cotiza tu impresión en vinilo hoy!
+                                📞 +51 994 078 320
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>
+                                📍 Lima – Perú</p>',        
+                    'image' => 'assets/impresion-en-vinilo/flyer-modal-6-2.jpg',
                     'extra' => '',
                 ],
             ],
