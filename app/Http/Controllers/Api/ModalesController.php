@@ -98,11 +98,13 @@ class ModalesController extends Controller
 
                 //AQUI SE ENVÍA EL SEGUNDO CORREO (+2 días después)
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,2))
-                        ->delay(now()->addDays(2));
+                        // ->delay(now()->addDays(2));
+                        ->delay(now()->addMinutes(2));
 
                 //AQUI SE ENVÍA EL TERCER CORREO (+4 días después)
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,3))
-                        ->delay(now()->addDays(4));
+                        // ->delay(now()->addDays(4));
+                        ->delay(now()->addMinutes(4));
 
                 if (isset($first_email_modal)) {
                     $first_email_modal->update([
