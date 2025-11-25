@@ -680,7 +680,7 @@ return [
                 1 => [
                     'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
                     'title' => 'Sillas luminosas!',
-                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
                                 En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
                                 Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
                                 Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
@@ -739,7 +739,7 @@ return [
                 1 => [
                     'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
                     'title' => 'Techos Led!',
-                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
                                 En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
                                 Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
                                 Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
@@ -797,7 +797,7 @@ return [
                 1 => [
                     'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
                     'title' => 'Letras de Neon en Tubos de Vidrio!',
-                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
                                 En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
                                 Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
                                 Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
