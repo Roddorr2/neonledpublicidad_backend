@@ -15,7 +15,7 @@ return [
                                 Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
                     'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
                     'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
-                                No olvides seguirnos en Facebook, Twitter e Instagram para estar al día con nuestras novedades.</p>',
+                                No olvides seguirnos en Facebook, Tiktok e Instagram para estar al día con nuestras novedades.</p>',
                 ],
                 2 => [
                     'subject' => 'Haz que tu marca brille como nunca antes',
