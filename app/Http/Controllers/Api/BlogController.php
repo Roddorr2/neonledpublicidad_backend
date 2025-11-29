@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogBody;
+use App\Models\BlogHead;
 use App\Services\AuditoriaService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +67,8 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $blog->id_blog,
                 $id_empleado,
-                'CREAR'
+                'CREAR',
+                (BlogHead::findOrFail($request->id_blog_head))->titulo,
             );
 
             DB::commit();
@@ -143,6 +145,7 @@ class BlogController extends Controller
                 $blog->id_blog,
                 $id_empleado,
                 'ACTUALIZAR',
+                BlogHead::findOrFail($request->id_blog_head)->titulo,
                 $descripcion
             );
 
@@ -228,7 +231,8 @@ class BlogController extends Controller
             AuditoriaService::registrar(
                 $id,
                 $id_empleado,
-                'ELIMINAR'
+                'ELIMINAR',
+                $titulo = $blog->head->titulo ?? 'blog',
             );
 
             $id_header_blog = $blog->id_blog_head;
