@@ -28,6 +28,23 @@ class CardController extends Controller
         $this->url_api = config("app.url");
     }
 
+    public function index_public()
+    {
+        try {
+            $cards = Card::with(['blog.head'])
+                            ->where('estado_publicacion', true)
+                            ->orderBy('id_card', 'asc')
+                            ->get();
+            return response()->json($cards, 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Error interno del servidor",
+                "error" => $ex->getMessage()
+            ], 500);
+        }
+    }
+
     public function index()
     {
         try {
@@ -73,6 +90,7 @@ class CardController extends Controller
                 'id_plantilla' => 'required|integer|min:1|max:3',
                 'id_blog' => 'required|integer|exists:blogs,id_blog',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
+                'estado_publicacion' => 'required|boolean',
             ]);
 
             if ($validator->fails()) {
@@ -112,11 +130,14 @@ class CardController extends Controller
                 'id_plantilla' => 'required|integer|min:1|max:3',
                 'id_blog' => 'required|integer|exists:blogs,id_blog',
                 'id_empleado' => 'required|integer|exists:empleados,id_empleado',
+                'estado_publicacion' => 'nullable|boolean',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 400);
             }
+
+            DB::beginTransaction();
 
             $card = Card::findOrFail($id);
 

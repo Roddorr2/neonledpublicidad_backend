@@ -8,74 +8,115 @@ return [
         1 => [
             'messages' => [
                 1 => [
-                    'subject' => "DALE ESTILO A TU MARCA: Letras de Acrílico.",
-                    'title' => "¡Dale estilo a tu marca con Letras de Acrílico! ✨",
-                    'message' => "Dale estilo a tu marca con nuestras <strong>letras de acrílico</strong>. Son la opción perfecta para destacar en cualquier ambiente gracias a su resistencia y acabado moderno. Ideal para interiores y exteriores. ¿Listo para una imagen profesional?",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;"> Gracias por sumarte a nuestra comunidad.<br>
+                                En Neón Led Publicidad transformamos ideas en elementos visuales llamativos gracias a nuestras letras acrílicas personalizadas, fabricadas con materiales resistentes y disponibles en una gran variedad de colores y acabados, desde neón hasta tonos metálicos.<br>
+                                Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
+                    'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
+                    'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
+                                No olvides seguirnos en Facebook, Tiktok e Instagram para estar al día con nuestras novedades.</p>',
                 ],
                 2 => [
-                    'subject' => "COTIZA AHORA: Acrílico para destacar en interiores/exteriores.",
-                    'title' => "ACRÍLICO: La Elegancia que tu Negocio Necesita.",
-                    'message' => "El acrílico no solo es <strong>resistente</strong>, sino que ofrece una estética <strong>moderna y profesional</strong>. Tus clientes notarán la diferencia. ¡Podemos diseñarlas justo a la medida de tu marca!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Haz que tu marca brille como nunca antes',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
+                                Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y cuentan con tecnología LED que ilumina tu mensaje en cualquier momento.
+                                Son ideales para tiendas, eventos y señalización interior, asegurando que tu marca se destaque con elegancia.</p>',
+                    'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br><br>
+                                Consulta cómo podemos ayudarte a crear la exhibición perfecta</p>',
                 ],
                 3 => [
-                    'subject' => "MODERNIDAD Y RESISTENCIA en Letras de Acrílico.",
-                    'title' => "¡Destaca con la modernidad del Acrílico! 🚀",
-                    'message' => "Diseñamos, fabricamos e instalamos <strong>letras de acrílico</strong> que capturan la atención. ¿Tienes una idea? ¡Conversemos y hagámosla realidad!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Crocs-Acrilico-Mobile.webp",
+                    'subject' => 'Es hora de darle vida a tu marca!',
+                    'title' => '¡Letreros de Acrílico!',
+                    'message' => '<p style="text-align: center;">Estamos emocionados de acompañarte en tu proyecto.
+                                No esperes más y da el primer paso para transformar tu espacio con nuestras letras acrílicas luminosas.</p>',
+                    'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-3.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La diferencia está en los detalles que brillan. ¿Listo para destacar?”</em>📞<br><br>
+                                Contáctanos hoy mismo a través de www.ledneonpublicidad.com.<br>
+                                Síguenos para inspirarte con nuevas ideas</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 2. Letreros De Aluminio Dorados
+        // 2. Letreros De Aluminio Dorados 3D
         // ----------------------------------------------------
         2 => [
             'messages' => [
                 1 => [
-                    'subject' => "LUJO Y ELEGANCIA: Letras de Aluminio Doradas.",
-                    'title' => "¡Elegancia máxima con Letras de Aluminio Doradas! 🏆",
-                    'message' => "Añade un toque de <strong>elegancia y lujo</strong> a tu espacio con nuestras <strong>letras de aluminio doradas</strong>. Perfectas para marcas, oficinas y vitrinas que buscan un impacto sofisticado. ¡La inversión en imagen que vale la pena!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon Led Publicidad! ✨',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Bienvenido a Neon Led Publicidad,
+                                Nos alegra que te unas a nosotros. Nuestras letras de aluminio dorado 3D combinan sofisticación y precisión para darle a tu marca un aspecto profesional y moderno.
+                                Son perfectas para oficinas, centros comerciales y cualquier espacio que busque resaltar con estilo.</p>',
+                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-1.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“La elegancia no se muestra, se siente. Demos brillo a tu marca.”</em>
+                                Explora algunos de nuestros proyectos más destacados <a href="https://ledneonpublicidad.com/productos/letras-doradas/" target="_blank">aquí</a>.</p>',
                 ],
                 2 => [
-                    'subject' => "IMPACTO VISUAL: Letras Doradas para tu Negocio.",
-                    'title' => "Dale un toque de Lujo a tu Marca. 🌟",
-                    'message' => "Nuestro aluminio dorado da un acabado <strong>Premium</strong> que refleja calidad y exclusividad. Es la opción ideal para destacar con <strong>distinción</strong>. ¡Cotiza tu proyecto hoy mismo!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Transforma tu espacio y negocio con ese brillo elegante dorado que deseas',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
+                                Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
+                                🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que marca la diferencia.</p>',
+                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“El lujo está en los detalles que reflejan tu identidad.”</em><br>
+                                Déjanos ayudarte a transformar tus espacios</p>',
                 ],
                 3 => [
-                    'subject' => "PREMIUM: Aluminio Dorado para Marcas Exclusivas.",
-                    'title' => "El Oro que hace brillar tu Negocio. 💰",
-                    'message' => "Las letras doradas no solo decoran, sino que <strong>posicionan tu marca</strong> como sinónimo de prestigio. Diseñamos e instalamos en tu ubicación en Lima, Perú.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-acrilicas-Lux-Nails-Neon-Led-Publicidad-Mobile.webp",
+                    'subject' => 'Autenticidad para tu marca 🌟!',
+                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'message' => '<p style="text-align: center;">Queremos que tu marca destaque con elegancia. Por eso te ofrecemos un 10% de descuento en tu próxima compra con el código: LUJO10<br><br>
+                                No dudes en contactarnos y aprovechar esta oportunidad → www.ledneonpublicidad.com.<br>
+                                Síguenos en nuestras redes para no perderte nada:<br>
+                                📸 Instagram: @neonledpublicidad<br>
+                                📘 Facebook: Neón LED Publicidad<br>
+                                🎥 TikTok: @neonledpublicidad</p>',
+                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-3.jpg',
+                    'extra' => '',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 3. Letreros Doradas y Plateadas
+        // 3. Letreros Aluminio Plateadas 3D
         // ----------------------------------------------------
         3 => [
             'messages' => [
                 1 => [
-                    'subject' => "BRILLO METÁLICO: Letras Doradas y Plateadas.",
-                    'title' => "¡Brillo y distinción con Letras Doradas y Plateadas! 💎",
-                    'message' => "Combina el <strong>brillo y la sofisticación</strong> de los tonos dorados y plateados. Estas letras son ideales para crear un efecto <strong>metálico</strong> de alto impacto visual. ¡Atrévete a brillar!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => 'Letreros Aluminio Plateadas 3D',
+                    'title' => 'Letreros Aluminio Plateadas 3D',
+                    'message' => '<p style="text-align: center;">Dale un toque moderno a tu espacio<br>
+                                Gracias por confiar en Neon Led Publicidad.<br>
+                                Nuestras letras de aluminio plateadas 3D son la combinación ideal entre estilo contemporáneo y precisión en el acabado,
+                                lo que las hace perfectas para oficinas, centros comerciales y espacios tecnológicos.</p>',
+                    'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-1.jpg',
+                    'extra' => '<p style="text-align: center;">💠 Ideales para oficinas, centros comerciales y espacios tecnológicos.<br>
+                                <em>“Cada luz cuenta una historia; haz que la tuya brille con nosotros.”</em></p>',
                 ],
                 2 => [
-                    'subject' => "DISTINCIÓN: Letras Plateadas y Doradas. ¡Cotiza ya!",
-                    'title' => "Tu Marca en tonos Plateados y Dorados. ✨",
-                    'message' => "Con nuestras letras doradas y plateadas, conseguirás que tu marca tenga la <strong>elegancia y el toque Premium</strong> que la diferencian de la competencia. Pídenos tu cotización sin compromiso.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => 'Letreros Aluminio Plateadas 3D',
+                    'title' => 'Letreros Aluminio Plateadas 3D',
+                    'message' => '<p style="text-align: center;">Queremos ayudarte a reflejar la personalidad innovadora de tu marca con nuestras letras de aluminio plateado 3D.<br>
+                                🌟 Resistentes, duraderas y con acabados brillantes o satinados</p>',
+                    'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-2.jpg',
+                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br>
+                                📩 Solicita tu cotización gratuita</p>',
                 ],
                 3 => [
-                    'subject' => "ACABADO PREMIUM: La combinación perfecta para vitrinas.",
-                    'title' => "Efecto Metálico Premium para un impacto visual. 💯",
-                    'message' => "Ofrecemos la más alta calidad en el acabado de letras metálicas. Dale a tu negocio la <strong>imagen memorable</strong> que merece. ¡Te esperamos!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/letras-plateadas.jpg",
+                    'subject' => 'Letreros Aluminio Plateadas 3D',
+                    'title' => 'Letreros Aluminio Plateadas 3D',
+                    'message' => '',
+                    'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-3.jpg',
+                    'extra' => 'Nos encanta contar contigo. Lleva tu imagen al siguiente nivel con nuestro estilo elegante y moderno en letras plateadas.<br>
+                                Estamos a un clic de ayudarte → <a href="https://www.ledneonpublicidad.com/" target="_blank">www.ledneonpublicidad.com.</a><br>
+                                Síguenos en:<br>
+                                📸 Instagram: @neonledpublicidad<br>
+                                📘 Facebook: Neon LED Publicidad<br>
+                                🎥 TikTok: @neonledpublicidad<br>
+                                Desde Lima, Perú a tu proyecto.',
                 ],
             ],
         ],
@@ -86,308 +127,727 @@ return [
         4 => [
             'messages' => [
                 1 => [
-                    'subject' => "ALTA VISIBILIDAD: Letreros Luminosos de impacto.",
-                    'title' => "¡Ilumina tu Marca con Letreros Luminosos! 💡",
-                    'message' => "Un <strong>letrero luminoso</strong> es la mejor forma de asegurar que tu marca sea visible 24/7. Creamos diseños personalizados con <strong>iluminación impactante</strong> y alta durabilidad. ¡Destaca siempre!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Letreros luminosos!',
+                    'message' => '¡Qué alegría tenerte con nosotros!<br>
+                                En <strong>Neon LED Publicidad</strong>, creemos que cada marca tiene una historia que merece ser <strong>vista, admirada y recordada</strong>. 💡<br>
+                                Nos especializamos en darle vida a tus ideas a través de <strong>soluciones visuales que impactan y atraen</strong>.<br>
+                                Desde <strong>letreros luminosos personalizados, neones LED decorativos</strong>, hasta <strong>impresiones en vinilo de alta calidad</strong>, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.<br>
+                                Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.<br>
+                                Cada detalle cuenta cuando se trata de captar miradas.<br>
+                                👉 Cuéntanos qué producto visual te gustaría implementar en tu negocio o espacio.<br>
+                                Estamos listos para hacerlo realidad.<br><br>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad.<br>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 <em>Iluminamos tus ideas</em><br><br>
+                                📞 +51 994 078 320<br>
+                                📍 Lima - Perú<br>
+                                Síguenos y descubre más ideas',
                 ],
                 2 => [
-                    'subject' => "TU MARCA NOCTURNA: Iluminación moderna en Lima.",
-                    'title' => "Máxima Visibilidad de día y de noche. 🌙",
-                    'message' => "Nuestros letreros luminosos son la solución ideal para <strong>farmacias, tiendas y negocios</strong> que operan de noche. Garantizamos un producto moderno y de <strong>alta calidad</strong> en Lima, Perú.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '✨ Haz que tu marca brille día y noche con nuestros Letreros Luminosos 💡',
+                    'title' => '¡Letreros luminosos!',
+                    'message' => 'Tu marca merece ser <strong>vista incluso desde lejos.</strong><br>
+                                Con nuestros <strong>letreros luminosos personalizados</strong>, logramos que tu negocio destaque sin importar la hora.<br>
+                                Usamos materiales de alta calidad y tecnología LED para garantizar <strong>brillo, durabilidad y bajo consumo de energía</strong>.<br>
+                                Cada diseño se adapta a tu estilo: moderno, elegante o minimalista.<br>
+                                💭 Imagina tu fachada iluminada, atrayendo clientes y proyectando una imagen profesional y moderna.<br>
+                                Un letrero bien diseñado <strong>no solo informa, sino que inspira confianza</strong>.<br>
+                                👉 Escríbenos y solicita tu diseño personalizado hoy mismo.<br><br>',
+                    'image' => '/assets/4-letreros-luminosos/flyer-modal-4-2.jpg',
+                    'extra' => '💡 <em>¡Tu marca merece brillar con identidad propia!</em><br><br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
                 3 => [
-                    'subject' => "LETREROS LUMINOSOS: Durabilidad y diseño espectacular.",
-                    'title' => "¡Letreros Luminosos: El impacto que estabas buscando! 💥",
-                    'message' => "La <strong>iluminación impactante</strong> de nuestros letreros luminosos capturará la atención de todos. ¡Convierte más transeúntes en clientes!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letras-Acrilicas-Farmacia-Mobile.webp",
+                    'subject' => '✨ De un letrero común... a una marca que ilumina su camino',
+                    'title' => '¡Letreros luminosos!',
+                    'message' =>  'Sabemos que muchos negocios aún usan carteles opacos o sin vida.<br>
+                                Se pierden entre la competencia y no logran captar la atención del público.<br>
+                                Imagina tu fachada con un <strong>letrero luminoso LED personalizado</strong>, con colores intensos y un acabado impecable.<br>
+                                💡 Tu marca no solo se verá, ¡resaltará incluso desde la distancia!<br>
+                                En <strong>Neon LED Publicidad</strong>, creamos letreros a medida con tecnología de iluminación eficiente, resistentes y de gran impacto visual.<br>
+                                👉 Da el paso hacia una identidad visual moderna<br><br>',
+                    'image' => '/assets/4-letreros-luminosos/flyer-modal-4-2.jpg',
+                    'extra' => '📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 5. Letreros de Neon en Tubos de Vidrio
+        // 5. NEON LED
         // ----------------------------------------------------
         5 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL CLÁSICO QUE VUELVE: Letreros de Neón en Vidrio.",
-                    'title' => "¡El Encanto Clásico del Neón en Tubo de Vidrio! 💖",
-                    'message' => "El <strong>Neón en Tubos de Vidrio</strong> es un clásico que <strong>cautiva</strong>. Su luz vibrante es ideal para crear un ambiente único, destacando tu marca en <strong>eventos y decoraciones especiales</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Neon LED!',
+                    'message' => '¡Qué alegría tenerte con nosotros!<br>
+                                En <strong>Neon LED Publicidad</strong>, creemos que cada marca tiene una historia que merece ser <strong>vista, admirada y recordada</strong>. 💡<br>
+                                Nos especializamos en darle vida a tus ideas a través de <strong>soluciones visuales que impactan y atraen</strong>.<br>
+                                Desde <strong>letreros luminosos personalizados, neones LED decorativos</strong>, hasta <strong>impresiones en vinilo de alta calidad</strong>, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.<br>
+                                Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.<br>
+                                Cada detalle cuenta cuando se trata de captar miradas.<br>
+                                👉 Cuéntanos qué producto visual te gustaría implementar en tu negocio o espacio.<br>
+                                Estamos listos para hacerlo realidad.<br><br>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad.<br>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 <em>Iluminamos tus ideas</em><br><br>
+                                📞 +51 994 078 320<br>
+                                📍 Lima - Perú<br>
+                                Síguenos y descubre más ideas',
                 ],
                 2 => [
-                    'subject' => "CAUTIVA AL PÚBLICO: Neón auténtico para tu marca.",
-                    'title' => "Neón Auténtico: Cautiva a tu Público. 🎯",
-                    'message' => "Si buscas un estilo <strong>Vintage</strong> o una declaración audaz, el neón tradicional es insuperable. <strong>Llama la atención</strong> y genera un recuerdo inolvidable en tus visitantes.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '💡 Dale personalidad a tu espacio con nuestros Neones LED Personalizados ✨',
+                    'title' => '¡Neón LED!',
+                    'message' =>  '¿Quieres un espacio con estilo, actitud y luz propia?<br>
+                                Nuestros <strong>neones LED personalizados</strong> son el toque que transforma cualquier ambiente.
+                                Cada diseño es 100% personalizable: frases, logos, íconos o figuras.<br>
+                                Perfectos para locales, estudios, habitaciones o eventos.<br>
+                                Con bajo consumo y materiales resistentes, duran miles de horas brillando.<br>
+                                Imagina tu logo o una frase inspiradora iluminando tu pared.<br>
+                                💫 Un detalle moderno, elegante y fotogénico que todos recordarán.<br>
+                                👉 Cuéntanos tu idea y la convertiremos en luz.<br>
+                                Haz que tu espacio hable por ti.<br><br>',
+                    'image' => '/assets/5-neon-led/flyer-modal-5-1.jpg',
+                    'extra' => '📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
                 3 => [
-                    'subject' => "ARTE EN LUZ: Letreros de Neón para eventos y decoración.",
-                    'title' => "El arte y la luz se unen en tu Letrero de Neón. 🖼️",
-                    'message' => "Desde diseños sencillos hasta obras de arte, fabricamos tus letreros de neón en vidrio con la <strong>máxima calidad</strong>. ¡Cotiza tu diseño más original!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Letrero-Works-licoreria-led-neo-led-publicidad-Mobile.webp",
+                    'subject' => '✨ De paredes vacías... a espacios con alma y color 🌈',
+                    'title' => '¡Neón LED!',
+                    'message' =>  '¿Sientes que a tu espacio le falta vida o un toque distintivo?<br>
+                                Una pared sin diseño puede pasar desapercibida, sin reflejar tu estilo ni el de tu marca.<br>
+                                Imagina ese mismo lugar iluminado con un <strong>neón LED personalizado</strong>, vibrante y con tu toque personal.<br>
+                                💡 Frases, íconos o logos que inspiran y comunican tu esencia.<br>
+                                En <strong>Neon LED Publicidad</strong>, combinamos diseño, color y tecnología para que tu ambiente brille con identidad.<br>
+                                👉 Personaliza el tuyo hoy y transforma tu espacio.<br><br>',
+                    'image' => '/assets/5-neon-led/flyer-modal-5-2.jpg',
+                    'extra' => '📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 6. Letreros de Neón LED
+        // 6. IMPRESION EN VINILO
         // ----------------------------------------------------
         6 => [
             'messages' => [
                 1 => [
-                    'subject' => "EL FUTURO ES AHORA: Neón LED Personalizado.",
-                    'title' => "¡Diseño Moderno y Ahorro con Neón LED! 🌈",
-                    'message' => "Descubre la versatilidad de nuestros <strong>Neones LED</strong>. Obtén <strong>diseños atractivos</strong> y la misma vibración del neón clásico, pero con <strong>bajo consumo</strong> y alta durabilidad. ¡La opción inteligente!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! Tu marca está a punto de brillar con nosotros ✨',
+                    'title' => '¡Impresión  en Vinilo!',
+                    'message' => '¡Qué alegría tenerte con nosotros!<br>
+                                En <strong>Neon LED Publicidad</strong>, creemos que cada marca tiene una historia que merece ser <strong>vista, admirada y recordada</strong>. 💡<br>
+                                Nos especializamos en darle vida a tus ideas a través de <strong>soluciones visuales que impactan y atraen</strong>.<br>
+                                Desde <strong>letreros luminosos personalizados, neones LED decorativos</strong>, hasta <strong>impresiones en vinilo de alta calidad</strong>, diseñamos cada proyecto para destacar tu marca y transformar tus espacios.<br>
+                                Imagina tu logo brillando con fuerza o tus paredes decoradas con diseños únicos que reflejan tu esencia.<br>
+                                Cada detalle cuenta cuando se trata de captar miradas.<br>
+                                👉 Cuéntanos qué producto visual te gustaría implementar en tu negocio o espacio.<br>
+                                Estamos listos para hacerlo realidad.<br><br>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad.<br>
+                                <strong>Equipo Neon LED Publicidad</strong><br>
+                                💡 <em>Iluminamos tus ideas</em><br><br>
+                                📞 +51 994 078 320<br>
+                                📍 Lima - Perú<br>
+                                Síguenos y descubre más ideas',
                 ],
                 2 => [
-                    'subject' => "BAJO CONSUMO Y ALTA VISIBILIDAD: Neón LED.",
-                    'title' => "Personalización Total con Neón LED. ✅",
-                    'message' => "Ideales para negocios, eventos y decoración, los Neones LED son <strong>personalizables</strong> en color, forma y tamaño. ¡Ilumina tu idea con eficiencia!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '🎨 Transforma tus paredes con nuestra Impresión en Vinilo Premium',
+                    'title' => '¡Impresión en vinilo!',
+                    'message' =>  'Tus paredes, vitrinas o vehículos pueden ser mucho más que simples superficies.<br>
+                                Con nuestra <strong>impresión en vinilo</strong>, los convertimos en herramientas de comunicación visual poderosas.<br>
+                                Trabajamos con vinilos adhesivos de alta calidad, resistentes y con colores intensos.<br>
+                                Perfectos para oficinas, locales, eventos o decoración de interiores.<br>
+                                💭 Imagina tu logo, frase o diseño favorito plasmado con precisión y brillo.<br>
+                                Con nuestra tecnología de impresión, cada detalle se ve profesional y duradero.<br>
+                                👉 Escríbenos y dale una nueva vida a tus espacios con vinilos personalizados.<br>',
+                    'image' => 'assets/6-impresion-en-vinilo/flyer-modal-6-1.jpg',
+                    'extra' => '📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
                 3 => [
-                    'subject' => "DISEÑOS ATRACTIVOS: Descubre nuestros Neones LED.",
-                    'title' => "Bajo Consumo, Alta Visibilidad: Neón LED. 🔋",
-                    'message' => "Te ofrecemos la mejor tecnología Neón LED en Lima, Perú. <strong>Menos calor, más vida útil y un diseño increíble</strong> para que tu marca no pase desapercibida.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/5letrasDeNeon.png",
+                    'subject' => '✨ De paredes vacías... a espacios llenos de identidad',
+                    'title' => '¡Impresión en vinilo!',
+                    'message' =>  'Muchos negocios tienen espacios sin personalidad o carteles que no representan su marca.<br>
+                                Eso limita la conexión con sus clientes y la recordación de su imagen.<br>
+                                Con nuestra <strong>impresión en vinilo de alta resolución</strong>, cada rincón puede reflejar tu esencia.<br>
+                                💡 Diseños nítidos, colores vibrantes y acabados profesionales que transforman ambientes.<br>
+                                En <strong>Neon LED Publicidad</strong>, plasmamos tus ideas con precisión, estilo y durabilidad.<br>
+                                👉 Dale voz a tus paredes. ¡Cotiza tu impresión en vinilo hoy!<br><br>',
+                    'image' => 'assets/6-impresion-en-vinilo/flyer-modal-6-2.jpg',
+                    'extra' => '📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                📍 Lima - Perú',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 7. Impresión en Vinilo
+        // 7. MENU BOARD
         // ----------------------------------------------------
         7 => [
             'messages' => [
                 1 => [
-                    'subject' => "VINILOS: La mejor opción para comunicar tu mensaje.",
-                    'title' => "¡La mejor opción para tu Mensaje: Impresión en Vinilo! 🖼️",
-                    'message' => "La <strong>Impresión en Vinilo</strong> es la forma más versátil y económica de comunicar tu <strong>mensaje, logotipo o promoción</strong>. Tenemos una gran variedad de estilos y acabados disponibles.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => '¡Menu Board!',
+                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => 'assets/7-menu-board/flyer-modal-7-1.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "GRAN VARIEDAD: Impresión en Vinilo para tu logotipo.",
-                    'title' => "Vinilos de Alta Resolución para todo lo que imaginas. 🎨",
-                    'message' => "Desde vinilos para paredes hasta vehículos, te ofrecemos <strong>alta calidad de impresión</strong> y durabilidad para cualquier superficie. ¡El límite es tu imaginación!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
+                    'subject' => '✨ Dale vida a tu restaurante con un Menú Board,  Transforma tu espacio y vende más 🍔',
+                    'title' => '¡Menu Board!',
+                    'message' => '<p style="text-align: center;">¡Gracias por interesarte en nuestros Menú Boards personalizados!<br>
+                                Sabemos que en la industria gastronómica, cada detalle cuenta… y tu menú es la carta de presentación de tu negocio.<br>
+                                En Neon LED Publicidad, transformamos ese espacio en una herramienta visual poderosa que atrae miradas y estimula el apetito.<br><br>
+                                Nuestros Menú Boards están diseñados para que tu carta se vea clara, moderna y atractiva, ayudando a tus clientes a decidir rápido y a disfrutar más.</p>',
+                    'image' => 'assets/7-menu-board/flyer-modal-7-2.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina a tus clientes observando tu menú iluminado, con colores vibrantes, imágenes irresistibles y precios bien visibles.<br>
+                                Con un Menú Board de Neon LED Publicidad, no solo informas, inspiras confianza y estilo.<br><br>
+                                👉 Responde a este correo o contáctanos directamente por WhatsApp para coordinar tu diseño personalizado.<br><br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
                 3 => [
-                    'subject' => "TRANSFORMA ESPACIOS: Vinilos de alta calidad a tu medida.",
-                    'title' => "¡Transforma Espacios con Vinilo Adhesivo! 🧱",
-                    'message' => "<strong>Transforma tus vitrinas y espacios</strong> con nuestros vinilos adhesivos. Muestra tus productos y promociones de manera clara y profesional.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/6impresionEnVinilo.png",
+                    'subject' => 'Convierte tu Menú en una experiencia visual que tus clientes recordarán✨',
+                    'title' => '¡Menu Board!',
+                    'message' => '<p style="text-align: center;">Sabemos que en muchos restaurantes, los menús tradicionales o carteles poco visibles no logran captar la atención de los clientes.<br>
+                                Los precios se pierden, las promociones pasan desapercibidas y la carta no refleja la verdadera calidad de la comida.<br>
+                                ¿Te suena familiar? 🍽<br><br>
+                                Imagina ahora tu local con un Menú Board LED personalizado, moderno y brillante, donde cada plato se presenta de forma clara, atractiva y profesional.<br>
+                                Un espacio donde tus clientes ven, eligen y se antojan al instante, impulsando tus ventas y mejorando la experiencia de compra.</p>',
+                    'image' => 'assets/7-menu-board/flyer-modal-7-3.jpg',
+                    'extra' => '<p style="text-align: center;">En Neon LED Publicidad, creamos Menú Boards a medida para restaurantes, cafeterías y negocios de comida rápida.<br>
+                                Usamos materiales resistentes, iluminación de alta calidad y diseños adaptados a tu estilo.<br><br>
+                                👉 Responde este correo o escríbenos directamente por WhatsApp para coordinar tu diseño:<br><br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 8. Menú Board
+        // 8. LETRAS PINTADAS EN MDF
         // ----------------------------------------------------
         8 => [
             'messages' => [
                 1 => [
-                    'subject' => "MENÚ BOARD: Muestra tus productos y precios fácilmente.",
-                    'title' => "¡Organiza tu Oferta con un Menú Board Dinámico! 🍔",
-                    'message' => "Optimiza el proceso de pedido en tu establecimiento de comida con nuestros <strong>Menú Boards</strong>. Son pantallas visuales que muestran <strong>productos, precios e imágenes</strong> de forma clara y atractiva.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => '¡Letras Pintadas en MDF!',
+                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => 'assets/8-letras-pintadas-en-mdf/flyer-modal-8-1.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "ORGANIZACIÓN Y VENTAS: Menú Boards para restaurantes.",
-                    'title' => "Menú Boards: Claridad y Venta Rápida. ⚡",
-                    'message' => "Un Menú Board eficiente ayuda a tus clientes a <strong>elegir fácilmente qué ordenar</strong>, agilizando el servicio y <strong>aumentando la venta</strong> de productos estrella. ¡Moderniza tu punto de venta!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
+                    'subject' => 'Haz que tu marca destaque con nuestras Letras MDF personalizadas ✨',
+                    'title' => '¡Letras Pintadas en MDF!',
+                    'message' => '¿Sabías que una buena primera impresión puede marcar la diferencia entre ser recordado o pasar desapercibido?<br>
+                                En Neon LED Publicidad, transformamos tu identidad visual con nuestras letras pintadas en MDF, diseñadas para captar miradas y fortalecer tu presencia de marca.<br><br>
+                                👉 Imagina tu logo o nombre en letras MDF pintadas 3D, con el color exacto de tu marca y una presencia elegante que hable por ti.<br><br>
+                                Gracias a su acabado premium y estilo tridimensional, son perfectas para decorar interiores, stands, señalización corporativa o eventos.',
+                    'image' => 'assets/8-letras-pintadas-en-mdf/flyer-modal-8-2.jpg',
+                    'extra' => '<p style="text-align: center;">Da el siguiente paso hacia una imagen sólida y moderna.<br><br>
+                                Contáctanos hoy mismo y diseñemos juntos tus letras MDF personalizadas.<br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
                 3 => [
-                    'subject' => "MEJORA LA EXPERIENCIA: Paneles visuales de Menú Board.",
-                    'title' => "Mejora la experiencia del cliente con tu Menú Board. 🍽️",
-                    'message' => "Diseñamos y montamos tu <strong>Menú Board</strong> para que sea totalmente visible y estético, mejorando la experiencia del cliente. ¡Pide tu cotización especializada para restaurantes!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/7hamburguesa.webp",
+                    'subject' => '✨ De un espacio común… a una marca que destaca con estilo',
+                    'title' => '¡Letras Pintadas en MDF!',
+                    'message' => '<p style="text-align: center;">Tu marca puede tener una historia increíble, pero si tu espacio no la comunica, se pierde entre las demás.<br>
+                                A veces, basta con mirar una pared vacía o una vitrina sin diseño para notar que falta algo que hable por ti.<br>
+                                El desafío no está en tener un buen producto, sino en hacer que tu marca se vea, se sienta y se recuerde.<br><br>
+                                Ahora imagina ese mismo espacio con letras MDF personalizadas, pintadas con colores que reflejan tu esencia.</p>',
+                    'image' => 'assets/8-letras-pintadas-en-mdf/flyer-modal-8-3.jpg',
+                    'extra' => '<p style="text-align: center;">En Neon Led Publicidad, entendemos que una marca no solo necesita verse bien, sino sentirse auténtica.<br>
+                                👉 Haz que tu marca hable por sí misma.<br>
+                                Cotiza tus letras MDF hoy y transforma tu espacio con estilo.<br><br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 9. Letras Pintadas en MDF
+        // 9. MONITORES DE PUBLICIDAD
         // ----------------------------------------------------
         9 => [
             'messages' => [
                 1 => [
-                    'subject' => "AHORRO CON ESTILO: Letras Pintadas en MDF.",
-                    'title' => "¡Identidad Visual con Letras MDF Pintadas! 🎨",
-                    'message' => "Las <strong>Letras Pintadas en MDF</strong> son la solución perfecta para negocios que buscan <strong>destacar su identidad visual sin un gran presupuesto</strong>. Ideal para decoración de paredes y vitrinas.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => '¡Monitores de Publicidad!',
+                    'message' => '<p style="text-align: center;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => 'assets/9-monitores-de-publicidad/flyer-modal-9-1.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "IDEAL PARA VITRINAS: Letras en MDF a medida.",
-                    'title' => "Destaca tu Marca sin gastar de más. 🏷️",
-                    'message' => "Fabricamos letras en MDF <strong>pintadas a medida</strong> y en el color exacto de tu marca. Son una opción robusta, económica y totalmente personalizable. ¡La mejor relación calidad-precio!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
+                    'subject' => '💡 Tu marca merece verse en alta definición',
+                    'title' => '¡Monitores de Publicidad!',
+                    'message' => '<p style="text-align: center;">
+                                Imagina que cada persona que pasa frente a tu negocio detiene su mirada.<br>
+                                Eso ocurre cuando usas monitores de publicidad digital: pantallas que transforman cualquier espacio en una experiencia visual moderna y profesional.<br><br>
+                                Nuestros monitores digitales son la herramienta perfecta para mostrar contenido dinámico, atractivo y de alto impacto.<br>
+                                Con tecnología LED de última generación, ofrecen imágenes nítidas, colores vibrantes y una eficiencia energética superior, consumiendo menos electricidad que los letreros tradicionales.
+                                </p>',
+                    'image' => 'assets/9-monitores-de-publicidad/flyer-modal-9-2.jpg',
+                    'extra' => '<p style="text-align: center;">
+                                Imagina tus promociones, menús o campañas moviéndose con fluidez y brillo en un monitor que no solo muestra, sino comunica la identidad de tu marca.<br>
+                                Su diseño versátil se adapta a interiores, exteriores o exhibiciones portátiles, integrándose fácilmente con neón decorativo o señalética corporativa.<br><br>
+                                👉 Haz que tu publicidad cobre vida.<br>
+                                Cotiza hoy tus monitores de publicidad digital y descubre cómo la tecnología puede elevar la presencia de tu marca.<br><br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
                 3 => [
-                    'subject' => "IDENTIDAD VISUAL SIN GASTAR DE MÁS: Letras MDF.",
-                    'title' => "Solución Económica y Personalizable: Letras en MDF. 📐",
-                    'message' => "Dale un toque <strong>cálido y artesanal</strong> a tu negocio con letras en MDF. Perfectas para stands de ferias o decoración interior. ¡Contáctanos y cotiza sin compromiso!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/8burnout.jpg",
+                    'subject' => '✨ De mensajes estáticos… a pantallas que hablan por tu marca',
+                    'title' => '¡Monitores de Publicidad!',
+                    'message' => '<p style="text-align: center;">
+                                Tu publicidad puede estar cumpliendo su función, pero… ¿realmente está captando la atención?<br>
+                                Los carteles tradicionales ya no generan el mismo impacto en un público acostumbrado a la imagen en movimiento.<br>
+                                Si tus promociones o anuncios permanecen estáticos, el mensaje puede perder fuerza antes de llegar a tus clientes.
+                                </p>',
+                    'image' => 'assets/9-monitores-de-publicidad/flyer-modal-9-3.jpg',
+                    'extra' => '<p style="text-align: center;">
+                                Con nuestros monitores de publicidad digital, tu mensaje cobra vida.<br><br>
+                                En Neon Led Publicidad, combinamos tecnología e innovación para que tu marca se comunique con impacto.<br><br>
+                                No dejes que tu mensaje se quede quieto.<br>
+                                👉 Ve hoy tus monitores de publicidad digital y haz que tu marca se vea como nunca antes.<br>
+                                📞 +51 994 078 320<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                Síguenos y descubre más ideas de diseño</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 10. Monitores de Publicidad
+        // 10. PANTALLAS LED
         // ----------------------------------------------------
         10 => [
             'messages' => [
                 1 => [
-                    'subject' => "PUBLICA CON IMPACTO: Monitores de Publicidad Digital.",
-                    'title' => "¡Comunica con Impacto con Monitores de Publicidad! 🖥️",
-                    'message' => "Destaca tu marca con nuestros <strong>Monitores de Publicidad Digital</strong>. Son <strong>modernos, sostenibles y versátiles</strong>, permitiéndote comunicar con dinamismo cualquier mensaje o promoción.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Registro',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
+                                ✅ Contacto inmediato con nuestros usuarios.<br>
+                                ✅ Recordación de nuestros productos.<br>
+                                ✅ Envío de ofertas y promociones.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día.<br>
+                                Contáctenos para saber el producto que desee llevar hoy mismo.<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 2 => [
-                    'subject' => "VERSATILIDAD Y SOSTENIBILIDAD: Monitores Digitales.",
-                    'title' => "Publicidad Digital Sostenible y Moderna. ♻️",
-                    'message' => "Ofrecemos <strong>displays interactivos y monitores táctiles</strong> que garantizan una experiencia inolvidable para el usuario. ¡Dale a tus clientes el poder de interactuar con tu marca!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Pantallas LED',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Te ayudamos a elegir el mejor letrero, cartel o valla publicitaria con una pantalla LED.<br>
+                                Con esta pantalla tendrás muchos beneficios a corto, mediano y largo plazo.<br>
+                                ✅ Aumenta tu visibilidad ante el público correcto.<br>
+                                ✅ Fácil de modificar y actualizar para cada tipo de objeto, servicio o beneficio que desees colocar.<br>
+                                ✅ Diferentes formas y tamaños para usarlos tanto en tiendas, como en centros comerciales; en eventos o en conciertos.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día.<br>
+                                Contáctenos para saber que pantallas LED se puede llevar hoy mismo<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 3 => [
-                    'subject' => "COMUNICA CON DINAMISMO: Monitores Táctiles y Displays.",
-                    'title' => "Monitores Táctiles: La Interacción que tu Marca Necesita. 👋",
-                    'message' => "Cambia tu publicidad al instante y <strong>ahorra en impresiones</strong> con nuestros monitores. El futuro de la comunicación visual está aquí.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/monitores_tactiles.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando nuestras Pantallas LED, tendrás más presencia en el mercado que perteneces.</strong><br><br>
+                                📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br><br>
+                                <strong>✨ Beneficios exclusivos:</strong><br>
+                                <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px;">
+                                <li>Mayor visibilidad y posicionamiento.</li>
+                                <li>Generar buenas expectativas con una vista exclusiva de su marca.</li>
+                                <li>Presencia en espacios interior o exterior.</li>
+                                </ul>
+                                <p style="margin: 0; padding: 0; line-height: 25px; mso-line-height-rule: exactly;">&nbsp;</p>
+                                🚀 ¡No te quedes atrás con un cartel de papel! Transforma tu negocio con imágenes innovadoras, diseñadas para maximizar tu rentabilidad.<br>
+                                📩Contáctanos hoy y comencemos a construir tu futura publicidad
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 11. Pantallas Led
+        // 11. HOLOGRAFICO
         // ----------------------------------------------------
         11 => [
             'messages' => [
                 1 => [
-                    'subject' => "ALTA RESOLUCIÓN: Pantallas LED para tu negocio.",
-                    'title' => "¡Máxima Resolución y Dinamismo con Pantallas LED! 📺",
-                    'message' => "Las <strong>Pantallas LED</strong> son la herramienta visual más potente para mostrar diseños, <strong>videos y promociones en alta resolución</strong>. ¡Transmite tu mensaje con el máximo impacto y dinamismo!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Registro',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
+                                ✅ Contacto inmediato con nuestros usuarios.<br>
+                                ✅ Recordación de nuestros productos.<br>
+                                ✅ Envío de ofertas y promociones.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día.<br>
+                                Contáctenos para saber el producto que desee llevar hoy mismo.<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 2 => [
-                    'subject' => "DINAMISMO VISUAL: Muestra promociones en Pantalla LED.",
-                    'title' => "Tu Marca en Pantallas LED de Alto Impacto. 🌟",
-                    'message' => "Ideal para fachadas o interiores, nuestras pantallas LED aseguran que tu marca se <strong>vea y se recuerde</strong>. ¡Te asesoramos en el tamaño y pitch perfecto para tu negocio!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Holográficos',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Los sistemas holográficos ya no son un sueño, o una diferente realidad.<br>
+                                Con estos holográficos, puedes trasformar imágenes planas, a imágenes en realidad aumentada. Y con ello puede contar con muchos beneficios.<br>
+                                ✅ Maneras de innovar la forma de ver una publicidad.<br>
+                                ✅ Fácil de modificar y actualizar para cada tipo de objeto, servicio o beneficio que desees colocar.<br>
+                                ✅ Diferentes formas y tamaños, de uso fácil y dinámico para las personas que no estén familiarizados con esta tecnología.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día. <br>
+                                Contáctenos para saber que <strong>holográficos</strong> se puede llevar hoy mismo<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 3 => [
-                    'subject' => "MÁXIMO IMPACTO: La herramienta visual más potente.",
-                    'title' => "Transmite Videos y Promociones en Calidad HD. 📽️",
-                    'message' => "Instalamos <strong>Pantallas LED</strong> en Lima, Perú, con garantía de calidad y el mejor soporte. Muestra tus campañas con la <strong>claridad y el brillo</strong> que merecen.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/Pantallas_led.jpg",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando graficos Holográficos, tendrás más presencia en el mercado que perteneces.</strong><br>
+                                📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br>
+                                <strong>✨ Beneficios exclusivos:</strong><br>
+                                <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px;">
+                                <li>Innovación en presentar tu producto.</li>
+                                <li>Generar buenas expectativas con una vista exclusiva de su marca.</li>
+                                <li>Presencia en espacios interior o exterior con tecnología de última generación.</li>
+                                </ul>
+                                <p style="margin: 0; padding: 0; line-height: 25px; mso-line-height-rule: exactly;">&nbsp;</p>
+                                🚀 ¡No te quedes atrás con un cartel de papel! Transforma tu negocio con imágenes innovadoras, diseñadas para maximizar tu rentabilidad.
+                                📩Contáctanos hoy y comencemos a construir tu futura publicidad.
+
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 12. Holográfico
+        // 12. PIXEL LED
         // ----------------------------------------------------
         12 => [
             'messages' => [
                 1 => [
-                    'subject' => "PUBLICIDAD DEL FUTURO: Productos Holográficos en Lima.",
-                    'title' => "¡Tecnología Holográfica 3D: Publicidad del Futuro! 🔮",
-                    'message' => "<strong>Holografía 3D</strong>: La tecnología <strong>innovadora</strong> que transforma tu publicidad en una experiencia mágica. ¡Proyecta tus productos en el aire y sorpréndete!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Registro',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
+                                ✅ Contacto inmediato con nuestros usuarios.<br>
+                                ✅ Recordación de nuestros productos.<br>
+                                ✅ Envío de ofertas y promociones.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día.<br>
+                                Contáctenos para saber el producto que desee llevar hoy mismo.<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 2 => [
-                    'subject' => "TECNOLOGÍA INNOVADORA: Efectos 3D para tu marca.",
-                    'title' => "Innovación que Cautiva: Productos Holográficos. ✨",
-                    'message' => "Destaca en ferias, lanzamientos o vitrinas con nuestros <strong>productos holográficos</strong>. Es la forma más futurista de <strong>cautivar y atraer</strong> todas las miradas.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => 'Pixel LED',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Pixel LED, la mejor innovación que tendrás. Combina tus espacios con una gama de luces de diferentes colores.<br>
+                                Estas luces están fabricadas exclusivamente para que cada punto de luz, ilumine a su preferencia.<br>
+                                ✅ Exclusivo para eventos o espacios cerrados.<br>
+                                ✅ Fácil de modificar y actualizar para cada tipo de objeto, servicio o beneficio que desees colocar.<br>
+                                ✅ Diferentes formas y tamaños, de uso fácil y dinámico para las personas que no estén familiarizados con esta tecnología.<br>
+                                Hagamos que tu marca destaque y genere conversación cada día.<br>
+                                Contáctenos para saber que <strong>Pixel LED</strong> se puede llevar hoy mismo<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
                 3 => [
-                    'subject' => "CAUTIVA CON 3D: Proyectores Holográficos.",
-                    'title' => "¡Sorprende a tu Audiencia con Efectos 3D! 🤯",
-                    'message' => "Somos líderes en tecnología holográfica en Lima, Perú. Deja de lado lo tradicional y atrévete a la <strong>publicidad inmersiva</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/holograma_3d_1.png",
+                    'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
+                    'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'message' => '',
+                    'image' => '',
+                    'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando luces de Pixel LED, tendrás más presencia en el mercado que perteneces.</strong><br>
+                                📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br>
+                                <strong>✨ Beneficios exclusivos:</strong><br>
+                                <ul style="margin-top: 0; margin-bottom: 0; padding-left: 20px;">
+                                <li>Mayor atractivo en los espacios que desee colocar.</li>
+                                <li>Generar buenas expectativas con una vista exclusiva de su marca.</li>
+                                <li>Fácil de manipular y buena gama de formatos.</li>
+                                </ul>
+                                <p style="margin: 0; padding: 0; line-height: 25px; mso-line-height-rule: exactly;">&nbsp;</p>
+                                🚀 ¡No te quedes atrás con un cartel de papel! Transforma tu negocio con imágenes innovadoras, diseñadas para maximizar tu rentabilidad.<br>
+                                📩Contáctanos hoy y comencemos a construir tu futura publicidad<br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <strong>Saludos,</strong><br>
+                                Neon LED Publicidad',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 13. Pixel Led
+        // 13. SILLAS LUMINOSAS
         // ----------------------------------------------------
         13 => [
             'messages' => [
                 1 => [
-                    'subject' => "ILUMINACIÓN AVANZADA: Productos Pixel LED.",
-                    'title' => "¡Iluminación Innovadora con Pixel LED! 💡",
-                    'message' => "Descubre la versatilidad de la <strong>Iluminación Pixel LED</strong>. Permite crear <strong>diseños y patrones de luz</strong> dinámicos, perfectos para publicidad y decoración de alto nivel.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => 'Sillas luminosas!',
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "DISEÑOS PERSONALIZABLES: Pixel LED en Lima, Perú.",
-                    'title' => "Diseños Únicos y Control de Color con Pixel LED. 🌈",
-                    'message' => "Nuestros productos <strong>Pixel LED</strong> te ofrecen un control total sobre el color y el movimiento, permitiendo una <strong>personalización sin límites</strong>. ¡Ilumina con inteligencia!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
+                    'subject' => '🪑 Ilumina tus eventos con estilo ✨',
+                    'title' => 'Sillas luminosas!',
+                    'message' => '',
+                    'image' => 'assets/13-sillas-luminosas/flyer-modal-13-2.jpg',
+                    'extra' => '¿Quieres que tu evento destaque incluso de noche?<br>
+                                En Neón Led Publicidad ofrecemos <strong>sillas luminosas</strong> que combinan diseño, comodidad y una iluminación impactante que transforma cualquier ambiente.<br>
+                                ¡Modernidad y elegancia instantánea!<br><br>
+                                ✅ Perfectas para eventos, terrazas o bares.<br>
+                                ✅ Disponibles en distintos colores y formatos.<br>
+                                ✅ Recargables y resistentes al uso continuo.<br><br>
+                                📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
                 3 => [
-                    'subject' => "DECORACIÓN Y PUBLICIDAD: Tecnología Pixel LED.",
-                    'title' => "Pixel LED: Tecnología Avanzada para Decoración. 🚀",
-                    'message' => "Tecnología Pixel LED para fachadas, rótulos o interiores. Obtén una <strong>iluminación avanzada y de vanguardia</strong> con bajo consumo energético.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/pixel_led_1.png",
+                    'subject' => '🪑 ¡Aprovecha EL DESCUENTO y haz que tus eventos brillen más! 💡',
+                    'title' => 'Sillas luminosas!',
+                    'message' => 'Nos alegra que te interese crear ambientes únicos con nuestras sillas luminosas. Por eso queremos darte un impulso: usa el código BIENVENIDO10 y obtén 10% de descuento en tu primera compra de sillas luminosas.<br>
+                                ¡Moderniza tu espacio en un instante con Neon Led Publicidad!',
+                    'image' => 'assets/13-sillas-luminosas/flyer-modal-13-3.jpg',
+                    'extra' => '📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 14. Sillas Luminosas
+        // 14. TECHOS LED
         // ----------------------------------------------------
         14 => [
             'messages' => [
                 1 => [
-                    'subject' => "EVENTOS INOLVIDABLES: Sillas Luminosas.",
-                    'title' => "¡Transforma tus Eventos con Sillas Luminosas! 🥳",
-                    'message' => "<strong>Transforma el ambiente de tus eventos</strong> y espacios con nuestras <strong>Sillas Luminosas</strong>. Ofrecen un diseño innovador y la posibilidad de cambiar de color para adaptarse a cualquier temática.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => 'Techos Led!',
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "DISEÑO INNOVADOR: Sillas LED para tu espacio.",
-                    'title' => "Diseño Innovador y Ambiente Único. 🛋️",
-                    'message' => "Perfectas para bares, discotecas, terrazas o eventos corporativos. Nuestras sillas LED son <strong>resistentes y visualmente impactantes</strong>. ¡Crea un espacio único!",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
+                    'subject' => '🌌 Transforma tu ambiente con un techo LED increíble 💫',
+                    'title' => 'Techos Led!',
+                    'message' => '¿Te imaginas una vista estrellada dentro de tu negocio o sala?<br>
+                                Con nuestros techos LED, se ilumina todo el ambiente y logramos espacios inmersivos que generan experiencias únicas.<br><br>
+                                🌠 Diseño personalizado.<br>
+                                🌠 Iluminación regulable y moderna.<br>
+                                🌠 Ideal para restaurantes, spas, barberías o salas de exhibición.<br>',
+                    'image' => 'assets/14-techos-led/flyer-modal-14-2.jpg',
+                    'extra' => '📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
                 3 => [
-                    'subject' => "AMBIENTE ÚNICO: Sillas Luminosas a tu medida.",
-                    'title' => "Sillas LED: Personalización y Estilo para tu Espacio. 💫",
-                    'message' => "Dale un toque de <strong>modernidad y diversión</strong> a tu decoración. Sillas luminosas a tu medida, disponibles para compra o alquiler en Lima.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/sillas_luminosas_1.png",
+                    'subject' => '🌌 Convierte tu espacio en una experiencia visual! ✨',
+                    'title' => 'Techos Led!',
+                    'message' => '¡Sabemos que quieres algo diferente para tu negocio!<br>
+                                Por eso te ofrecemos <strong>10% de descuento</strong> en tu primer techo LED personalizado.<br>
+                                ¡Con Neón Led Publicidad tus espacios opacan a los rivales!<br>',
+                    'image' => 'assets/14-techos-led/flyer-modal-14-3.jpg',
+                    'extra' => '📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 15. Techos Led
+        // 15. LETRAS DE NEON EN TUBOS DE VIDRIO
         // ----------------------------------------------------
         15 => [
             'messages' => [
                 1 => [
-                    'subject' => "TECHO LED: Elegancia y alto impacto visual.",
-                    'title' => "¡Elegancia y Alto Impacto con Techos LED!  छत",
-                    'message' => "Instala <strong>Techos LED</strong> y transforma por completo cualquier espacio. Su diseño moderno y la <strong>iluminación uniforme</strong> crean un ambiente de elegancia y alto impacto.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
+                    'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
+                    'title' => 'Letras de Neon en Tubos de Vidrio!',
+                    'message' => '<p style="text-align: left;">¡Nos alegra muchísimo tenerte aquí!<br>
+                                En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
+                                Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
+                                Desde letreros LED personalizados, pantallas luminosas y estructuras decorativas, hasta hologramas y techos LED, cada proyecto que realizamos está diseñado para atraer miradas y generar impacto real.</p>',
+                    'image' => '/assets/general/flyer.jpg',
+                    'extra' => '<p style="text-align: center;">Imagina el nombre de tu marca brillando con fuerza, atrayendo a más clientes y destacando frente a tu competencia.<br><br>
+                                Ayúdanos a conocerte un poco más:<br>
+                                👉 Cuéntanos qué producto o tipo de iluminación te gustaría explorar para tu negocio o proyecto.<br><br>
+                                Gracias por confiar en nosotros y por permitirnos ser parte de tu próxima gran idea.<br><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                Con energía y creatividad,<br>
+                                Equipo Neon LED Publicidad<br>
+                                💡 Iluminamos tus ideas<br><br>
+                                📞 WhatsApp: +51 994 078 320</p>',
                 ],
                 2 => [
-                    'subject' => "DISEÑO MODERNO: La solución de iluminación que buscas.",
-                    'title' => "El Diseño Moderno que tu Negocio Merece. 🏢",
-                    'message' => "Ideal para oficinas, tiendas de lujo o espacios comerciales. Un Techo LED es una <strong>solución de iluminación decorativa</strong> que garantiza la máxima distinción.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
+                    'subject' => '🔤  Dale identidad propia a tu marca con letras de neón 💫',
+                    'title' => 'Letras de Neon en Tubos de Vidrio!',
+                    'message' => '¿Quieres que tu negocio destaque a simple vista?<br>
+                                En Neón Led Publicidad contamos con <strong>letras de neón en tubos de vidrio</strong> para renovar tu espacio. Son piezas artesanales que proyectan luz y estilo, ideales para bares, restaurantes y estudios.<br><br>
+                                ✨ Diseños personalizados<br>
+                                ✨ Colores vibrantes y materiales duraderos<br>
+                                ✨ Instalación profesional incluida <br>',
+                    'image' => 'assets/15-letras-de-neon-en-tubos-de-vidrio/flyer-modal-15-3.jpg',
+                    'extra' => '📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
                 3 => [
-                    'subject' => "DESTACA CON ELEGANCIA: Techos LED personalizados.",
-                    'title' => "Techos LED: La Solución de Iluminación Definitiva. ☀️",
-                    'message' => "Personalizamos el diseño de tu Techo LED para que se integre perfectamente con la arquitectura de tu negocio. <strong>Elegancia, modernidad y la mejor iluminación</strong>.",
-                    'image' => "https://ledneonpublicidad.com/productosPrincipal/luces_led_techo_1.png",
+                    'subject' => '🔤 ¡Tu logo puede brillar en neón! 💥',
+                    'title' => 'Letras de Neon en Tubos de Vidrio!',
+                    'message' => '¡Imagina tu marca iluminando el espacio con un neón a medida! Con gran potencial de ahorro; hoy puedes darle estilo a tu espacio con 10% de descuento en tu primer diseño personalizado.<br>
+                                ¡Con Neon Led Publicidad todo diseño se hace realidad!',
+                    'image' => 'assets/15-letras-de-neon-en-tubos-de-vidrio/flyer-modal-15-3.jpg',
+                    'extra' => '📱Agenda una asesoría gratuita al 994078320.<br>
+                                🌐 <a href="http://www.ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a><br>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <em>👉 Síguenos y descubre más ideas de diseño</em>',
                 ],
             ],
         ],

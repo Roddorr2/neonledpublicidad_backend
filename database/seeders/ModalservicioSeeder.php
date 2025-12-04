@@ -18,25 +18,25 @@ class ModalservicioSeeder extends Seeder
                 'nombre' => 'Ana Torres EJEMPLO',
                 'telefono' => '983354321',
                 'correo' => 'ana@gmail.com',
-                'id_servicio' => 1,
+                'id_producto' => 1,
             ],
             [
                 'nombre' => 'Lorena Rodriguez EJEMPLO',
                 'telefono' => '987384322',
                 'correo' => 'lorena@gmail.com',
-                'id_servicio' => 2,
+                'id_producto' => 2,
             ],
             [
                 'nombre' => 'Jose Santos EJEMPLO',
                 'telefono' => '987654323',
                 'correo' => 'jose@gmail.com',
-                'id_servicio' => 3,
+                'id_producto' => 3,
             ],
             [
                 'nombre' => 'Luis Romero EJEMPLO',
                 'telefono' => '981154323',
                 'correo' => 'luisito@gmail.com',
-                'id_servicio' => 4,
+                'id_producto' => 4,
             ],
         ];
 

@@ -42,6 +42,7 @@ class MailService extends Mailable
                         'send_message' => $mail_content['message'],
                         'title' => $mail_content['title'] ?? $mail_content['subject'], // Usar Subject como fallback
                         'image' => $mail_content['image'] ?? null,
+                        'extra_message' => $mail_content['extra'],
                     ]);
     }
 }
