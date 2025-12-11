@@ -204,4 +204,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:crear-productos')->post('/productos', [ProductosController::class, 'create']);
     Route::middleware('permission:editar-productos')->put('/productos/{id}', [ProductosController::class, 'update']);
     Route::middleware('permission:eliminar-productos')->delete('/productos/{id}', [ProductosController::class, 'destroy']);
+
+    // metricas
+    Route::middleware('permission:ver-blogs')->get('/metrics/cards_by_plantilla', [CardController::class, "listOfCardsByPlantilla"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_plantilla', [CardController::class, "countListOfCardsByPlantilla"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_total_cards', [CardController::class, "tableCardsByIdPlantilla"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/list_empleado_cards', [CardController::class, "listEmpleadoWithCards"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_empleado', [CardController::class, "countListOfCardsByEmpleado"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/publish_frecuency_card_by_empleado', [CardController::class, "frecuenciaPublicacionCardsPorEmpleado"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/tiempo_creacion_edicion_publicacion_card', [BlogController::class, "tiempoCreacionEdicionPublicacionCard"]);
 });
