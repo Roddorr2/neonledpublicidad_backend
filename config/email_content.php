@@ -13,7 +13,7 @@ return [
                     'message' => '<p style="text-align: center;"> Gracias por sumarte a nuestra comunidad.<br>
                                 En Neón Led Publicidad transformamos ideas en elementos visuales llamativos gracias a nuestras letras acrílicas personalizadas, fabricadas con materiales resistentes y disponibles en una gran variedad de colores y acabados, desde neón hasta tonos metálicos.<br>
                                 Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
-                    'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
+                    'image' => url('/assets/1-letras-acrilicas-luminosa/flyer-modal-1-1.jpg'),
                     'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
                                 No olvides seguirnos en Facebook, Tiktok e Instagram para estar al día con nuestras novedades.</p>',
                 ],
@@ -51,7 +51,7 @@ return [
                     'message' => '<p style="text-align: center;">Bienvenido a Neon Led Publicidad,
                                 Nos alegra que te unas a nosotros. Nuestras letras de aluminio dorado 3D combinan sofisticación y precisión para darle a tu marca un aspecto profesional y moderno.
                                 Son perfectas para oficinas, centros comerciales y cualquier espacio que busque resaltar con estilo.</p>',
-                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-1.jpg',
+                    'image' => url('/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-1.jpg'),
                     'extra' => '<p style="text-align: center;"><em>“La elegancia no se muestra, se siente. Demos brillo a tu marca.”</em>
                                 Explora algunos de nuestros proyectos más destacados <a href="https://ledneonpublicidad.com/productos/letras-doradas/" target="_blank">aquí</a>.</p>',
                 ],
@@ -61,7 +61,7 @@ return [
                     'message' => '<p style="text-align: center;">Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
                                 Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
                                 🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que marca la diferencia.</p>',
-                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-2.jpg',
+                    'image' => url('/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-2.jpg'),
                     'extra' => '<p style="text-align: center;"><em>“El lujo está en los detalles que reflejan tu identidad.”</em><br>
                                 Déjanos ayudarte a transformar tus espacios</p>',
                 ],
@@ -74,7 +74,7 @@ return [
                                 📸 Instagram: @neonledpublicidad<br>
                                 📘 Facebook: Neón LED Publicidad<br>
                                 🎥 TikTok: @neonledpublicidad</p>',
-                    'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-3.jpg',
+                    'image' => url('/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-3.jpg'),
                     'extra' => '',
                 ],
             ],
