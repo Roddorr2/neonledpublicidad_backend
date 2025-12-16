@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\PropuestaController;
 use App\Http\Controllers\Api\productosController;
 use App\Http\Controllers\Api\BlogAuditoriaController;
+use App\Http\Controllers\Api\MetricasController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -206,11 +207,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:eliminar-productos')->delete('/productos/{id}', [ProductosController::class, 'destroy']);
 
     // metricas
-    Route::middleware('permission:ver-blogs')->get('/metrics/cards_by_plantilla', [CardController::class, "listOfCardsByPlantilla"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_plantilla', [CardController::class, "countListOfCardsByPlantilla"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/count_total_cards', [CardController::class, "tableCardsByIdPlantilla"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/list_empleado_cards', [CardController::class, "listEmpleadoWithCards"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_empleado', [CardController::class, "countListOfCardsByEmpleado"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/publish_frecuency_card_by_empleado', [CardController::class, "frecuenciaPublicacionCardsPorEmpleado"]);
-    Route::middleware('permission:ver-blogs')->get('/metrics/tiempo_creacion_edicion_publicacion_card', [BlogController::class, "tiempoCreacionEdicionPublicacionCard"]);
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_blogs_by_month', [MetricasController::class, "countBlogsByMonth"]);//1.1 Cantidad de blogs creados en un mes específico
+    Route::middleware('permission:ver-blogs')->get('/metrics/list_blogs_by_months_12', [MetricasController::class, "listBlogsByMonths12"]);//1.2 Lista de cantidad de blogs creados en los últimos 12 meses
+    Route::middleware('permission:ver-blogs')->get('/metrics/top5_months_with_more_blogs', [MetricasController::class, "top5MothsWithMoreBlogs"]);//1.3 Top 5 meses con más blogs creados
+    Route::middleware('permission:ver-blogs')->get('/metrics/cards_by_plantilla', [MetricasController::class, "listOfCardsByPlantilla"]);//2.1 Lista de cards creadas por plantilla
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_plantilla', [MetricasController::class, "countListOfCardsByPlantilla"]);//2.2 Cantidad de cards creadas por plantilla
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_total_cards', [MetricasController::class, "tableCardsByIdPlantilla"]);//2.3 Cantidad total de cards creadas por plantilla
+    Route::middleware('permission:ver-blogs')->get('/metrics/list_empleado_cards', [MetricasController::class, "listEmpleadoWithCards"]);//3.1 Lista de empleados con cantidad de cards creadas
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_cards_by_empleado', [MetricasController::class, "countListOfCardsByEmpleado"]);//3.2 Cantidad de cards creadas por empleado
+    Route::middleware('permission:ver-blogs')->get('/metrics/count_total_cards_by_empleado', [MetricasController::class, "tableCardsByEmpleado"]);//3.3 Top 5 empleados con más cards creadas
+    Route::middleware('permission:ver-blogs')->get('/metrics/frecuencia_publicacion_cards_todos_empleados', [MetricasController::class, "frecuenciaPublicacionCardsTodosEmpleados"]);//3.4 Frecuencia de publicación de cards por empleado
+    Route::middleware('permission:ver-blogs')->get('/metrics/tiempo_creacion_edicion_publicacion_card', [MetricasController::class, "tiempoCreacionEdicionPublicacionCard"]);//3.5 Tiempo promedio de creación, edición y publicación de una card por empleado
 });
