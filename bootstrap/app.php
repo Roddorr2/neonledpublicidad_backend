@@ -27,6 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
+    ->withCommands([
+        __DIR__.'/../app/Console/Commands',
+    ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
