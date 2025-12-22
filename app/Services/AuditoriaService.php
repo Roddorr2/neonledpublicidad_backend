@@ -12,7 +12,7 @@ class AuditoriaService
         return BlogAuditoria::create([
             'id_blog' => $idBlog,
             'id_empleado' => $idEmpleado,
-            'accion' => strtoupper($accion),
+            'accion' => strtoupper($accion),// 'CREAR', 'ACTUALIZAR', 'ELIMINAR'
             'descripcion' => $descripcion,
             'fecha_hora' => Carbon::now(),
             'titulo' => $titulo, // You can set a default value or modify as needed
