@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmailJob;
+use App\Jobs\SendWhatsAppJob;
 
 class ModalesController extends Controller
 {
@@ -73,7 +74,7 @@ class ModalesController extends Controller
                 }
             }
 
-            for ($i = 1; $i <= 2; $i++) {
+            for ($i = 1; $i <= 3; $i++) {
                 WatModal::create([
                     'estado' => 0,
                     'error' => '',
@@ -93,6 +94,8 @@ class ModalesController extends Controller
                     'telefono' => $request->telefono
                 ];
 
+                $productoName = $request->productoName ?? '';
+
                 //AQUI SE ENVÍA EL PRIMER CORREO (inmediato)
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,1));
 
@@ -105,6 +108,28 @@ class ModalesController extends Controller
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,3))
                         ->delay(now()->addDays(4));
                         // ->delay(now()->addMinutes(4));
+
+                $wat1 = WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
+                    ->where('number_message', 1)
+                    ->first();
+
+                dispatch(new SendWhatsAppJob($wat1, $data, $productoName));
+
+                $wat2 = WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
+                    ->where('number_message', 2)
+                    ->first();
+
+                dispatch(new SendWhatsAppJob($wat2, $data, $productoName))
+                    ->delay(now()->addMinutes(2));
+
+                $wat3 = WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
+                    ->where('number_message', 3)
+                    ->first();
+
+                dispatch(new SendWhatsAppJob($wat3, $data, $productoName))
+                    ->delay(now()->addMinutes(4));
+
+
 
                 if (isset($first_email_modal)) {
                     $first_email_modal->update([
