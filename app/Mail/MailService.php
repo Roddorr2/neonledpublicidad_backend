@@ -35,13 +35,18 @@ class MailService extends Mailable
             throw new \Exception("Fallo al construir MailService. Contenido no encontrado en: " . $configPath);
         }
 
+        $image = null;
+        if (!empty($mail_content['image'])) {
+            $image = config('app.url') . $mail_content['image'];
+        }
+
         return $this->subject($mail_content['subject'])
                     ->view('mails.modal')
                     ->with([
                         'data' => $this->data,
                         'send_message' => $mail_content['message'],
                         'title' => $mail_content['title'] ?? $mail_content['subject'], // Usar Subject como fallback
-                        'image' => $mail_content['image'] ?? null,
+                        'image' => $image,
                         'extra_message' => $mail_content['extra'],
                     ]);
     }

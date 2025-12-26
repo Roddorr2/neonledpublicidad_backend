@@ -166,8 +166,8 @@
                 <a href="https://web.facebook.com/p/Neon-Led-store-100063474791455/?_rdc=1&_rdr" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
                 </a>
-                <a href="#" class="social-link">
-                    <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+                <a href="https://www.tiktok.com/@neonled.publicidad?is_from_webapp=1&sender_device=pc" class="social-link">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3938/3938055.png" alt="Tiktok ">
                 </a>
                 <a href="https://www.instagram.com/neonledpublicidad.peru" class="social-link">
                     <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">

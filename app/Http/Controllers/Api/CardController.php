@@ -6,6 +6,8 @@ use App\Models\Blog;
 use App\Models\Card;
 use App\Models\BlogBody;
 use App\Models\BlogHead;
+use App\Models\BlogAuditoria;
+use App\Models\Empleado;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
