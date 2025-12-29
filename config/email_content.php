@@ -491,7 +491,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Registro',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/general/flyer-2.jpg',
                     'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
                                 ✅ Contacto inmediato con nuestros usuarios.<br>
                                 ✅ Recordación de nuestros productos.<br>
@@ -508,7 +508,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Pantallas LED',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/10-pantallas-led/flyer-modal-10-2.jpg',
                     'extra' => 'Te ayudamos a elegir el mejor letrero, cartel o valla publicitaria con una pantalla LED.<br>
                                 Con esta pantalla tendrás muchos beneficios a corto, mediano y largo plazo.<br>
                                 ✅ Aumenta tu visibilidad ante el público correcto.<br>
@@ -526,7 +526,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/10-pantallas-led/flyer-modal-10-3.jpg',
                     'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando nuestras Pantallas LED, tendrás más presencia en el mercado que perteneces.</strong><br><br>
                                 📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br><br>
                                 <strong>✨ Beneficios exclusivos:</strong><br>
@@ -556,7 +556,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Registro',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/general/flyer-2.jpg',
                     'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
                                 ✅ Contacto inmediato con nuestros usuarios.<br>
                                 ✅ Recordación de nuestros productos.<br>
@@ -573,7 +573,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Holográficos',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/11-holografico/flyer-modal-11-2.jpg',
                     'extra' => 'Los sistemas holográficos ya no son un sueño, o una diferente realidad.<br>
                                 Con estos holográficos, puedes trasformar imágenes planas, a imágenes en realidad aumentada. Y con ello puede contar con muchos beneficios.<br>
                                 ✅ Maneras de innovar la forma de ver una publicidad.<br>
@@ -591,7 +591,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/11-holografico/flyer-modal-11-3.jpg',
                     'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando graficos Holográficos, tendrás más presencia en el mercado que perteneces.</strong><br>
                                 📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br>
                                 <strong>✨ Beneficios exclusivos:</strong><br>
@@ -622,7 +622,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Registro',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/general/flyer-2.jpg',
                     'extra' => 'Bienvenido a la familia de Neón LED Publicidad. Estamos dispuestos a resolver toda duda y pedidos que desee realizar.<br>
                                 ✅ Contacto inmediato con nuestros usuarios.<br>
                                 ✅ Recordación de nuestros productos.<br>
@@ -639,7 +639,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => 'Pixel LED',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/12-pixel-led/flyer-modal-12-2.jpg',
                     'extra' => 'Pixel LED, la mejor innovación que tendrás. Combina tus espacios con una gama de luces de diferentes colores.<br>
                                 Estas luces están fabricadas exclusivamente para que cada punto de luz, ilumine a su preferencia.<br>
                                 ✅ Exclusivo para eventos o espacios cerrados.<br>
@@ -657,7 +657,7 @@ return [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
                     'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '',
-                    'image' => '',
+                    'image' => 'assets/12-pixel-led/flyer-modal-12-3.jpg',
                     'extra' => 'Estás a un solo paso para conseguir una buena inversión. <strong>Usando luces de Pixel LED, tendrás más presencia en el mercado que perteneces.</strong><br>
                                 📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.<br>
                                 <strong>✨ Beneficios exclusivos:</strong><br>
