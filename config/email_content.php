@@ -8,34 +8,52 @@ return [
         1 => [
             'messages' => [
                 1 => [
-                    'subject' => '¡Bienvenido a Neon Led Publicidad!',
+                    'subject' => 'Letras acrílicas que elevan tu marca ✨',
                     'title' => '¡Letreros de Acrílico!',
-                    'message' => '<p style="text-align: center;"> Gracias por sumarte a nuestra comunidad.<br>
-                                En Neón Led Publicidad transformamos ideas en elementos visuales llamativos gracias a nuestras letras acrílicas personalizadas, fabricadas con materiales resistentes y disponibles en una gran variedad de colores y acabados, desde neón hasta tonos metálicos.<br>
-                                Dale a tus espacios un toque moderno y luminoso que destaque tanto de día como de noche.</p>',
+                    'message' => '<p>¿Quieres que tu negocio destaque desde el primer vistazo?</p>
+                                <p>Nuestras <strong>letras acrílicas en PMMA</strong> ofrecen un acabado limpio, resistente y
+                                totalmente personalizable según tu tipografía y estilo. Puedes potenciar su
+                                impacto con <strong>iluminación LED</strong> (frontal, de borde o retroiluminada) para 
+                                lograr un efecto visual moderno y profesional.</p>
+                                <p>Son ideales para <strong>fachadas, señalética interior, exhibiciones y 
+                                decoración</strong>, combinando estética y durabilidad para que tu marca brille con luz propia.</p><br>',
+
                     'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-1.jpg',
-                    'extra' => '<p style="text-align: center;">Te invitamos a conocer nuestros trabajos <a href="https://ledneonpublicidad.com/productos/letras-acrilico/" target="_blank">aquí</a>.<br><br>
+                    'extra' => '<p">Un letrero bien diseñado transmite <strong>confianza, profesionalismo y recordación</strong>, <br>
+                                incluso antes de que el cliente ingrese a tu negocio. <br>
+                                Con <strong>Neón LED Publicidad</strong>, tu marca se convierte en un punto de referencia.</p><br>
+                                <p"><strong>👉 Escríbenos ahora por WhatsApp y cotiza tu proyecto</strong><br><br>
+                                📲 <strong>WhatsApp:</strong> +51 994 078 320<br>
+                                📍 <strong>Lima – Perú</strong><br>
+                                🌐 <a href="https://ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>.<br><br>
                                 No olvides seguirnos en Facebook, Tiktok e Instagram para estar al día con nuestras novedades.</p>',
                 ],
                 2 => [
                     'subject' => 'Haz que tu marca brille como nunca antes',
                     'title' => '¡Letreros de Acrílico!',
-                    'message' => '<p style="text-align: center;">🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
-                                Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y cuentan con tecnología LED que ilumina tu mensaje en cualquier momento.
-                                Son ideales para tiendas, eventos y señalización interior, asegurando que tu marca se destaque con elegancia.</p>',
+                    'message' => '<p>🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
+                                Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y 
+                                cuentan con tecnología LED que ilumina tu mensaje en cualquier momento. 
+                                Son ideales para tiendas, eventos y señalización interior, asegurando que tu 
+                                marca se destaque con elegancia.</p>',
                     'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-2.jpg',
-                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br><br>
+                    'extra' => '<p><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br><br>
                                 Consulta cómo podemos ayudarte a crear la exhibición perfecta</p>',
                 ],
                 3 => [
                     'subject' => 'Es hora de darle vida a tu marca!',
                     'title' => '¡Letreros de Acrílico!',
-                    'message' => '<p style="text-align: center;">Estamos emocionados de acompañarte en tu proyecto.
-                                No esperes más y da el primer paso para transformar tu espacio con nuestras letras acrílicas luminosas.</p>',
+                    'message' => '<p">Estamos emocionados de acompañarte en tu proyecto. No esperes más y da 
+                                el primer paso para transformar tu espacio con nuestras letras acrílicas 
+                                luminosas.</p>',
                     'image' => '/assets/1-letras-acrilicas-luminosa/flyer-modal-1-3.jpg',
-                    'extra' => '<p style="text-align: center;"><em>“La diferencia está en los detalles que brillan. ¿Listo para destacar?”</em>📞<br><br>
-                                Contáctanos hoy mismo a través de www.ledneonpublicidad.com.<br>
-                                Síguenos para inspirarte con nuevas ideas</p>',
+                    'extra' => '<p><em>“La diferencia está en los detalles que brillan. ¿Listo para destacar?”</em>📞<br><br>
+                                Contáctanos hoy mismo a través de <a href="https://ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>.<br>
+                                Síguenos para inspirarte con nuevas ideas:<br><br>  
+                                📸 <strong>Instagram: </strong>@neonledpublicidad<br>
+                                📘 <strong>Facebook: </strong>Neon LED Publicidad<br>
+                                🎥 <strong>TikTok: </strong>@neonledpublicidad<br>
+                                ¡Desde Lima, Perú para ti!</p>',
                 ],
             ],
         ],
@@ -46,76 +64,114 @@ return [
         2 => [
             'messages' => [
                 1 => [
-                    'subject' => '¡Bienvenido a Neon Led Publicidad! ✨',
+                    'subject' => 'Dale un toque de lujo a tu marca ✨',
                     'title' => '¡Letreros De Aluminio Dorados 3D!',
-                    'message' => '<p style="text-align: center;">Bienvenido a Neon Led Publicidad,
-                                Nos alegra que te unas a nosotros. Nuestras letras de aluminio dorado 3D combinan sofisticación y precisión para darle a tu marca un aspecto profesional y moderno.
-                                Son perfectas para oficinas, centros comerciales y cualquier espacio que busque resaltar con estilo.</p>',
+                    'message' => '<p">Nuestras <strong>letras de aluminio dorado 3D</strong> te brindan un acabado metálico 
+                    brillante que simula el oro iluminando cualquier ambiente con elegancia . Su diseño 
+                    preciso y resistente te da un efecto visual cálido y sofisticado para logotipos, 
+                    señalizaciones premium  y decoración de interiores .Perfectas para marcas que  buscan 
+                    y quieren un estilo moderno,elegante ,exclusivo y de alto impacto.<br>
+                    ¿Deseas ver modelos o solicitar una cotización?</p>',
                     'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-1.jpg',
-                    'extra' => '<p style="text-align: center;"><em>“La elegancia no se muestra, se siente. Demos brillo a tu marca.”</em>
-                                Explora algunos de nuestros proyectos más destacados <a href="https://ledneonpublicidad.com/productos/letras-doradas/" target="_blank">aquí</a>.</p>',
+                    'extra' => '<p>👉 Escríbenos ahora por WhatsApp y recibe asesoría personalizada.<br><br>
+                                📲 WhatsApp: +51 994 078 320<br>
+                                Síguenos y descubre más proyectos premium:<br>
+                                📸 <strong>Instagram: </strong>@neonledpublicidad<br>
+                                📘 <strong>Facebook: </strong>Neon LED Publicidad<br>
+                                🎥 <strong>TikTok: </strong>@neonledpublicidad<br>
+                                📍 <strong>Lima – Perú</strong><br>
+                                🌐 <a href="https://ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>.<br><br>
+                                </p>',
                 ],
                 2 => [
                     'subject' => 'Transforma tu espacio y negocio con ese brillo elegante dorado que deseas',
                     'title' => '¡Letreros De Aluminio Dorados 3D!',
-                    'message' => '<p style="text-align: center;">Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
+                    'message' => '<p>Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
                                 Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
-                                🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que marca la diferencia.</p>',
+                                🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que 
+                                marca la diferencia.</p>',
                     'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-2.jpg',
-                    'extra' => '<p style="text-align: center;"><em>“El lujo está en los detalles que reflejan tu identidad.”</em><br>
-                                Déjanos ayudarte a transformar tus espacios</p>',
+                    'extra' => '<p><strong><em>“El lujo está en los detalles que reflejan tu identidad.”</em></strong><br>
+                                <a href="https://ledneonpublicidad.com" target="_blank">Déjanos ayudarte a transformar tus espacios</a></p>',
                 ],
                 3 => [
                     'subject' => 'Autenticidad para tu marca 🌟!',
                     'title' => '¡Letreros De Aluminio Dorados 3D!',
-                    'message' => '<p style="text-align: center;">Queremos que tu marca destaque con elegancia. Por eso te ofrecemos un 10% de descuento en tu próxima compra con el código: LUJO10<br><br>
-                                No dudes en contactarnos y aprovechar esta oportunidad → www.ledneonpublicidad.com.<br>
-                                Síguenos en nuestras redes para no perderte nada:<br>
-                                📸 Instagram: @neonledpublicidad<br>
-                                📘 Facebook: Neón LED Publicidad<br>
-                                🎥 TikTok: @neonledpublicidad</p>',
+                    'message' => '<p>Hay marcas que se ven bien… y otras que se sienten premium desde el primer vistazo.<p>
+                                <p>Nuestras letras de aluminio doradas 3D están diseñadas para transmitir elegancia, prestigio y solidez, 
+                                gracias a su acabado metálico brillante y su diseño tridimensional de alta calidad. Son el detalle 
+                                perfecto para destacar logotipos, murales y escaparates que buscan proyectar una imagen sofisticada y 
+                                profesional.</p>
+                                <p>✨ Acabado dorado de alto impacto
+                                ✨ Material resistente y duradero
+                                ✨ Ideal para interiores y espacios comerciales</p>',
                     'image' => '/assets/2-letras-aluminio-doradas-3d/flyer-modal-2-3.jpg',
-                    'extra' => '',
+                    'extra' => '<p>Un letrero dorado no solo decora, refuerza la identidad de tu marca y deja huella en quien lo ve.<br>
+                                👉 Cotiza hoy tus letras doradas 3D y dale a tu espacio el brillo que merece</p>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                                <p>Síguenos y descubre más proyectos premium:<br>
+                                📸 <strong>Instagram: </strong>@neonledpublicidad<br>
+                                📘 <strong>Facebook: </strong>Neon LED Publicidad<br>
+                                🎥 <strong>TikTok: </strong>@neonledpublicidad<br>
+                                📍 <strong>Lima – Perú</strong><br>
+                                Ubicados en Lima, Perú, listos para asesorarte.</p>',
                 ],
             ],
         ],
 
         // ----------------------------------------------------
-        // 3. Letreros Aluminio Plateadas 3D
+        // 3. Letras de Aluminio Plateadas 3D
         // ----------------------------------------------------
         3 => [
             'messages' => [
                 1 => [
-                    'subject' => 'Letreros Aluminio Plateadas 3D',
-                    'title' => 'Letreros Aluminio Plateadas 3D',
-                    'message' => '<p style="text-align: center;">Dale un toque moderno a tu espacio<br>
-                                Gracias por confiar en Neon Led Publicidad.<br>
-                                Nuestras letras de aluminio plateadas 3D son la combinación ideal entre estilo contemporáneo y precisión en el acabado,
-                                lo que las hace perfectas para oficinas, centros comerciales y espacios tecnológicos.</p>',
+                    'subject' => 'Elegancia y presencia en letras de aluminio 3D ✨',
+                    'title' => 'Letras de aluminio plateadas 3D',
+                    'message' => '<p>¿Buscas que tu negocio destaque desde el primer vistazo?</p>
+                                <p>Nuestras <strong>letras de aluminio plateadas 3D</strong> ofrecen un acabado moderno, 
+                                elegante y altamente resistente, ideales para proyectar una imagen 
+                                profesional y de alto impacto. Se fabrican de forma personalizada, 
+                                adaptándose a la tipografía, tamaño y estilo que mejor represente tu 
+                                marca.</p>
+                                <p>Además, puedes potenciar su presencia incorporando <strong>iluminación LED</strong>, 
+                                logrando efectos visuales únicos que captan la atención tanto de día 
+                                como de noche.</p>
+                                <p>Son perfectas para <strong>fachadas, interiores, recepciones y decoración 
+                                comercial</strong>, combinando diseño, duración a largo plazo y elegancia para 
+                                que tu marca destaque con luz propia.</p>',
                     'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-1.jpg',
-                    'extra' => '<p style="text-align: center;">💠 Ideales para oficinas, centros comerciales y espacios tecnológicos.<br>
+                    'extra' => '<p>¿Te gustaría conocer opciones, ver ejemplos o solicitar una cotización?<br>
+                                👉 Escríbenos ahora por WhatsApp y recibe asesoría personalizada.<br><br>
+                                📲 <strong>WhatsApp:</strong> +51 994 078 320<br>
+                                🌐 <strong>Web</strong><a href="https://ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>.<br>
+                                Síguenos y descubre más proyectos premium:<br>
+                                📸 <strong>Instagram: </strong>@neonledpublicidad<br>
+                                📘 <strong>Facebook: </strong>Neon LED Publicidad<br>
+                                🎥 <strong>TikTok: </strong>@neonledpublicidad<br>
+                                📍 <strong>Lima – Perú</strong><br><br>
                                 <em>“Cada luz cuenta una historia; haz que la tuya brille con nosotros.”</em></p>',
                 ],
                 2 => [
-                    'subject' => 'Letreros Aluminio Plateadas 3D',
-                    'title' => 'Letreros Aluminio Plateadas 3D',
-                    'message' => '<p style="text-align: center;">Queremos ayudarte a reflejar la personalidad innovadora de tu marca con nuestras letras de aluminio plateado 3D.<br>
-                                🌟 Resistentes, duraderas y con acabados brillantes o satinados</p>',
+                    'subject' => 'Letras de aluminio plateadas 3D',
+                    'title' => 'Letras de aluminio plateadas 3D',
+                    'message' => '<p>Queremos ayudarte a reflejar la personalidad innovadora de tu marca con nuestras letras de aluminio plateado 3D.</p>
+                                <p>🌟 Resistentes, duraderas y con acabados brillantes o satinados</p>',
                     'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-2.jpg',
-                    'extra' => '<p style="text-align: center;"><em>“Ilumina tu espacio, inspira a tus clientes.”</em><br>
-                                📩 Solicita tu cotización gratuita</p>',
+                    'extra' => '<p><strong><em>“Ilumina tu espacio, inspira a tus clientes.”</em></strong><br>
+                                📩 Solicita tu cotización gratuita <a href="https://ledneonpublicidad.com" target="_blank">www.ledneonpublicidad.com</a>.</p>',
                 ],
                 3 => [
-                    'subject' => 'Letreros Aluminio Plateadas 3D',
-                    'title' => 'Letreros Aluminio Plateadas 3D',
-                    'message' => '',
+                    'subject' => 'Dale un aire futurista a tu marca',
+                    'title' => 'Letras de aluminio plateadas 3D',
+                    'message' => 'Nos encanta contar contigo. Lleva tu imagen al siguiente nivel con nuestro estilo elegante y moderno en letras plateadas.<br>',
                     'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-3.jpg',
-                    'extra' => 'Nos encanta contar contigo. Lleva tu imagen al siguiente nivel con nuestro estilo elegante y moderno en letras plateadas.<br>
-                                Estamos a un clic de ayudarte → <a href="https://www.ledneonpublicidad.com/" target="_blank">www.ledneonpublicidad.com.</a><br>
+                    'extra' => 'Estamos a un clic de ayudarte → <a href="https://www.ledneonpublicidad.com/" target="_blank">www.ledneonpublicidad.com.</a><br>
                                 Síguenos en:<br>
-                                📸 Instagram: @neonledpublicidad<br>
-                                📘 Facebook: Neon LED Publicidad<br>
-                                🎥 TikTok: @neonledpublicidad<br>
+                                📸 <strong>Instagram:</strong> @neonledpublicidad<br>
+                                📘 <strong>Facebook:</strong> Neon LED Publicidad<br>
+                                🎥 <strong>TikTok</strong>: @neonledpublicidad<br>
                                 Desde Lima, Perú a tu proyecto.',
                 ],
             ],
