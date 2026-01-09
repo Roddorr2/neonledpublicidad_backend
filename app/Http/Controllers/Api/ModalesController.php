@@ -101,12 +101,12 @@ class ModalesController extends Controller
 
                 //AQUI SE ENVÍA EL SEGUNDO CORREO (+2 días después)
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,2))
-                        ->delay(now()->addDays(2));
+                        ->delay(now()->addSeconds(2));
                         // ->delay(now()->addMinutes(2));
 
                 //AQUI SE ENVÍA EL TERCER CORREO (+4 días después)
                 dispatch(new SendEmailJob($request->correo, $data, $request->id_producto,3))
-                        ->delay(now()->addDays(4));
+                        ->delay(now()->addSeconds(4));
                         // ->delay(now()->addMinutes(4));
 
                 $wat1 = WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
