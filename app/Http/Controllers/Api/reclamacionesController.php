@@ -14,6 +14,7 @@ class ReclamacionesController extends Controller
         $reclamaciones = Reclamacion::orderBy('id_reclamacion', 'asc')->paginate(4);
         return response()->json($reclamaciones, 200);
     }
+    //  Obtener una reclamación por ID
 
     public function getById($id){
         $reclamacion = Reclamacion::find($id);

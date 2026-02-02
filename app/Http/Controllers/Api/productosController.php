@@ -30,6 +30,7 @@ class ProductosController extends Controller
                         'url' => $producto->path_main,
                         // 'titulo' => null,
                         // 'descripcion' => null,
+                        //
                     ];
                 }
 
