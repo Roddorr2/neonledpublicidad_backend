@@ -1,0 +1,5114 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API NeonLed Publicidad",
+        "description": "Documentación de la API REST NeonLed Publicidad",
+        "contact": {
+            "email": "soporte@neonled.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registrar nuevo usuario y empleado",
+                "operationId": "2e0d10b318685d2c1c819cda14d2177c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "nombre",
+                                    "apellido",
+                                    "dni",
+                                    "telefono",
+                                    "id_rol"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Perez"
+                                    },
+                                    "dni": {
+                                        "type": "string",
+                                        "example": "12345678"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "987654321"
+                                    },
+                                    "id_rol": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario y empleado registrados correctamente"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Iniciar sesión",
+                "operationId": "57447772b0fc1d4c1294dbfd9f244d8f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login exitoso"
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Obtener usuario autenticado",
+                "operationId": "10d7e06135c9293fada16794aa72fdd1",
+                "responses": {
+                    "200": {
+                        "description": "Datos del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Cerrar sesión",
+                "operationId": "60408911e9425c5c656e2bec9242e047",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/forgot-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Solicitar recuperación de contraseña",
+                "operationId": "d251e99efbb8b5ed9ea80f941142b27e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token de restablecimiento enviado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/update-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Restablecer contraseña con token",
+                "operationId": "d96a9ac73311192edb01a946b2e186bd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "token",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "token123"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newPassword123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newPassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña actualizada correctamente"
+                    },
+                    "404": {
+                        "description": "Token inválido o usuario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/blogs_auditoria": {
+            "get": {
+                "tags": [
+                    "BlogAuditoria"
+                ],
+                "summary": "Listar registros de auditoría de blogs",
+                "operationId": "a0bea7e65f39a650c3f551f0aa495386",
+                "responses": {
+                    "200": {
+                        "description": "Lista de auditoría retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BlogAuditoria"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-body": {
+            "get": {
+                "tags": [
+                    "BlogBody"
+                ],
+                "summary": "Listar todos los bodies de blog",
+                "operationId": "976c789f87eaad23ecaa705213e5c941",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BlogBody"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "BlogBody"
+                ],
+                "summary": "Crear un nuevo blog body",
+                "operationId": "ac6f1068cea6781578a15e4ce9fce94a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogBody"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-body/{id}": {
+            "get": {
+                "tags": [
+                    "BlogBody"
+                ],
+                "summary": "Obtener un blog body por ID",
+                "operationId": "6f4c833d20a838ea4a05646212b67f1c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogBody"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "BlogBody"
+                ],
+                "summary": "Actualizar un blog body",
+                "operationId": "d220113720219052445559f5a4c5f830",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "BlogBody"
+                ],
+                "summary": "Eliminar un blog body",
+                "operationId": "19b9f4a21f640130faa8de6389db9aab",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/blogs": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Listar todos los blogs",
+                "operationId": "11392f81a3d4d00a6ffec4b4cddad683",
+                "responses": {
+                    "200": {
+                        "description": "Operación exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Blog"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Crear un nuevo blog",
+                "operationId": "2693cd30179b9c21a9ce1997845d10ba",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_blog_head",
+                                    "id_blog_body",
+                                    "id_blog_footer"
+                                ],
+                                "properties": {
+                                    "id_blog_head": {
+                                        "type": "integer"
+                                    },
+                                    "id_blog_body": {
+                                        "type": "integer"
+                                    },
+                                    "id_blog_footer": {
+                                        "type": "integer"
+                                    },
+                                    "fecha": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Blog creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Blog"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blogs/{id}": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Obtener un blog por ID",
+                "operationId": "0a07a210b339d23de923e5e2c89d2323",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del blog",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Blog encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Blog"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Blog no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Actualizar un blog existente",
+                "operationId": "7ce0ab0a8c66eed3f7251f65207de862",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del blog",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_blog_head": {
+                                        "type": "integer"
+                                    },
+                                    "id_blog_body": {
+                                        "type": "integer"
+                                    },
+                                    "id_blog_footer": {
+                                        "type": "integer"
+                                    },
+                                    "fecha": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Blog actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Blog"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Blog no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Eliminar un blog",
+                "operationId": "e9e04e7bcfbdd184b1e4a7e9367659db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del blog",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Blog eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Blog no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/blog-footer": {
+            "get": {
+                "tags": [
+                    "BlogFooter"
+                ],
+                "summary": "Listar todos los footers",
+                "operationId": "189806f1f2cca670ab4b837a6e7fdfb5",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BlogFooter"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "BlogFooter"
+                ],
+                "summary": "Crear un nuevo footer",
+                "operationId": "eb8221526dbe565a2f372dd626a08ec3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogFooter"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogFooter"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-footer/{id}": {
+            "get": {
+                "tags": [
+                    "BlogFooter"
+                ],
+                "summary": "Obtener un footer por ID",
+                "operationId": "64f815da0aab2a227656c06424cd6055",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogFooter"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "BlogFooter"
+                ],
+                "summary": "Actualizar un footer",
+                "operationId": "d3483f848d9bc7f9369728a2688ea4a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogFooter"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "BlogFooter"
+                ],
+                "summary": "Eliminar un footer",
+                "operationId": "9194caa4433d414a57e9ea40f2e3edd0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/blog-head": {
+            "get": {
+                "tags": [
+                    "BlogHead"
+                ],
+                "summary": "Listar todos los headers",
+                "operationId": "b2eaefa694ed520e2972a2d0ece60727",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BlogHead"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "BlogHead"
+                ],
+                "summary": "Crear un nuevo header",
+                "operationId": "d58adc84e9352c19c32c300d92a0e5ab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogHead"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogHead"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-head/{id}": {
+            "get": {
+                "tags": [
+                    "BlogHead"
+                ],
+                "summary": "Obtener un header por ID",
+                "operationId": "ece402e2d2e28f2c0e89a2bafe1a12af",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlogHead"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "BlogHead"
+                ],
+                "summary": "Actualizar un header",
+                "operationId": "e2646637c6daa1d9bba6f2847aceb031",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlogHead"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "BlogHead"
+                ],
+                "summary": "Eliminar un header",
+                "operationId": "ade11552f3af9fc4cb3b16d4cbc67959",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/cards/{id}/image-header": {
+            "post": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Subir imagen de encabezado",
+                "operationId": "8ffa8fc2fdc9c0350b991731c86d4ae9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen subida correctamente"
+                    }
+                }
+            }
+        },
+        "/api/cards/{id}/image-body": {
+            "post": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Subir imagen para el cuerpo del blog",
+                "operationId": "d7c36547dc36ee1ff83d0610548da9d9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen subida correctamente"
+                    }
+                }
+            }
+        },
+        "/api/cards/{id}/image-footer": {
+            "post": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Subir imagen para el footer del blog",
+                "operationId": "6fd274cef15527faa5d144336bd70182",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen subida correctamente"
+                    }
+                }
+            }
+        },
+        "/api/cards": {
+            "get": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Listar todas las cards",
+                "operationId": "66d5ffafc48e0dfa86fda7f1f7675430",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Card"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Crear una nueva card",
+                "operationId": "d78382a17a2cdb2303f38f65feb3b902",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Card"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Card"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cards/{id}": {
+            "get": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Obtener una card por ID",
+                "operationId": "92f4e6244f389fd7bb1f3c6c0fce49d9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Card"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Actualizar una card",
+                "operationId": "4b605ec118dc6740c06e44d58c74cd09",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Card"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cards"
+                ],
+                "summary": "Eliminar una card",
+                "operationId": "067dac5846119dcf9cebd64d85679c60",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/cliente": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Listar clientes (paginado)",
+                "operationId": "22ae4bd1925130cd84db8470397b3e33",
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Crear un nuevo cliente",
+                "operationId": "75cc4942759d0de7f3181ad1f07d6be1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener un cliente por ID",
+                "operationId": "3672c6a0ffefd2d390cda5fbd4900f2f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos del cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Actualizar un cliente",
+                "operationId": "f2b663cffe3f2678d02b20e79a695578",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cliente actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Eliminar un cliente",
+                "operationId": "f0dc22d196e9d8fe3cbbf008d3e27966",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente eliminado"
+                    }
+                }
+            }
+        },
+        "/api/mi-perfil": {
+            "put": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Actualizar perfil propio del cliente autenticado",
+                "operationId": "5de86d03e612eead2471bccaa3a6ec37",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Perfil actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id}/image": {
+            "post": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Actualizar imagen de perfil de un cliente",
+                "operationId": "63336aa0e503c0242e879105e14312ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "imagen": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen actualizada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Eliminar imagen de perfil de un cliente",
+                "operationId": "e23cb9fa70c933c5fcf4489c49d7c311",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Imagen eliminada"
+                    }
+                }
+            }
+        },
+        "/api/commendtarjeta": {
+            "get": {
+                "tags": [
+                    "CommendTarjeta"
+                ],
+                "summary": "Listar todos los CommendTarjeta",
+                "operationId": "424c53cdaf600835340d1885f84f8142",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CommendTarjeta"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "CommendTarjeta"
+                ],
+                "summary": "Crear un CommendTarjeta",
+                "operationId": "dcd4de85004cc4484eee67e1768f05ef",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CommendTarjeta"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CommendTarjeta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/commendtarjeta/{id}": {
+            "get": {
+                "tags": [
+                    "CommendTarjeta"
+                ],
+                "summary": "Obtener un CommendTarjeta por ID",
+                "operationId": "12a894f03e21f5b52a5544b26a309ac2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CommendTarjeta"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "CommendTarjeta"
+                ],
+                "summary": "Actualizar un CommendTarjeta",
+                "operationId": "47ffbad9eef35d59d6cc23aced3b8cb8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CommendTarjeta"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CommendTarjeta"
+                ],
+                "summary": "Eliminar un CommendTarjeta",
+                "operationId": "644c9803e6ac025548a5cc23f244d5cc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/contactanos": {
+            "get": {
+                "tags": [
+                    "Contactanos"
+                ],
+                "summary": "Listar mensajes de contactos",
+                "operationId": "6934e2c3803057d49e2dcfe61e534abd",
+                "responses": {
+                    "200": {
+                        "description": "Lista de contactos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Contactanos"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Contactanos"
+                ],
+                "summary": "Crear un nuevo contacto",
+                "operationId": "238fc98b78553d59c0035ec9ff565330",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Contactanos"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Contacto creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Contactanos"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/contactanos/{id}": {
+            "get": {
+                "tags": [
+                    "Contactanos"
+                ],
+                "summary": "Obtener un contacto por ID",
+                "operationId": "5b09c2145f0df71cbccc707ba20686e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Contacto encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Contactanos"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Contactanos"
+                ],
+                "summary": "Eliminar un contacto",
+                "operationId": "98886e76e5e1c08af8dd39c50144b5ad",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Contacto eliminado"
+                    }
+                }
+            }
+        },
+        "/api/empleados/verify-password": {
+            "post": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Verificar contraseña actual",
+                "operationId": "590746397ced88750c6f6f266e5d32da",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "currentPassword",
+                                    "id_empleado"
+                                ],
+                                "properties": {
+                                    "currentPassword": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "id_empleado": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña válida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "valid": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/empleados/{id}/profile-image": {
+            "delete": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Eliminar imagen de perfil",
+                "operationId": "4d7f615fc864f08ca03f8e5aac51373a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Imagen eliminada correctamente"
+                    }
+                }
+            }
+        },
+        "/api/empleados": {
+            "get": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Listar todos los empleados",
+                "operationId": "11fa61d9474c3bbe319f5029206ec386",
+                "responses": {
+                    "200": {
+                        "description": "Lista de empleados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Empleado"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Crear un nuevo empleado (Admin)",
+                "operationId": "b1e1964e6a909ad3193455728608ce57",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Empleado"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empleado creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/empleados/{id}": {
+            "get": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Obtener empleado por ID",
+                "operationId": "9f418e9e130e7a6fca99449d708db3f0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Empleado"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Actualizar empleado",
+                "operationId": "080a589a774de9e666ef24e60f92e3a3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Empleado"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Eliminar empleado",
+                "operationId": "c1334deef668c868256ea499c0de83c4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/empleados/{id}/imagen": {
+            "post": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Subir imagen de perfil",
+                "operationId": "c4962c2af693f3e78a8cd5d30995f74e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "imagen": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen actualizada"
+                    }
+                }
+            }
+        },
+        "/api/empleados/{id}/update-password": {
+            "put": {
+                "tags": [
+                    "Empleados"
+                ],
+                "summary": "Actualizar contraseña de empleado",
+                "operationId": "0d3b7ae75658762b20fc53e751afd666",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña actualizada"
+                    }
+                }
+            }
+        },
+        "/api/metrics/count_blogs_by_month": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Cantidad de blogs creados en un mes específico",
+                "operationId": "b860ab734fc090f9bf0ede5e61cd62f4",
+                "parameters": [
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "description": "Mes (1-12)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "Año",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cantidad retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/list_blogs_by_months_12": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Lista de cantidad deblogs creados en los últimos 12 meses",
+                "operationId": "6bf5fb4f07ec63a9550055ed20ce8a80",
+                "responses": {
+                    "200": {
+                        "description": "Lista retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/top5_months_with_more_blogs": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Top 5 meses con más blogs creados",
+                "operationId": "19e63e6a5417133fed21c7a09864a76b",
+                "responses": {
+                    "200": {
+                        "description": "Top 5 retornado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/cards_by_plantilla": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Lista de cards creadas por plantilla",
+                "operationId": "ec9a71825e74b4565afd137217e6deb6",
+                "responses": {
+                    "200": {
+                        "description": "Lista retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/count_cards_by_plantilla": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Cantidad de cards creadas por plantilla",
+                "operationId": "84a2826beee11b9292922f12f566accc",
+                "responses": {
+                    "200": {
+                        "description": "Cantidad retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/count_total_cards": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Cantidad total de cards creadas por plantilla",
+                "operationId": "8dba2e28c91f419c67f7d634b8cf4746",
+                "responses": {
+                    "200": {
+                        "description": "Cantidad total retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/list_empleado_cards": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Lista de empleados con cantidad de cards creadas",
+                "operationId": "abba663f73eb1482ee9b7290c2163fe3",
+                "responses": {
+                    "200": {
+                        "description": "Lista de empleados retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/count_cards_by_empleado": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Cantidad de cards creadas por empleado",
+                "operationId": "b27dcdf5ba9bd4edbb88dcc33e650b94",
+                "responses": {
+                    "200": {
+                        "description": "Cantidad retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/count_total_cards_by_empleado": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Top 5 empleados con más cards creadas",
+                "operationId": "eec72feb135815a799ecf0acedf6c2e8",
+                "responses": {
+                    "200": {
+                        "description": "Top 5 empleados retornado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/metrics/tiempo_creacion_edicion_publicacion_card": {
+            "get": {
+                "tags": [
+                    "Metricas"
+                ],
+                "summary": "Tiempo promedio de creación, edición y publicación de una card por empleado",
+                "operationId": "f37ddfd552999f68c93fa7bb96d591e7",
+                "responses": {
+                    "200": {
+                        "description": "Tiempos promedio retornados correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/modal-mail/send/{id}": {
+            "post": {
+                "tags": [
+                    "ModalMail"
+                ],
+                "summary": "Enviar correo asociado a un modal",
+                "operationId": "fbf750f751d71974c995d2069b7f4cbe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Correo enviado exitosamente"
+                    },
+                    "500": {
+                        "description": "Error al enviar correo"
+                    }
+                }
+            }
+        },
+        "/api/modal-mail/report-error/{id}": {
+            "post": {
+                "tags": [
+                    "ModalMail"
+                ],
+                "summary": "Reportar error en envío de correo",
+                "operationId": "cba65f174b089fd1d78debcfd995c654",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "error": {
+                                        "type": "string",
+                                        "example": "Error SMTP connection"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Error reportado exitosamente"
+                    }
+                }
+            }
+        },
+        "/modal-wat/send/{id}": {
+            "post": {
+                "tags": [
+                    "ModalWat"
+                ],
+                "summary": "Registrar envío de WhatsApp",
+                "operationId": "e5ff1047097763c9e09b273d238be113",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registrado exitosamente"
+                    }
+                }
+            }
+        },
+        "/modal-wat/estado/{id}": {
+            "put": {
+                "tags": [
+                    "ModalWat"
+                ],
+                "summary": "Actualizar estado de envío WhatsApp",
+                "operationId": "d8e00dfb8afac2bc3b30c6ccd861fcf7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "estado": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "error": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Estado actualizado"
+                    }
+                }
+            }
+        },
+        "/api/modales": {
+            "get": {
+                "tags": [
+                    "Modales"
+                ],
+                "summary": "Listar todos los modales",
+                "operationId": "f9393aac9f9c4f90e5bea2b084ba9fb4",
+                "responses": {
+                    "200": {
+                        "description": "Lista obtenida exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ModalServicio"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Modales"
+                ],
+                "summary": "Crear un modal de servicio",
+                "operationId": "a266fdb8fff3ad0f14ae7391f2fbfc00",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ModalServicio"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/modales/{id}": {
+            "get": {
+                "tags": [
+                    "Modales"
+                ],
+                "summary": "Obtener modal por ID",
+                "operationId": "96c469c56cccdc6995daaea81abefb67",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModalServicio"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Modales"
+                ],
+                "summary": "Eliminar modal",
+                "operationId": "ce64410efa0080e639d542439871b342",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/modales/send/{id}": {
+            "post": {
+                "tags": [
+                    "Modales"
+                ],
+                "summary": "Acción de envío relacionada al modal (correo/wat)",
+                "operationId": "c9e822008c5a262b5ca8041822bc66c4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Acción realizada"
+                    }
+                }
+            }
+        },
+        "/api/permisos": {
+            "get": {
+                "tags": [
+                    "Permisos"
+                ],
+                "summary": "Listar permisos",
+                "operationId": "da048ab81b39843eaa6e4db7d9842bda",
+                "responses": {
+                    "200": {
+                        "description": "Lista de permisos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Permiso"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Permisos"
+                ],
+                "summary": "Crear permiso",
+                "operationId": "65bc0e3745d8783d95162957a310e999",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Permiso"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/permisos/{id}": {
+            "get": {
+                "tags": [
+                    "Permisos"
+                ],
+                "summary": "Obtener permiso por ID",
+                "operationId": "d585a9a9be3e0a685bec055c5e632429",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Permiso"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Permisos"
+                ],
+                "summary": "Actualizar permiso",
+                "operationId": "34587cd1631feaf163799373beeedc30",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Permiso"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Permisos"
+                ],
+                "summary": "Eliminar permiso",
+                "operationId": "1aa10bd4401089875d4cbb7151d39b9c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/productos": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Listar productos",
+                "operationId": "d8fbbcaeb7f01fc174859275256e19c2",
+                "responses": {
+                    "200": {
+                        "description": "Lista de productos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Productos"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Crear producto",
+                "operationId": "1f7b2d289d34669768d8c4417b538c7d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Productos"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/productos/{id}": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Obtener producto por ID",
+                "operationId": "46d47b28efbdbebd46b4d8c61126e279",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Productos"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Actualizar producto",
+                "operationId": "371d3543f7403a41a3a754717e7d1033",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Productos"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Eliminar producto",
+                "operationId": "e2fd334a5c0b8ef833aa92e20072515c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/propuestas": {
+            "get": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Listar todas las propuestas",
+                "operationId": "d4d034db27347a45a45d400286bb246a",
+                "responses": {
+                    "200": {
+                        "description": "Lista de propuestas retornada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Propuesta"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/propuesta/{id}": {
+            "get": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Obtener una propuesta por ID",
+                "operationId": "34112d8124ab76bc5b0a65546f526879",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Propuesta encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Propuesta"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Propuesta no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Eliminar una propuesta",
+                "operationId": "9d3fc930df514146b27d8f3a2d45560a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Propuesta eliminada correctamente"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Actualizar una propuesta existente",
+                "operationId": "e6e0e2c8b29e67a74128853ecf3e7e01",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Propuesta actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Propuesta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/propuesta": {
+            "post": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Crear una nueva propuesta",
+                "operationId": "995b6215ecc51949994a94c03a1040da",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_cliente",
+                                    "nombre",
+                                    "descripcion"
+                                ],
+                                "properties": {
+                                    "id_cliente": {
+                                        "type": "integer"
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Propuesta creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Propuesta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id}/propuestas": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener propuestas por cliente",
+                "operationId": "09be278a0eadd6a15ccd427d76553212",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de propuestas del cliente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Propuesta"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id_cliente}/propuesta/{id_propuesta}": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener detalle de propuesta por cliente",
+                "operationId": "e40e734e386ef61041afba3d31aab021",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "in": "path",
+                        "description": "ID del cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id_propuesta",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de la propuesta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Propuesta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/imagen_propuesta/{id}": {
+            "post": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Subir imagen a una propuesta",
+                "operationId": "c6f04d309041bbe419d35f2d4adc68e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen subida exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Eliminar imagen de una propuesta",
+                "operationId": "2c85600db7f2d4c76d604e5578b3dee7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "image_url": {
+                                        "description": "URL de la imagen a eliminar",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Imagen eliminada"
+                    }
+                }
+            }
+        },
+        "/api/video_propuesta/{id}": {
+            "post": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Subir video a una propuesta",
+                "operationId": "89d682457b9c9a883712fc2879f3770b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "videos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Video subido exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Propuestas"
+                ],
+                "summary": "Eliminar video de una propuesta",
+                "operationId": "bb7cc939f3262f8e19223c85bc6d2cca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la propuesta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "video_url": {
+                                        "description": "URL del video a eliminar",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Video eliminado"
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-imagenes": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Descargar todas las imágenes de una propuesta (ZIP)",
+                "operationId": "6442a9960a814c2bed7e3885f8eb3500",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id_propuesta",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archivo ZIP descargado"
+                    }
+                }
+            }
+        },
+        "/api/cliente/{id_cliente}/propuesta/{id_propuesta}/descargar-videos": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Descargar todos los videos de una propuesta (ZIP)",
+                "operationId": "2403073aadd35188ca371479b7117bea",
+                "parameters": [
+                    {
+                        "name": "id_cliente",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "id_propuesta",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Archivo ZIP descargado"
+                    }
+                }
+            }
+        },
+        "/api/reclamaciones": {
+            "get": {
+                "tags": [
+                    "Reclamaciones"
+                ],
+                "summary": "Listar reclamaciones (Filtro por fecha opcional)",
+                "operationId": "4bcb58cd87cf4607c285a42789043781",
+                "parameters": [
+                    {
+                        "name": "fecha_inicio",
+                        "in": "query",
+                        "description": "Fecha inicio YYYY-MM-DD",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "fecha_fin",
+                        "in": "query",
+                        "description": "Fecha fin YYYY-MM-DD",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de reclamaciones",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Reclamacion"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Reclamaciones"
+                ],
+                "summary": "Registrar una reclamación",
+                "operationId": "8f89ce066746d8e417489cdb8e6ddb18",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Reclamacion"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reclamación creada exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/reclamaciones/{id}": {
+            "get": {
+                "tags": [
+                    "Reclamaciones"
+                ],
+                "summary": "Obtener una reclamación por ID",
+                "operationId": "b673ea145c1b9023ee5ef5133c34162d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reclamación encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reclamacion"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Reclamaciones"
+                ],
+                "summary": "Actualizar el estado de una reclamación",
+                "operationId": "80ae4349883158e7370c55a4b17d68e5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "estadoReclamo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "PENDIENTE",
+                                            "ATENDIDO"
+                                        ],
+                                        "example": "ATENDIDO"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Estado actualizado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Reclamaciones"
+                ],
+                "summary": "Eliminar una reclamación",
+                "operationId": "eca3ae74e677d049f3b0e7390aa4c4de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Reclamación eliminada"
+                    }
+                }
+            }
+        },
+        "/api/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Listar todos los roles",
+                "operationId": "d4a463509a6f5b9bf44896b0c7692db8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de roles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Rol"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Crear un nuevo rol",
+                "operationId": "00d2a4f961be3c36d6838bc0e42dc09e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Administrador"
+                                    },
+                                    "permisos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rol creado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Obtener un rol por ID",
+                "operationId": "be07c51e9e463956c84c5865c9b19185",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol obtenido correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Rol"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Actualizar un rol",
+                "operationId": "807c9dae4ea0c5a85f334fdae4bde7ea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Editor"
+                                    },
+                                    "permisos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Rol actualizado correctamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Eliminar un rol",
+                "operationId": "a58a5dd68d2eed65c2f98fc15cb0229b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol eliminado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/roles/{id}/permisos": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Obtener permisos asociados a un rol",
+                "operationId": "fd25b9bd3e7be8e80ec48d3c33446348",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Permisos obtenidos correctamente"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "Sincronizar permisos de un rol",
+                "operationId": "e68586d34b664b4fa5720f43d689f6f5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permisos"
+                                ],
+                                "properties": {
+                                    "permisos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Permisos actualizados correctamente"
+                    }
+                }
+            }
+        },
+        "/api/servicios": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Listar servicios",
+                "operationId": "6383c5cd549e15107bc7b1d14a4211a7",
+                "responses": {
+                    "200": {
+                        "description": "Lista de servicios paginada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Servicio"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Crear un nuevo servicio",
+                "operationId": "dd50269928904ecd80518b0e1d2ac071",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Servicio"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Servicio creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/servicios/{id}": {
+            "put": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Actualizar un servicio",
+                "operationId": "9e172204e07948e7de4f06f49400aa9c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Servicio"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Servicio actualizado exitosamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Eliminar un servicio",
+                "operationId": "5d4674fae38988ff3e0bbfe89ff69af7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Servicio eliminado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/tarjeta/{id}": {
+            "get": {
+                "tags": [
+                    "Tarjetas"
+                ],
+                "summary": "Obtener tarjeta por ID",
+                "operationId": "5f4d697303f46bfbdbc52cd894329341",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarjeta encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tarjeta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tarjetas"
+                ],
+                "summary": "Actualizar tarjeta existente",
+                "operationId": "008c4d8d4e51a29aedbeda0a485011e9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tarjeta"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarjeta actualizada correctamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tarjetas"
+                ],
+                "summary": "Eliminar una tarjeta",
+                "operationId": "a1e745632f84debad3ac93197fcb17e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarjeta eliminada correctamente"
+                    }
+                }
+            }
+        },
+        "/api/tarjeta": {
+            "post": {
+                "tags": [
+                    "Tarjetas"
+                ],
+                "summary": "Crear nueva tarjeta",
+                "operationId": "1515340eb3eb6c827b04918e172d0376",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tarjeta"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarjeta creada correctamente"
+                    }
+                }
+            }
+        },
+        "/api/tarjeta/borrar-todas/{id}": {
+            "delete": {
+                "tags": [
+                    "Tarjetas"
+                ],
+                "summary": "Eliminar todas las tarjetas por ID de blog body",
+                "operationId": "7b7ee182e4106ada69847b9bd0d6a533",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del blog body asociado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarjetas eliminadas correctamente"
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener un usuario por su ID",
+                "operationId": "1adc0f07152869c8ef279fc2bddc40a7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario obtenido correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar el nombre de un usuario",
+                "operationId": "78b755372897c5e37e693f0f18b52ee4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Carlos Mendoza"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado correctamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar un usuario",
+                "operationId": "79a4b72fd297e6fba4ba343336b668c7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Obtener todos los usuarios paginados",
+                "operationId": "fa6154d8ff268abef8dbb2f6f84b1089",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear un nuevo usuario",
+                "operationId": "56bfd0bff3e96e12c078f9b5b083cd75",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registro creado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/user/update-pass/{id}": {
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar la contraseña de un usuario",
+                "operationId": "c6d18602ef0ec1bbac00acb59de76b6f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Contraseña actualizada correctamente"
+                    }
+                }
+            }
+        },
+        "/api/user/logout": {
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Cerrar sesión del usuario actual (Revocar Token)",
+                "operationId": "13386c6f6ac3d10535824f092612fab0",
+                "responses": {
+                    "200": {
+                        "description": "Tokens revocados correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Blog": {
+                "title": "Blog",
+                "description": "Modelo central que une las secciones Head, Body y Footer de un blog",
+                "required": [
+                    "id_blog_head",
+                    "id_blog_body",
+                    "id_blog_footer",
+                    "fecha"
+                ],
+                "properties": {
+                    "id_blog": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "id_blog_head": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "id_blog_body": {
+                        "type": "integer",
+                        "example": 20
+                    },
+                    "id_blog_footer": {
+                        "type": "integer",
+                        "example": 30
+                    },
+                    "fecha": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-05-22"
+                    },
+                    "head": {
+                        "$ref": "#/components/schemas/BlogHead"
+                    },
+                    "body": {
+                        "$ref": "#/components/schemas/BlogBody"
+                    },
+                    "footer": {
+                        "$ref": "#/components/schemas/BlogFooter"
+                    },
+                    "card": {
+                        "$ref": "#/components/schemas/Card"
+                    }
+                },
+                "type": "object"
+            },
+            "BlogBody": {
+                "title": "BlogBody",
+                "description": "Sección central del contenido del blog",
+                "required": [
+                    "titulo",
+                    "descripcion"
+                ],
+                "properties": {
+                    "id_blog_body": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "example": "Explorando el Futuro de la Tecnología"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Un análisis profundo sobre el impacto de la IA en la vida cotidiana."
+                    },
+                    "id_commend_tarjeta": {
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
+                    "public_image1": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "url_image1": {
+                        "type": "string",
+                        "format": "uri",
+                        "example": "https://example.com/image1.jpg"
+                    },
+                    "public_image2": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "url_image2": {
+                        "type": "string",
+                        "format": "uri",
+                        "example": "https://example.com/image2.jpg"
+                    },
+                    "public_image3": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "url_image3": {
+                        "type": "string",
+                        "format": "uri",
+                        "example": "https://example.com/image3.jpg"
+                    },
+                    "commend_tarjeta": {
+                        "$ref": "#/components/schemas/CommendTarjeta"
+                    },
+                    "tarjetas": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tarjeta"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BlogFooter": {
+                "title": "BlogFooter",
+                "required": [
+                    "titulo",
+                    "descripcion"
+                ],
+                "properties": {
+                    "id_blog_footer": {
+                        "description": "ID del blog footer",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "titulo": {
+                        "description": "Título del footer",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción del footer",
+                        "type": "string"
+                    },
+                    "public_image1": {
+                        "description": "Ruta pública imagen 1",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "url_image1": {
+                        "description": "URL imagen 1",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "public_image2": {
+                        "description": "Ruta pública imagen 2",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "url_image2": {
+                        "description": "URL imagen 2",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "public_image3": {
+                        "description": "Ruta pública imagen 3",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "url_image3": {
+                        "description": "URL imagen 3",
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BlogHead": {
+                "title": "BlogHead",
+                "description": "Encabezado de un blog",
+                "required": [
+                    "titulo",
+                    "texto_frase",
+                    "texto_descripcion",
+                    "public_image",
+                    "url_image"
+                ],
+                "properties": {
+                    "id_blog_head": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "example": "Título del blog"
+                    },
+                    "texto_frase": {
+                        "type": "string",
+                        "example": "Una frase inspiradora del blog"
+                    },
+                    "texto_descripcion": {
+                        "type": "string",
+                        "example": "Descripción breve del blog"
+                    },
+                    "public_image": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/images/blogs/head/imagenPrincipal.webp"
+                    },
+                    "url_image": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "/storage/images/blogs/head/imagenPrincipal.webp"
+                    },
+                    "blog": {
+                        "$ref": "#/components/schemas/Blog"
+                    }
+                },
+                "type": "object"
+            },
+            "Card": {
+                "title": "Card",
+                "description": "Modelo que representa una tarjeta de presentación enlazada a un blog",
+                "required": [
+                    "titulo",
+                    "descripcion",
+                    "public_image",
+                    "id_plantilla",
+                    "id_blog",
+                    "id_empleado"
+                ],
+                "properties": {
+                    "id_card": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "example": "Tarjeta de presentación A"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Descripción breve de la tarjeta"
+                    },
+                    "public_image": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/images/templates/plantilla1/blog-title1/head/imagenPrincipal.webp"
+                    },
+                    "url_image": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "/storage/images/templates/plantilla1/blog-title1/head/imagenPrincipal.webp"
+                    },
+                    "id_plantilla": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "id_blog": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "id_empleado": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "blog": {
+                        "$ref": "#/components/schemas/Blog"
+                    },
+                    "empleado": {
+                        "$ref": "#/components/schemas/Empleado"
+                    }
+                },
+                "type": "object"
+            },
+            "CommendTarjeta": {
+                "title": "CommendTarjeta",
+                "description": "Modelo de CommendTarjeta",
+                "properties": {
+                    "id_commend_tarjeta": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Título de ejemplo",
+                        "nullable": true
+                    },
+                    "texto1": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Texto 1",
+                        "nullable": true
+                    },
+                    "texto2": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Texto 2",
+                        "nullable": true
+                    },
+                    "texto3": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Texto 3",
+                        "nullable": true
+                    },
+                    "texto4": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Texto 4",
+                        "nullable": true
+                    },
+                    "texto5": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Texto 5",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Contactanos": {
+                "title": "Contacto",
+                "description": "Esquema que representa la información de un contacto",
+                "required": [
+                    "nombre",
+                    "apellido",
+                    "telefono",
+                    "distrito",
+                    "email",
+                    "tipo_reclamo",
+                    "mensaje"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Juan"
+                    },
+                    "apellido": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Pérez"
+                    },
+                    "telefono": {
+                        "type": "string",
+                        "maxLength": 20,
+                        "example": "999999999"
+                    },
+                    "distrito": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Lima"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "juan.perez@example.com"
+                    },
+                    "tipo_reclamo": {
+                        "type": "string",
+                        "maxLength": 1050,
+                        "example": "Consulta general"
+                    },
+                    "mensaje": {
+                        "type": "string",
+                        "maxLength": 1050,
+                        "example": "Mensaje de prueba"
+                    },
+                    "estado": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "fecha_hora": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-05-22T15:00:00Z"
+                    },
+                    "fecha_hora_actualizacion": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-05-23T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "EmailModal": {
+                "title": "EmailModal",
+                "required": [
+                    "estado",
+                    "id_modalservicio",
+                    "number_message",
+                    "fecha"
+                ],
+                "properties": {
+                    "id_modal_email": {
+                        "description": "ID único del intento de envío de email",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "estado": {
+                        "description": "Estado del envío",
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "description": "Mensaje de error",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "id_modalservicio": {
+                        "description": "ID del modalservicio relacionado",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "number_message": {
+                        "description": "Identificador o número del mensaje enviado",
+                        "type": "string"
+                    },
+                    "fecha": {
+                        "description": "Fecha y hora del intento de envío",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Empleado": {
+                "title": "Empleado",
+                "required": [
+                    "nombre",
+                    "apellido",
+                    "email",
+                    "dni",
+                    "telefono",
+                    "id_user",
+                    "id_rol"
+                ],
+                "properties": {
+                    "id_empleado": {
+                        "description": "ID único del empleado",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombres del empleado",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellidos del empleado",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "dni": {
+                        "description": "DNI",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "Teléfono",
+                        "type": "string"
+                    },
+                    "imagen_perfil": {
+                        "description": "Nombre archivo imagen",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen_perfil_url": {
+                        "description": "URL imagen",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "id_user": {
+                        "description": "ID usuario asociado",
+                        "type": "integer"
+                    },
+                    "id_rol": {
+                        "description": "ID rol asociado",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ModalServicio": {
+                "title": "ModalServicio",
+                "required": [
+                    "nombre",
+                    "telefono",
+                    "correo",
+                    "id_servicio",
+                    "fecha",
+                    "estado"
+                ],
+                "properties": {
+                    "id_modalservicio": {
+                        "description": "ID único del modal de servicio",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del cliente",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "Teléfono",
+                        "type": "string"
+                    },
+                    "correo": {
+                        "description": "Correo",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "id_servicio": {
+                        "description": "ID servicio solicitado",
+                        "type": "integer"
+                    },
+                    "fecha": {
+                        "description": "Fecha solicitud",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "estado": {
+                        "description": "Estado solicitud",
+                        "type": "string"
+                    },
+                    "wat_modal": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WatModal"
+                        }
+                    },
+                    "email_modal": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EmailModal"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Permiso": {
+                "title": "Permiso",
+                "required": [
+                    "nombre",
+                    "slug"
+                ],
+                "properties": {
+                    "id_permiso": {
+                        "description": "ID único del permiso",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del permiso",
+                        "type": "string"
+                    },
+                    "slug": {
+                        "description": "Slug del permiso",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Productos": {
+                "title": "Producto",
+                "required": [
+                    "nombre",
+                    "descripcion"
+                ],
+                "properties": {
+                    "id_producto": {
+                        "description": "ID único del producto",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "nombre": {
+                        "description": "Nombre del producto",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción del producto",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Reclamacion": {
+                "title": "Reclamacion",
+                "required": [
+                    "nombre",
+                    "apellido",
+                    "email",
+                    "telefono",
+                    "departamento",
+                    "direccion",
+                    "distrito",
+                    "id_servicio",
+                    "fechaIncidente",
+                    "descripcionServicio",
+                    "checkReclamoForm",
+                    "aceptaPoliticaPrivacidad",
+                    "fechaReclamo"
+                ],
+                "properties": {
+                    "id_reclamacion": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "nombre": {
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "telefono": {
+                        "type": "string"
+                    },
+                    "departamento": {
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "type": "string"
+                    },
+                    "distrito": {
+                        "type": "string"
+                    },
+                    "id_servicio": {
+                        "description": "ID servicio",
+                        "type": "integer"
+                    },
+                    "fechaIncidente": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "montoReclamado": {
+                        "type": "number",
+                        "format": "float",
+                        "nullable": true
+                    },
+                    "descripcionServicio": {
+                        "type": "string"
+                    },
+                    "checkReclamoForm": {
+                        "description": "Reclamo (true) o queja (false)",
+                        "type": "boolean"
+                    },
+                    "aceptaPoliticaPrivacidad": {
+                        "type": "boolean"
+                    },
+                    "fechaReclamo": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "estadoReclamo": {
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Rol": {
+                "title": "Rol",
+                "required": [
+                    "nombre"
+                ],
+                "properties": {
+                    "id_rol": {
+                        "description": "ID único del rol",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nombre": {
+                        "description": "Nombre del rol",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Servicio": {
+                "title": "Servicio",
+                "required": [
+                    "id_servicio",
+                    "nombre",
+                    "descripcion"
+                ],
+                "properties": {
+                    "id_servicio": {
+                        "description": "ID único del servicio",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "nombre": {
+                        "description": "Nombre del servicio",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción del servicio",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Tarjeta": {
+                "title": "Tarjeta",
+                "description": "Elemento representativo vinculado a un BlogBody",
+                "required": [
+                    "titulo",
+                    "descripcion",
+                    "id_blog_body"
+                ],
+                "properties": {
+                    "id_tarjeta": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 10
+                    },
+                    "titulo": {
+                        "type": "string",
+                        "example": "Innovación en Energía Renovable"
+                    },
+                    "descripcion": {
+                        "type": "string",
+                        "example": "Resumen de avances"
+                    },
+                    "id_blog_body": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "blog_body": {
+                        "$ref": "#/components/schemas/BlogBody"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "writeOnly": true
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "remember_token": {
+                        "type": "string",
+                        "writeOnly": true,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "WatModal": {
+                "title": "WatModal",
+                "required": [
+                    "estado",
+                    "id_modalservicio",
+                    "number_message",
+                    "fecha"
+                ],
+                "properties": {
+                    "id_modal_wat": {
+                        "description": "ID mensaje WhatsApp",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "estado": {
+                        "description": "Estado envío",
+                        "type": "boolean"
+                    },
+                    "error": {
+                        "description": "Error",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "id_modalservicio": {
+                        "description": "ID modalservicio",
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "number_message": {
+                        "description": "ID mensaje",
+                        "type": "string"
+                    },
+                    "fecha": {
+                        "description": "Fecha envío",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Cliente": {
+                "title": "Cliente",
+                "required": [
+                    "nombre",
+                    "apellido",
+                    "email",
+                    "telefono"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID único del cliente",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "nombre": {
+                        "description": "Nombre del cliente",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del cliente",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "telefono": {
+                        "description": "Teléfono",
+                        "type": "string"
+                    },
+                    "distrito": {
+                        "description": "Distrito",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen_perfil": {
+                        "description": "Nombre archivo imagen",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "imagen_perfil_url": {
+                        "description": "URL imagen",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "id_user": {
+                        "description": "ID usuario asociado",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "id_rol": {
+                        "description": "ID rol asociado",
+                        "type": "integer",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Propuesta": {
+                "title": "Propuesta",
+                "required": [
+                    "id_cliente",
+                    "nombre",
+                    "descripcion"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID único de la propuesta",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "id_cliente": {
+                        "description": "ID del cliente",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre de la propuesta",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripción",
+                        "type": "string"
+                    },
+                    "cantidad_imagenes": {
+                        "description": "Conteo de imágenes",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "cantidad_videos": {
+                        "description": "Conteo de videos",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "fecha_formateada": {
+                        "description": "Fecha formateada",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "BlogAuditoria": {
+                "title": "BlogAuditoria",
+                "required": [
+                    "id_blog",
+                    "id_empleado",
+                    "accion"
+                ],
+                "properties": {
+                    "id_blog_auditoria": {
+                        "description": "ID auditoría",
+                        "type": "integer",
+                        "readOnly": true
+                    },
+                    "id_blog": {
+                        "description": "ID blog",
+                        "type": "integer"
+                    },
+                    "id_empleado": {
+                        "description": "ID empleado",
+                        "type": "integer"
+                    },
+                    "accion": {
+                        "description": "Acción realizada",
+                        "type": "string"
+                    },
+                    "titulo": {
+                        "description": "Título del registro",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "descripcion": {
+                        "description": "Descripción del registro",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "fecha_hora": {
+                        "description": "Fecha y hora",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Enter token in format (Bearer <token>)",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Endpoints para autenticación y gestión de usuarios"
+        },
+        {
+            "name": "BlogAuditoria",
+            "description": "Operaciones para auditar cambios en los blogs"
+        },
+        {
+            "name": "BlogBody",
+            "description": "Operaciones relacionadas con el contenido del cuerpo del blog"
+        },
+        {
+            "name": "Blog",
+            "description": "Operaciones para la gestión de blogs"
+        },
+        {
+            "name": "BlogFooter",
+            "description": "Operaciones relacionadas con el pie de página de los blogs"
+        },
+        {
+            "name": "BlogHead",
+            "description": "Operaciones relacionadas con la cabecera de los blogs"
+        },
+        {
+            "name": "Cards",
+            "description": "Operaciones relacionadas con las tarjetas de presentación enlazadas a Blogs"
+        },
+        {
+            "name": "Clientes",
+            "description": "Operaciones para la gestión de clientes"
+        },
+        {
+            "name": "CommendTarjeta",
+            "description": "Operaciones relacionadas con CommendTarjeta"
+        },
+        {
+            "name": "Contactanos",
+            "description": "Operaciones relacionadas con los contactos de reclamos"
+        },
+        {
+            "name": "Empleados",
+            "description": "Controlador para la gestión de empleados"
+        },
+        {
+            "name": "Metricas",
+            "description": "Operaciones para obtener análisis y estadísticas del sistema"
+        },
+        {
+            "name": "ModalMail",
+            "description": "Operaciones relacionadas con el envío de correos y el reporte de errores"
+        },
+        {
+            "name": "ModalWat",
+            "description": "Operaciones relacionadas con el envío de mensajes de WhatsApp"
+        },
+        {
+            "name": "Modales",
+            "description": "Operaciones relacionadas a modales"
+        },
+        {
+            "name": "Permisos",
+            "description": "Operaciones relacionadas con permisos del sistema"
+        },
+        {
+            "name": "Productos",
+            "description": "Operaciones para gestionar productos"
+        },
+        {
+            "name": "Propuestas",
+            "description": "Operaciones para la gestión de propuestas"
+        },
+        {
+            "name": "Reclamaciones",
+            "description": "Operaciones relacionadas con la gestión de reclamaciones"
+        },
+        {
+            "name": "Roles",
+            "description": "Operaciones relacionadas con la gestión de roles y sus permisos"
+        },
+        {
+            "name": "Servicios",
+            "description": "Operaciones para la gestión de servicios"
+        },
+        {
+            "name": "Tarjetas",
+            "description": "Operaciones relacionadas con tarjetas enlazadas a un BlogBody"
+        },
+        {
+            "name": "Usuarios",
+            "description": "Operaciones para la gestión de usuarios"
+        }
+    ]
+}
