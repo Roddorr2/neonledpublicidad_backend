@@ -23,4 +23,8 @@ class Servicio extends Model
     public function reclamacion(){
         return $this->hasMany(Reclamacion::class, 'id_servicio');
     }
+
+    public function campanias(){
+        return $this->hasMany(Campania::class, 'id_servicio', 'id_servicio');
+    }
 }
