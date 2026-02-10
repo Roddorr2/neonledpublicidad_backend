@@ -37,6 +37,8 @@ return [
 
     'whatsapp' => [
         'url' => env('WHATSAPP_API_URL'),
+        'api_key' => env('WHATSAPP_API_KEY'),
+        'rate_limit_per_minute' => env('WHATSAPP_RATE_LIMIT', 30),
     ],
 
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_campania');
             $table->unsignedBigInteger('id_servicio');
             $table->text('parrafo');
-            $table->string('imagen_url', 100);
+            $table->string('imagen_url', 300);
             $table->enum('estado', ['pendiente', 'en_proceso', 'completada', 'cancelada', 'error'])->default('pendiente');
             $table->integer('total_destinatarios')->default(0);
             $table->integer('envios_exitosos')->default(0);

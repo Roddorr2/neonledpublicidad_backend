@@ -34,10 +34,30 @@ class Campania extends Model
     ];
 
     /**
-     * Relación con Servicio
+     * Relación con Servicio (legado)
      */
     public function servicio(): BelongsTo
     {
         return $this->belongsTo(Servicio::class, 'id_servicio', 'id_servicio');
+    }
+
+    /**
+     * Relación con Producto (id_servicio almacena id_producto)
+     */
+    public function producto(): BelongsTo
+    {
+        return $this->belongsTo(Productos::class, 'id_servicio', 'id_producto');
+    }
+
+    /**
+     * Obtiene el porcentaje de progreso de la campaña
+     */
+    public function getProgressPercentage(): float
+    {
+        if ($this->total_destinatarios === 0) {
+            return 0;
+        }
+        
+        return round((($this->envios_exitosos + $this->envios_fallidos) / $this->total_destinatarios) * 100, 2);
     }
 }
