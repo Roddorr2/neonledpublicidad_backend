@@ -213,25 +213,18 @@ class WhatsAppCampaignController extends Controller
                 return $image;
             }
 
-            // Inicializar instancia de Cloudinary con credenciales del .env
-            // En entorno local usa HTTP para evitar problemas de certificado SSL
-            $config = [
+            // Inicializar Cloudinary con credenciales del .env (HTTP)
+            $cloudinary = new Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                     'api_key'    => env('CLOUDINARY_KEY'),
                     'api_secret' => env('CLOUDINARY_SECRET'),
                 ],
-                'url' => ['secure' => true],
-            ];
-
-            if (app()->environment('local')) {
-                $config['api'] = [
+                'url' => ['secure' => false],
+                'api' => [
                     'upload_prefix' => 'http://api.cloudinary.com',
-                ];
-                $config['url']['secure'] = false;
-            }
-
-            $cloudinary = new Cloudinary($config);
+                ],
+            ]);
 
             // Si es base64, decodificar y subir
             if (strpos($image, 'data:image') === 0) {

@@ -72,9 +72,7 @@ class CloudinaryTest extends TestCase
         $this->assertGreaterThan(0, $filesize, 'El archivo temporal está vacío');
 
         try {
-            // Usar la SDK directa con las variables de .env
-            // HTTP en local para evitar error SSL cURL 60
-            $config = [
+            $cloudinary = new \Cloudinary\Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                     'api_key'    => env('CLOUDINARY_KEY'),
@@ -84,8 +82,7 @@ class CloudinaryTest extends TestCase
                 'api' => [
                     'upload_prefix' => 'http://api.cloudinary.com',
                 ],
-            ];
-            $cloudinary = new \Cloudinary\Cloudinary($config);
+            ]);
 
             $result = $cloudinary->uploadApi()->upload($tmpFile, [
                 'folder' => 'test_diagnostico',
@@ -175,9 +172,9 @@ class CloudinaryTest extends TestCase
         echo "Archivo temporal: {$tmpFile} ({$tmpSize} bytes)\n";
         $this->assertGreaterThan(0, $tmpSize, 'Archivo temporal vacío');
 
-        // Paso 6: Subir a Cloudinary (HTTP en local para evitar SSL cURL 60)
+        // Paso 6: Subir a Cloudinary
         try {
-            $config = [
+            $cloudinary = new \Cloudinary\Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
                     'api_key'    => env('CLOUDINARY_KEY'),
@@ -187,8 +184,7 @@ class CloudinaryTest extends TestCase
                 'api' => [
                     'upload_prefix' => 'http://api.cloudinary.com',
                 ],
-            ];
-            $cloudinary = new \Cloudinary\Cloudinary($config);
+            ]);
 
             $result = $cloudinary->uploadApi()->upload($tmpFile, [
                 'folder' => 'test_diagnostico',

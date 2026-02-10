@@ -39,11 +39,20 @@ foreach ($extensions as $ext) {
 echo "\n";
 
 // 3. Intentar crear instancia de Cloudinary
-echo "3. INSTANCIAR CLOUDINARY:\n";
+echo "3. INSTANCIAR CLOUDINARY (HTTP):\n";
 try {
-    $cloudinaryUrl = $_ENV['CLOUDINARY_URL'];
-    $cloudinary = new Cloudinary\Cloudinary($cloudinaryUrl);
-    echo "   [OK] Instancia creada con CLOUDINARY_URL\n";
+    $cloudinary = new Cloudinary\Cloudinary([
+        'cloud' => [
+            'cloud_name' => $_ENV['CLOUDINARY_CLOUD_NAME'],
+            'api_key'    => $_ENV['CLOUDINARY_KEY'],
+            'api_secret' => $_ENV['CLOUDINARY_SECRET'],
+        ],
+        'url' => ['secure' => false],
+        'api' => [
+            'upload_prefix' => 'http://api.cloudinary.com',
+        ],
+    ]);
+    echo "   [OK] Instancia creada con HTTP\n";
 } catch (Exception $e) {
     echo "   [FALLO] " . $e->getMessage() . "\n";
     exit(1);
@@ -103,8 +112,7 @@ try {
         echo "\n   >>> DIAGNOSTICO: API Secret incorrecto - verifica CLOUDINARY_SECRET\n";
     } elseif (str_contains($msg, 'cURL') || str_contains($msg, 'curl')) {
         echo "\n   >>> DIAGNOSTICO: Error de red/conexión - verifica acceso a internet\n";
-    } elseif (str_contains($msg, 'SSL') || str_contains($msg, 'certificate')) {
-        echo "\n   >>> DIAGNOSTICO: Error SSL - puede necesitar actualizar certificados CA\n";
+
     } else {
         echo "\n   >>> DIAGNOSTICO: Error no clasificado. Revisa el mensaje arriba.\n";
     }
