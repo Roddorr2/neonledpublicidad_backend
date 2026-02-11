@@ -16,6 +16,11 @@ class SendWhatsappCampaignJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * Número de reintentos antes de marcar como fallido
+     */
+    public $tries = 3;
+
     public $campaniaId;
     public $chunkNumber;
     public $recipients;
@@ -34,6 +39,9 @@ class SendWhatsappCampaignJob implements ShouldQueue
         $this->message = $message;
         $this->imageUrl = $imageUrl;
         $this->idProducto = $idProducto;
+        
+        // Establecer la cola usando el método del trait Queueable
+        $this->onQueue('whatsapp');
     }
 
     /**
@@ -61,7 +69,7 @@ class SendWhatsappCampaignJob implements ShouldQueue
 
             // Enviar a WhatsApp Service
             $response = Http::timeout(60)
-                ->post(config('services.whatsapp.url') . '/api/whatsapp/campaign/send', $payload);
+                ->post(config('services.whatsapp.url') . '/api/send-campaign-batch', $payload);
 
             if ($response->successful()) {
                 $responseData = $response->json();
