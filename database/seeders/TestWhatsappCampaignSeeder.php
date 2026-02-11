@@ -52,6 +52,6 @@ class TestWhatsappCampaignSeeder extends Seeder
             ]);
         }
 
-        $this->command->info('✅ Seeder ejecutado: 3 registros de prueba creados con número 931640662 en servicio 1');
+        $this->command->info('✅ Seeder ejecutado: 3 registros de prueba creados con número 9xxxxxxxx en servicio 1');
     }
 }
