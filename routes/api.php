@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\PropuestaController;
-use App\Http\Controllers\Api\productosController;
+use App\Http\Controllers\Api\ProductosController;
 use App\Http\Controllers\Api\BlogAuditoriaController;
 use App\Http\Controllers\Api\MetricasController;
 
