@@ -136,6 +136,9 @@ class ProductoSeeder extends Seeder
             ]
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('productos')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('productos')->insert($productos);
     }
 }

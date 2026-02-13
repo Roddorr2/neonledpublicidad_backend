@@ -10,14 +10,17 @@ class ReclamacionSeeder extends Seeder
 {
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('reclamaciones')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('reclamaciones')->insert([
             [
                 'nombre' => 'Carlos',
                 'apellido' => 'Ramírez',
-                'email' => 'carlos@example.com',
+                'email' => 'carlos.test@staging.neonled.com',
                 'telefono' => '998877665',
                 'departamento' => 'Lima',
-                'direccion' => 'Av. Siempre Viva 123',
+                'direccion' => 'Av. Test 123',
                 'distrito' => 'Surco',
                 'id_servicio' => 1,
                 'fechaIncidente' => '2025-03-15',
@@ -30,12 +33,12 @@ class ReclamacionSeeder extends Seeder
             ], 
             [
                 'nombre' => 'Carlitos',
-                'apellido' => 'Ramírez',
-                'email' => 'carlitoss@example.com',
-                'telefono' => '98177665',
+                'apellido' => 'Test',
+                'email' => 'carlitos.test@staging.neonled.com',
+                'telefono' => '987654321',
                 'departamento' => 'La Libertad',
-                'direccion' => 'Av. Siempre Viva 123',
-                'distrito' => 'Chepén',
+                'direccion' => 'Av. Test 456',
+                'distrito' => 'Trujillo',
                 'id_servicio' => 1,
                 'fechaIncidente' => '2025-03-15',
                 'montoReclamado' => 120.50,

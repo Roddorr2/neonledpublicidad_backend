@@ -20,12 +20,12 @@ class BlogFooterSeeder extends Seeder
                 'public_image1'=>'/blog/blog-2.jpg',
                 'public_image2'=>'/blog/blog-2.jpg',
                 'public_image3'=>'/blog/blog-2.jpg',
-                // 'estado' => true,
-                // 'keyword' => 'luces neón LED, bar, publicidad, marketing',
-                // 'link' => 'https://neonledpublicidad.com/blog/beneficios-luces-neon-led-para-tu-bar',
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('blog_footers')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('blog_footers')->insert($blog_footers);
     }
 }

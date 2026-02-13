@@ -15,31 +15,34 @@ class ModalservicioSeeder extends Seeder
     {
         $modalServicios = [
             [
-                'nombre' => 'Ana Torres EJEMPLO',
+                'nombre' => 'Ana Torres Test',
                 'telefono' => '983354321',
-                'correo' => 'ana@gmail.com',
+                'correo' => 'ana.torres@staging.neonled.com',
                 'id_producto' => 1,
             ],
             [
-                'nombre' => 'Lorena Rodriguez EJEMPLO',
+                'nombre' => 'Lorena Rodriguez Test',
                 'telefono' => '987384322',
-                'correo' => 'lorena@gmail.com',
+                'correo' => 'lorena.rodriguez@staging.neonled.com',
                 'id_producto' => 2,
             ],
             [
-                'nombre' => 'Jose Santos EJEMPLO',
+                'nombre' => 'Jose Santos Test',
                 'telefono' => '987654323',
-                'correo' => 'jose@gmail.com',
+                'correo' => 'jose.santos@staging.neonled.com',
                 'id_producto' => 3,
             ],
             [
-                'nombre' => 'Luis Romero EJEMPLO',
+                'nombre' => 'Luis Romero Test',
                 'telefono' => '981154323',
-                'correo' => 'luisito@gmail.com',
+                'correo' => 'luis.romero@staging.neonled.com',
                 'id_producto' => 4,
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('modalservicios')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('modalservicios')->insert($modalServicios);
     }
 }

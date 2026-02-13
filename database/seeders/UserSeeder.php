@@ -13,56 +13,60 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        
         $users = [
             [
-                'name' => 'Kevin',
-                'email' => 'keving.kpg@gmail.com',
-                'password' => Hash::make('F@Q#n64QuJm%'),
+                'name' => 'Admin Staging',
+                'email' => 'admin@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Jose Luis',
-                'email' => 'joseluisjlgd123@gmail.com',
-                'password' => Hash::make('j8#m2%Q2g2SW'),
+                'email' => 'joseluis@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Juan Carlos',
-                'email' => 'tmlighting@hotmail.com',
-                'password' => Hash::make('Vqw&Kk4o$Q7c'),
+                'email' => 'juancarlos@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Krizzia Martina',
-                'email' => 'krizzia_saavedra201@hotmail.com',
-                'password' => Hash::make('2XQsrPELv$&Y'),
+                'email' => 'krizzia@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Gonzalo Fernando',
-                'email' => 'gogozgallardo22@gmail.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'gonzalo@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Piero Alexander',
-                'email' => 'pierocatacorayt13@gmail.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'piero@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Diego Torres',
-                'email' => 'diego_torres_11@hotmail.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'diego@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Juan Perez',
-                'email' => 'juan.perez@example.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'cliente.juan@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Ana Garcia',
-                'email' => 'ana.garcia@example.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'cliente.ana@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
             [
                 'name' => 'Luis Torres',
-                'email' => 'luis.torres@example.com',
-                'password' => Hash::make('12345678'),
+                'email' => 'cliente.luis@staging.neonled.com',
+                'password' => Hash::make('staging_password_123'),
             ],
 
         ];

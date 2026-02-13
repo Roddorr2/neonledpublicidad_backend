@@ -16,18 +16,18 @@ class ClienteSeeder extends Seeder
             [
                 'nombre' => 'Juan',
                 'apellido' => 'Pérez',
-                'email' => 'juan.perez@example.com',
+                'email' => 'cliente.juan@staging.neonled.com',
                 'telefono' => '999111222',
                 'distrito' => 'Miraflores',
                 'imagen_perfil' => null,
                 'imagen_perfil_url' => null,
                 'id_user' => 8,
-                'id_rol' => 4, // Asegúrate de que este rol exista
+                'id_rol' => 4,
             ],
             [
                 'nombre' => 'Ana',
                 'apellido' => 'García',
-                'email' => 'ana.garcia@example.com',
+                'email' => 'cliente.ana@staging.neonled.com',
                 'telefono' => '988777666',
                 'distrito' => 'San Isidro',
                 'imagen_perfil' => null,
@@ -38,7 +38,7 @@ class ClienteSeeder extends Seeder
             [
                 'nombre' => 'Luis',
                 'apellido' => 'Torres',
-                'email' => 'luis.torres@example.com',
+                'email' => 'cliente.luis@staging.neonled.com',
                 'telefono' => '955444333',
                 'distrito' => 'Surco',
                 'imagen_perfil' => null,
@@ -47,6 +47,9 @@ class ClienteSeeder extends Seeder
                 'id_rol' => 4,
             ],
         ];
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('clientes')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('clientes')->insert($clientes);
     }
 }

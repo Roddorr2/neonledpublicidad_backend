@@ -11,13 +11,16 @@ class ContactanosSeeder extends Seeder
 {
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('contactanos')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('contactanos')->insert([
             [
                 'nombre' => 'Juan',
                 'apellido' => 'Pérez',
                 'telefono' => '987654321',
                 'distrito' => 'Miraflores',
-                'email' => 'juan@example.com',
+                'email' => 'juan.test@staging.neonled.com',
                 'detalle_reclamacion' => 'CONSULTA',
                 'mensaje' => 'Me gustaría saber más sobre sus servicios.',
                 'estado' => false,
@@ -29,7 +32,7 @@ class ContactanosSeeder extends Seeder
                 'apellido' => 'García',
                 'telefono' => '912345678',
                 'distrito' => 'San Isidro',
-                'email' => 'lucia@example.com',
+                'email' => 'lucia.test@staging.neonled.com',
                 'detalle_reclamacion' => 'RECLAMO',
                 'mensaje' => 'Tuve un problema con un servicio.',
                 'estado' => true,
