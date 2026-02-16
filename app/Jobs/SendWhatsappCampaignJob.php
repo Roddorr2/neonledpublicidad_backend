@@ -67,9 +67,25 @@ class SendWhatsappCampaignJob implements ShouldQueue
                 'id_producto' => $this->idProducto
             ];
 
-            // Enviar a WhatsApp Service
-            $response = Http::timeout(60)
-                ->post(config('services.whatsapp.url') . '/api/send-campaign-batch', $payload);
+                // Obtener token JWT desde /api/auth usando credenciales del .env
+                $authUrl = config('services.whatsapp.url') . '/api/auth/login';
+                $username = env('ADMIN_USERNAME');
+                $password = env('ADMIN_PASSWORD');
+                $role = env('ADMIN_ROLE');
+                $authResponse = \Illuminate\Support\Facades\Http::post($authUrl, [
+                    'username' => $username,
+                    'password' => $password,
+                    'role' => $role
+                ]);
+                if (!$authResponse->successful() || !isset($authResponse['token'])) {
+                    throw new \Exception('No se pudo obtener el token JWT de /api/auth: ' . $authResponse->body());
+                }
+                $token = $authResponse['token'];
+
+                // Enviar a WhatsApp Service con Authorization Bearer
+                $response = \Illuminate\Support\Facades\Http::withToken($token)
+                    ->timeout(60)
+                    ->post(config('services.whatsapp.url') . '/api/send-campaign-batch', $payload);
 
             if ($response->successful()) {
                 $responseData = $response->json();

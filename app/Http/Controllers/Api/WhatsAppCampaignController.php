@@ -14,6 +14,7 @@ use Cloudinary\Cloudinary;
 
 class WhatsAppCampaignController extends Controller
 {
+
     /**
      * POST /api/whatsapp/campaign/activate
      * Activa una campaña de WhatsApp masiva
@@ -24,7 +25,7 @@ class WhatsAppCampaignController extends Controller
         $validator = Validator::make($request->all(), [
             'service' => 'required|string|in:p1,p2,p3,p4',
             'paragraph' => 'required|string|min:10|max:1000',
-            'image' => 'required|string', // Base64 o URL
+            'image' => 'required|file|image', // Solo archivo imagen
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +41,7 @@ class WhatsAppCampaignController extends Controller
             $idProducto = $serviceMap[$request->service];
 
             // Subir imagen a Cloudinary
-            $imagenUrl = $this->processAndUploadImage($request->image);
+            $imagenUrl = $this->processAndUploadImage($request->file('image'));
             if (!$imagenUrl) {
                 return response()->json([
                     'success' => false,
@@ -205,15 +206,15 @@ class WhatsAppCampaignController extends Controller
      * @param string $image Base64, URL o archivo
      * @return string|null URL de la imagen subida o null si falla
      */
-    private function processAndUploadImage($image)
+    private function processAndUploadImage($imageFile)
     {
         try {
-            // Si es una URL válida, retornarla directamente
-            if (filter_var($image, FILTER_VALIDATE_URL)) {
-                return $image;
+            // Solo aceptar archivos subidos (UploadedFile)
+            if (!$imageFile || !is_object($imageFile) || !method_exists($imageFile, 'getRealPath')) {
+                Log::error('No se recibió archivo de imagen válido');
+                return null;
             }
 
-            // Inicializar Cloudinary con credenciales del .env (HTTP)
             $cloudinary = new Cloudinary([
                 'cloud' => [
                     'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
@@ -226,84 +227,20 @@ class WhatsAppCampaignController extends Controller
                 ],
             ]);
 
-            // Si es base64, decodificar y subir
-            if (strpos($image, 'data:image') === 0) {
-                // Extraer solo la parte base64 usando regex (soporta cualquier formato)
-                $image = preg_replace('/^data:image\/[a-zA-Z]+;base64,/', '', $image);
-                // Limpiar espacios y saltos de línea
-                $image = preg_replace('/\s+/', '', $image);
-                $image = str_replace(' ', '+', $image);
+            $result = $cloudinary->uploadApi()->upload($imageFile->getRealPath(), [
+                'folder' => 'campanias_whatsapp'
+            ]);
 
-                $imageData = base64_decode($image, true);
-                if ($imageData === false || strlen($imageData) === 0) {
-                    Log::error('Error al decodificar base64: datos inválidos o vacíos');
-                    return null;
-                }
-
-                // Crear archivo temporal
-                $tmpFile = tempnam(sys_get_temp_dir(), 'img');
-                file_put_contents($tmpFile, $imageData);
-
-                if (filesize($tmpFile) === 0) {
-                    Log::error('Archivo temporal vacío después de escribir base64');
-                    @unlink($tmpFile);
-                    return null;
-                }
-
-                Log::info('Subiendo imagen a Cloudinary', [
-                    'tmpFile' => $tmpFile,
-                    'filesize' => filesize($tmpFile),
+            if (!$result || !isset($result['secure_url'])) {
+                Log::error('Cloudinary no retornó secure_url', [
+                    'result_type' => gettype($result),
+                    'result' => is_array($result) ? $result : (string) $result,
                 ]);
-
-                $result = $cloudinary->uploadApi()->upload($tmpFile, [
-                    'folder' => 'campanias_whatsapp'
-                ]);
-
-                @unlink($tmpFile);
-
-                // Verificar respuesta
-                if (!$result || !isset($result['secure_url'])) {
-                    Log::error('Cloudinary no retornó secure_url', [
-                        'result_type' => gettype($result),
-                        'result' => is_array($result) ? $result : (string) $result,
-                    ]);
-                    return null;
-                }
-
-                Log::info('Imagen subida exitosamente', ['url' => $result['secure_url']]);
-                return $result['secure_url'];
+                return null;
             }
 
-            // Si es base64 puro SIN prefijo data:image
-            $imageData = base64_decode($image, true);
-            if ($imageData !== false && strlen($imageData) > 0) {
-                $tmpFile = tempnam(sys_get_temp_dir(), 'img');
-                file_put_contents($tmpFile, $imageData);
-
-                if (filesize($tmpFile) === 0) {
-                    @unlink($tmpFile);
-                    Log::error('Archivo temporal vacío (base64 sin prefijo)');
-                    return null;
-                }
-
-                $result = $cloudinary->uploadApi()->upload($tmpFile, [
-                    'folder' => 'campanias_whatsapp'
-                ]);
-
-                @unlink($tmpFile);
-
-                if (!$result || !isset($result['secure_url'])) {
-                    Log::error('Cloudinary no retornó secure_url (base64 sin prefijo)', [
-                        'result_type' => gettype($result),
-                    ]);
-                    return null;
-                }
-
-                return $result['secure_url'];
-            }
-
-            Log::error('Formato de imagen no válido: no es URL, ni base64 con prefijo, ni base64 puro');
-            return null;
+            Log::info('Imagen subida exitosamente', ['url' => $result['secure_url']]);
+            return $result['secure_url'];
 
         } catch (\Exception $e) {
             Log::error('Error al procesar imagen', [
