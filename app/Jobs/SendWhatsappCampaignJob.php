@@ -58,8 +58,7 @@ class SendWhatsappCampaignJob implements ShouldQueue
                     return [
                         'id_modalservicio' => $recipient->id_modalservicio,
                         'nombre' => $recipient->nombre,
-                        'telefono' => '51' . $recipient->telefono,
-                        'number_message' => $recipient->number_message
+                        'telefono' => '51' . $recipient->telefono
                     ];
                 }, $this->recipients),
                 'message' => $this->message,

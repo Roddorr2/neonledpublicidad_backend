@@ -51,29 +51,24 @@ class WhatsAppCampaignController extends Controller
 
             DB::beginTransaction();
 
-            // 1. Consultar destinatarios desde modal_wats con sus modalservicios
-            $watModals = DB::table('modal_wats')
-                ->join('modalservicios', 'modal_wats.id_modalservicio', '=', 'modalservicios.id_modalservicio')
-                ->where('modalservicios.id_producto', $idProducto)
-                ->where('modalservicios.estado', 1)
-                ->select(
-                    'modal_wats.id_modal_wat',
-                    'modal_wats.id_modalservicio',
-                    'modal_wats.number_message',
-                    'modalservicios.nombre',
-                    'modalservicios.telefono',
-                    'modalservicios.id_producto'
-                )
-                ->get();
+            // 1. Consultar destinatarios directamente desde modalservicios activos por producto
+            $destinatarios = DB::table('modalservicios')
+                ->where('id_producto', $idProducto)
+                ->where('estado', 1)
+                ->select('id_modalservicio', 'nombre', 'telefono', 'id_producto')
+                ->orderByDesc('id_modalservicio')
+                ->get()
+                ->unique('telefono')
+                ->values();
 
-            if ($watModals->isEmpty()) {
+            if ($destinatarios->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'No hay destinatarios para este producto'
                 ], 404);
             }
 
-            $totalDestinatarios = $watModals->count();
+            $totalDestinatarios = $destinatarios->count();
 
             // 2. Crear registro de campaña
             $campania = Campania::create([
@@ -86,10 +81,9 @@ class WhatsAppCampaignController extends Controller
                 'fecha_inicio' => now()
             ]);
 
-            // 3. Dividir destinatarios en chunks de 50 y despachar jobs
-            $chunks = $watModals->chunk(50);
+            // 3. Dividir destinatarios en chunks de 20 y despachar jobs
+            $chunks = $destinatarios->chunk(20);
             $chunkNumber = 0;
-            
             foreach ($chunks as $chunk) {
                 $chunkNumber++;
                 SendWhatsappCampaignJob::dispatch(
