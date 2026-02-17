@@ -78,7 +78,7 @@ class SendWhatsappCampaignJob implements ShouldQueue
                     'role' => $role
                 ]);
                 if (!$authResponse->successful() || !isset($authResponse['token'])) {
-                    throw new \Exception('No se pudo obtener el token JWT de /api/auth: ' . $authResponse->body());
+                    throw new \Exception('No se pudo obtener el token JWT de /api/auth/login: ' . $authResponse->body());
                 }
                 $token = $authResponse['token'];
 

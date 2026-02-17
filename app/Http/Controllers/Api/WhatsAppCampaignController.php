@@ -21,7 +21,7 @@ class WhatsAppCampaignController extends Controller
      */
     public function activate(Request $request)
     {
-        // Validación del payload
+        // Validación del payload ----
         $validator = Validator::make($request->all(), [
             'service' => 'required|string|in:p1,p2,p3,p4',
             'paragraph' => 'required|string|min:10|max:1000',
