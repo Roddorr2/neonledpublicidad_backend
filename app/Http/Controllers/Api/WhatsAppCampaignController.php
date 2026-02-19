@@ -73,12 +73,20 @@ class WhatsAppCampaignController extends Controller
             // 2. Crear registro de campaña
             $campania = Campania::create([
                 'id_servicio' => $idProducto,
+                'user_id' => $request->user()->id, // ← Registra quién la creó
                 'parrafo' => $request->paragraph,
                 'imagen_url' => $imagenUrl,
                 'estado' => 'pendiente',
                 'total_destinatarios' => $totalDestinatarios,
                 'envios_pendientes' => $totalDestinatarios,
                 'fecha_inicio' => now()
+            ]);
+
+            // Log de auditoría
+            \Log::info('Campaña WhatsApp creada', [
+                'campania_id' => $campania->id_campania,
+                'creado_por_user_id' => $request->user()->id,
+                'creado_por_nombre' => $request->user()->name
             ]);
 
             // 3. Dividir destinatarios en chunks de 20 y despachar jobs

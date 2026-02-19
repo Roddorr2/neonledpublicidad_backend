@@ -13,6 +13,7 @@ class Campania extends Model
 
     protected $fillable = [
         'id_servicio',
+        'user_id', // ← NUEVO para auditoría
         'parrafo',
         'imagen_url',
         'estado',
@@ -23,6 +24,13 @@ class Campania extends Model
         'fecha_inicio',
         'fecha_fin'
     ];
+    /**
+     * Relación con el usuario creador (auditoría)
+     */
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     protected $casts = [
         'fecha_inicio' => 'datetime',

@@ -109,10 +109,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:enviar-mensajes')->put('/modales/reportar_error/{id}', [ModalMailController::class, "reportarError"]);
     Route::middleware('permission:enviar-mensajes')->put('/modales/estado_wat/{id}', [ModalWatController::class, "cambiarEstado"]);
 
-    // WhatsApp Campaigns
-    Route::middleware('permission:enviar-mensajes')->post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, "activate"]);
-    Route::middleware('permission:ver-modales')->get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, "status"]);
-    Route::middleware('permission:ver-modales')->get('/whatsapp/campaigns', [WhatsAppCampaignController::class, "index"]);
+    // WhatsApp Campaigns protegidas
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware('role:marketing,administrador')->group(function () {
+            Route::post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, 'activate']);
+            Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
+            Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
+        });
+    });
 
     //rutas create blog
     Route::middleware('permission:crear-blogs')->post('/card', [CardController::class, "create"]);

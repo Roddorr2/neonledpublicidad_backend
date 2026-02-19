@@ -66,25 +66,14 @@ class SendWhatsappCampaignJob implements ShouldQueue
                 'id_producto' => $this->idProducto
             ];
 
-                // Obtener token JWT desde /api/auth usando credenciales del .env
-                $authUrl = config('services.whatsapp.url') . '/api/auth/login';
-                $username = env('ADMIN_USERNAME');
-                $password = env('ADMIN_PASSWORD');
-                $role = env('ADMIN_ROLE');
-                $authResponse = \Illuminate\Support\Facades\Http::post($authUrl, [
-                    'username' => $username,
-                    'password' => $password,
-                    'role' => $role
-                ]);
-                if (!$authResponse->successful() || !isset($authResponse['token'])) {
-                    throw new \Exception('No se pudo obtener el token JWT de /api/auth/login: ' . $authResponse->body());
-                }
-                $token = $authResponse['token'];
-
-                // Enviar a WhatsApp Service con Authorization Bearer
-                $response = \Illuminate\Support\Facades\Http::withToken($token)
-                    ->timeout(60)
-                    ->post(config('services.whatsapp.url') . '/api/send-campaign-batch', $payload);
+                // Enviar a WhatsApp Service usando API Key
+                $response = \Illuminate\Support\Facades\Http::timeout(60)
+                    ->withHeaders([
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'X-API-Key' => env('WHATSAPP_SERVICE_API_KEY'), // ← API Key desde .env
+                    ])
+                    ->post(config('services.whatsapp.url') . '/api/whatsapp/send-campaign-batch', $payload);
 
             if ($response->successful()) {
                 $responseData = $response->json();
