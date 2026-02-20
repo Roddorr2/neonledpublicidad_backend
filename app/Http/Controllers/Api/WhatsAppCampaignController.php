@@ -23,7 +23,7 @@ class WhatsAppCampaignController extends Controller
     {
         // Validación del payload ----
         $validator = Validator::make($request->all(), [
-            'service' => 'required|string|in:p1,p2,p3,p4',
+            'service' => 'required|string|in:p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15',
             'paragraph' => 'required|string|min:10|max:1000',
             'image' => 'required|file|image', // Solo archivo imagen
         ]);
@@ -37,7 +37,23 @@ class WhatsAppCampaignController extends Controller
 
         try {
             // Mapear service a id_producto
-            $serviceMap = ['p1' => 1, 'p2' => 2, 'p3' => 3, 'p4' => 4];
+            $serviceMap = [
+                'p1' => 1,
+                'p2' => 2,
+                'p3' => 3,
+                'p4' => 4,
+                'p5' => 5,
+                'p6' => 6,
+                'p7' => 7,
+                'p8' => 8,
+                'p9' => 9,
+                'p10' => 10,
+                'p11' => 11,
+                'p12' => 12,
+                'p13' => 13,
+                'p14' => 14,
+                'p15' => 15
+            ];
             $idProducto = $serviceMap[$request->service];
 
             // Subir imagen a Cloudinary

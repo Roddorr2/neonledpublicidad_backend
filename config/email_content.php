@@ -470,7 +470,7 @@ return [
                                 📘 Facebook: Neon LED Publicidad<br>
                                 🎥 TikTok: <a href="https://www.tiktok.com/@neonledpublicidad">@neonledpublicidad</a>
                                 </p>
-                                <p>📍 Lima – Perú</p',
+                                <p>📍 Lima – Perú</p>',
                 ],
             ],
         ],
@@ -528,8 +528,8 @@ return [
                                 <p><strong>Síguenos y descubre más ideas de diseño:</strong></p>
                                 <p>
                                 📸 <strong>Instagram:</strong> <a href="https://www.instagram.com/neonledpublicidad">@neonledpublicidad</a><br>
-                                📘 <strong>Facebook</strong>: Neon LED Publicidad<br>
-                                🎥 <strong>TikTok</strong>: <a href="https://www.tiktok.com/@neonledpublicidad">@neonledpublicidad</a>
+                                📘 <strong>Facebook:</strong> Neon LED Publicidad<br>
+                                🎥 <strong>TikTok:</strong> <a href="https://www.tiktok.com/@neonledpublicidad">@neonledpublicidad</a>
                                 </p>
                                 <p>📍 Lima – Perú</p>',
                 ],
@@ -836,31 +836,35 @@ return [
                                 <p>Usando <strong>gráficos holográficos</strong>, tu marca puede lograr
                                 mayor presencia en el mercado al que pertenece, destacando de forma innovadora
                                 y memorable frente a tu competencia.</p>
-                                <p>📈 Nuestro equipo está preparado para llevar tu marca a lugares aún no vistos.</p>
+                                <p>📈 Nuestro equipo está preparado para llevar tu marca a
+                                <strong>lugares aún no vistos</strong>, combinando diseño, tecnología y creatividad.</p>
                                 <p><strong>✨ Beneficios exclusivos:</strong></p>
                                 <ul>
-                                    <li>Innovación en la forma de presentar tu producto o servicio</li>
-                                    <li>Generación de altas expectativas con una visualización exclusiva de tu marca</li>
-                                    <li>Presencia en espacios interiores o exteriores con tecnología de última generación</li>
+                                    <li>Mayor atractivo visual en los espacios donde desees instalarlos.</li>
+                                    <li>Genera expectativas positivas con una vista exclusiva de tu marca.</li>
+                                    <li>Fácil de manipular, con una amplia gama de formatos y configuraciones.</li>
                                 </ul>
-                                <p>🚀 ¡No te quedes atrás con un cartel de papel!</p>
+                                <p>🚀 <strong>¡No te quedes atrás con un cartel de papel!</strong></p>
                                 <p>Transforma tu negocio con imágenes innovadoras diseñadas para maximizar
-                                tu rentabilidad y posicionamiento.</p>',
+                                tu rentabilidad y posicionamiento.</p>
+                                <p><strong>📩 Contáctanos hoy y comencemos a construir tu futura publicidad.</strong></p>',
                     'image' => 'assets/11-holografico/flyer-modal-11-3.jpg',
-                    'extra' => '<p><strong>📩 Contáctanos hoy y comencemos a construir tu futura publicidad.</strong></p>
-                                <p>
-                                <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20más%20información%20de%20sus%20productos"
-                                style="display:inline-block;padding:10px 18px;background:#00c853;color:#ffffff;
-                                        text-decoration:none;border-radius:6px;font-weight:bold;">
-                                ¡CONTÁCTENOS!
-                                </a>
-                                </p>
-                                <p>
-                                📞 +51 994 078 320<br>
+                    'extra' => '<p>
+                                <div class="cta-container">
+                                    <a href="https://wa.me/+51994078320?text=Hola,%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20de%20sus%20productos" class="cta-button" style="color:white;">¡CONTÁCTENOS!</a>
+                                </div>
+                            </p>
+                            <p>
+                                📲 WhatsApp: +51 994 078 320<br>
                                 🌐 <a href="https://www.ledneonpublicidad.com">www.ledneonpublicidad.com</a>
-                                </p>
-                                <p>Saludos,<br>
-                                <strong>Neón LED Publicidad</strong></p>',
+                            </p>
+                            <p>
+                                Síguenos y descubre más ideas de diseño:<br>
+                                📸 Instagram: @neonledpublicidad<br>
+                                📘 Facebook: Neon LED Publicidad<br>
+                                🎥 TikTok: @neonledpublicidad
+                            </p>
+                            <p>📍 Lima – Perú</p>',
                 ],
             ],
         ],
