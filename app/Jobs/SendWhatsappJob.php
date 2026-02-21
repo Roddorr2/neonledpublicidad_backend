@@ -34,11 +34,27 @@ class SendWhatsAppJob implements ShouldQueue
                 return;
             }
 
-            $response = Http::post(config('services.whatsapp.url') . '/api/send-message', [
-                'telefono' => '51' . $this->data['telefono'],
+            // Formatear el número: prefijo 51, sin espacios
+            $telefono = $this->data['telefono'];
+            $telefono = preg_replace('/\s+/', '', $telefono); // quitar espacios
+            if (strpos($telefono, '51') !== 0) {
+                $telefono = '51' . $telefono;
+            }
+            $templateOption = optional($this->watModal->modalservicio)->id_producto;
+            if (!$templateOption) {
+                Log::error('modalservicio o id_producto no encontrado', [
+                    'id_modal_wat' => $this->watModal->id_modal_wat,
+                    'id_modalservicio' => $this->watModal->id_modalservicio,
+                ]);
+                return;
+            }
+            $response = Http::withHeaders([
+                'x-api-key' => config('services.whatsapp.apikey')
+            ])->post(config('services.whatsapp.url') . '/api/whatsapp/send-message-image', [
                 'nombre' => $this->data['nombre'],
-                'templateOption' => (int) $this->watModal->number_message,
-                'productoName' => $this->productoName,
+                'templateOption' => $templateOption,
+                'messageType' => $this->watModal->number_message,
+                'telefono' => $telefono,
             ]);
 
             if ($response->failed()) {
