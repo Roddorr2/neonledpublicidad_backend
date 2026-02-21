@@ -56,6 +56,16 @@ class WhatsAppCampaignController extends Controller
             ];
             $idProducto = $serviceMap[$request->service];
 
+            // Verificar que el producto exista
+            $productoExists = DB::table('productos')->where('id_producto', $idProducto)->exists();
+            if (! $productoExists) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Producto no encontrado para el servicio seleccionado',
+                    'id_producto' => $idProducto
+                ], 404);
+            }
+
             // Subir imagen a Cloudinary
             $imagenUrl = $this->processAndUploadImage($request->file('image'));
             if (!$imagenUrl) {

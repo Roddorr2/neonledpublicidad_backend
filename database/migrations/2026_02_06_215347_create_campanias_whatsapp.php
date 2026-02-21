@@ -25,7 +25,9 @@ return new class extends Migration
             $table->timestamp('fecha_fin')->nullable();
             $table->timestamps();
             
-            $table->foreign('id_servicio')->references('id_servicio')->on('servicios')->onDelete('cascade');
+            // La columna conserva el nombre `id_servicio` por compatibilidad,
+            // pero referencia a `productos.id_producto` (id de producto) según el nuevo modelo de datos.
+            $table->foreign('id_servicio')->references('id_producto')->on('productos')->onDelete('cascade');
             $table->index('id_servicio');
             $table->index('estado');
             $table->index('created_at');
