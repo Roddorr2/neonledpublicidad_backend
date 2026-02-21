@@ -14,125 +14,350 @@ class ProductoSeeder extends Seeder
     public function run(): void
     {
         $productos = [
+            // LETRAS DE ACRÍLICO (rescata info de "Letras en Acrílico")
             [
                 "id_empleado" => 1,
-                "nombre" => "Panel LED 60x60",
-                "descripcion" => "Panel LED de alta eficiencia para iluminación comercial",
-
-                // Imágenes
-                "path_main" => "panel_main.jpg",
-                "path_background" => "panel_bg.jpg",
-
-                "path1" => "panel1.jpg",
-                "tituloimg1" => "Panel LED 60x60",
-                "descripcionimg1" => "Vista frontal del panel LED",
-
-                "path2" => "panel2.jpg",
-                "tituloimg2" => "Panel LED en instalación",
-                "descripcionimg2" => "Panel LED instalado en techo modular",
-
-                "path3" => "panel3.jpg",
-                "tituloimg3" => "Panel LED encendido",
-                "descripcionimg3" => "Panel LED encendido mostrando su iluminación",
-
-                // Descripciones adicionales
-                "caracteristicas_descrip" => "Eficiencia energética, fácil instalación, diseño delgado",
-                "ventajas_descrip" => "Reduce costos de energía y mantenimiento",
-                "consumoenergetico_descrip" => "36W por panel, alta luminosidad con bajo consumo",
-                "iluminacion_descrip" => "Luz blanca neutra de 4000K",
-                "durabilidad_descrip" => "Vida útil estimada de 50,000 horas",
-
-                "estado" => 1
-            ],
-            [
-                "id_empleado" => 1,
-                "nombre" => "Letras Iluminadas",
-                "descripcion" => "Letras corpóreas iluminadas con tecnología LED",
-
-                // Imágenes
-                "path_main" => "panel_main.jpg",
-                "path_background" => "panel_bg.jpg",
-
-                "path1" => "letras_iluminadas1.jpg",
-                "tituloimg1" => "Letras LED frontal",
-                "descripcionimg1" => "Letras iluminadas con LED frontal",
-
-                "path2" => "letras_iluminadas2.jpg",
-                "tituloimg2" => "Letras LED lateral",
-                "descripcionimg2" => "Iluminación LED lateral para efecto moderno",
-
-                "path3" => "letras_iluminadas3.jpg",
-                "tituloimg3" => "Letras LED noche",
-                "descripcionimg3" => "Vista nocturna de letras iluminadas",
-
-                // Descripciones adicionales
-                "caracteristicas_descrip" => "Material de acrílico y acero inoxidable, iluminación LED interna",
-                "ventajas_descrip" => "Alta visibilidad, bajo consumo energético",
-                "consumoenergetico_descrip" => "Consumo promedio 12V DC, 1.5A",
-                "iluminacion_descrip" => "LED blanco o RGB",
-                "durabilidad_descrip" => "Resistente al clima, durabilidad de 5 años",
-
-                "estado" => 1
-            ],
-            [
-                "id_empleado" => 2,
-                "nombre" => "Letras Alto Relieve",
-                "descripcion" => "Letras corpóreas en alto relieve para fachadas",
-
-                // Imágenes
-                "path_main" => "panel_main.jpg",
-                "path_background" => "panel_bg.jpg",
-
-                "path1" => "alto_relieve1.jpg",
-                "tituloimg1" => "Letras en montaje",
-                "descripcionimg1" => "Montaje de letras en relieve",
-
-                "path2" => "alto_relieve2.jpg",
-                "tituloimg2" => "Detalle de relieve",
-                "descripcionimg2" => "Vista lateral del alto relieve",
-
-                "path3" => "alto_relieve3.jpg",
-                "tituloimg3" => "Letras finalizadas",
-                "descripcionimg3" => "Letras instaladas en fachada",
-
-                // Descripciones adicionales
-                "caracteristicas_descrip" => "Fabricadas en aluminio, corte preciso",
-                "ventajas_descrip" => "Diseño elegante y duradero",
-                "consumoenergetico_descrip" => "No requiere energía (sin iluminación)",
-                "iluminacion_descrip" => "Puede combinarse con iluminación externa",
-                "durabilidad_descrip" => "Duración superior a 8 años",
-
-                "estado" => 0
-            ],
-            [
-                "id_empleado" => 2,
-                "nombre" => "Letras en Acrílico",
+                "nombre" => "LETRAS DE ACRÍLICO",
                 "descripcion" => "Letras corpóreas en acrílico para fachadas",
-
-                // Imágenes
                 "path_main" => "panel_main.jpg",
                 "path_background" => "panel_bg.jpg",
-
                 "path1" => "acrilico1.jpg",
                 "tituloimg1" => "Letras acrílicas blancas",
                 "descripcionimg1" => "Diseño limpio y moderno",
-
                 "path2" => "acrilico2.jpg",
                 "tituloimg2" => "Detalle de montaje",
                 "descripcionimg2" => "Instalación sobre base metálica",
-
                 "path3" => "acrilico3.jpg",
                 "tituloimg3" => "Vista final",
                 "descripcionimg3" => "Fachada con letras en acrílico",
-
-                // Descripciones adicionales
                 "caracteristicas_descrip" => "Material acrílico de alta calidad",
                 "ventajas_descrip" => "Resistente a rayos UV y fácil mantenimiento",
                 "consumoenergetico_descrip" => "No aplica",
                 "iluminacion_descrip" => "Compatible con LED externo",
                 "durabilidad_descrip" => "Durabilidad promedio de 6 años",
-
-                "estado" => 0
+                "estado" => 1
+            ],
+            // LETRAS DE ALUMINIO DORADAS 3D (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "LETRAS DE ALUMINIO DORADAS 3D",
+                "descripcion" => "",
+                "path_main" => "aluminio_dorado_main.jpg",
+                "path_background" => "aluminio_dorado_bg.jpg",
+                "path1" => "aluminio_dorado1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "aluminio_dorado2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "aluminio_dorado3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // LETRAS DE ALUMINIO PLATEADAS 3D (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "LETRAS DE ALUMINIO PLATEADAS 3D",
+                "descripcion" => "",
+                "path_main" => "aluminio_plateado_main.jpg",
+                "path_background" => "aluminio_plateado_bg.jpg",
+                "path1" => "aluminio_plateado1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "aluminio_plateado2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "aluminio_plateado3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // LETREROS LUMINOSOS (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "LETREROS LUMINOSOS",
+                "descripcion" => "",
+                "path_main" => "luminoso_main.jpg",
+                "path_background" => "luminoso_bg.jpg",
+                "path1" => "luminoso1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "luminoso2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "luminoso3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // NEÓN LED (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "NEÓN LED",
+                "descripcion" => "",
+                "path_main" => "neonled_main.jpg",
+                "path_background" => "neonled_bg.jpg",
+                "path1" => "neonled1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "neonled2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "neonled3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // IMPRESIÓN EN VINILO (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "IMPRESIÓN EN VINILO",
+                "descripcion" => "",
+                "path_main" => "vinilo_main.jpg",
+                "path_background" => "vinilo_bg.jpg",
+                "path1" => "vinilo1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "vinilo2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "vinilo3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // MENÚ BOARD (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "MENÚ BOARD",
+                "descripcion" => "",
+                "path_main" => "menu_board_main.jpg",
+                "path_background" => "menu_board_bg.jpg",
+                "path1" => "menu_board1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "menu_board2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "menu_board3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // LETRAS PINTADAS EN MDF (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "LETRAS PINTADAS EN MDF",
+                "descripcion" => "",
+                "path_main" => "mdf_main.jpg",
+                "path_background" => "mdf_bg.jpg",
+                "path1" => "mdf1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "mdf2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "mdf3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // MONITORES DE PUBLICIDAD (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "MONITORES DE PUBLICIDAD",
+                "descripcion" => "",
+                "path_main" => "monitor_main.jpg",
+                "path_background" => "monitor_bg.jpg",
+                "path1" => "monitor1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "monitor2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "monitor3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // PANTALLAS LED (rescata info de "Panel LED 60x60")
+            [
+                "id_empleado" => 2,
+                "nombre" => "PANTALLAS LED",
+                "descripcion" => "Panel LED de alta eficiencia para iluminación comercial",
+                "path_main" => "panel_main.jpg",
+                "path_background" => "panel_bg.jpg",
+                "path1" => "panel1.jpg",
+                "tituloimg1" => "Panel LED 60x60",
+                "descripcionimg1" => "Vista frontal del panel LED",
+                "path2" => "panel2.jpg",
+                "tituloimg2" => "Panel LED en instalación",
+                "descripcionimg2" => "Panel LED instalado en techo modular",
+                "path3" => "panel3.jpg",
+                "tituloimg3" => "Panel LED encendido",
+                "descripcionimg3" => "Panel LED encendido mostrando su iluminación",
+                "caracteristicas_descrip" => "Eficiencia energética, fácil instalación, diseño delgado",
+                "ventajas_descrip" => "Reduce costos de energía y mantenimiento",
+                "consumoenergetico_descrip" => "36W por panel, alta luminosidad con bajo consumo",
+                "iluminacion_descrip" => "Luz blanca neutra de 4000K",
+                "durabilidad_descrip" => "Vida útil estimada de 50,000 horas",
+                "estado" => 1
+            ],
+            // HOLOGRÁFICO (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "HOLOGRÁFICO",
+                "descripcion" => "",
+                "path_main" => "holografico_main.jpg",
+                "path_background" => "holografico_bg.jpg",
+                "path1" => "holografico1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "holografico2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "holografico3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // PIXEL LED (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "PIXEL LED",
+                "descripcion" => "",
+                "path_main" => "pixel_led_main.jpg",
+                "path_background" => "pixel_led_bg.jpg",
+                "path1" => "pixel_led1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "pixel_led2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "pixel_led3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // SILLAS LUMINOSAS (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "SILLAS LUMINOSAS",
+                "descripcion" => "",
+                "path_main" => "silla_luminosa_main.jpg",
+                "path_background" => "silla_luminosa_bg.jpg",
+                "path1" => "silla_luminosa1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "silla_luminosa2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "silla_luminosa3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // TECHOS LED (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "TECHOS LED",
+                "descripcion" => "",
+                "path_main" => "techo_led_main.jpg",
+                "path_background" => "techo_led_bg.jpg",
+                "path1" => "techo_led1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "techo_led2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "techo_led3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
+            ],
+            // LETRAS DE NEÓN EN TUBOS DE VIDRIO (sin info previa)
+            [
+                "id_empleado" => 1,
+                "nombre" => "LETRAS DE NEÓN EN TUBOS DE VIDRIO",
+                "descripcion" => "",
+                "path_main" => "neon_vidrio_main.jpg",
+                "path_background" => "neon_vidrio_bg.jpg",
+                "path1" => "neon_vidrio1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "neon_vidrio2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "neon_vidrio3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
             ]
         ];
 

@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\PropuestaController;
 use App\Http\Controllers\Api\ProductosController;
 use App\Http\Controllers\Api\BlogAuditoriaController;
 use App\Http\Controllers\Api\MetricasController;
+use App\Http\Controllers\Api\WhatsAppCampaignController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -107,6 +108,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:enviar-mensajes')->get('/modales/send_mail/{id}',[ModalMailController::class, "sendMail"]);
     Route::middleware('permission:enviar-mensajes')->put('/modales/reportar_error/{id}', [ModalMailController::class, "reportarError"]);
     Route::middleware('permission:enviar-mensajes')->put('/modales/estado_wat/{id}', [ModalWatController::class, "cambiarEstado"]);
+
+    // WhatsApp Campaigns protegidas
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware('role:marketing,administrador')->group(function () {
+            Route::post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, 'activate']);
+            Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
+            Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
+        });
+    });
 
     //rutas create blog
     Route::middleware('permission:crear-blogs')->post('/card', [CardController::class, "create"]);

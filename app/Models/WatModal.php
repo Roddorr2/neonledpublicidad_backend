@@ -25,7 +25,7 @@ class WatModal extends Model
         'estado' => 'boolean',
     ];
 
-    public function modalServicio(){
-        return $this->belongsTo(modalservicios::class,'id_modal_servicio', 'id_modalservicio');
+    public function modalservicio(){
+        return $this->belongsTo(modalservicios::class,'id_modalservicio', 'id_modalservicio');
     }
 }
