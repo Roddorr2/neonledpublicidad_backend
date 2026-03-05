@@ -169,22 +169,19 @@ class MetricasController extends Controller
     public function tableCardsByIdPlantilla(Request $request)
     {
         [$month, $year] = $this->resolveMonthYear($request);
+        $counts = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
+            ->where('ba.accion', 'CREAR')
+            ->whereYear('ba.fecha_hora', $year)
+            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->selectRaw('cards.id_plantilla, count(*) as count_cards')
+            ->groupBy('cards.id_plantilla')
+            ->pluck('count_cards', 'id_plantilla');
 
-        $data = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $count = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
-                ->where('cards.id_plantilla', $i)
-                ->where('ba.accion', 'CREAR')
-                ->whereYear('ba.fecha_hora', $year)
-                ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
-                ->count();
-
-            $data[] = [
-                "id_plantilla" => $i,
-                "count_cards" => $count
-            ];
-        }
-
+        $data = collect([1, 2, 3])->map(fn($i) => [
+            'id_plantilla' => $i,
+            'count_cards'  => $counts[$i] ?? 0,
+        ]);
+        
         return response()->json([
             "status" => 200,
             "data" => $data
