@@ -188,6 +188,69 @@ class WhatsAppCampaignController extends Controller
     }
 
     /**
+     * POST /api/whatsapp/campaign/estimate
+     * Estima duración (días) y chunking para una campaña sin crearla.
+     */
+    public function estimate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'service' => 'nullable|string',
+            'id_servicio' => 'nullable|integer',
+            'recipients' => 'nullable|array',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        try {
+            $recipients = [];
+
+            // If service or id_servicio provided, load recipients from modalservicios
+            $idProducto = null;
+            if ($request->filled('id_servicio')) {
+                $idProducto = (int) $request->input('id_servicio');
+            } elseif ($request->filled('service')) {
+                $serviceMap = [
+                    'p1' => 1,'p2' => 2,'p3' => 3,'p4' => 4,'p5' => 5,
+                    'p6' => 6,'p7' => 7,'p8' => 8,'p9' => 9,'p10' => 10,
+                    'p11' => 11,'p12' => 12,'p13' => 13,'p14' => 14,'p15' => 15
+                ];
+                $idProducto = $serviceMap[$request->service] ?? null;
+            }
+
+            if ($idProducto) {
+                $destinatarios = DB::table('modalservicios')
+                    ->where('id_producto', $idProducto)
+                    ->where('estado', 1)
+                    ->select('id_modalservicio', 'nombre', 'telefono')
+                    ->orderByDesc('id_modalservicio')
+                    ->get()
+                    ->unique('telefono')
+                    ->values();
+
+                $recipients = $destinatarios->toArray();
+            } elseif ($request->filled('recipients')) {
+                $recipients = $request->input('recipients');
+            } else {
+                return response()->json(['success' => false, 'message' => 'Se requiere service/id_servicio o recipients'], 422);
+            }
+
+            $chunkSize = $request->input('chunk_size');
+            $dailyLimit = $request->input('daily_limit');
+            $spacing = $request->input('spacing_minutes');
+            $start = $request->input('start_date');
+
+            $est = \App\Services\PlannerService::estimateCampaign($recipients, $chunkSize, $dailyLimit, $spacing, $start);
+
+            return response()->json(['success' => true, 'data' => $est]);
+
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
      * GET /api/whatsapp/campaigns
      * Lista las campañas recientes
      */

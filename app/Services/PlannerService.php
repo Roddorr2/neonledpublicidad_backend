@@ -94,4 +94,75 @@ class PlannerService
 
 		return $created;
 	}
+
+	/**
+	 * Estimate campaign duration and chunking without creating any DB rows.
+	 * Accepts array of recipients or integer count.
+	 *
+	 * @param array|int $recipientsOrCount
+	 * @param int|null $chunkSize
+	 * @param int|null $dailyLimit
+	 * @param int|null $spacingMinutes
+	 * @param \Carbon\Carbon|string|null $startDate
+	 * @return array
+	 */
+	public static function estimateCampaign($recipientsOrCount, int $chunkSize = null, int $dailyLimit = null, int $spacingMinutes = null, $startDate = null): array
+	{
+		$chunkSize = $chunkSize ?? (int) config('whatsapp.chunk_size', 20);
+		$dailyLimit = $dailyLimit ?? (int) config('whatsapp.daily_limit', 50);
+		$spacingMinutes = $spacingMinutes ?? (int) config('whatsapp.chunk_spacing_minutes', 2);
+
+		// derive total recipients
+		if (is_array($recipientsOrCount)) {
+			// normalize unique by telefono if possible
+			$seen = [];
+			$total = 0;
+			foreach ($recipientsOrCount as $r) {
+				$telefono = is_object($r) ? ($r->telefono ?? null) : ($r['telefono'] ?? null);
+				if (empty($telefono)) continue;
+				if (isset($seen[$telefono])) continue;
+				$seen[$telefono] = true;
+				$total++;
+			}
+		} else {
+			$total = (int) $recipientsOrCount;
+		}
+
+		$totalChunks = (int) ceil($total / max(1, $chunkSize));
+		$estimatedDays = (int) ceil($total / max(1, $dailyLimit));
+
+		// build per-day breakdown
+		$remaining = $total;
+		$perDay = [];
+		for ($d = 0; $d < $estimatedDays; $d++) {
+			$dayCount = min($remaining, $dailyLimit);
+			$perDay[] = [
+				'day_index' => $d + 1,
+				'recipients' => $dayCount,
+				'chunks' => (int) ceil($dayCount / max(1, $chunkSize)),
+			];
+			$remaining -= $dayCount;
+			if ($remaining <= 0) break;
+		}
+
+		// schedule preview for first N chunks
+		$start = $startDate ? (is_string($startDate) ? Carbon::parse($startDate) : $startDate) : Carbon::now();
+		$preview = [];
+		$previewCount = min(10, $totalChunks);
+		for ($i = 0; $i < $previewCount; $i++) {
+			$minutes = $i * $spacingMinutes;
+			$preview[] = $start->copy()->addMinutes($minutes)->toDateTimeString();
+		}
+
+		return [
+			'total_recipients' => $total,
+			'chunk_size' => $chunkSize,
+			'total_chunks' => $totalChunks,
+			'daily_limit' => $dailyLimit,
+			'estimated_days' => $estimatedDays,
+			'per_day' => $perDay,
+			'schedule_preview' => $preview,
+			'estimated_end_date' => $start->copy()->addDays(max(0, $estimatedDays - 1))->toDateString(),
+		];
+	}
 }

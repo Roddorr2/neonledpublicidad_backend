@@ -114,6 +114,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::middleware('role:marketing,administrador')->group(function () {
             Route::post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, 'activate']);
+            Route::post('/whatsapp/campaign/estimate', [WhatsAppCampaignController::class, 'estimate']);
             Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
             Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
         });
