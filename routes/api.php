@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\productosController;
 use App\Http\Controllers\Api\BlogAuditoriaController;
 use App\Http\Controllers\Api\MetricasController;
 use App\Http\Controllers\Api\WhatsAppCampaignController;
+use App\Http\Controllers\Api\WhatsappWebhookController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -116,6 +117,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
             Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
         });
+
+    // Webhook endpoint (protected by X-API-Key header)
+    Route::post('/whatsapp/webhook/status', [WhatsappWebhookController::class, 'status']);
     });
 
     //rutas create blog

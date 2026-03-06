@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Campania;
 use App\Models\modalservicios;
-use App\Jobs\SendWhatsappCampaignJob;
+use App\Jobs\SendWhatsAppCampaignJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -115,20 +115,9 @@ class WhatsAppCampaignController extends Controller
                 'creado_por_nombre' => $request->user()->name
             ]);
 
-            // 3. Dividir destinatarios en chunks de 20 y despachar jobs
-            $chunks = $destinatarios->chunk(20);
-            $chunkNumber = 0;
-            foreach ($chunks as $chunk) {
-                $chunkNumber++;
-                SendWhatsappCampaignJob::dispatch(
-                    $campania->id_campania,
-                    $chunkNumber,
-                    $chunk->toArray(),
-                    $request->paragraph,
-                    $imagenUrl,
-                    $idProducto
-                );
-            }
+            // 3. Planificar los chunks y persistir en whatsapp_chunks (el orquestador los enviará)
+            $recipients = $destinatarios->toArray();
+            $chunksCreated = \App\Services\PlannerService::planCampaign($campania->id_campania, $recipients);
 
             // 4. Actualizar estado de campaña
             $campania->update(['estado' => 'en_proceso']);
@@ -142,7 +131,7 @@ class WhatsAppCampaignController extends Controller
                     'id_campania' => $campania->id_campania,
                     'imagen_url' => $imagenUrl,
                     'total_destinatarios' => $totalDestinatarios,
-                    'chunks' => $chunks->count(),
+                    'chunks' => count($chunksCreated),
                     'estado' => $campania->estado
                 ]
             ], 201);

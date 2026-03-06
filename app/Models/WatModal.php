@@ -19,10 +19,13 @@ class WatModal extends Model
         'id_modalservicio',
         'number_message',
         'fecha',
+        'message_id',
+        'attempts',
     ];
 
     protected $casts = [
         'estado' => 'boolean',
+        'attempts' => 'integer',
     ];
 
     public function modalservicio(){
