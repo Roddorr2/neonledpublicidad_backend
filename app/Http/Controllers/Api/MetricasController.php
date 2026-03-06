@@ -286,27 +286,17 @@ class MetricasController extends Controller
     {
         [$month, $year] = $this->resolveMonthYear($request);
 
-        $data = BlogAuditoria::whereIn('accion', ['CREAR', 'ACTUALIZAR'])
-            ->whereYear('fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('fecha_hora', $month))
-            ->orderBy('id_blog')
-            ->get()
-            ->groupBy('id_blog')
-            ->map(function ($items, $id_blog) {
-                $crear = $items->firstWhere('accion', 'CREAR');
-                $editar = $items->firstWhere('accion', 'ACTUALIZAR');
-
-                if (!$crear || !$editar) return null;
-
-                return [
-                    "id_blog" => $id_blog,
-                    "tiempo_minutos" =>
-                        Carbon::parse($crear->fecha_hora)
-                            ->diffInMinutes(Carbon::parse($editar->fecha_hora))
-                ];
+        $data = BlogAuditoria::from('blog_auditoria as crear')
+            ->join('blog_auditoria as editar', function ($join) {
+                $join->on('crear.id_blog', '=', 'editar.id_blog')
+                     ->where('editar.accion', '=', 'ACTUALIZAR');
             })
-            ->filter()
-            ->values();
+            ->where('crear.accion', 'CREAR')
+            ->whereYear('crear.fecha_hora', $year)
+            ->when($month, fn($q) => $q->whereMonth('crear.fecha_hora', $month))
+            ->selectRaw('crear.id_blog, TIMESTAMPDIFF(MINUTE, crear.fecha_hora, MIN(editar.fecha_hora)) as tiempo_minutos')
+            ->groupBy('crear.id_blog', 'crear.fecha_hora')
+            ->get();
 
         return response()->json([
             "status" => 200,
