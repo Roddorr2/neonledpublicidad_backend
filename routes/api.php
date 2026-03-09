@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\BlogAuditoriaController;
 use App\Http\Controllers\Api\MetricasController;
 use App\Http\Controllers\Api\WhatsAppCampaignController;
 use App\Http\Controllers\Api\WhatsappWebhookController;
+use App\Http\Controllers\Api\PlantillasWhatsappController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -117,10 +118,17 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/whatsapp/campaign/estimate', [WhatsAppCampaignController::class, 'estimate']);
             Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
             Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
+            // Plantillas WhatsApp (dashboard)
+            Route::get('/plantillas/whatsapp', [PlantillasWhatsappController::class, 'index']);
+            Route::get('/plantillas/whatsapp/{id}', [PlantillasWhatsappController::class, 'show']);
+            Route::post('/plantillas/whatsapp/{id}/actualizar', [PlantillasWhatsappController::class, 'actualizar']);
         });
 
     // Webhook endpoint (protected by X-API-Key header)
     Route::post('/whatsapp/webhook/status', [WhatsappWebhookController::class, 'status']);
+
+// Endpoint consumido por whatsapp-service (X-API-Key header validated in controller)
+Route::get('/plantillas/whatsapp/{id_producto}/{numero_plantilla}', [PlantillasWhatsappController::class, 'showByProductoNumero']);
     });
 
     //rutas create blog

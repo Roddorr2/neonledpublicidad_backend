@@ -24,7 +24,7 @@ Request body (JSON)
 {
   "campania_id": 123,           // alias: campaign_id
   "chunk_id": 987,              // alias: chunk_number
-  "id_servicio": 1,             // el id del producto/servicio local
+  "id_producto": 1,             // el id del producto local
   "parrafo": "Texto del mensaje",
   "imagen_url": "https://...cloudinary...",
   "recipients": [
@@ -35,7 +35,7 @@ Request body (JSON)
 ```
 
 Notas sobre el request
-- Los nombres de columna en la DB son: `campanias_whatsapp.id_campania`, `campanias_whatsapp.id_servicio`, y en `modalservicios` la PK es `id_modalservicio`. El proveedor debe incluir `id_modalservicio` por destinatario para que el backend pueda mapear idempotentemente.
+-- Los nombres de columna en la DB históricamente incluían `campanias_whatsapp.id_servicio`, pero el significado de ese campo es `id_producto` (referencia a `productos.id_producto`). En los payloads se recomienda usar `id_producto`. En `modalservicios` la PK es `id_modalservicio`. El proveedor debe incluir `id_modalservicio` por destinatario para que el backend pueda mapear idempotentemente.
 - Aceptamos aliases en camelCase: `campaign_id` ↔ `campania_id`, `chunk_number` ↔ `chunk_id`, `imageUrl` ↔ `imagen_url`, `message` ↔ `parrafo`.
 - `recipients.length` debe respetar el `chunk_size` configurado por el backend (p.ej. 20).
 
@@ -155,7 +155,7 @@ POST https://our.backend/api/whatsapp/activate
 Payload mínimo aceptado por el controlador de activación (ejemplo):
 ```json
 {
-  "id_servicio": 1,
+  "id_producto": 1,
   "parrafo": "Texto del mensaje",
   "imagen_url": "https://...",
   "recipients": [ {"id_modalservicio":1}, {"id_modalservicio":2} ]
