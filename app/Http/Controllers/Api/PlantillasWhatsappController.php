@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Cloudinary\Cloudinary;
+use App\Services\FileUploadService;
 
 class PlantillasWhatsappController extends Controller
 {
@@ -70,58 +70,33 @@ class PlantillasWhatsappController extends Controller
         try {
             $plantilla->mensaje = $request->input('mensaje');
 
-            if ($request->hasFile('imagen')) {
-                $file = $request->file('imagen');
+                if ($request->hasFile('imagen')) {
+                    $archivo = $request->file('imagen');
+                    $uploader = new FileUploadService();
+                    // Build a descriptive filename for local fallback / Cloudinary public_id suggestion
+                    $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
+                    $safeProducto = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$plantilla->id_producto);
+                    $safeNumero = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$plantilla->numero_plantilla);
+                    $timestamp = time();
+                    $filename = "plantilla_{$safeProducto}_{$safeNumero}_{$timestamp}.{$ext}";
 
-                // If Cloudinary configured, upload there
-                if (env('CLOUDINARY_URL') || (env('CLOUDINARY_CLOUD_NAME') && env('CLOUDINARY_KEY') && env('CLOUDINARY_SECRET'))) {
-                    $cloudinary = new Cloudinary([
-                        'cloud' => [
-                            'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                            'api_key'    => env('CLOUDINARY_KEY'),
-                            'api_secret' => env('CLOUDINARY_SECRET'),
-                        ],
-                        'url' => ['secure' => false],
-                        'api' => ['upload_prefix' => 'http://api.cloudinary.com'],
+                    // For plantillas, ensure we remove previous cloud or local image when updating
+                    $resultado = $uploader->subir($archivo, 'plantillas_whatsapp', $plantilla->imagen_public_id, $plantilla->imagen_url, [
+                        'delete_previous_cloud' => true,
+                        'delete_previous_local' => true,
+                        'filename' => $filename,
                     ]);
 
-                    $result = $cloudinary->uploadApi()->upload($file->getRealPath(), [
-                        'folder' => 'plantillas_whatsapp'
-                    ]);
-
-                    if ($result && isset($result['secure_url'])) {
-                        // delete previous in cloudinary if exists
-                        if ($plantilla->imagen_public_id) {
-                            try {
-                                $cloudinary->uploadApi()->destroy($plantilla->imagen_public_id);
-                            } catch (\Exception $e) {
-                                Log::warning('No se pudo eliminar imagen previa en Cloudinary: '.$e->getMessage());
-                            }
-                        }
-
-                        $plantilla->imagen_url = $result['secure_url'];
-                        $plantilla->imagen_public_id = $result['public_id'] ?? null;
+                    if (empty($resultado['url'])) {
+                        // Log details to help debugging (Cloudinary fallback, storage, exceptions, etc.)
+                        Log::error('PlantillasWhatsappController: fallo al subir imagen', ['plantilla_id' => $plantilla->id, 'resultado' => $resultado]);
+                        // If the client sent a file but upload failed, return error instead of saving with null image
+                        return response()->json(['success' => false, 'message' => 'Fallo al subir la imagen. No se actualizó la plantilla.'], 500);
                     }
 
-                } else {
-                    // store locally in public disk
-                    $path = $file->store('plantillas_whatsapp', 'public');
-                    $url = asset('storage/' . $path);
-
-                    // delete previous local file if it looks like a storage url
-                    if ($plantilla->imagen_url && str_contains($plantilla->imagen_url, '/storage/')) {
-                        try {
-                            $relative = str_replace(asset('storage/'), '', $plantilla->imagen_url);
-                            Storage::disk('public')->delete($relative);
-                        } catch (\Exception $e) {
-                            Log::warning('No se pudo eliminar imagen local previa: '.$e->getMessage());
-                        }
-                    }
-
-                    $plantilla->imagen_url = $url;
-                    $plantilla->imagen_public_id = null;
+                    $plantilla->imagen_url = $resultado['url'];
+                    $plantilla->imagen_public_id = $resultado['public_id'] ?? null;
                 }
-            }
 
             $plantilla->updated_by = $request->user()?->id ?? $plantilla->updated_by;
             $plantilla->save();

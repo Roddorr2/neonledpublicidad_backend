@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Cloudinary\Cloudinary;
+use App\Services\FileUploadService;
 
 class WhatsAppCampaignController extends Controller
 {
@@ -66,8 +66,10 @@ class WhatsAppCampaignController extends Controller
                 ], 404);
             }
 
-            // Subir imagen a Cloudinary
-            $imagenUrl = $this->processAndUploadImage($request->file('image'));
+            // Subir imagen usando servicio reutilizable
+            $subidor = new FileUploadService();
+            $resultadoSubida = $subidor->subir($request->file('image'), 'campanias_whatsapp');
+            $imagenUrl = $resultadoSubida['url'] ?? null;
             if (!$imagenUrl) {
                 return response()->json([
                     'success' => false,
@@ -288,46 +290,21 @@ class WhatsAppCampaignController extends Controller
      */
     private function processAndUploadImage($imageFile)
     {
-        try {
-            // Solo aceptar archivos subidos (UploadedFile)
-            if (!$imageFile || !is_object($imageFile) || !method_exists($imageFile, 'getRealPath')) {
-                Log::error('No se recibió archivo de imagen válido');
-                return null;
-            }
-
-            $cloudinary = new Cloudinary([
-                'cloud' => [
-                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                    'api_key'    => env('CLOUDINARY_KEY'),
-                    'api_secret' => env('CLOUDINARY_SECRET'),
-                ],
-                'url' => ['secure' => false],
-                'api' => [
-                    'upload_prefix' => 'http://api.cloudinary.com',
-                ],
-            ]);
-
-            $result = $cloudinary->uploadApi()->upload($imageFile->getRealPath(), [
-                'folder' => 'campanias_whatsapp'
-            ]);
-
-            if (!$result || !isset($result['secure_url'])) {
-                Log::error('Cloudinary no retornó secure_url', [
-                    'result_type' => gettype($result),
-                    'result' => is_array($result) ? $result : (string) $result,
-                ]);
-                return null;
-            }
-
-            Log::info('Imagen subida exitosamente', ['url' => $result['secure_url']]);
-            return $result['secure_url'];
-
-        } catch (\Exception $e) {
-            Log::error('Error al procesar imagen', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
+        // Delegar al servicio FileUploadService
+        if (!$imageFile || !is_object($imageFile) || !method_exists($imageFile, 'getRealPath')) {
+            Log::error('No se recibió archivo de imagen válido');
             return null;
         }
+
+        $uploader = new FileUploadService();
+        $res = $uploader->subir($imageFile, 'campanias_whatsapp');
+
+        if (empty($res['url'])) {
+            Log::error('FileUploadService no retornó URL válida', ['result' => $res]);
+            return null;
+        }
+
+        Log::info('Imagen subida exitosamente', ['url' => $res['url']]);
+        return $res['url'];
     }
 }

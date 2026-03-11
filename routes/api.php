@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\BlogFooterController;
 use App\Http\Controllers\API\ClienteController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
+use App\Http\Controllers\Api\CloudinaryController;
 use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\PropuestaController;
 use App\Http\Controllers\Api\productosController;
@@ -36,6 +37,9 @@ Route::post('/update_password', [AuthController::class, "updatePassword"]);
 Route::post('/contactanos', [ContactanosController::class, "create"]);
 Route::post('/reclamaciones', [ReclamacionesController::class, "create"]);
 Route::post('/modales', [ModalesController::class, "create"]);
+
+// Cloudinary webhook (public - Cloudinary will call this URL)
+Route::post('/cloudinary/webhook', [CloudinaryController::class, 'webhook']);
 
 // blogs públicos para ver los clientes
 Route::get('/cards_public', [CardController::class, "index_public"]);
@@ -90,6 +94,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // imágenes
     Route::post('/empleados/{id}/image', [EmpleadoController::class, 'updateProfileImage']);
     Route::delete('/empleados/{id}/image', [EmpleadoController::class, 'deleteProfileImage']);
+    // Cloudinary signature endpoint (authenticated)
+    Route::get('/cloudinary/signature', [CloudinaryController::class, 'signature']);
     // Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
     // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 

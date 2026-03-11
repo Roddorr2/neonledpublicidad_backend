@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Cloudinary\Cloudinary;
 use App\Mail\CredencialesEmpleadoMail;
 use Illuminate\Support\Facades\Auth;
+use App\Services\FileUploadService;
 
 
 class EmpleadoController extends Controller
@@ -274,18 +275,9 @@ class EmpleadoController extends Controller
 
     public function updateProfileImage(Request $request, $id)
     {
-        $validate = Validator::make($request->all(), [
-            'public_id' => 'required|string',
-            'secure_url' => 'required|url'
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "errors" => $validate->errors()
-            ], 422);
-        }
+        // Support two modes:
+        // - Client sends multipart file 'imagen' -> server uploads via FileUploadService
+        // - Client sends 'public_id' and 'secure_url' (existing flow)
 
         try {
             $empleado = Empleado::where('id_empleado', $id)->first();
@@ -298,19 +290,66 @@ class EmpleadoController extends Controller
 
             DB::beginTransaction();
 
+            // If client uploaded a file, handle server-side upload and fallback
+            if ($request->hasFile('imagen')) {
+                $archivo = $request->file('imagen');
+                $uploader = new FileUploadService();
+                $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
+                $filename = "empleado_{$id}_" . time() . ".{$ext}";
+
+                $res = $uploader->subir($archivo, 'empleados', $empleado->imagen_perfil, $empleado->imagen_perfil_url, [
+                    'delete_previous_cloud' => true,
+                    'delete_previous_local' => true,
+                    'filename' => $filename,
+                ]);
+
+                if (empty($res['url'])) {
+                    DB::rollBack();
+                    return response()->json(["status" => 500, "message" => "Fallo al subir la imagen"], 500);
+                }
+
+                $empleado->imagen_perfil = $res['public_id'] ?? $empleado->imagen_perfil;
+                $empleado->imagen_perfil_url = $res['url'];
+                $empleado->save();
+
+                DB::commit();
+
+                return response()->json([
+                    "status" => 200,
+                    "message" => "Imagen actualizada correctamente",
+                    "data" => [
+                        'public_id' => $empleado->imagen_perfil,
+                        'url' => $empleado->imagen_perfil_url,
+                        'version' => time()
+                    ]
+                ]);
+            }
+
+            // Otherwise accept client-provided public_id + secure_url (backwards compatible)
+            $validate = Validator::make($request->all(), [
+                'public_id' => 'required|string',
+                'secure_url' => 'required|url'
+            ]);
+
+            if ($validate->fails()) {
+                DB::rollBack();
+                return response()->json([
+                    "status" => 422,
+                    "message" => "Error de validación",
+                    "errors" => $validate->errors()
+                ], 422);
+            }
+
+            // If there was a previous cloud image, attempt to delete it via Cloudinary
             if ($empleado->imagen_perfil) {
                 try {
-
                     $cloudinary = new Cloudinary();
-
-                    $result = $cloudinary->uploadApi()->destroy($empleado->imagen_perfil);
-
+                    $cloudinary->uploadApi()->destroy($empleado->imagen_perfil);
                 } catch (\Exception $e) {
                     Log::warning("Error al eliminar imagen anterior, continuando con actualización: " . $e->getMessage());
                 }
             }
 
-            $empleado->imagen_perfil_url = null;
             $empleado->imagen_perfil = $request->public_id;
             $empleado->imagen_perfil_url = $request->secure_url;
             $empleado->save();
@@ -329,7 +368,6 @@ class EmpleadoController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-
             Log::error("Error actualizando imagen: " . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString()
