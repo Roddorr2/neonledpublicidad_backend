@@ -116,7 +116,20 @@ class FileUploadService
                     }
 
                     if ($rutaFallback) {
-                        return ['url' => asset('storage/' . $rutaFallback), 'public_id' => null];
+                        // Derivar un public_id local consistente (sin extensión) si se guardó con filename
+                        $publicIdFallback = null;
+                        if (!empty($filename)) {
+                            $base = pathinfo($filename, PATHINFO_FILENAME);
+                            $publicIdFallback = trim($localFolder, '/') . '/' . $base;
+                        } else {
+                            // intentar derivar del nombre de archivo devuelto
+                            $base = pathinfo($rutaFallback, PATHINFO_FILENAME);
+                            if ($base) {
+                                $publicIdFallback = trim($localFolder, '/') . '/' . $base;
+                            }
+                        }
+
+                        return ['url' => asset('storage/' . $rutaFallback), 'public_id' => $publicIdFallback];
                     }
 
                     return ['url' => '', 'public_id' => null];
@@ -141,7 +154,19 @@ class FileUploadService
                         }
                     }
 
-                return ['url' => asset('storage/' . $ruta), 'public_id' => null];
+                // Derivar public_id local consistente (sin extensión)
+                $publicIdFallback = null;
+                if (!empty($filename)) {
+                    $base = pathinfo($filename, PATHINFO_FILENAME);
+                    $publicIdFallback = trim($localFolder, '/') . '/' . $base;
+                } else {
+                    $base = pathinfo($ruta, PATHINFO_FILENAME);
+                    if ($base) {
+                        $publicIdFallback = trim($localFolder, '/') . '/' . $base;
+                    }
+                }
+
+                return ['url' => asset('storage/' . $ruta), 'public_id' => $publicIdFallback];
             }
 
             return ['url' => '', 'public_id' => null];
@@ -160,10 +185,17 @@ class FileUploadService
     {
         // Special case: plantilla whatsapp should go to public/storage/plantillas/whatsapp
         if (in_array($carpeta, ['plantillas_whatsapp', 'plantillas/whatsapp'])) {
-            $folder = 'plantillas/whatsapp';
-            return $folder;
+            return 'plantillas/whatsapp';
         }
 
+        // If the target is empleados/perfiles we want a flat, predictable path
+        // like storage/app/public/empleados/perfiles/{id} (no 'uploads' nor YYYY/MM)
+        if (str_starts_with(trim($carpeta, '/'), 'empleados/perfiles')) {
+            // If the carpeta already contains the id (common usage), keep it as-is
+            return trim($carpeta, '/');
+        }
+
+        // Default behavior: organized under uploads/YYYY/MM for other folders
         $base = 'uploads';
         $year = date('Y');
         $month = date('m');
