@@ -169,22 +169,19 @@ class MetricasController extends Controller
     public function tableCardsByIdPlantilla(Request $request)
     {
         [$month, $year] = $this->resolveMonthYear($request);
+        $counts = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
+            ->where('ba.accion', 'CREAR')
+            ->whereYear('ba.fecha_hora', $year)
+            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->selectRaw('cards.id_plantilla, count(*) as count_cards')
+            ->groupBy('cards.id_plantilla')
+            ->pluck('count_cards', 'id_plantilla');
 
-        $data = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $count = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
-                ->where('cards.id_plantilla', $i)
-                ->where('ba.accion', 'CREAR')
-                ->whereYear('ba.fecha_hora', $year)
-                ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
-                ->count();
-
-            $data[] = [
-                "id_plantilla" => $i,
-                "count_cards" => $count
-            ];
-        }
-
+        $data = collect([1, 2, 3])->map(fn($i) => [
+            'id_plantilla' => $i,
+            'count_cards'  => $counts[$i] ?? 0,
+        ]);
+        
         return response()->json([
             "status" => 200,
             "data" => $data
@@ -289,27 +286,17 @@ class MetricasController extends Controller
     {
         [$month, $year] = $this->resolveMonthYear($request);
 
-        $data = BlogAuditoria::whereIn('accion', ['CREAR', 'ACTUALIZAR'])
-            ->whereYear('fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('fecha_hora', $month))
-            ->orderBy('id_blog')
-            ->get()
-            ->groupBy('id_blog')
-            ->map(function ($items, $id_blog) {
-                $crear = $items->firstWhere('accion', 'CREAR');
-                $editar = $items->firstWhere('accion', 'ACTUALIZAR');
-
-                if (!$crear || !$editar) return null;
-
-                return [
-                    "id_blog" => $id_blog,
-                    "tiempo_minutos" =>
-                        Carbon::parse($crear->fecha_hora)
-                            ->diffInMinutes(Carbon::parse($editar->fecha_hora))
-                ];
+        $data = BlogAuditoria::from('blog_auditoria as crear')
+            ->join('blog_auditoria as editar', function ($join) {
+                $join->on('crear.id_blog', '=', 'editar.id_blog')
+                     ->where('editar.accion', '=', 'ACTUALIZAR');
             })
-            ->filter()
-            ->values();
+            ->where('crear.accion', 'CREAR')
+            ->whereYear('crear.fecha_hora', $year)
+            ->when($month, fn($q) => $q->whereMonth('crear.fecha_hora', $month))
+            ->selectRaw('crear.id_blog, TIMESTAMPDIFF(MINUTE, crear.fecha_hora, MIN(editar.fecha_hora)) as tiempo_minutos')
+            ->groupBy('crear.id_blog', 'crear.fecha_hora')
+            ->get();
 
         return response()->json([
             "status" => 200,
