@@ -11,6 +11,7 @@ use App\Models\Empleado;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use App\Models\BlogFooter;
 use Illuminate\Support\Facades\Log;
@@ -75,6 +76,64 @@ class CardController extends Controller
             return response()->json([
                 "status" => 500,
                 "message" => "Error interno del servidor",
+                "error" => $ex->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Búsqueda optimizada de cards con cache y límite de resultados
+     * Utiliza índices en la base de datos para búsquedas rápidas
+     * 
+     * @param Request $request - Parámetros: q (query), type (public|dashboard)
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        try {
+            $query = $request->input('q', '');
+            $type = $request->input('type', 'public');
+            
+            // Validar mínimo 3 caracteres
+            if (strlen(trim($query)) < 3) {
+                return response()->json([], 200);
+            }
+
+            // Crear clave de cache única basada en la búsqueda normalizada
+            $cacheKey = "card_search_{$type}_" . md5(strtolower(trim($query)));
+            
+            // Cache de 60 segundos para evitar consultas repetidas
+            $results = Cache::remember($cacheKey, 60, function () use ($query, $type) {
+                $baseQuery = Card::with(['blog.head', 'empleado'])
+                    ->select('id_card', 'titulo', 'descripcion', 'public_image', 
+                             'url_image', 'id_plantilla', 'id_blog', 'id_empleado', 
+                             'estado_publicacion');
+                
+                // Si es búsqueda pública, solo retornar cards publicados
+                if ($type === 'public') {
+                    $baseQuery->where('estado_publicacion', true);
+                }
+                
+                // Búsqueda por título O descripción (ambas con índices)
+                // LIKE con % al inicio es lento, pero con índices es aceptable
+                $searchTerm = "%{$query}%";
+                $baseQuery->where(function ($q) use ($searchTerm) {
+                    $q->where('titulo', 'like', $searchTerm)
+                      ->orWhere('descripcion', 'like', $searchTerm);
+                });
+                
+                return $baseQuery->orderBy('id_card', 'asc')
+                               ->limit(10)  // Máximo 10 resultados
+                               ->get();
+            });
+            
+            return response()->json($results, 200);
+            
+        } catch (\Exception $ex) {
+            Log::error('Error en búsqueda de cards: ' . $ex->getMessage());
+            return response()->json([
+                "status" => 500,
+                "message" => "Error en la búsqueda",
                 "error" => $ex->getMessage()
             ], 500);
         }

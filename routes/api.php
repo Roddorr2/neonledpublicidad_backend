@@ -37,6 +37,7 @@ Route::post('/modales', [ModalesController::class, "create"]);
 
 // blogs públicos para ver los clientes
 Route::get('/cards_public', [CardController::class, "index_public"]);
+Route::get('/cards/search', [CardController::class, "search"]); // Búsqueda optimizada con cache
 // Route::get('/cards', [CardController::class, "index"]);
 
 Route::get('/blogs/{id}', [BlogController::class, "show"]);
