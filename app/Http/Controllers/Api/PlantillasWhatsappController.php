@@ -79,9 +79,10 @@ class PlantillasWhatsappController extends Controller
                     $safeNumero = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$plantilla->numero_plantilla);
                     $timestamp = time();
                     $filename = "plantilla_{$safeProducto}_{$safeNumero}_{$timestamp}.{$ext}";
+                    $carpeta = "plantillas/whatsapp/producto-{$safeProducto}/plantilla-{$safeNumero}";
 
                     // For plantillas, ensure we remove previous cloud or local image when updating
-                    $resultado = $uploader->subir($archivo, 'plantillas_whatsapp', $plantilla->imagen_public_id, $plantilla->imagen_url, [
+                    $resultado = $uploader->subir($archivo, $carpeta, $plantilla->imagen_public_id, $plantilla->imagen_url, [
                         'delete_previous_cloud' => true,
                         'delete_previous_local' => true,
                         'filename' => $filename,

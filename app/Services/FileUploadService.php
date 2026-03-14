@@ -188,6 +188,15 @@ class FileUploadService
             return 'plantillas/whatsapp';
         }
 
+        if (str_starts_with(trim($carpeta, '/'), 'plantillas/whatsapp/')) {
+            return trim($carpeta, '/');
+        }
+
+        // Special case: plantilla email should go to public/storage/plantillas/email
+        if (in_array($carpeta, ['plantillas_email', 'plantillas/email'])) {
+            return 'plantillas/email';
+        }
+
         // If the target is empleados/perfiles we want a flat, predictable path
         // like storage/app/public/empleados/perfiles/{id} (no 'uploads' nor YYYY/MM)
         if (str_starts_with(trim($carpeta, '/'), 'empleados/perfiles')) {

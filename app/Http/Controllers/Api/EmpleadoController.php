@@ -294,6 +294,16 @@ class EmpleadoController extends Controller
                 return $permissionCheck;
             }
 
+            // Ownership explicit check: only owner may upload (frontend requires clear 403)
+            if (Auth::id() !== $empleado->id_user) {
+                Log::warning('Intento subir imagen por usuario no propietario', [
+                    'empleado_id' => $id,
+                    'empleado_user_id' => $empleado->id_user,
+                    'actor_user_id' => Auth::id()
+                ]);
+                return response()->json(['status' => 403, 'message' => 'No autorizado para este perfil'], 403);
+            }
+
             DB::beginTransaction();
 
             $service = app(FileUploadService::class);
@@ -334,12 +344,13 @@ class EmpleadoController extends Controller
 
                 DB::commit();
 
+                // Always return consistent JSON using the upload result
                 return response()->json([
                     "status" => 200,
                     "message" => "Imagen actualizada correctamente",
                     "data" => [
-                        'public_id' => $empleado->imagen_perfil,
-                        'url' => $empleado->imagen_perfil_url,
+                        'public_id' => $res['public_id'] ?? null,
+                        'url' => $res['url'] ?? null,
                         'version' => time()
                     ]
                 ]);
@@ -360,11 +371,12 @@ class EmpleadoController extends Controller
                 ], 422);
             }
 
-            $expectedPublicId = "empleados/perfiles/{$id}/profile";
-            if ($request->public_id !== $expectedPublicId) {
+            $expectedPrefix = "empleados/perfiles/{$id}/";
+            // Accept any public_id that resides under the employee's folder (frontend may provide generated filenames)
+            if (!str_starts_with($request->public_id, $expectedPrefix)) {
                 DB::rollBack();
                 Log::warning('public_id no coincide con la carpeta esperada del empleado', [
-                    'expected' => $expectedPublicId,
+                    'expected_prefix' => $expectedPrefix,
                     'received' => $request->public_id,
                     'user_id' => Auth::id(),
                 ]);

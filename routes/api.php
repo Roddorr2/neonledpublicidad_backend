@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\MetricasController;
 use App\Http\Controllers\Api\WhatsAppCampaignController;
 use App\Http\Controllers\Api\WhatsappWebhookController;
 use App\Http\Controllers\Api\PlantillasWhatsappController;
+use App\Http\Controllers\Api\PlantillasEmailController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
@@ -128,6 +129,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/plantillas/whatsapp', [PlantillasWhatsappController::class, 'index']);
             Route::get('/plantillas/whatsapp/{id}', [PlantillasWhatsappController::class, 'show']);
             Route::post('/plantillas/whatsapp/{id}/actualizar', [PlantillasWhatsappController::class, 'actualizar']);
+
+            // Plantillas Email (dashboard)
+            Route::get('/plantillas/email', [PlantillasEmailController::class, 'index']);
+            Route::get('/plantillas/email/{id}', [PlantillasEmailController::class, 'show']);
+            Route::post('/plantillas/email/{id}/actualizar', [PlantillasEmailController::class, 'actualizar']);
         });
 
     // Webhook endpoint (protected by X-API-Key header)
@@ -135,6 +141,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Endpoint consumido por whatsapp-service (X-API-Key header validated in controller)
 Route::get('/plantillas/whatsapp/{id_producto}/{numero_plantilla}', [PlantillasWhatsappController::class, 'showByProductoNumero']);
+
+// Endpoint consumido por email-service (X-API-Key header validated in controller)
+Route::get('/plantillas/email/{id_producto}/{numero_plantilla}', [PlantillasEmailController::class, 'showByProductoNumero']);
     });
 
     //rutas create blog
