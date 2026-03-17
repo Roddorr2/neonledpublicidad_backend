@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campanias_whatsapp', function (Blueprint $table) {
+                if (Schema::hasTable('campanias_whatsapp')) {
+            return;
+        }
+
+Schema::create('campanias_whatsapp', function (Blueprint $table) {
             $table->id('id_campania');
             $table->unsignedBigInteger('id_servicio');
             $table->text('parrafo');

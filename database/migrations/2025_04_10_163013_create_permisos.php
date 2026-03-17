@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permisos', function (Blueprint $table) {
+                if (Schema::hasTable('permisos')) {
+            return;
+        }
+
+Schema::create('permisos', function (Blueprint $table) {
             $table->id('id_permiso');
             $table->string('nombre')->unique();
             $table->string('slug')->unique()->nullable();

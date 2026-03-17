@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modal_emails', function (Blueprint $table) {
+                if (Schema::hasTable('modal_emails')) {
+            return;
+        }
+
+Schema::create('modal_emails', function (Blueprint $table) {
             $table->id('id_modal_email');
             $table->boolean('estado')->default(0);
             $table->string('error', 500)->nullable();
