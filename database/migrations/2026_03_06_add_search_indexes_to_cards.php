@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,13 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cards', function (Blueprint $table) {
-            // Agregar índices para optimizar búsquedas de texto
-            // Necesarios para que las consultas LIKE sean eficientes
-            $table->index('titulo');
-            $table->index('descripcion', 255); // Limitar a 255 caracteres para mejor performance
-            // Índice compuesto para búsquedas por estado + título
-            $table->index(['estado_publicacion', 'titulo']);
+            if (! $this->indexExists('cards', 'cards_titulo_index')) {
+                $table->index('titulo');
+            }
+
+            if (! $this->indexExists('cards', 'cards_estado_publicacion_titulo_index')) {
+                $table->index(['estado_publicacion', 'titulo']);
+            }
         });
+
+        // MySQL/MariaDB requiere prefijo de longitud para indexar columnas TEXT.
+        if (! $this->indexExists('cards', 'cards_descripcion_index')) {
+            DB::statement('ALTER TABLE `cards` ADD INDEX `cards_descripcion_index` (`descripcion`(255))');
+        }
     }
 
     /**
@@ -27,10 +34,29 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('cards', function (Blueprint $table) {
-            // Eliminar índices si se revierte la migración
-            $table->dropIndex('cards_titulo_index');
-            $table->dropIndex('cards_descripcion_index');
-            $table->dropIndex('cards_estado_publicacion_titulo_index');
+            if ($this->indexExists('cards', 'cards_titulo_index')) {
+                $table->dropIndex('cards_titulo_index');
+            }
+
+            if ($this->indexExists('cards', 'cards_estado_publicacion_titulo_index')) {
+                $table->dropIndex('cards_estado_publicacion_titulo_index');
+            }
         });
+
+        if ($this->indexExists('cards', 'cards_descripcion_index')) {
+            DB::statement('ALTER TABLE `cards` DROP INDEX `cards_descripcion_index`');
+        }
+    }
+
+    private function indexExists(string $table, string $index): bool
+    {
+        $database = DB::getDatabaseName();
+
+        $result = DB::selectOne(
+            'SELECT 1 FROM information_schema.statistics WHERE table_schema = ? AND table_name = ? AND index_name = ? LIMIT 1',
+            [$database, $table, $index]
+        );
+
+        return $result !== null;
     }
 };
