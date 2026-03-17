@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blog_heads', function (Blueprint $table) {
-            $table->text('public_image')->nullable()->change();
+            if (Schema::hasColumn('blog_heads', 'public_image')) {
+                $table->text('public_image')->nullable()->change();
+            }
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blog_heads', function (Blueprint $table) {
-            $table->text('public_image')->nullable(false)->change();
+            if (Schema::hasColumn('blog_heads', 'public_image')) {
+                $table->text('public_image')->nullable(false)->change();
+            }
         });
     }
 };

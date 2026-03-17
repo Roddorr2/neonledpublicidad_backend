@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blog_heads', function (Blueprint $table) {
-            $table->string('meta_title')->nullable();
-            $table->string('meta_descripcion')->nullable();
+            if (! Schema::hasColumn('blog_heads', 'meta_title')) {
+                $table->string('meta_title')->nullable();
+            }
+
+            if (! Schema::hasColumn('blog_heads', 'meta_descripcion')) {
+                $table->string('meta_descripcion')->nullable();
+            }
         });
     }
 
@@ -23,7 +28,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blog_heads', function (Blueprint $table) {
-            $table->dropColumn(['meta_title', 'meta_descripcion']);
+            if (Schema::hasColumn('blog_heads', 'meta_title')) {
+                $table->dropColumn('meta_title');
+            }
+
+            if (Schema::hasColumn('blog_heads', 'meta_descripcion')) {
+                $table->dropColumn('meta_descripcion');
+            }
         });
     }
 };

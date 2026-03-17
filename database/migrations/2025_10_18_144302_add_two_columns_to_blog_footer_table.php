@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blog_footers', function (Blueprint $table) {
-            $table->string('keyword')->nullable()->default(null);
-            $table->string('link')->nullable()->default(null);
+            if (! Schema::hasColumn('blog_footers', 'keyword')) {
+                $table->string('keyword')->nullable()->default(null);
+            }
+
+            if (! Schema::hasColumn('blog_footers', 'link')) {
+                $table->string('link')->nullable()->default(null);
+            }
         });
     }
 
@@ -23,7 +28,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blog_footers', function (Blueprint $table) {
-            $table->dropColumn(['keyword', 'link']);
+            if (Schema::hasColumn('blog_footers', 'keyword')) {
+                $table->dropColumn('keyword');
+            }
+
+            if (Schema::hasColumn('blog_footers', 'link')) {
+                $table->dropColumn('link');
+            }
         });
     }
 };
