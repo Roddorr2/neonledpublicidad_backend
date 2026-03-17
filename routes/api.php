@@ -93,6 +93,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
     Route::middleware('permission:ver-blogs')->get('/cards', [CardController::class, "index"]);
+    Route::middleware('permission:ver-blogs')->get('/tarjetas', [TarjetaController::class, "index"]);
 
     Route::middleware('permission:ver-contactos')->get('/contactanos', [ContactanosController::class, "get"]);
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones', [ReclamacionesController::class, "get"]);
