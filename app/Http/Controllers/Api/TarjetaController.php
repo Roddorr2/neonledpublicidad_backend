@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\DB;
 
 class TarjetaController extends Controller
 {
+    public function index()
+    {
+        try {
+            $tarjetas = Tarjeta::all();
+            return response()->json($tarjetas, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function showAll(int $id)
     {
         try{
