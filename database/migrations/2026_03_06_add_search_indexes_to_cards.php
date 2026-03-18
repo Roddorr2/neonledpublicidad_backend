@@ -31,10 +31,17 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('cards', function (Blueprint $table) {
+            try {
+                $table->dropIndex('cards_titulo_index');
+            } catch (\Exception $e) {
+                // Index might not exist
+            }
             
-            $table->dropIndex('cards_titulo_index');
-            $table->dropIndex('cards_descripcion_index');
-            $table->dropIndex('cards_estado_publicacion_titulo_index');
+            try {
+                $table->dropIndex('cards_estado_publicacion_titulo_index');
+            } catch (\Exception $e) {
+                // Index might not exist
+            }
         });
 
         if ($this->indexExists('cards', 'cards_descripcion_index')) {

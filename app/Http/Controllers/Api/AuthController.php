@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPassword;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
@@ -232,6 +233,28 @@ class AuthController extends Controller
         return response()->json(['message' => 'Contraseña actualizada correctamente, ingresa desde el login'], 200);
     }
 
+    #[OA\Get(
+        path: '/api/me',
+        operationId: 'getAuthenticatedUser',
+        tags: ['Auth'],
+        summary: 'Obtener datos del usuario autenticado',
+        description: 'Retorna los datos del usuario actualmente autenticado, incluyendo roles y permisos',
+        security: [
+            ['bearerAuth' => []]
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Datos del usuario autenticado',
+                content: new OA\JsonContent(ref: '#/components/schemas/UserResponse')
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'No autenticado',
+                content: new OA\JsonContent(ref: '#/components/schemas/AuthErrorResponse')
+            ),
+        ]
+    )]
     public function me(Request $request)
     {
         $user = $request->user();
@@ -249,7 +272,48 @@ class AuthController extends Controller
         ]);
     }
 
-     public function changePassword(Request $request)
+    #[OA\Post(
+        path: '/api/change-password',
+        operationId: 'changePassword',
+        tags: ['Auth'],
+        summary: 'Cambiar contraseña del usuario autenticado',
+        description: 'Permite al usuario autenticado cambiar su contraseña. Requiere la contraseña actual para validar.',
+        security: [
+            ['bearerAuth' => []]
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/ChangePasswordRequest')
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Contraseña cambida exitosamente',
+                content: new OA\JsonContent(ref: '#/components/schemas/ChangePasswordSuccessResponse')
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'Validación fallida o contraseña actual incorrecta',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'error', type: 'string', example: 'La contraseña actual es incorrecta'),
+                        new OA\Property(property: 'errors', type: 'object', example: ['currentPassword' => ['Campo requerido']])
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'No autenticado',
+                content: new OA\JsonContent(ref: '#/components/schemas/AuthErrorResponse')
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Datos de validación inválidos',
+                content: new OA\JsonContent(ref: '#/components/schemas/ValidationErrorResponse')
+            ),
+        ]
+    )]
+    public function changePassword(Request $request)
     {
 
          $validator = Validator::make($request->all(), [
