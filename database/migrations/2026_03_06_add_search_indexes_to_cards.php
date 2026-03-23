@@ -13,13 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cards', function (Blueprint $table) {
-            if (! $this->indexExists('cards', 'cards_titulo_index')) {
-                $table->index('titulo');
-            }
-
-            if (! $this->indexExists('cards', 'cards_estado_publicacion_titulo_index')) {
-                $table->index(['estado_publicacion', 'titulo']);
-            }
+            
+            $table->index('titulo');
+            $table->index('descripcion', 255); // Limitar a 255 caracteres 
+            $table->index(['estado_publicacion', 'titulo']);
         });
 
         // MySQL/MariaDB requiere prefijo de longitud para indexar columnas TEXT.
@@ -34,13 +31,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('cards', function (Blueprint $table) {
-            if ($this->indexExists('cards', 'cards_titulo_index')) {
-                $table->dropIndex('cards_titulo_index');
-            }
-
-            if ($this->indexExists('cards', 'cards_estado_publicacion_titulo_index')) {
-                $table->dropIndex('cards_estado_publicacion_titulo_index');
-            }
+            
+            $table->dropIndex('cards_titulo_index');
+            $table->dropIndex('cards_descripcion_index');
+            $table->dropIndex('cards_estado_publicacion_titulo_index');
         });
 
         if ($this->indexExists('cards', 'cards_descripcion_index')) {
