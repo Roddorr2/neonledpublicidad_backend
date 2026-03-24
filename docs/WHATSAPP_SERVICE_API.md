@@ -107,6 +107,17 @@ Requisitos sobre webhooks
 - Incluir siempre `id_modalservicio` y `campania_id` o `chunk_id` para rastrear la fila local.
 - Incluir `provider_message_id` del proveedor cuando esté disponible.
 - El backend debe procesar webhooks idempotentemente: si recibe el mismo `provider_message_id`/`id_modalservicio` repetido, debe ignorarlo o actualizar sin duplicar contadores.
+ - El backend debe procesar webhooks idempotentemente: si recibe el mismo `provider_message_id`/`id_modalservicio` repetido, debe ignorarlo o actualizar sin duplicar contadores.
+
+Deduplicación recomendada y justificación:
+
+- Preferir `provider_message_id` (o `message_id`) cuando esté disponible: es la forma más fiable de identificar mensajes únicos y detectar reenvíos. Laravel prioriza este campo para deduplicación.
+- Fallback (opcional): si `provider_message_id` NO está disponible, se puede aplicar una deduplicación compuesta por `campania_id`, `chunk_id`, `id_modalservicio`. Sin embargo, esta estrategia puede confluir reintentos legítimos como duplicados y dificultar auditoría; por eso es recomendable solicitar al proveedor que siempre provea `provider_message_id`.
+
+Decisión de implementación actual (resumen):
+
+- Implementamos deduplicación basada en `provider_message_id` y una lógica de no-degradación (no permitir que `delivered` sea cambiado a `failed`).
+- No aplicamos la deduplicación compuesta por defecto para evitar falsos positivos; se deja como mejora opcional que puede activarse con una bandera de configuración cuando el proveedor no entregue `provider_message_id`.
 
 Comportamiento recomendado del backend (Laravel)
 - Cuando el orquestador envía un chunk:

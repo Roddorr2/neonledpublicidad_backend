@@ -49,7 +49,7 @@ class SendWhatsAppJob implements ShouldQueue
                 return;
             }
             $response = Http::withHeaders([
-                'x-api-key' => config('services.whatsapp.apikey')
+                'X-API-Key' => config('services.whatsapp.apikey')
             ])->post(config('services.whatsapp.url') . '/api/whatsapp/send-message-image', [
                 'nombre' => $this->data['nombre'],
                 'templateOption' => $templateOption,

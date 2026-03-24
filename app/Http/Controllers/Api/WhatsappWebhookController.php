@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\ProcessWhatsappStatus;
-use Illuminate\Support\Facades\Response;
 
 class WhatsappWebhookController extends Controller
 {
@@ -20,43 +19,111 @@ class WhatsappWebhookController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $data = $request->all();
+        $payload = $request->all();
+        $events = $this->extractEvents($payload);
 
-        $validator = Validator::make($data, [
-            'id_modal_wat' => 'sometimes|integer',
-            'id_modalservicio' => 'sometimes|integer',
-            'campania_id' => 'sometimes|integer',
-            'campaign_id' => 'sometimes|integer',
-            'status' => 'required|string',
-            'message_id' => 'nullable|string',
-            'error' => 'nullable|string',
-            'sentAt' => 'nullable|date'
-        ]);
-
-        if ($validator->fails()) {
-            Log::warning('whatsapp.webhook.invalid_payload', ['errors' => $validator->errors()->all()]);
+        if (empty($events)) {
+            Log::warning('whatsapp.webhook.invalid_payload', ['errors' => ['Payload must include status or non-empty events[]']]);
             return response()->json(['error' => 'Invalid payload'], 422);
         }
 
-        // Persist raw event quickly
-        // Normalize campaign id: accept both campania_id and campaign_id
-        $campaniaId = $data['campania_id'] ?? $data['campaign_id'] ?? null;
+        $acceptedEventIds = [];
+        $rejected = [];
 
-        $eventId = DB::table('whatsapp_webhook_events')->insertGetId([
-            'chunk_id' => $data['chunk_id'] ?? $data['chunk_number'] ?? null,
-            'campania_id' => $campaniaId,
-            'id_modal_wat' => $data['id_modal_wat'] ?? null,
-            'provider_message_id' => $data['message_id'] ?? $data['provider_message_id'] ?? null,
-            'status' => $data['status'] ?? null,
-            'raw' => json_encode($data),
-            'received_at' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        foreach ($events as $index => $eventData) {
+            $normalized = $this->normalizeEvent($payload, $eventData);
 
-        // Dispatch async job to process the event
-        ProcessWhatsappStatus::dispatch($eventId)->onQueue('whatsapp-status');
+            $validator = Validator::make($normalized, [
+                'id_modal_wat' => 'sometimes|integer',
+                'id_modalservicio' => 'sometimes|integer',
+                'campania_id' => 'sometimes|integer',
+                'chunk_id' => 'sometimes|integer',
+                'status' => 'required|string',
+                'message_id' => 'nullable|string',
+                'provider_message_id' => 'nullable|string',
+                'error' => 'nullable|string',
+                'sentAt' => 'nullable|date',
+            ]);
 
-        return response()->json(['accepted' => true, 'event_id' => $eventId], 202);
+            if ($validator->fails()) {
+                $rejected[] = [
+                    'index' => $index,
+                    'errors' => $validator->errors()->all(),
+                ];
+                continue;
+            }
+
+            $eventId = DB::table('whatsapp_webhook_events')->insertGetId([
+                'chunk_id' => $normalized['chunk_id'] ?? null,
+                'campania_id' => $normalized['campania_id'] ?? null,
+                'id_modal_wat' => $normalized['id_modal_wat'] ?? null,
+                'provider_message_id' => $normalized['provider_message_id'] ?? ($normalized['message_id'] ?? null),
+                'status' => $normalized['status'] ?? null,
+                'raw' => json_encode($normalized),
+                'received_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            ProcessWhatsappStatus::dispatch($eventId)->onQueue('whatsapp-status');
+            $acceptedEventIds[] = $eventId;
+        }
+
+        if (empty($acceptedEventIds)) {
+            Log::warning('whatsapp.webhook.invalid_payload', ['errors' => $rejected]);
+            return response()->json(['error' => 'Invalid payload', 'rejected' => $rejected], 422);
+        }
+
+        return response()->json([
+            'accepted' => true,
+            'events_accepted' => count($acceptedEventIds),
+            'event_ids' => $acceptedEventIds,
+            'events_rejected' => count($rejected),
+            'rejected' => $rejected,
+        ], 202);
+    }
+
+    /**
+     * Accepts either one event payload or a batch payload with events[].
+     */
+    private function extractEvents(array $payload): array
+    {
+        if (isset($payload['events']) && is_array($payload['events'])) {
+            return array_values(array_filter($payload['events'], fn ($item) => is_array($item)));
+        }
+
+        return [$payload];
+    }
+
+    /**
+     * Normalizes aliases while preserving canonical identifiers.
+     */
+    private function normalizeEvent(array $payload, array $event): array
+    {
+        $rootDefaults = $payload;
+        unset($rootDefaults['events']);
+
+        $normalized = array_merge($rootDefaults, $event);
+
+        $normalized['campania_id'] = $normalized['campania_id'] ?? $normalized['campaign_id'] ?? null;
+        $normalized['campaign_id'] = $normalized['campaign_id'] ?? $normalized['campania_id'];
+
+        // Never overwrite explicit chunk_id with chunk_number.
+        if (!isset($normalized['chunk_id']) || $normalized['chunk_id'] === null) {
+            $normalized['chunk_id'] = $normalized['chunk_number'] ?? null;
+        }
+
+        $normalized['provider_message_id'] = $normalized['provider_message_id'] ?? $normalized['message_id'] ?? null;
+        $normalized['message_id'] = $normalized['message_id'] ?? $normalized['provider_message_id'];
+
+        if (isset($normalized['status']) && is_string($normalized['status'])) {
+            $normalized['status'] = strtolower(trim($normalized['status']));
+        }
+
+        if (isset($normalized['error']) && !is_string($normalized['error']) && $normalized['error'] !== null) {
+            $normalized['error'] = json_encode($normalized['error']);
+        }
+
+        return $normalized;
     }
 }

@@ -23,8 +23,9 @@ class PlannerService
 	{
 		$created = [];
 
-		$campaign = Campania::find($campaignId);
-		$start = $campaign && $campaign->fecha_inicio ? Carbon::parse($campaign->fecha_inicio) : Carbon::now();
+		// Validate campaign exists; throw 404 if not found
+		$campaign = Campania::findOrFail($campaignId);
+		$start = $campaign->fecha_inicio ? Carbon::parse($campaign->fecha_inicio) : Carbon::now();
 
 		// Normalize recipients: keep unique by telefono
 		$seen = [];
@@ -40,7 +41,12 @@ class PlannerService
 
 		// determine chunk size and spacing from config when not provided
 		$chunkSize = $chunkSize ?? (int) config('whatsapp.chunk_size', 20);
-		$spacingMinutes = $spacingMinutes ?? (int) config('whatsapp.chunk_spacing_minutes', 2);
+		// Prefer seconds if configured for fine-grained testing; fall back to minutes
+		$spacingSeconds = (int) config('whatsapp.chunk_spacing_seconds', 0);
+		if ($spacingSeconds <= 0) {
+			$spacingMinutes = $spacingMinutes ?? (int) config('whatsapp.chunk_spacing_minutes', 2);
+			$spacingSeconds = $spacingMinutes * 60;
+		}
 
 		// Reserve slots for the campaign on the target date (apply daily limit)
 		$date = $start->copy()->startOfDay();
@@ -51,18 +57,20 @@ class PlannerService
 
 		// Try to reserve all recipients; if fails, decrement until success (small loop, limits are small)
 		$reserved = false;
+		$reservation = null;
 		$attempt = $totalRecipients;
 		while ($attempt > 0) {
 			$res = WhatsappCampaignReservation::reserveSlots($campaignId, $date, $attempt);
 			if ($res !== false) {
 				$reserved = $attempt;
+				$reservation = $res;
 				break;
 			}
 			$attempt--;
 		}
 
 		if (! $reserved) {
-			Log::info('planner.reserve_slots.none_available', ['campaign_id' => $campaignId, 'date' => $date->toDateString()]);
+			Log::warning('planner.reserve_slots.none_available', ['campaign_id' => $campaignId, 'date' => $date->toDateString(), 'total_requested' => $totalRecipients]);
 			return [];
 		}
 
@@ -76,9 +84,10 @@ class PlannerService
 		$batches = array_chunk($normalized, $chunkSize);
 
 		foreach ($batches as $index => $batch) {
-			$scheduled = $start->copy()->addMinutes($index * $spacingMinutes);
+			$scheduled = $start->copy()->addSeconds($index * $spacingSeconds);
 
 			$chunk = WhatsappChunk::create([
+				'reservation_id' => $reservation?->id ?? null,
 				'campaign_id' => $campaignId,
 				'chunk_index' => $index + 1,
 				'recipients_count' => count($batch),
@@ -110,7 +119,11 @@ class PlannerService
 	{
 		$chunkSize = $chunkSize ?? (int) config('whatsapp.chunk_size', 20);
 		$dailyLimit = $dailyLimit ?? (int) config('whatsapp.daily_limit', 50);
-		$spacingMinutes = $spacingMinutes ?? (int) config('whatsapp.chunk_spacing_minutes', 2);
+		$spacingSeconds = (int) config('whatsapp.chunk_spacing_seconds', 0);
+		if ($spacingSeconds <= 0) {
+			$spacingMinutes = $spacingMinutes ?? (int) config('whatsapp.chunk_spacing_minutes', 2);
+			$spacingSeconds = $spacingMinutes * 60;
+		}
 
 		// derive total recipients
 		if (is_array($recipientsOrCount)) {
@@ -150,8 +163,8 @@ class PlannerService
 		$preview = [];
 		$previewCount = min(10, $totalChunks);
 		for ($i = 0; $i < $previewCount; $i++) {
-			$minutes = $i * $spacingMinutes;
-			$preview[] = $start->copy()->addMinutes($minutes)->toDateTimeString();
+			$seconds = $i * $spacingSeconds;
+			$preview[] = $start->copy()->addSeconds($seconds)->toDateTimeString();
 		}
 
 		return [

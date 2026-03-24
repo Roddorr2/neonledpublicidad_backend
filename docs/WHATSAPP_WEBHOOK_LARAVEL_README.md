@@ -48,7 +48,7 @@ Route::post('whatsapp/webhook/status', 'WhatsappWebhookController@status');
 // app/Http/Controllers/WhatsappWebhookController.php
 public function status(Request $req)
 {
-    if ($req->header('X-API-Key') !== config('services.whatsapp.api_key')) {
+    if ($req->header('X-API-Key') !== config('services.whatsapp.apikey')) {
         return response()->json(['error'=>'Unauthorized'], 401);
     }
 

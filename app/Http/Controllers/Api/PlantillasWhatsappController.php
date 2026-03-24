@@ -33,7 +33,7 @@ class PlantillasWhatsappController extends Controller
     public function showByProductoNumero(Request $request, $id_producto, $numero_plantilla)
     {
         $apiKey = $request->header('x-api-key') ?? $request->header('X-API-Key');
-        if (!$apiKey || $apiKey !== env('WHATSAPP_SERVICE_API_KEY')) {
+        if (!$apiKey || $apiKey !== config('services.whatsapp.apikey')) {
             return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
         }
 

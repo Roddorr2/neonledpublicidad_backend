@@ -42,6 +42,20 @@ Route::post('/modales', [ModalesController::class, "create"]);
 // Cloudinary webhook (public - Cloudinary will call this URL)
 Route::post('/cloudinary/webhook', [CloudinaryController::class, 'webhook']);
 
+// Webhook endpoint (protected by X-API-Key header in controller)
+Route::post('/whatsapp/webhook/status', [WhatsappWebhookController::class, 'status'])
+    ->middleware('throttle:120,1');
+
+// Endpoints consumidos por servicios (X-API-Key header validated in controller)
+Route::get('/plantillas/whatsapp/{id_producto}/{numero_plantilla}', [PlantillasWhatsappController::class, 'showByProductoNumero'])
+    ->middleware('throttle:240,1')
+    ->whereNumber('id_producto')
+    ->whereNumber('numero_plantilla');
+Route::get('/plantillas/email/{id_producto}/{numero_plantilla}', [PlantillasEmailController::class, 'showByProductoNumero'])
+    ->middleware('throttle:240,1')
+    ->whereNumber('id_producto')
+    ->whereNumber('numero_plantilla');
+
 // blogs públicos para ver los clientes
 Route::get('/cards_public', [CardController::class, "index_public"]);
 // Route::get('/cards', [CardController::class, "index"]);
@@ -119,31 +133,32 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('permission:enviar-mensajes')->put('/modales/estado_wat/{id}', [ModalWatController::class, "cambiarEstado"]);
 
     // WhatsApp Campaigns protegidas
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::middleware('role:marketing,administrador')->group(function () {
-            Route::post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, 'activate']);
-            Route::post('/whatsapp/campaign/estimate', [WhatsAppCampaignController::class, 'estimate']);
-            Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status']);
-            Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
-            // Plantillas WhatsApp (dashboard)
-            Route::get('/plantillas/whatsapp', [PlantillasWhatsappController::class, 'index']);
-            Route::get('/plantillas/whatsapp/{id}', [PlantillasWhatsappController::class, 'show']);
-            Route::post('/plantillas/whatsapp/{id}/actualizar', [PlantillasWhatsappController::class, 'actualizar']);
+    Route::middleware('role:marketing,administrador')->group(function () {
+        Route::post('/whatsapp/campaign/activate', [WhatsAppCampaignController::class, 'activate']);
+        Route::get('/whatsapp/campaign/preview/{service}', [WhatsAppCampaignController::class, 'previewCampaign'])
+            ->where('service', '^p(1[0-5]|[1-9])$');
+        Route::post('/whatsapp/campaign/create', [WhatsAppCampaignController::class, 'createCampaign']);
+        Route::post('/whatsapp/campaign/{id}/start', [WhatsAppCampaignController::class, 'startCampaign'])
+            ->whereNumber('id');
+        Route::post('/whatsapp/campaign/estimate', [WhatsAppCampaignController::class, 'estimate']);
+        Route::get('/whatsapp/campaign/{id}/status', [WhatsAppCampaignController::class, 'status'])
+            ->whereNumber('id');
+        Route::get('/whatsapp/campaign/{id}/progress-flag', [WhatsAppCampaignController::class, 'progressFlag'])
+            ->whereNumber('id');
+        Route::get('/whatsapp/campaigns', [WhatsAppCampaignController::class, 'index']);
+        // Plantillas WhatsApp (dashboard)
+        Route::get('/plantillas/whatsapp', [PlantillasWhatsappController::class, 'index']);
+        Route::get('/plantillas/whatsapp/{id}', [PlantillasWhatsappController::class, 'show'])
+            ->whereNumber('id');
+        Route::post('/plantillas/whatsapp/{id}/actualizar', [PlantillasWhatsappController::class, 'actualizar'])
+            ->whereNumber('id');
 
-            // Plantillas Email (dashboard)
-            Route::get('/plantillas/email', [PlantillasEmailController::class, 'index']);
-            Route::get('/plantillas/email/{id}', [PlantillasEmailController::class, 'show']);
-            Route::post('/plantillas/email/{id}/actualizar', [PlantillasEmailController::class, 'actualizar']);
-        });
-
-    // Webhook endpoint (protected by X-API-Key header)
-    Route::post('/whatsapp/webhook/status', [WhatsappWebhookController::class, 'status']);
-
-// Endpoint consumido por whatsapp-service (X-API-Key header validated in controller)
-Route::get('/plantillas/whatsapp/{id_producto}/{numero_plantilla}', [PlantillasWhatsappController::class, 'showByProductoNumero']);
-
-// Endpoint consumido por email-service (X-API-Key header validated in controller)
-Route::get('/plantillas/email/{id_producto}/{numero_plantilla}', [PlantillasEmailController::class, 'showByProductoNumero']);
+        // Plantillas Email (dashboard)
+        Route::get('/plantillas/email', [PlantillasEmailController::class, 'index']);
+        Route::get('/plantillas/email/{id}', [PlantillasEmailController::class, 'show'])
+            ->whereNumber('id');
+        Route::post('/plantillas/email/{id}/actualizar', [PlantillasEmailController::class, 'actualizar'])
+            ->whereNumber('id');
     });
 
     //rutas create blog
