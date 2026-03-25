@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Services\FileUploadService;
+use App\Services\WhatsappDailyQuotaService;
 
 class WhatsAppCampaignController extends Controller
 {
@@ -296,8 +297,8 @@ class WhatsAppCampaignController extends Controller
                 ],
                 'progress_milestone' => (int) ($campania->progress_milestone ?? 0),
                 'progress_version' => (int) ($campania->progress_version ?? 0),
-                'envios_hoy' => 0,
-                'limite_diario' => (int) config('whatsapp.daily_limit', 50),
+                'envios_hoy' => app(WhatsappDailyQuotaService::class)->getEnviosDia(),
+                'limite_diario' => app(WhatsappDailyQuotaService::class)->getLimiteDiario(),
                 'fecha_inicio' => $campania->fecha_inicio?->format('Y-m-d H:i:s'),
                 'fecha_fin' => $campania->fecha_fin?->format('Y-m-d H:i:s'),
                 'duracion' => $campania->fecha_inicio && $campania->fecha_fin 
@@ -429,6 +430,10 @@ class WhatsAppCampaignController extends Controller
 
         $campanias = $query->paginate($perPage);
 
+        $quotaService = app(WhatsappDailyQuotaService::class);
+        $enviosDia = $quotaService->getEnviosDia();
+        $limiteDiario = $quotaService->getLimiteDiario();
+
         $items = collect($campanias->items())->map(function ($campania) {
             return [
                 'id_campania' => $campania->id_campania,
@@ -459,6 +464,8 @@ class WhatsAppCampaignController extends Controller
                 // Compatibilidad con clientes que esperaban data.data
                 'data' => $items,
             ],
+            'envios_hoy' => $enviosDia,
+            'limite_diario' => $limiteDiario,
             'pagination' => [
                 'total' => $campanias->total(),
                 'per_page' => $campanias->perPage(),
