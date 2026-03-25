@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPassword;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 
@@ -80,66 +82,80 @@ class AuthController extends Controller
         }
     }
 
-  public function login(Request $request)
-{
-    $request->validate([
-        'email'    => 'required|email',
-        'password' => 'required',
-    ]);
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'turnstile_token' => 'required|string',
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        if (!$this->validarTurnstile($request->turnstile_token, $request->ip())) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Verificación de seguridad fallida. Inténtalo de nuevo.'
+            ], 422);
+        }
 
-    if (!$user) {
+        $minutos = $this->verificarBloqueo($request->email);
+        if ($minutos) {
+            return response()->json([
+                'status' => 'error',
+                'message' => "Demasiados intentos fallidos. Inténtalo en {$minutos} minutos."
+            ], 429);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            Log::warning('Login faliido.', [
+                'email' => $request->email,
+                'motivo' => !$user ? 'email no existe' : 'contraseña incorrecta',
+                'ip' => $request->ip(),
+            ]);
+            $this->registrarIntentoFallido($request->email);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El email o la contraseña son incorrectos.'
+            ], 401);
+        }
+
+        $empleado = $user->empleado;
+        $cliente = $user->cliente;
+
+        if ($empleado && $empleado->rol) {
+            $rol = $empleado->rol;
+            $permisos = $rol->permisos->pluck('slug')->toArray();
+            $tipo = 'empleado';
+            $info = $empleado;
+        } elseif ($cliente && $cliente->rol) {
+            $rol = $cliente->rol;
+            $permisos = $rol->permisos->pluck('slug')->toArray();
+            $tipo = 'cliente';
+            $info = $cliente;
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El usuario no tiene un rol asignado'
+            ], 403);
+        }
+
+        $this->resetearIntentos($request->email);
+        // Eliminar tokens anteriores
+        $user->tokens()->delete();
+
+        // Crear nuevo token con el nombre del rol como ability
+        $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
+
         return response()->json([
-            'status'  => 'error',
-            'message' => 'Esta cuenta no está registrada en Neon Led Publicidad.'
-        ], 404);
+            'status' => 'success',
+            'user' => $user,
+            $tipo => $info,
+            'rol' => $rol->nombre,
+            'permisos' => $permisos,
+            'token' => $token,
+        ]);
     }
-
-    if (!Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'status'  => 'error',
-            'message' => 'El email o la contraseña son incorrectos.'
-        ], 401);
-    }
-
-    $empleado = $user->empleado;
-    $cliente = $user->cliente;
-
-    if ($empleado && $empleado->rol) {
-        $rol = $empleado->rol;
-        $permisos = $rol->permisos->pluck('slug')->toArray();
-        $tipo = 'empleado';
-        $info = $empleado;
-    } elseif ($cliente && $cliente->rol) {
-        $rol = $cliente->rol;
-        $permisos = $rol->permisos->pluck('slug')->toArray();
-        $tipo = 'cliente';
-        $info = $cliente;
-    } else {
-        return response()->json([
-            'status'  => 'error',
-            'message' => 'El usuario no tiene un rol asignado'
-        ], 403);
-    }
-
-    // Eliminar tokens anteriores
-    $user->tokens()->delete();
-
-    // Crear nuevo token con el nombre del rol como ability
-    $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
-
-    return response()->json([
-        'status'   => 'success',
-        'user'     => $user,
-        $tipo      => $info,
-        'rol'      => $rol->nombre,
-        'permisos' => $permisos,
-        'token'    => $token,
-    ]);
-}
-
-
 
     //logout
     public function logout(Request $request)
@@ -185,7 +201,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function updatePassword(Request $request){
+    public function updatePassword(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'token' => 'required|string',
             'password' => 'required|min:6|confirmed',
@@ -249,10 +266,10 @@ class AuthController extends Controller
         ]);
     }
 
-     public function changePassword(Request $request)
+    public function changePassword(Request $request)
     {
 
-         $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'currentPassword' => 'required',
             'newPassword' => 'required|min:8'
         ]);
@@ -283,5 +300,47 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Contraseña cambiada exitosamente'
         ]);
+    }
+
+    private function validarTurnstile(string $token, string $ip): bool
+    {
+        $response = Http::withoutVerifying()->asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret' => env('TURNSTILE_SECRET_KEY'),
+            'response' => $token,
+            'remoteip' => $ip,
+        ]);
+
+        return $response->json('success', false);
+    }
+
+    private function registrarIntentoFallido(string $email)
+    {
+        $key = 'login_intentos_' . md5($email);
+        $intentos = Cache::get($key, 0) + 1;
+        Cache::put($key, $intentos, now()->addHours(2));
+
+        $minutos = match (true) {
+            $intentos >= 15 => 60,
+            $intentos >= 10 => 15,
+            $intentos >= 7 => 5,
+            $intentos >= 4 => 2,
+            default => 0,
+        };
+
+        if ($minutos > 0) {
+            Cache::put('login_bloqueo_' . md5($email), $minutos, now()->addMinutes($minutos));
+        }
+    }
+
+    private function verificarBloqueo(string $email): int|false
+    {
+        $bloqueoKey = 'login_bloqueo_' . md5($email);
+        return Cache::get($bloqueoKey, false);
+    }
+
+    private function resetearIntentos(string $email)
+    {
+        Cache::forget('login_intentos_' . md5($email));
+        Cache::forget('login_bloqueo_' . md5($email));
     }
 }
