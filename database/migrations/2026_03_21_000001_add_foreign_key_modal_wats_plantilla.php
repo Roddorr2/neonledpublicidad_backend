@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasColumn('modal_wats', 'id_plantilla_whatsapp')) {
+            Schema::table('modal_wats', function (Blueprint $table) {
+                $table->unsignedBigInteger('id_plantilla_whatsapp')->nullable()->after('number_message');
+            });
+        }
+
         Schema::table('modal_wats', function (Blueprint $table) {
-            // Add foreign key constraint linking modal_wats to plantillas_whatsapp
             $table->foreign('id_plantilla_whatsapp')
                 ->references('id_plantilla_whatsapp')
                 ->on('plantillas_whatsapp')
