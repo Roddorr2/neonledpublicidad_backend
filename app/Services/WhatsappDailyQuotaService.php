@@ -121,4 +121,5 @@ class WhatsappDailyQuotaService
     {
         return ($this->getEnviosDia() + $cantidad) <= $this->getLimiteDiario();
     }
+
 }

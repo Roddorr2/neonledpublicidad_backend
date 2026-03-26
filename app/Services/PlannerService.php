@@ -33,10 +33,15 @@ class PlannerService
 		foreach ($recipients as $r) {
 			$telefono = is_object($r) ? ($r->telefono ?? null) : ($r['telefono'] ?? null);
 			$id = is_object($r) ? ($r->id_modalservicio ?? ($r->id ?? null)) : ($r['id_modalservicio'] ?? ($r['id'] ?? null));
+			$nombre = is_object($r) ? ($r->nombre ?? null) : ($r['nombre'] ?? null);
 			if (empty($telefono)) continue;
 			if (isset($seen[$telefono])) continue;
 			$seen[$telefono] = true;
-			$normalized[] = ['id_modalservicio' => $id, 'telefono' => $telefono];
+			$normalized[] = [
+				'id_modalservicio' => $id,
+				'telefono' => $telefono,
+				'nombre' => $nombre,
+			];
 		}
 
 		// determine chunk size and spacing from config when not provided

@@ -21,6 +21,7 @@ class WatModal extends Model
         'fecha',
         'message_id',
         'attempts',
+        'id_plantilla_whatsapp',
     ];
 
     protected $casts = [

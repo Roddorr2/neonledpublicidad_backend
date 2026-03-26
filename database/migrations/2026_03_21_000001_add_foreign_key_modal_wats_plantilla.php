@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('modal_wats', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_plantilla_whatsapp')->nullable()->after('number_message');
-            $table->string('message_id', 255)->nullable()->after('id_plantilla_whatsapp');
-            $table->integer('attempts')->default(0)->after('message_id');
+            // Add foreign key constraint linking modal_wats to plantillas_whatsapp
+            $table->foreign('id_plantilla_whatsapp')
+                ->references('id_plantilla_whatsapp')
+                ->on('plantillas_whatsapp')
+                ->onDelete('set null');
         });
     }
 
@@ -24,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('modal_wats', function (Blueprint $table) {
-            $table->dropColumn(['id_plantilla_whatsapp', 'message_id', 'attempts']);
+            $table->dropForeign(['id_plantilla_whatsapp']);
         });
     }
 };

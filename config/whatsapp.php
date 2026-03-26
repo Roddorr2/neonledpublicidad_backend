@@ -3,6 +3,8 @@
 return [
     // Límite diario por flujo (campañas o modal flow se usan por separado)
     'daily_limit' => env('WHATSAPP_DAILY_LIMIT', 50),
+    // Límite diario por flujo (campañas o modal flow se usan por separado)
+    'daily_limit' => env('WHATSAPP_DAILY_LIMIT', 50),
 
     // Zona horaria usada para programar envíos
     'timezone' => env('WHATSAPP_TIMEZONE', 'America/Lima'),

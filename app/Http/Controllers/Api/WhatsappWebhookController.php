@@ -34,10 +34,11 @@ class WhatsappWebhookController extends Controller
             $normalized = $this->normalizeEvent($payload, $eventData);
 
             $validator = Validator::make($normalized, [
-                'id_modal_wat' => 'sometimes|integer',
-                'id_modalservicio' => 'sometimes|integer',
-                'campania_id' => 'sometimes|integer',
-                'chunk_id' => 'sometimes|integer',
+                // identifiers may be absent for modal-only events; accept nulls
+                'id_modal_wat' => 'nullable|integer',
+                'id_modalservicio' => 'nullable|integer',
+                'campania_id' => 'nullable|integer',
+                'chunk_id' => 'nullable|integer',
                 'status' => 'required|string',
                 'message_id' => 'nullable|string',
                 'provider_message_id' => 'nullable|string',
@@ -49,6 +50,15 @@ class WhatsappWebhookController extends Controller
                 $rejected[] = [
                     'index' => $index,
                     'errors' => $validator->errors()->all(),
+                ];
+                continue;
+            }
+
+            // Ensure at least one identifier is present: modal or campaign or modalservicio
+            if (empty($normalized['id_modal_wat']) && empty($normalized['campania_id']) && empty($normalized['id_modalservicio'])) {
+                $rejected[] = [
+                    'index' => $index,
+                    'errors' => ['Missing identifier: one of id_modal_wat, campania_id or id_modalservicio is required.'],
                 ];
                 continue;
             }

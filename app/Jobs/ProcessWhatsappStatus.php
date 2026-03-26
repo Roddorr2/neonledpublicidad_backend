@@ -90,6 +90,31 @@ class ProcessWhatsappStatus implements ShouldQueue
                 return;
             }
 
+            // Handle modal sends (when id_modal_wat is present)
+            if ($event->id_modal_wat) {
+                $modal = WatModal::find($event->id_modal_wat);
+                if ($modal) {
+                    // Map webhook status to modal estado (1=success, 0=pending/processing, -1=error)
+                    $modalEstado = in_array($status, self::FINAL_SUCCESS) ? 1 : -1;
+                    
+                    $modal->update([
+                        'estado' => $modalEstado,
+                        'message_id' => $messageId,
+                        'error' => in_array($status, self::FINAL_FAILURE) ? 'WhatsApp status: ' . $status : '',
+                        'fecha' => now(),
+                    ]);
+                    
+                    Log::info('whatsapp.process_event.modal_updated', [
+                        'eventId' => $event->id,
+                        'id_modal_wat' => $event->id_modal_wat,
+                        'status' => $status,
+                        'modal_estado' => $modalEstado,
+                    ]);
+                }
+                // Note: modals don't need chunk/campaign counter logic
+                return;
+            }
+
             // Update campaign counters
             if ($campaniaId) {
                 $camp = Campania::find($campaniaId);
