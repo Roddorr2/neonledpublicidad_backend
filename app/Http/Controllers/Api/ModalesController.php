@@ -8,6 +8,7 @@ use App\Mail\MailService;
 use App\Models\EmailModal;
 use Illuminate\Http\Request;
 use App\Models\modalservicios;
+use App\Models\PlantillaWhatsapp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -75,12 +76,18 @@ class ModalesController extends Controller
             }
 
             for ($i = 1; $i <= 3; $i++) {
+                // Buscar plantilla para este producto y número de mensaje
+                $plantilla = PlantillaWhatsapp::where('id_producto', $request->id_producto)
+                    ->where('numero_plantilla', $i)
+                    ->first();
+                
                 WatModal::create([
                     'estado' => 0,
                     'error' => '',
                     'id_modalservicio' => $modal_servicio->id_modalservicio,
                     'number_message' => $i,
                     'fecha' => now(),
+                    'id_plantilla_whatsapp' => $plantilla?->id_plantilla_whatsapp,
                 ]);
             }
 
@@ -120,14 +127,14 @@ class ModalesController extends Controller
                     ->first();
 
                 dispatch(new SendWhatsAppJob($wat2, $data, $productoName))
-                    ->delay(now()->addMinutes(2));
+                    ->delay(now()->addMinutes(30));
 
                 $wat3 = WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
                     ->where('number_message', 3)
                     ->first();
 
                 dispatch(new SendWhatsAppJob($wat3, $data, $productoName))
-                    ->delay(now()->addMinutes(4));
+                    ->delay(now()->addHours(1));
 
 
 
@@ -138,14 +145,27 @@ class ModalesController extends Controller
                     ]);
                 }
 
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
+                Log::error('Error dispatching modal messages', [
+                    'error' => $e->getMessage(),
+                    'modal_servicio_id' => $modal_servicio->id_modalservicio ?? null,
+                ]);
+
                 if (isset($first_email_modal)) {
                     $first_email_modal->update([
-                        'estado' => 1,
-                        'error' => 'Enviado con error, Posiblemente el correo no existe',
+                        'estado' => 0,
+                        'error' => 'Enviado con error: ' . $e->getMessage(),
                         'fecha' => now(),
                     ]);
                 }
+
+                // Marcar los wat modals pendientes con el error para seguimiento
+                WatModal::where('id_modalservicio', $modal_servicio->id_modalservicio)
+                    ->where('estado', 0)
+                    ->update([
+                        'error' => 'Dispatch error: ' . $e->getMessage(),
+                        'fecha' => now(),
+                    ]);
             }
 
             DB::commit();

@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
             ContactanosSeeder::class,
             EmpleadoSeeder::class,
             ProductoSeeder::class,
+            PlantillasEmailSeeder::class,
+            PlantillasWhatsappSeeder::class,
             CardSeeder::class,
             ClienteSeeder::class,
             PropuestaSeeder::class,

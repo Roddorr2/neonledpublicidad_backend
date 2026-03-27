@@ -19,13 +19,17 @@ class WatModal extends Model
         'id_modalservicio',
         'number_message',
         'fecha',
+        'message_id',
+        'attempts',
+        'id_plantilla_whatsapp',
     ];
 
     protected $casts = [
         'estado' => 'boolean',
+        'attempts' => 'integer',
     ];
 
-    public function modalServicio(){
-        return $this->belongsTo(modalservicios::class,'id_modal_servicio', 'id_modalservicio');
+    public function modalservicio(){
+        return $this->belongsTo(modalservicios::class,'id_modalservicio', 'id_modalservicio');
     }
 }
