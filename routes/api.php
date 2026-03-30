@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\ModalWatController;
 
 use App\Http\Controllers\Api\ModalMailController;
 use App\Http\Controllers\Api\BlogFooterController;
-use App\Http\Controllers\API\ClienteController;
+use App\Http\Controllers\Api\ClienteController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\ReclamacionesController;
 use App\Http\Controllers\Api\CloudinaryController;
