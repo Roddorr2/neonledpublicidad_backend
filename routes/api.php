@@ -26,10 +26,10 @@ use App\Http\Controllers\Api\MetricasController;
 use App\Http\Controllers\Api\WhatsAppCampaignController;
 
 // rutas públicas
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:register');
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
-Route::post('/reset_password', [AuthController::class, "forgotPassword"]);
-Route::post('/update_password', [AuthController::class, "updatePassword"]);
+Route::post('/reset_password', [AuthController::class, "forgotPassword"])->middleware('throttle:reset_password');
+Route::post('/update_password', [AuthController::class, "updatePassword"])->middleware('throttle:update_password');
 
 Route::post('/contactanos', [ContactanosController::class, "create"]);
 Route::post('/reclamaciones', [ReclamacionesController::class, "create"]);
