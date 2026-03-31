@@ -21,6 +21,9 @@ class Campania extends Model
         'envios_exitosos',
         'envios_fallidos',
         'envios_pendientes',
+        'progress_milestone',
+        'progress_version',
+        'progress_milestone_updated_at',
         'fecha_inicio',
         'fecha_fin'
     ];
@@ -39,6 +42,9 @@ class Campania extends Model
         'envios_exitosos' => 'integer',
         'envios_fallidos' => 'integer',
         'envios_pendientes' => 'integer',
+        'progress_milestone' => 'integer',
+        'progress_version' => 'integer',
+        'progress_milestone_updated_at' => 'datetime',
     ];
 
     /**
@@ -67,5 +73,22 @@ class Campania extends Model
         }
         
         return round((($this->envios_exitosos + $this->envios_fallidos) / $this->total_destinatarios) * 100, 2);
+    }
+
+    public static function getActiveCampaign(): ?self
+    {
+        return self::whereIn('estado', ['en_proceso', 'pausada_hasta_mañana'])
+            ->orderBy('created_at', 'asc')
+            ->first();
+    }
+
+    public function canBeStarted(): bool
+    {
+        if (!in_array($this->estado, ['borrador', 'pendiente', 'pausada_hasta_mañana'])) {
+            return false;
+        }
+
+        $active = self::getActiveCampaign();
+        return !$active || $active->id_campania === $this->id_campania;
     }
 }

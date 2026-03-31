@@ -2,10 +2,12 @@
 
 namespace App\Mail;
 
+use App\Models\PlantillaEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class MailService extends Mailable
 {
@@ -23,8 +25,8 @@ class MailService extends Mailable
 
     public function build()
     {
+        $mail_content = $this->resolveMailContent();
         $configPath = "email_content.services.{$this->id_producto}.messages.{$this->number_message}";
-        $mail_content = Config::get($configPath);
 
         if (empty($mail_content) || !is_array($mail_content) || !isset($mail_content['subject']) || !isset($mail_content['message'])) {
             Log::error("ERROR DE CONFIGURACIÓN DE CORREO: Contenido no encontrado o incompleto.", [
@@ -45,9 +47,29 @@ class MailService extends Mailable
                     ->with([
                         'data' => $this->data,
                         'send_message' => $mail_content['message'],
-                        'title' => $mail_content['title'] ?? $mail_content['subject'], // Usar Subject como fallback
+                        'title' => $mail_content['title'] ?? $mail_content['subject'],
                         'image' => $image,
-                        'extra_message' => $mail_content['extra'],
+                        'extra_message' => $mail_content['extra'] ?? null,
                     ]);
+    }
+
+    private function resolveMailContent(): ?array
+    {
+        $plantilla = PlantillaEmail::where('id_producto', $this->id_producto)
+            ->where('numero_plantilla', $this->number_message)
+            ->first();
+
+        if ($plantilla) {
+            return [
+                'subject' => $plantilla->asunto,
+                'title' => $plantilla->encabezado,
+                'message' => $plantilla->mensaje,
+                'image' => $plantilla->imagen_url,
+                'extra' => null,
+            ];
+        }
+
+        $configPath = "email_content.services.{$this->id_producto}.messages.{$this->number_message}";
+        return Config::get($configPath);
     }
 }

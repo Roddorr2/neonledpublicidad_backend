@@ -8,6 +8,7 @@ use App\Mail\MailService;
 use App\Models\EmailModal;
 use Illuminate\Http\Request;
 use App\Models\modalservicios;
+use App\Models\PlantillaWhatsapp;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -75,12 +76,18 @@ class ModalesController extends Controller
             }
 
             for ($i = 1; $i <= 3; $i++) {
+                // Buscar plantilla para este producto y número de mensaje
+                $plantilla = PlantillaWhatsapp::where('id_producto', $request->id_producto)
+                    ->where('numero_plantilla', $i)
+                    ->first();
+                
                 WatModal::create([
                     'estado' => 0,
                     'error' => '',
                     'id_modalservicio' => $modal_servicio->id_modalservicio,
                     'number_message' => $i,
                     'fecha' => now(),
+                    'id_plantilla_whatsapp' => $plantilla?->id_plantilla_whatsapp,
                 ]);
             }
 

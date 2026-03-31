@@ -8,6 +8,7 @@
 /storage/keys/*.pem
 /storage/pail
 /vendor
+/scripts/*
 .env
 .env.backup
 .env.production

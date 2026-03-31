@@ -8,6 +8,7 @@ use App\Models\Cliente;
 use App\Models\Rol;
 use App\Models\User;
 use Cloudinary\Cloudinary;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -241,19 +242,7 @@ class ClienteController extends Controller
 
     public function updateProfileImage(Request $request, $id)
     {
-        $validate = Validator::make($request->all(), [
-            'public_id' => 'required|string',
-            'secure_url' => 'required|url'
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "errors" => $validate->errors()
-            ], 422);
-        }
-
+        // Support multipart upload via server-side FileUploadService or client-provided public_id
         try {
             $cliente = Cliente::where('id', $id)->first();
             if (!$cliente) {
@@ -265,18 +254,61 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
 
-            if ($cliente->imagen_perfil) {
-                try {
+            if ($request->hasFile('imagen')) {
+                $archivo = $request->file('imagen');
+                $uploader = new FileUploadService();
+                $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
+                $filename = "cliente_{$id}_" . time() . ".{$ext}";
 
-                    $cloudinary = new Cloudinary();
+                $res = $uploader->subir($archivo, 'clientes', $cliente->imagen_perfil, $cliente->imagen_perfil_url, [
+                    'delete_previous_cloud' => true,
+                    'delete_previous_local' => true,
+                    'filename' => $filename,
+                ]);
 
-                    $result = $cloudinary->uploadApi()->destroy($cliente->imagen_perfil);
-                } catch (\Exception $e) {
-                    Log::warning("Error al eliminar imagen anterior, continuando con actualización: " . $e->getMessage());
+                if (empty($res['url'])) {
+                    DB::rollBack();
+                    return response()->json(["status" => 500, "message" => "Fallo al subir la imagen"], 500);
                 }
+
+                $cliente->imagen_perfil = $res['public_id'] ?? $cliente->imagen_perfil;
+                $cliente->imagen_perfil_url = $res['url'];
+                $cliente->save();
+
+                DB::commit();
+
+                return response()->json([
+                    "status" => 200,
+                    "message" => "Imagen actualizada correctamente",
+                    "data" => [
+                        'public_id' => $cliente->imagen_perfil,
+                        'url' => $cliente->imagen_perfil_url,
+                        'version' => time()
+                    ]
+                ]);
             }
 
-            $cliente->imagen_perfil_url = null;
+            // Backwards-compatible: client sends public_id + secure_url
+            $validate = Validator::make($request->all(), [
+                'public_id' => 'required|string',
+                'secure_url' => 'required|url'
+            ]);
+
+            if ($validate->fails()) {
+                DB::rollBack();
+                return response()->json([
+                    "status" => 422,
+                    "message" => "Error de validación",
+                    "errors" => $validate->errors()
+                ], 422);
+            }
+
+            // Attempt to remove previous cloud image via centralized service
+            $uploader = new FileUploadService();
+            if ($cliente->imagen_perfil) {
+                $uploader->eliminarPublicId($cliente->imagen_perfil);
+            }
+
             $cliente->imagen_perfil = $request->public_id;
             $cliente->imagen_perfil_url = $request->secure_url;
             $cliente->save();
@@ -294,7 +326,6 @@ class ClienteController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
             Log::error("Error actualizando imagen: " . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString()

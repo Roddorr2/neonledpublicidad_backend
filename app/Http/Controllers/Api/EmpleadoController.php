@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Cloudinary\Cloudinary;
 use App\Mail\CredencialesEmpleadoMail;
 use Illuminate\Support\Facades\Auth;
+use App\Services\FileUploadService;
 
 
 class EmpleadoController extends Controller
@@ -274,18 +275,9 @@ class EmpleadoController extends Controller
 
     public function updateProfileImage(Request $request, $id)
     {
-        $validate = Validator::make($request->all(), [
-            'public_id' => 'required|string',
-            'secure_url' => 'required|url'
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "errors" => $validate->errors()
-            ], 422);
-        }
+        // Support two modes:
+        // - Client sends multipart file 'imagen' -> server uploads via FileUploadService
+        // - Client sends 'public_id' and 'secure_url' (existing flow)
 
         try {
             $empleado = Empleado::where('id_empleado', $id)->first();
@@ -296,23 +288,114 @@ class EmpleadoController extends Controller
                 ], 404);
             }
 
-            DB::beginTransaction();
-
-            if ($empleado->imagen_perfil) {
-                try {
-
-                    $cloudinary = new Cloudinary();
-
-                    $result = $cloudinary->uploadApi()->destroy($empleado->imagen_perfil);
-
-                } catch (\Exception $e) {
-                    Log::warning("Error al eliminar imagen anterior, continuando con actualización: " . $e->getMessage());
-                }
+            // permission check
+            $permissionCheck = $this->checkPermissionMiddleware($id);
+            if ($permissionCheck) {
+                return $permissionCheck;
             }
 
-            $empleado->imagen_perfil_url = null;
+            // Ownership explicit check: only owner may upload (frontend requires clear 403)
+            if (Auth::id() !== $empleado->id_user) {
+                Log::warning('Intento subir imagen por usuario no propietario', [
+                    'empleado_id' => $id,
+                    'empleado_user_id' => $empleado->id_user,
+                    'actor_user_id' => Auth::id()
+                ]);
+                return response()->json(['status' => 403, 'message' => 'No autorizado para este perfil'], 403);
+            }
+
+            DB::beginTransaction();
+
+            $service = app(FileUploadService::class);
+
+            // Server-side multipart upload
+            if ($request->hasFile('imagen')) {
+                $validator = Validator::make($request->all(), [
+                    'imagen' => 'required|file|mimes:jpg,jpeg,png,webp|max:2048', // max in KB -> 2048 KB = 2 MB
+                ]);
+
+                if ($validator->fails()) {
+                    DB::rollBack();
+                    return response()->json(["status" => 422, "message" => "Error de validación", "errors" => $validator->errors()], 422);
+                }
+
+                $archivo = $request->file('imagen');
+
+                $carpeta = "empleados/perfiles/{$id}";
+                // Preserve original extension (do not force conversion here)
+                $ext = $archivo->getClientOriginalExtension();
+                $filename = 'profile' . ($ext ? ".{$ext}" : '');
+
+                $res = $service->subir($archivo, $carpeta, $empleado->imagen_perfil, $empleado->imagen_perfil_url, [
+                    'delete_previous_cloud' => true,
+                    'delete_previous_local' => true,
+                    'filename' => $filename,
+                    'entity_id' => $id,
+                ]);
+
+                if (empty($res['url'])) {
+                    DB::rollBack();
+                    return response()->json(["status" => 500, "message" => "Fallo al subir la imagen"], 500);
+                }
+
+                $empleado->imagen_perfil = $res['public_id'] ?? null;
+                $empleado->imagen_perfil_url = $res['url'];
+                $empleado->save();
+
+                DB::commit();
+
+                // Always return consistent JSON using the upload result
+                return response()->json([
+                    "status" => 200,
+                    "message" => "Imagen actualizada correctamente",
+                    "data" => [
+                        'public_id' => $res['public_id'] ?? null,
+                        'url' => $res['url'] ?? null,
+                        'version' => time()
+                    ]
+                ]);
+            }
+
+            // Backwards compatible: client-provided public_id + secure_url
+            $validate = Validator::make($request->all(), [
+                'public_id' => 'required|string',
+                'secure_url' => 'required|url'
+            ]);
+
+            if ($validate->fails()) {
+                DB::rollBack();
+                return response()->json([
+                    "status" => 422,
+                    "message" => "Error de validación",
+                    "errors" => $validate->errors()
+                ], 422);
+            }
+
+            $expectedPrefix = "empleados/perfiles/{$id}/";
+            // Accept any public_id that resides under the employee's folder (frontend may provide generated filenames)
+            if (!str_starts_with($request->public_id, $expectedPrefix)) {
+                DB::rollBack();
+                Log::warning('public_id no coincide con la carpeta esperada del empleado', [
+                    'expected_prefix' => $expectedPrefix,
+                    'received' => $request->public_id,
+                    'user_id' => Auth::id(),
+                ]);
+                return response()->json(['status' => 403, 'message' => 'Imagen no autorizada para este perfil'], 403);
+            }
+
+            // Only accept secure_url coming from Cloudinary or from local storage (/storage/)
+            $secureUrl = $request->secure_url;
+            if (!(str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
+                DB::rollBack();
+                Log::warning('secure_url no válida para public_id del empleado', [
+                    'secure_url' => $secureUrl,
+                    'user_id' => Auth::id(),
+                ]);
+                return response()->json(['status' => 403, 'message' => 'URL de imagen no válida'], 403);
+            }
+
             $empleado->imagen_perfil = $request->public_id;
-            $empleado->imagen_perfil_url = $request->secure_url;
+            $empleado->imagen_perfil_url = $secureUrl;
             $empleado->save();
 
             DB::commit();
@@ -329,7 +412,6 @@ class EmpleadoController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-
             Log::error("Error actualizando imagen: " . $e->getMessage(), [
                 'exception' => $e,
                 'trace' => $e->getTraceAsString()
@@ -484,23 +566,36 @@ class EmpleadoController extends Controller
                 ], 404);
             }
 
+            // permission check
+            $permissionCheck = $this->checkPermissionMiddleware($id);
+            if ($permissionCheck) {
+                return $permissionCheck;
+            }
+
+            $service = app(FileUploadService::class);
+
             if ($empleado->imagen_perfil) {
-                Log::info('Intentando eliminar imagen de perfil:', ['public_id' => $empleado->imagen_perfil]);
-
+                Log::info('Intentando eliminar imagen de perfil (cloud):', ['public_id' => $empleado->imagen_perfil]);
                 try {
-                    $cloudinary = new Cloudinary();
-
-                    $result = $cloudinary->uploadApi()->destroy($empleado->imagen_perfil);
-                    Log::info('Resultado de eliminación:', ['result' => $result]);
+                    $service->eliminarPublicId($empleado->imagen_perfil);
                 } catch (\Exception $e) {
                     Log::warning("Error al eliminar imagen de Cloudinary: " . $e->getMessage());
-                    // Continuamos con la actualización en la base de datos
                 }
-
-                $empleado->imagen_perfil = null;
-                $empleado->imagen_perfil_url = null;
-                $empleado->save();
             }
+
+            // Si la URL anterior apunta al storage local, eliminar el archivo
+            if ($empleado->imagen_perfil_url && str_contains($empleado->imagen_perfil_url, '/storage/')) {
+                try {
+                    $relative = str_replace(asset('storage/'), '', $empleado->imagen_perfil_url);
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($relative);
+                } catch (\Exception $e) {
+                    Log::warning('No se pudo eliminar archivo local previo: ' . $e->getMessage());
+                }
+            }
+
+            $empleado->imagen_perfil = null;
+            $empleado->imagen_perfil_url = null;
+            $empleado->save();
 
             return response()->json([
                 'status' => 200,
