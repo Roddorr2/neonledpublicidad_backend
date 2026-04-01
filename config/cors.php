@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => array_values(array_filter([
+        env('APP_URL'),
+        env('WHATSAPP_API_URL'),
+    ])),
 
     'allowed_origins_patterns' => [],
 
