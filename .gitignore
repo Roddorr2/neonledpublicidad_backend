@@ -7,6 +7,8 @@
 /storage/key
 /storage/keys/*.pem
 /storage/pail
+/storage/debugbar
+/storage/logs
 /vendor
 /scripts/*
 .env
