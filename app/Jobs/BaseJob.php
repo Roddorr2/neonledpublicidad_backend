@@ -25,9 +25,19 @@ abstract class BaseJob implements ShouldQueue
     public $backoff = 60;
 
     /**
+     * Timeout en segundos para la ejecución del job
+     */
+    public $timeout = 120;
+
+    /**
      * Nombre del job para logging
      */
     protected string $jobName;
+
+    /**
+     * Contador de intentos actuales para logging
+     */
+    protected int $currentAttempt = 0;
 
     public function __construct()
     {
@@ -64,6 +74,32 @@ abstract class BaseJob implements ShouldQueue
     }
 
     /**
+     * Log de debug con contexto del job (para desarrollo)
+     */
+    protected function logDebug(string $message, array $context = []): void
+    {
+        Log::debug("[{$this->jobName}] {$message}", $context);
+    }
+
+    /**
+     * Determina si se debe reintentar basado en el número de intentos
+     * Útil para lógica condicional de reintentos
+     */
+    protected function shouldRetry(int $currentAttempt): bool
+    {
+        return $currentAttempt < $this->tries;
+    }
+
+    /**
+     * Obtiene el delay en segundos para el próximo reintento
+     * Puede ser sobrescrito en subclasses para lógica exponencial
+     */
+    protected function getRetryDelay(int $attempt): int
+    {
+        return $this->backoff;
+    }
+
+    /**
      * Manejo centralizado de fallos
      */
     protected function handleFailure(Throwable $e): void
@@ -72,6 +108,7 @@ abstract class BaseJob implements ShouldQueue
             'exception_class' => get_class($e),
             'message' => $e->getMessage(),
             'line' => $e->getLine(),
+            'file' => $e->getFile(),
         ]);
     }
 
@@ -84,5 +121,18 @@ abstract class BaseJob implements ShouldQueue
             'exception' => get_class($exception),
             'message' => $exception->getMessage(),
         ]);
+    }
+
+    /**
+     * Retorna información del job para debugging
+     */
+    protected function getJobInfo(): array
+    {
+        return [
+            'name' => $this->jobName,
+            'tries' => $this->tries,
+            'timeout' => $this->timeout,
+            'backoff' => $this->backoff,
+        ];
     }
 }
