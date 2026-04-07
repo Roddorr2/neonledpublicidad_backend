@@ -83,9 +83,8 @@ class SendWhatsAppJob implements ShouldQueue
 
     private function sendViaWhatsApp($modalservicio, $plantilla): string
     {
-        $base = rtrim(config('services.whatsapp.url'), '/');
-        $url = $base . '/api/whatsapp/send-message-image';
-        $apiKey = config('services.whatsapp.apikey');
+        $url = whatsapp_url('/api/whatsapp/send-message-image');
+        $apiKey = whatsapp_api_key();
 
         // Enviar teléfono tal como viene en la base de datos
         $telefono = $this->data['telefono'] ?? '';
