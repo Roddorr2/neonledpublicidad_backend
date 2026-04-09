@@ -228,20 +228,17 @@ class ModalesController extends Controller
             return response()->json(['error' => 'Modal no encontrado'], 404);
         }
 
-        $emails_modal = EmailModal::where('id_modalservicio', $id)->get();
-        $wats_modal = WatModal::where('id_modalservicio', $id)->get();
-
-        if($emails_modal != null){
-            foreach ($emails_modal as $email) {
+        EmailModal::where('id_modalservicio', $id)
+            ->get()
+            ->each(function (EmailModal $email): void {
                 $email->delete();
-            }
-        }
+            });
 
-        if($wats_modal != null){
-            foreach ($wats_modal as $wat) {
+        WatModal::where('id_modalservicio', $id)
+            ->get()
+            ->each(function (WatModal $wat): void {
                 $wat->delete();
-            }
-        }
+            });
 
         $modal->delete();
 
