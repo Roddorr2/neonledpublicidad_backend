@@ -87,9 +87,8 @@ class OrchestrateWhatsappCampaigns extends Command
                     'image_url' => $campaign?->imagen_url,
                 ];
 
-                $base = rtrim(config('services.whatsapp.url'), '/');
-                $url = $base . '/api/whatsapp/send-campaign-batch';
-                $apiKey = config('services.whatsapp.apikey');
+                $url = whatsapp_url('/api/whatsapp/send-campaign-batch');
+                $apiKey = whatsapp_api_key();
 
                 try {
                     $response = Http::withHeaders(['X-API-Key' => $apiKey])->post($url, $payload);
@@ -423,9 +422,8 @@ class OrchestrateWhatsappCampaigns extends Command
     private function attemptStartConnection()
     {
         try {
-            $base = rtrim(config('services.whatsapp.url'), '/');
-            $url = $base . '/api/whatsapp/start-connection';
-            $apiKey = config('services.whatsapp.apikey');
+            $url = whatsapp_url('/api/whatsapp/start-connection');
+            $apiKey = whatsapp_api_key();
 
             // Call /start-connection endpoint with API key
             $response = Http::withHeaders(['X-API-Key' => $apiKey])

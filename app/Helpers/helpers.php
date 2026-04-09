@@ -59,3 +59,26 @@ if (!function_exists('chunksArray')) {
         return array_chunk($array, $size);
     }
 }
+
+if (!function_exists('whatsapp_url')) {
+    /**
+     * Construye la URL completa para un endpoint de la API de WhatsApp
+     * @param string $path Ruta del endpoint (ej: '/api/whatsapp/health')
+     * @return string
+     */
+    function whatsapp_url(string $path): string
+    {
+        return rtrim(config('services.whatsapp.url'), '/') . '/' . ltrim($path, '/');
+    }
+}
+
+if (!function_exists('whatsapp_api_key')) {
+    /**
+     * Obtiene la API key del servicio WhatsApp desde la configuración
+     * @return string
+     */
+    function whatsapp_api_key(): string
+    {
+        return config('services.whatsapp.apikey') ?? '';
+    }
+}
