@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::table('cards', function (Blueprint $table) {
             
             $table->index('titulo');
-            $table->index('descripcion', 255); // Limitar a 255 caracteres 
             $table->index(['estado_publicacion', 'titulo']);
         });
 
