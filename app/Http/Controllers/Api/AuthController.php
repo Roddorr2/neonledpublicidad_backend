@@ -124,7 +124,8 @@ class AuthController extends Controller
                 ], 422);
             }
 
-            $user = User::where('email', $request->email)->first();
+            //$user = User::where('email', $request->email)->first();
+            $user = User::with('empleado.rol.permisos', 'cliente.rol.permisos')->where('email', $request->email)->first();
 
             if (!$user) {
                 $attemptResult = $this->registrarIntentoFallido(
