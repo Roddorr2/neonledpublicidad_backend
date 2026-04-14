@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+                if (Schema::hasTable('roles')) {
+            return;
+        }
+
+Schema::create('roles', function (Blueprint $table) {
             $table->id('id_rol');
             $table->string('nombre')->unique()->nullable(false);            
         });

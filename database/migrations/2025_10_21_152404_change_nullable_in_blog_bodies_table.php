@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blog_bodies', function (Blueprint $table) {
-            $table->text('public_image1')->nullable()->change();
-            $table->text('public_image2')->nullable()->change();
+            if (Schema::hasColumn('blog_bodies', 'public_image1')) {
+                $table->text('public_image1')->nullable()->change();
+            }
+
+            if (Schema::hasColumn('blog_bodies', 'public_image2')) {
+                $table->text('public_image2')->nullable()->change();
+            }
         });
     }
 
@@ -23,8 +28,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blog_bodies', function (Blueprint $table) {
-            $table->text('public_image1')->nullable(false)->change();
-            $table->text('public_image2')->nullable(false)->change();
+            if (Schema::hasColumn('blog_bodies', 'public_image1')) {
+                $table->text('public_image1')->nullable(false)->change();
+            }
+
+            if (Schema::hasColumn('blog_bodies', 'public_image2')) {
+                $table->text('public_image2')->nullable(false)->change();
+            }
         });
     }
 };

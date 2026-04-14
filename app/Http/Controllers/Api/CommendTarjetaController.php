@@ -48,10 +48,10 @@ class CommendTarjetaController extends Controller
         try{
 
             $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
-                'texto1' => 'required|string|max:255',
-                'texto2' => 'required|string|max:255',
-                'texto3' => 'required|string|max:255',
+                'titulo' => 'nullable|string|max:255',
+                'texto1' => 'nullable|string|max:255',
+                'texto2' => 'nullable|string|max:255',
+                'texto3' => 'nullable|string|max:255',
                 'texto4' => 'nullable|string|max:255',
                 'texto5' => 'nullable|string|max:255',
             ]);
@@ -67,7 +67,7 @@ class CommendTarjetaController extends Controller
                     [
                         'status'=> 404,
                         'message'=> 'Tarjeta no encontrada'
-                    ],200
+                    ],404
                 );
             }
 
@@ -87,10 +87,10 @@ class CommendTarjetaController extends Controller
             DB::rollback();
             return response()->json(
                 [
-                    'status'=> 400,
+                    'status'=> 500,
                     'message'=> 'Error interno del servidor',
                     'error' => $e->getMessage()
-                ],200
+                ],500
             );
         }
     }

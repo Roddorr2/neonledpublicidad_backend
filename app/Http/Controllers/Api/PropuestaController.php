@@ -12,10 +12,51 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Laravel\Facades\Image;
+use OpenApi\Attributes as OA;
 
 
 class PropuestaController extends Controller
 {
+    #[OA\Get(
+        path: '/cliente/{id}/propuestas',
+        summary: 'Obtener propuestas de un cliente',
+        description: 'Retorna todas las propuestas de un cliente específico incluyendo sus imágenes y videos',
+        tags: ['Propuestas'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                description: 'ID del cliente',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 5)
+            ),
+        ],
+        security: [
+            ['bearerAuth' => []],
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Propuestas encontradas exitosamente',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestasListSuccessResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Cliente no encontrado o no tiene propuestas',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestaNotFoundResponse')
+            ),
+            new OA\Response(
+                response: 422,
+                description: 'Datos de validación inválidos',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestaValidationErrorResponse')
+            ),
+            new OA\Response(
+                response: 500,
+                description: 'Error del servidor',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestaServerErrorResponse')
+            ),
+        ]
+    )]
     public function GetAll_Cliente($id_cliente) //retorna todas las propuestas de un cliente ,necesita de id_cliente
     {
         try {
@@ -76,6 +117,32 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
+    #[OA\Get(
+        path: '/propuestas',
+        summary: 'Obtener todas las propuestas',
+        description: 'Retorna todas las propuestas del sistema incluyendo información del cliente, imágenes y videos',
+        tags: ['Propuestas'],
+        security: [
+            ['bearerAuth' => []],
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Propuestas encontradas exitosamente',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestasAllListSuccessResponse')
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'No se encontraron propuestas',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestaNotFoundResponse')
+            ),
+            new OA\Response(
+                response: 500,
+                description: 'Error del servidor',
+                content: new OA\JsonContent(ref: '#/components/schemas/PropuestaServerErrorResponse')
+            ),
+        ]
+    )]
     public function GetAll()
     {
         try {

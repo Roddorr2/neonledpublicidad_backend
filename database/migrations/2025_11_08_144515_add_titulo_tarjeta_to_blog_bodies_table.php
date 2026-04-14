@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blog_bodies', function (Blueprint $table) {
-            $table->text('titulo_tarjeta')->nullable()->after('flag_informacion');
+            if (! Schema::hasColumn('blog_bodies', 'titulo_tarjeta')) {
+                $table->text('titulo_tarjeta')->nullable()->after('flag_informacion');
+            }
         });
     }
 
@@ -22,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blog_bodies', function (Blueprint $table) {
-            $table->dropColumn('titulo_tarjeta');
+            if (Schema::hasColumn('blog_bodies', 'titulo_tarjeta')) {
+                $table->dropColumn('titulo_tarjeta');
+            }
         });
     }
 };

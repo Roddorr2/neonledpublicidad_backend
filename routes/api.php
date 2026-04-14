@@ -30,10 +30,10 @@ use App\Http\Controllers\Api\PlantillasWhatsappController;
 use App\Http\Controllers\Api\PlantillasEmailController;
 
 // rutas públicas
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/reset_password', [AuthController::class, "forgotPassword"]);
-Route::post('/update_password', [AuthController::class, "updatePassword"]);
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:register');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
+Route::post('/reset_password', [AuthController::class, "forgotPassword"])->middleware('throttle:reset_password');
+Route::post('/update_password', [AuthController::class, "updatePassword"])->middleware('throttle:update_password');
 
 Route::post('/contactanos', [ContactanosController::class, "create"]);
 Route::post('/reclamaciones', [ReclamacionesController::class, "create"]);
@@ -58,6 +58,7 @@ Route::get('/plantillas/email/{id_producto}/{numero_plantilla}', [PlantillasEmai
 
 // blogs públicos para ver los clientes
 Route::get('/cards_public', [CardController::class, "index_public"]);
+Route::get('/cards/search', [CardController::class, "search"]); // Búsqueda optimizada con cache
 // Route::get('/cards', [CardController::class, "index"]);
 
 Route::get('/blogs/{id}', [BlogController::class, "show"]);
@@ -115,6 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);
 
     Route::middleware('permission:ver-blogs')->get('/cards', [CardController::class, "index"]);
+    Route::middleware('permission:ver-blogs')->get('/tarjetas', [TarjetaController::class, "index"]);
 
     Route::middleware('permission:ver-contactos')->get('/contactanos', [ContactanosController::class, "get"]);
     Route::middleware('permission:ver-reclamaciones')->get('/reclamaciones', [ReclamacionesController::class, "get"]);

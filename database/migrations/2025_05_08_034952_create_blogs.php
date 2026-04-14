@@ -11,7 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+                if (Schema::hasTable('blogs')) {
+            return;
+        }
+
+Schema::create('blogs', function (Blueprint $table) {
             $table->id('id_blog');
             $table->foreignId('id_blog_head')->unique()->references('id_blog_head')->on('blog_heads')->onDelete('cascade');
             $table->foreignId('id_blog_body')->unique()->references('id_blog_body')->on('blog_bodies')->onDelete('cascade');

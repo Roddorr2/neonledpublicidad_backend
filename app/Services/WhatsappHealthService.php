@@ -33,10 +33,8 @@ class WhatsappHealthService
      */
     private static function performHealthCheck()
     {
-        $base = rtrim(config('services.whatsapp.url'), '/');
-        // Use strict health endpoint that validates API key + webhooks
-        $url = $base . '/api/whatsapp/health';
-        $apiKey = config('services.whatsapp.apikey');
+        $url = whatsapp_url('/api/whatsapp/health');
+        $apiKey = whatsapp_api_key();
         $maxRetries = 2;
         $retryDelayMs = 100;
 

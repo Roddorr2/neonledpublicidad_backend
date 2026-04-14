@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\DB;
 
 class TarjetaController extends Controller
 {
+    public function index()
+    {
+        try {
+            $tarjetas = Tarjeta::all();
+            return response()->json($tarjetas, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function showAll(int $id)
     {
         try{
@@ -125,19 +135,16 @@ class TarjetaController extends Controller
     {
         try{
 
-            $tarjetas = Tarjeta::where('id_blog_body', $id)->get();
+            $deletedRows = Tarjeta::where('id_blog_body', $id)->delete();
 
-            if (!$tarjetas) {
+            if ($deletedRows === 0) {
                 return response()->json(['error' => 'No se encontraron tarjetas'], 404);
-            }
-
-            foreach ($tarjetas as $tarjeta) {
-                $tarjeta->delete();
             }
 
             return response()->json([
                 "status" => 200,
-                "message" => "Tarjetas eliminadas correctamente"
+                "message" => "Tarjetas eliminadas correctamente",
+                "deleted" => $deletedRows
                 ], 200);
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 500);
