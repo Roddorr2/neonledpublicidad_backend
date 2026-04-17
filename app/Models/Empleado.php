@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Cloudinary\Cloudinary;
+use App\Traits\HasFullName;
+use App\Traits\HasContactInfo;
 class   Empleado extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasFullName, HasContactInfo;
 
     protected $table = 'empleados';
     protected $primaryKey = 'id_empleado';
@@ -65,16 +67,6 @@ class   Empleado extends Model
     public function blogAuditoria(): HasMany
     {
         return $this->hasMany(BlogAuditoria::class, 'id_empleado', 'id_empleado');
-    }
-
-    public function getNombreCompleto(): string
-    {
-        return "{$this->nombre} {$this->apellido}";
-    }
-
-    public function getContacto(): string
-    {
-        return "{$this->email} | {$this->telefono}";
     }
 
     public function puedeAcceder(): bool

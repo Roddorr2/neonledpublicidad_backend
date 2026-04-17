@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\HasFullName;
+use App\Traits\HasContactInfo;
 
 class Cliente extends Model
 {
-
-    use HasFactory;
+    use HasFactory, HasFullName, HasContactInfo;
     protected $table = 'clientes';
     public $timestamps = false;
     // protected $primaryKey = 'id_cliente';
@@ -39,16 +40,6 @@ class Cliente extends Model
     public function propuestas(): HasMany
     {
         return $this->hasMany(Propuesta::class, 'id_cliente', 'id');
-    }
-
-    public function getNombreCompleto(): string
-    {
-        return "{$this->nombre} {$this->apellido}";
-    }
-
-    public function getContacto(): string
-    {
-        return "{$this->email} | {$this->telefono}";
     }
 
     public function tienePropuestas(): bool
