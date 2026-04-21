@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreContactoRequest;
+use App\Http\Requests\UpdateContactoEstadoRequest;
 use App\Models\Contactanos;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -31,8 +33,11 @@ class ContactanosController extends Controller
         ], 200);
     }
 
-    public function create(Request $request)
-    {
+    public function create(
+        //Request $request
+        StoreContactoRequest $request
+    ) {
+        /*
         $validated = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -57,9 +62,19 @@ class ContactanosController extends Controller
             'status' => 201,
             'message' => 'Contacto guardado exitosamente'
         ], 201);
+        */
+        $request->validated();
+        return response()->json([
+            'status' => 201,
+            'message' => 'Contacto guardado exitosamente'
+        ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(
+        //Request $request,
+        UpdateContactoEstadoRequest $request,
+        $id
+    )
     {
         $contacto = Contactanos::find($id);
 
@@ -67,9 +82,13 @@ class ContactanosController extends Controller
             return response()->json(['error' => 'Contacto no encontrado'], 404);
         }
 
+        /*
         $validated = $request->validate([
             'estado' => 'required|boolean',
         ]);
+        */
+
+        $request->validated();
 
         $contacto->update([
             'estado' => $request->estado,
