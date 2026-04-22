@@ -29,6 +29,7 @@ class WhatsAppCampaignController extends Controller
         'p13' => 13,
         'p14' => 14,
         'p15' => 15,
+        'p16' => 16,
     ];
 
     /**
@@ -63,7 +64,7 @@ class WhatsAppCampaignController extends Controller
     public function createCampaign(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'service' => 'required|string|in:p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15',
+            'service' => 'required|string|in:p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16',
             'paragraph' => 'required|string|min:10|max:1000',
             'image' => 'required|file|image',
         ]);

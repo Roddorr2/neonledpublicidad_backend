@@ -358,6 +358,29 @@ class ProductoSeeder extends Seeder
                 "iluminacion_descrip" => "",
                 "durabilidad_descrip" => "",
                 "estado" => 1
+            ],
+            // CAJAS LUMINOSAS (sin info previa)
+            [
+                "id_empleado" => 2,
+                "nombre" => "CAJAS LUMINOSAS",
+                "descripcion" => "",
+                "path_main" => "cajas_luminosas_main.jpg",
+                "path_background" => "cajas_luminosas_bg.jpg",
+                "path1" => "cajas_luminosas1.jpg",
+                "tituloimg1" => "",
+                "descripcionimg1" => "",
+                "path2" => "cajas_luminosas2.jpg",
+                "tituloimg2" => "",
+                "descripcionimg2" => "",
+                "path3" => "cajas_luminosas3.jpg",
+                "tituloimg3" => "",
+                "descripcionimg3" => "",
+                "caracteristicas_descrip" => "",
+                "ventajas_descrip" => "",
+                "consumoenergetico_descrip" => "",
+                "iluminacion_descrip" => "",
+                "durabilidad_descrip" => "",
+                "estado" => 1
             ]
         ];
 

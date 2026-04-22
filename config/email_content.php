@@ -1453,5 +1453,92 @@ return [
                 ],
             ],
         ],
+
+        // ----------------------------------------------------
+        // 16. CAJAS LUMINOSAS
+        // ----------------------------------------------------
+        16 => [
+            'messages' => [
+                1 => [
+                    'subject' => 'Cajas luminosas que hacen visible tu marca dia y noche',
+                    'title' => 'Cajas Luminosas!',
+                    'message' => '<p>
+                                    Gracias por tu interes en nuestras <strong>cajas luminosas personalizadas</strong>.
+                                    Son una excelente opcion para destacar fachadas, vitrinas y puntos de venta
+                                    con una imagen profesional y de alto impacto.
+                                </p>
+                                <p>
+                                    Fabricamos cajas luminosas con estructura resistente e iluminacion LED
+                                    de bajo consumo, adaptadas al tamano, color y estilo de tu marca.
+                                </p>
+                                <p><strong>Ideales para:</strong></p>
+                                <ul>
+                                    <li>Locales comerciales y franquicias</li>
+                                    <li>Restaurantes y cafeterias</li>
+                                    <li>Centros de salud y oficinas</li>
+                                    <li>Negocios que buscan mayor visibilidad nocturna</li>
+                                </ul>',
+                    'image' => '/assets/16-cajas-luminosas/flyer-modal-16-1.jpg',
+                    'extra' => '<p>
+                                    👉 <strong>Escribenos y cotiza tu caja luminosa a medida.</strong><br>
+                                    📱 WhatsApp: +51 994 078 320<br>
+                                    🌐 <a href="https://www.ledneonpublicidad.com">www.ledneonpublicidad.com</a>
+                                </p>',
+                ],
+                2 => [
+                    'subject' => 'Haz que te encuentren mas rapido con una caja luminosa',
+                    'title' => 'Cajas Luminosas!',
+                    'message' => '<p>
+                                    Una <strong>caja luminosa bien disenada</strong> mejora la presencia de tu negocio
+                                    y facilita que tus clientes te identifiquen desde lejos.
+                                </p>
+                                <p>
+                                    En Neon Led Publicidad desarrollamos soluciones personalizadas para que
+                                    tu marca proyecte confianza, orden y profesionalismo durante todo el dia.
+                                </p>
+                                <p><strong>Beneficios clave:</strong></p>
+                                <ul>
+                                    <li>Mayor recordacion de marca</li>
+                                    <li>Iluminacion uniforme y atractiva</li>
+                                    <li>Materiales durables para exterior e interior</li>
+                                    <li>Acabado alineado a tu identidad visual</li>
+                                </ul>',
+                    'image' => '/assets/16-cajas-luminosas/flyer-modal-16-2.jpg',
+                    'extra' => '<p>
+                                    📞 <strong>Agenda una asesoria:</strong> 994 078 320<br>
+                                    📍 Lima - Peru<br>
+                                    🌐 <a href="https://www.ledneonpublicidad.com">www.ledneonpublicidad.com</a>
+                                </p>',
+                ],
+                3 => [
+                    'subject' => 'Tu marca encendida 24/7 con cajas luminosas de alto impacto',
+                    'title' => 'Cajas Luminosas!',
+                    'message' => '<p>
+                                    Si buscas una solucion visual efectiva para diferenciarte de tu competencia,
+                                    nuestras <strong>cajas luminosas</strong> son la opcion ideal.
+                                </p>
+                                <p>
+                                    Combinan diseno, tecnologia LED y fabricacion profesional para lograr
+                                    una senalizacion moderna, legible y atractiva en cualquier horario.
+                                </p>
+                                <p>
+                                    Nuestro equipo te acompana en todo el proceso: diseno, fabricacion e instalacion,
+                                    para que obtengas un resultado final alineado con tu objetivo comercial.
+                                </p>
+                                <p><strong>👉 Cotiza hoy y dale mas visibilidad a tu negocio.</strong></p>',
+                    'image' => '/assets/16-cajas-luminosas/flyer-modal-16-3.jpg',
+                    'extra' => '<p>
+                                    📲 <strong>Contacto directo:</strong> +51 994 078 320<br>
+                                    🌐 <a href="https://www.ledneonpublicidad.com">www.ledneonpublicidad.com</a>
+                                </p>
+                                <p>
+                                    Siguenos en redes:<br>
+                                    📸 Instagram: @neonledpublicidad<br>
+                                    📘 Facebook: Neon LED Publicidad<br>
+                                    🎥 TikTok: @neonledpublicidad
+                                </p>',
+                ],
+            ],
+        ],
     ],
 ];

@@ -111,6 +111,11 @@ class PlantillasWhatsappSeeder extends Seeder
                 2 => "✨ Impacto visual que se nota\n Las Letras de Neón en Vidrio mejoran la visibilidad de tu negocio, especialmente de noche, haciendo que tu local sea fácil de identificar y recordar.",
                 3 => "Las Letras de Neón en tubos de vidrio atraen miradas y diferencian tu marca 🔥\nEleva la imagen de tu negocio y genera mayor interés de clientes.",
             ],
+            16 => [
+                1 => "✨ Cajas luminosas personalizadas\nFabricadas con estructura resistente e iluminación LED de alta eficiencia. Son ideales para fachadas y puntos de venta que necesitan máxima visibilidad.",
+                2 => "👀 Haz que tu negocio se vea desde lejos\nLas cajas luminosas atraen miradas de día y de noche, mejoran la recordación de marca y proyectan una imagen profesional.",
+                3 => "🚀 Tu marca encendida 24/7\nCon acabados a medida, bajo consumo y gran impacto visual, las cajas luminosas son una inversión efectiva para destacar frente a la competencia.",
+            ],
         ];
     }
 }
