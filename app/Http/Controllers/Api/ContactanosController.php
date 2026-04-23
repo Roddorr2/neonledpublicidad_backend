@@ -63,7 +63,13 @@ class ContactanosController extends Controller
             'message' => 'Contacto guardado exitosamente'
         ], 201);
         */
-        $request->validated();
+        $data=$request->validated();
+
+        $data['estado'] = 0; // Estado inicial (pendiente)
+        $data['fecha_hora'] = Carbon::now();
+
+        Contactanos::create($data);
+
         return response()->json([
             'status' => 201,
             'message' => 'Contacto guardado exitosamente'

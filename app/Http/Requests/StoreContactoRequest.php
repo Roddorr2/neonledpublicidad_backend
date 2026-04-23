@@ -48,7 +48,7 @@ class StoreContactoRequest extends FormRequest
             'telefono' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (validarTelefonoPeruano($value)) {
+                    if (!validarTelefonoPeruano($value)) {
                         $fail('Formato de telefono invalido');
                     }
                 }
