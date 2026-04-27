@@ -359,20 +359,20 @@ class ProductoSeeder extends Seeder
                 "durabilidad_descrip" => "",
                 "estado" => 1
             ],
-            // CAJAS LUMINOSAS
+            // CAJAS LUMINOSAS (sin info previa)
             [
                 "id_empleado" => 2,
                 "nombre" => "CAJAS LUMINOSAS",
                 "descripcion" => "",
-                "path_main" => "cajas_main.jpg",
-                "path_background" => "cajas_bg.jpg",
-                "path1" => "cajas.jpg",
+                "path_main" => "cajas_luminosas_main.jpg",
+                "path_background" => "cajas_luminosas_bg.jpg",
+                "path1" => "cajas_luminosas1.jpg",
                 "tituloimg1" => "",
                 "descripcionimg1" => "",
-                "path2" => "cajas2.jpg",
+                "path2" => "cajas_luminosas2.jpg",
                 "tituloimg2" => "",
                 "descripcionimg2" => "",
-                "path3" => "cajas3.jpg",
+                "path3" => "cajas_luminosas3.jpg",
                 "tituloimg3" => "",
                 "descripcionimg3" => "",
                 "caracteristicas_descrip" => "",
@@ -387,3 +387,4 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert($productos);
     }
 }
+

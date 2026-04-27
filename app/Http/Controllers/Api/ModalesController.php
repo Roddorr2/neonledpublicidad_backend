@@ -47,7 +47,7 @@ class ModalesController extends Controller
                 'nombre' => 'required|string|max:100',
                 'telefono' => 'required|string|max:9',
                 'correo' => 'required|email|max:200',
-                'id_producto' => 'required|integer|min:1|max:15',
+                'id_producto' => 'required|integer|exists:productos,id_producto',
             ]);
 
             DB::beginTransaction();
