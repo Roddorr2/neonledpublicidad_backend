@@ -19,18 +19,23 @@ class Propuesta extends Model
     {
         return $this->belongsTo(Cliente::class, 'id_cliente', 'id');
     }
-    public function getCantidadImagenesAttribute()
+    public function getCantidadImagenesAttribute(): int
     {
         $path = "cliente/{$this->id_cliente}/propuestas/{$this->id}/imagenes/";
         return count(Storage::disk('public')->files($path));
     }
-    public function getCantidadVideosAttribute()
+    public function getCantidadVideosAttribute(): int
     {
         $path = "cliente/{$this->id_cliente}/propuestas/{$this->id}/videos/";
         return count(Storage::disk('public')->files($path));
     }
-        public function getFechaFormateadaAttribute()
+    public function getFechaFormateadaAttribute(): string|null
     {
         return $this->created_at ? $this->created_at->format('d/m/Y') : null;
+    }
+
+    public function estaCompleta(): bool
+    {
+        return !empty($this->nombre) && !empty($this->descripcion);
     }
 }
