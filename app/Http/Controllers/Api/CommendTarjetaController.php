@@ -5,26 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CommendTarjeta;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreCommendTarjetaRequest;
+use App\Http\Requests\UpdateCommendTarjetaRequest;
 use Illuminate\Support\Facades\DB;
 
 class CommendTarjetaController extends Controller
 {
-    public function create(Request $request)
+   public function create(StoreCommendTarjetaRequest $request)
     {
         try{
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'nullable|string|max:255',
-                'texto1' => 'nullable|string|max:255',
-                'texto2' => 'nullable|string|max:255',
-                'texto3' => 'nullable|string|max:255',
-                'texto4' => 'nullable|string|max:255',
-                'texto5' => 'nullable|string|max:255',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
+           
 
             DB::beginTransaction();
 
@@ -44,21 +34,10 @@ class CommendTarjetaController extends Controller
         }
     }
 
-    public function update(Request $request,int $id){
+    public function update(UpdateCommendTarjetaRequest $request, int $id){
         try{
 
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'nullable|string|max:255',
-                'texto1' => 'nullable|string|max:255',
-                'texto2' => 'nullable|string|max:255',
-                'texto3' => 'nullable|string|max:255',
-                'texto4' => 'nullable|string|max:255',
-                'texto5' => 'nullable|string|max:255',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
+           
 
             $tarjeta = CommendTarjeta::find($id);
 
