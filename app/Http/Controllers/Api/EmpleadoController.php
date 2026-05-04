@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEmpleadoRequest;
+use App\Http\Requests\UpdateEmpleadoPasswordRequest;
+use App\Http\Requests\UpdateEmpleadoProfileImageRequest;
+use App\Http\Requests\UpdateEmpleadoRequest;
 use App\Models\Empleado;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -125,8 +129,11 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function create(Request $request)
-    {
+    public function create(
+        //Request $request
+        StoreEmpleadoRequest $request
+    ) {
+        /*
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -180,6 +187,54 @@ class EmpleadoController extends Controller
                 "error" => $e->getMessage()
             ], 500);
         }
+        */
+        try {
+
+            $data = $request->validated();
+
+            $result = DB::transaction(function () use ($data) {
+
+                $password = $this->createPassword(
+                    $data['dni'],
+                    $data['nombre'],
+                    $data['apellido']
+                );
+
+                $user = User::create([
+                    'name' => $data['nombre'] . ' ' . $data['apellido'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($password),
+                ]);
+
+                $empleado = Empleado::create([
+                    'nombre' => $data['nombre'],
+                    'apellido' => $data['apellido'],
+                    'email' => $data['email'],
+                    'dni' => $data['dni'],
+                    'telefono' => $data['telefono'] ?? null,
+                    'id_user' => $user->id,
+                    'id_rol' => $data['id_rol'],
+                ]);
+
+                return compact('user', 'empleado', 'password');
+            });
+
+            Mail::to($result['user']->email)
+                ->send(new CredencialesEmpleadoMail($result['user'], $result['password']));
+
+            return response()->json([
+                "status" => 200,
+                "message" => "Empleado creado correctamente",
+                "user" => $result['user'],
+                "empleado" => $result['empleado'],
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Error al crear empleado",
+                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+            ], 500);
+        }
     }
 
     private function createPassword(string $dni, string $nombre, string $apellidos)
@@ -192,7 +247,7 @@ class EmpleadoController extends Controller
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
 
-        $password= "{$apellidoIniciales}{$dniParte}";
+        $password = "{$apellidoIniciales}{$dniParte}";
 
         for ($i = 0; $i < 5; $i++) {
             $password .= $characters[rand(0, $charactersLength - 1)];
@@ -203,8 +258,12 @@ class EmpleadoController extends Controller
         return $password;
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(
+        //Request $request,
+        UpdateEmpleadoRequest $request,
+        $id
+    ) {
+        /*
         $validate = Validator::make(["id" => $id], [
             "id" => "required|numeric",
         ]);
@@ -270,11 +329,55 @@ class EmpleadoController extends Controller
             "message" => "Empleado actualizado correctamente",
             "data"    => $empleado
         ]);
+        */
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
+        }
+
+        $empleado = Empleado::where('id_empleado', $id)->first();
+
+        if (!$empleado) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Empleado no encontrado"
+            ]);
+        }
+
+        $data = $request->validated();
+
+        $user = User::find($empleado->id_user);
+
+        if ($user) {
+            if (isset($data['email']) && $data['email'] !== $empleado->email) {
+                $user->email = $data['email'];
+            }
+
+            if (isset($data['nombre']) || isset($data['apellido'])) {
+                $nombre   = $data['nombre'] ?? $empleado->nombre;
+                $apellido = $data['apellido'] ?? $empleado->apellido;
+                $user->name = $nombre . ' ' . $apellido;
+            }
+
+            $user->save();
+        }
+
+        $empleado->update($data);
+
+        return response()->json([
+            "status"  => 200,
+            "message" => "Empleado actualizado correctamente",
+            "data"    => $empleado
+        ]);
     }
 
 
-    public function updateProfileImage(Request $request, $id)
-    {
+    public function updateProfileImage(
+        //Request $request,
+        UpdateEmpleadoProfileImageRequest $request,
+        $id
+    ) {
+        /*
         // Support two modes:
         // - Client sends multipart file 'imagen' -> server uploads via FileUploadService
         // - Client sends 'public_id' and 'secure_url' (existing flow)
@@ -409,7 +512,6 @@ class EmpleadoController extends Controller
                     'version' => time()
                 ]
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("Error actualizando imagen: " . $e->getMessage(), [
@@ -423,11 +525,119 @@ class EmpleadoController extends Controller
                 "error" => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor'
             ], 500);
         }
+        */
+
+        try {
+            $empleado = Empleado::where('id_empleado', $id)->first();
+
+            if (!$empleado) {
+                return response()->json([
+                    "status" => 404,
+                    "message" => "Empleado no encontrado"
+                ], 404);
+            }
+
+            // permisos
+            $permissionCheck = $this->checkPermissionMiddleware($id);
+            if ($permissionCheck) return $permissionCheck;
+
+            if (Auth::id() !== $empleado->id_user) {
+                return response()->json([
+                    'status' => 403,
+                    'message' => 'No autorizado para este perfil'
+                ], 403);
+            }
+
+            $data = DB::transaction(function () use ($request, $empleado, $id) {
+
+                $service = app(FileUploadService::class);
+
+                // 🔵 MODO ARCHIVO
+                if ($request->hasFile('imagen')) {
+
+                    $archivo = $request->file('imagen');
+
+                    $carpeta = "empleados/perfiles/{$id}";
+                    $ext = $archivo->getClientOriginalExtension();
+                    $filename = 'profile' . ($ext ? ".{$ext}" : '');
+
+                    $res = $service->subir(
+                        $archivo,
+                        $carpeta,
+                        $empleado->imagen_perfil,
+                        $empleado->imagen_perfil_url,
+                        [
+                            'delete_previous_cloud' => true,
+                            'delete_previous_local' => true,
+                            'filename' => $filename,
+                            'entity_id' => $id,
+                        ]
+                    );
+
+                    if (empty($res['url'])) {
+                        throw new \Exception("Fallo al subir la imagen");
+                    }
+
+                    $empleado->imagen_perfil = $res['public_id'] ?? null;
+                    $empleado->imagen_perfil_url = $res['url'];
+
+                    $empleado->save();
+
+                    return [
+                        'public_id' => $res['public_id'] ?? null,
+                        'url' => $res['url'] ?? null,
+                        'version' => time()
+                    ];
+                }
+
+                // 🟣 MODO MANUAL
+                $publicId = $request->public_id;
+                $secureUrl = $request->secure_url;
+
+                $expectedPrefix = "empleados/perfiles/{$id}/";
+
+                if (!str_starts_with($publicId, $expectedPrefix)) {
+                    throw new \Exception("Imagen no autorizada para este perfil");
+                }
+
+                if (!(str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
+                    throw new \Exception("URL de imagen no válida");
+                }
+
+                $empleado->imagen_perfil = $publicId;
+                $empleado->imagen_perfil_url = $secureUrl;
+                $empleado->save();
+
+                return [
+                    'public_id' => $empleado->imagen_perfil,
+                    'url' => $empleado->imagen_perfil_url,
+                    'version' => time()
+                ];
+            });
+
+            return response()->json([
+                "status" => 200,
+                "message" => "Imagen actualizada correctamente",
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            Log::error("Error actualizando imagen: " . $e->getMessage());
+
+            return response()->json([
+                "status" => 500,
+                "message" => "Error al actualizar la imagen",
+                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+            ], 500);
+        }
     }
 
 
-    public function updatePass(Request $request, $id)
-    {
+    public function updatePass(
+        //Request $request,
+        UpdateEmpleadoPasswordRequest $request,
+        $id
+    ) {
+        /*
         $validate = Validator::make(["id" => $id], [
             "id" => "required|numeric",
         ]);
@@ -445,6 +655,33 @@ class EmpleadoController extends Controller
         $userId = $empleado->id_user;
 
         return $this->updatePass1($request, $userId);
+        */
+
+        $empleado = Empleado::where('id_empleado', $id)->first();
+
+        if (!$empleado) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Empleado no encontrado"
+            ]);
+        }
+
+        $user = User::find($empleado->id_user);
+
+        if (!$user) {
+            return response()->json([
+                "status" => 404,
+                "message" => "Usuario no encontrado"
+            ]);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            "status" => 200,
+            "message" => "Contraseña actualizada correctamente"
+        ]);
     }
 
     private function updatePass1(Request $request, $id)
@@ -474,6 +711,7 @@ class EmpleadoController extends Controller
 
     public function verifyPassword(Request $request)
     {
+        /*
         try {
             $request->validate([
                 'currentPassword' => 'required',
@@ -504,6 +742,34 @@ class EmpleadoController extends Controller
             return response()->json([
                 'error' => 'Ocurrió un error al procesar la solicitud',
                 'message' => $e->getMessage()
+            ], 500);
+        }
+        */
+        try {
+            $empleado = Empleado::with('user')->findOrFail($request->id_empleado);
+
+            if (!$empleado->user) {
+                return response()->json([
+                    'valid' => false,
+                    'message' => 'No se encontró el usuario asociado al empleado'
+                ], 404);
+            }
+
+            if (!Hash::check($request->currentPassword, $empleado->user->password)) {
+                return response()->json([
+                    'valid' => false,
+                    'message' => 'La contraseña actual es incorrecta'
+                ], 400);
+            }
+
+            return response()->json([
+                'valid' => true,
+                'message' => 'Contraseña verificada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error al procesar la solicitud',
+                'message' => config('app.debug') ? $e->getMessage() : 'Error interno'
             ], 500);
         }
     }
@@ -601,7 +867,6 @@ class EmpleadoController extends Controller
                 'status' => 200,
                 'message' => 'Imagen eliminada correctamente'
             ]);
-
         } catch (\Exception $e) {
             Log::error("Error eliminando imagen de perfil: " . $e->getMessage(), [
                 'exception' => $e,
