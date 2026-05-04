@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use App\Models\Empleado;
 use App\Models\Rol;
@@ -22,8 +25,11 @@ use OpenApi\Attributes as OA;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
+    public function register(
+        //Request $request
+        RegisterRequest $request
+    ) {
+        /*
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -82,10 +88,59 @@ class AuthController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+        */
+        DB::beginTransaction();
+
+        try {
+            $data = $request->validated();
+
+            // crear usuario
+            $user = User::create([
+                'name' => $data['nombre'] . ' ' . $data['apellido'],
+                'email' => $data['email'],
+                'password' => Hash::make('1234'),
+            ]);
+
+            // crear empleado
+            $empleado = Empleado::create([
+                'nombre' => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'email' => $data['email'],
+                'dni' => $data['dni'],
+                'telefono' => $data['telefono'] ?? null,
+                'id_user' => $user->id,
+                'id_rol' => $data['id_rol'],
+            ]);
+
+            DB::commit();
+
+            $rol = Rol::find($data['id_rol']);
+            $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Usuario registrado exitosamente',
+                'user' => $user,
+                'empleado' => $empleado,
+                'rol' => $rol->nombre,
+                'token' => $token,
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al registrar usuario',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function login(Request $request)
-    {
+    public function login(
+        //Request $request
+        LoginRequest $request
+    ) {
+        /*
         try {
             $request->validate([
                 'email' => 'required|email',
@@ -206,6 +261,129 @@ class AuthController extends Controller
                 'error' => config('app.debug') ? $e->getMessage() : null,
             ], 500);
         }
+        */
+
+        try {
+            $data = $request->validated();
+
+            $normalizedEmail = $data['email'];
+            $backoffKey = 'login_backoff:' . $normalizedEmail;
+            $attemptsKey = 'login_attempts:' . $normalizedEmail;
+
+            $activeBackoffSeconds = $this->obtenerEsperaBackoffSegundos($backoffKey);
+
+            if ($activeBackoffSeconds > 0) {
+                $attemptResult = $this->registrarIntentoFallido(
+                    $attemptsKey,
+                    $backoffKey,
+                    $request,
+                    'blocked_by_backoff'
+                );
+
+                return $this->responderBloqueoBackoff(
+                    $request,
+                    max($activeBackoffSeconds, $attemptResult['wait_seconds'])
+                );
+            }
+
+            // Validar Turnstile
+            if (!$this->validarTurnstile($data['turnstile_token'], $request->ip())) {
+                Log::warning('Turnstile verification failed', [
+                    'email' => $data['email'],
+                    'ip' => $request->ip()
+                ]);
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Verificación de seguridad fallida. Recarga la página e inténtalo de nuevo.'
+                ], 422);
+            }
+
+            $user = User::with('empleado.rol.permisos', 'cliente.rol.permisos')
+                ->where('email', $data['email'])
+                ->first();
+
+            if (!$user) {
+                $attemptResult = $this->registrarIntentoFallido(
+                    $attemptsKey,
+                    $backoffKey,
+                    $request,
+                    'user_not_found'
+                );
+
+                if ($attemptResult['wait_seconds'] > 0) {
+                    return $this->responderBloqueoBackoff($request, $attemptResult['wait_seconds']);
+                }
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'El email o la contraseña son incorrectos.'
+                ], 401);
+            }
+
+            if (!Hash::check($data['password'], $user->password)) {
+                $attemptResult = $this->registrarIntentoFallido(
+                    $attemptsKey,
+                    $backoffKey,
+                    $request,
+                    'wrong_password'
+                );
+
+                if ($attemptResult['wait_seconds'] > 0) {
+                    return $this->responderBloqueoBackoff($request, $attemptResult['wait_seconds']);
+                }
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'El email o la contraseña son incorrectos.',
+                ], 401);
+            }
+
+            // limpiar intentos
+            Cache::forget($backoffKey);
+            Cache::forget($attemptsKey);
+
+            $empleado = $user->empleado;
+            $cliente = $user->cliente;
+
+            if ($empleado && $empleado->rol) {
+                $rol = $empleado->rol;
+                $permisos = $rol->permisos->pluck('slug')->toArray();
+                $tipo = 'empleado';
+                $info = $empleado;
+            } elseif ($cliente && $cliente->rol) {
+                $rol = $cliente->rol;
+                $permisos = $rol->permisos->pluck('slug')->toArray();
+                $tipo = 'cliente';
+                $info = $cliente;
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'El usuario no tiene un rol asignado'
+                ], 403);
+            }
+
+            // eliminar tokens anteriores
+            $user->tokens()->delete();
+
+            // generar nuevo token
+            $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'user' => $user,
+                $tipo => $info,
+                'rol' => $rol->nombre,
+                'permisos' => $permisos,
+                'token' => $token,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ocurrió un error en el servidor',
+                'error' => config('app.debug') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 
     //logout
@@ -219,13 +397,44 @@ class AuthController extends Controller
         ]);
     }
 
-    public function forgotPassword(Request $request)
-    {
+    public function forgotPassword(
+        //Request $request
+        ForgotPasswordRequest $request
+    ) {
+        /*
         $request->validate([
             'email' => 'required|email',
         ]);
 
         $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El usuario no existe'
+            ], 404);
+        }
+
+        $token = Str::random(60);
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $user->email],
+            [
+                'token' => $token,
+                'created_at' => now()
+            ]
+        );
+
+        Mail::to($user->email)->send(new ForgotPassword($user, $token));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Token de restablecimiento de contraseña enviado'
+        ]);
+        */
+        $data = $request->validated();
+
+        $user = User::where('email', $data['email'])->first();
 
         if (!$user) {
             return response()->json([
