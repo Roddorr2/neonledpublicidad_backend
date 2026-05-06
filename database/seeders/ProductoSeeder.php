@@ -387,3 +387,4 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert($productos);
     }
 }
+
