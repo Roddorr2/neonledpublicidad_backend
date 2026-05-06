@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 use Illuminate\Support\Carbon;
+use App\Http\Requests\StoreCardRequest;
+use App\Http\Requests\UpdateCardRequest;
 
 class CardController extends Controller
 {
@@ -139,27 +141,12 @@ class CardController extends Controller
         }
     }
 
-    public function create(Request $request)
+    public function create(\App\Http\Requests\StoreCardRequest $request)
     {
         try {
-
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
-                'descripcion' => 'required|string',
-                'public_image' => 'required|string',
-                'url_image' => 'nullable|string',
-                'id_plantilla' => 'required|integer|min:1|max:3',
-                'id_blog' => 'required|integer|exists:blogs,id_blog',
-                'id_empleado' => 'required|integer|exists:empleados,id_empleado',
-                'estado_publicacion' => 'required|boolean',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
             DB::beginTransaction();
 
-            $card = Card::create($request->all());
+            $card = Card::create($request->validated());
 
             DB::commit();
 
@@ -179,24 +166,9 @@ class CardController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCardRequest $request, $id)
     {
         try {
-
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string|max:255',
-                'descripcion' => 'required|string',
-                'public_image' => 'required|string',
-                'url_image' => 'nullable|string',
-                'id_plantilla' => 'required|integer|min:1|max:3',
-                'id_blog' => 'required|integer|exists:blogs,id_blog',
-                'id_empleado' => 'required|integer|exists:empleados,id_empleado',
-                'estado_publicacion' => 'nullable|boolean',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
 
             DB::beginTransaction();
 
@@ -209,7 +181,7 @@ class CardController extends Controller
                 ], 404);
             }
 
-            $card->update($request->all());
+            $card->update($request->validated());
 
             DB::commit();
 
