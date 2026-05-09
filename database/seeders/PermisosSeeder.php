@@ -82,6 +82,12 @@ class PermisosSeeder extends Seeder
             'Crear productos' => 'Permite crear productos',
             'Editar productos' => 'Permite editar productos',
             'Eliminar productos' => 'Permite eliminar productos',
+
+            // Popups
+            'Ver popups' => 'Permite ver configuraciones de popups',
+            'Crear popups' => 'Permite crear configuraciones de popups',
+            'Editar popups' => 'Permite editar configuraciones de popups',
+            'Eliminar popups' => 'Permite eliminar configuraciones de popups',
         ];
 
         foreach ($permisos as $nombre => $descripcion) {
@@ -141,6 +147,11 @@ class PermisosSeeder extends Seeder
                 'Eliminar blogs',
                 'Crear blogs',
                 'Crear tarjetas',
+
+                'Ver popups',
+                'Crear popups',
+                'Editar popups',
+                'Eliminar popups',
 
                 'Permisos generales',
             ],
