@@ -18,12 +18,12 @@ class PopupConfigSeeder extends Seeder
         for ($id = 1; $id <= 16; $id++) {
             $popupConfigs[] = [
                 'id_producto' => $id,
-                'title_text' => 'DISFRUTA NUESTROS PRODUCTOS',
+                'title_text' => '¡SOLO POR HOY: ACCEDE A UNA ASESORÍA GRATIS!',
                 'title_color' => '#FFFFFF',
                 'button_text' => 'HAZLO YA',
-                'button_color' => '#7C3FD9',
-                'service_color' => '#8B5CF6',
-                'service_color_2' => '#A855F7',
+                'button_color' => '#feb549',
+                'service_color' => '#6f7cf9',
+                'service_color_2' => '#9652f4',
                 'gradient_direction' => 'to bottom',
                 'trigger_time' => 3,
                 'left_image_url' => null,
