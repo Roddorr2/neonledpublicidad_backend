@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Propuesta;
+use App\Http\Requests\StorePropuestaRequest;
+use App\Http\Requests\UpdatePropuestaRequest;
+use App\Http\Requests\UploadPropuestaImageRequest;
+use App\Http\Requests\ErasePropuestaImageRequest;
+use App\Http\Requests\UploadPropuestaVideoRequest;
+use App\Http\Requests\ErasePropuestaVideoRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -197,26 +203,9 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
-    public function Create(Request $request)
+    public function Create(StorePropuestaRequest $request)
     {
         try {
-            // VALIDACIÓN
-            $validator = Validator::make($request->all(), [
-                'id_cliente' => 'required|string',
-                'nombre' => 'required|string',
-                'descripcion' => 'required|string',
-                'files' => 'nullable|array|max:10',
-                'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif',
-                'videos' => 'nullable|array|max:5',
-                'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
-
-            ]);
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    'errors' => $validator->errors()
-                ], 422);
-            }
 
             // GUARDAR DATOS PRINCIPALES
             DB::beginTransaction();
@@ -402,21 +391,9 @@ class PropuestaController extends Controller
     }
 
 
-    public function Update(Request $request, int $id) //busca por id de propuesta
+    public function Update(UpdatePropuestaRequest $request, int $id) //busca por id de propuesta
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'nombre' => 'nullable|string',
-                'descripcion' => 'nullable|string',
-                'id_cliente' => 'nullable|numeric|exists:clientes,id'
-            ]);
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    "status" => 422,
-                    "message" => $validator->errors()
-                ], 422);
-            }
             $propuesta = Propuesta::find($id);
 
             if (!$propuesta) {
@@ -453,23 +430,9 @@ class PropuestaController extends Controller
     }
 
 
-    public function UploadImage(Request $request, int $id)
+    public function UploadImage(UploadPropuestaImageRequest $request, int $id)
     {
         try {
-            // VALIDACIÓN
-            $validator = Validator::make($request->all(), [
-                'files' => 'nullable|array',
-                'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif',
-
-            ]);
-
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    'status' => 422,
-                    "message" => $validator->errors()
-                ], 422);
-            }
 
             // BUSCAR PROPUESTA
             $propuesta = Propuesta::find($id);
@@ -533,20 +496,9 @@ class PropuestaController extends Controller
         }
     }
 
-    public function EraseImage(Request $request, int $id)
+    public function EraseImage(ErasePropuestaImageRequest $request, int $id)
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'id_cliente' => 'required|string',
-                'filename' => 'required|string',
-            ]);
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    'status' => 422,
-                    "message" => $validator->errors()
-                ], 422);
-            }
             $path = "cliente/{$request->id_cliente}/propuestas/{$id}/imagenes/{$request->filename}.webp";
 
             if (Storage::disk('public')->exists($path)) {
@@ -571,22 +523,9 @@ class PropuestaController extends Controller
         }
     }
 
-    public function UploadVideo(Request $request, int $id) // id = id de la propuesta
+    public function UploadVideo(UploadPropuestaVideoRequest $request, int $id) // id = id de la propuesta
     {
         try {
-            // Validación
-            $validator = Validator::make($request->all(), [
-                'videos' => 'required|array',
-                'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
-            ]);
-
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    'status' => 422,
-                    'message' => $validator->errors()
-                ], 422);
-            }
 
             // Buscar propuesta
             $propuesta = Propuesta::find($id);
@@ -642,23 +581,9 @@ class PropuestaController extends Controller
             ], 500);
         }
     }
-    public function EraseVideo(Request $request, int $id)
+    public function EraseVideo(ErasePropuestaVideoRequest $request, int $id)
     {
         try {
-            // Validar datos
-            $validator = Validator::make($request->all(), [
-                'id_cliente' => 'required|string',
-                'filename' => 'required|string', // nombre del video sin extensión
-                'extension' => 'required|string',// extensión del video
-            ]);
-
-            if ($validator->fails()) {
-                Log::info($validator->errors());
-                return response()->json([
-                    'status' => 422,
-                    'message' => $validator->errors()
-                ], 422);
-            }
 
             // Ruta del video
             $path = "cliente/{$request->id_cliente}/propuestas/{$id}/videos/{$request->filename}.{$request->extension}";
