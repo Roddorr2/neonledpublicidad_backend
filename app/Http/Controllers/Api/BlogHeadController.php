@@ -4,36 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogHead;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Cloudinary\Cloudinary;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreBlogHeadRequest;
+use App\Http\Requests\UpdateBlogHeadRequest;
 
 class BlogHeadController extends Controller
 {
-    public function create(Request $request)
+    public function create(StoreBlogHeadRequest $request)
     {
         try{
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string',
-                'texto_frase' => 'required|string|max:70',
-                'texto_descripcion' => 'required|string|max:120',
-                'public_image' => 'nullable|string',
-                'url_image' => 'nullable|string',
-                'alt'=> 'nullable|string|min:60|max:120',
-                'title'=> 'nullable|string|min:50|max:70',
-                'meta_title'=> 'nullable|string|min:50|max:60',
-                'meta_descripcion'=> 'nullable|string|min:150|max:160'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
+            $validated = $request->validated();
 
             DB::beginTransaction();
 
-            $blogHead = BlogHead::create($request->all());
+            $blogHead = BlogHead::create($validated);
 
             DB::commit();
 
@@ -53,23 +39,9 @@ class BlogHeadController extends Controller
         }
     }
 
-    public function update(Request $request, int $id){
+    public function update(UpdateBlogHeadRequest $request, int $id){
         try{
-            $validator = Validator::make($request->all(), [
-                'titulo' => 'required|string',
-                'texto_frase' => 'required|string|max:70',
-                'texto_descripcion' => 'required|string|max:120',
-                'public_image' => 'nullable|string',
-                'url_image' => 'nullable|string',
-                'alt'=> 'nullable|string|min:60|max:120',
-                'title'=> 'nullable|string|min:50|max:70',
-                'meta_title'=> 'nullable|string|min:50|max:60',
-                'meta_descripcion'=> 'nullable|string|min:150|max:160'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 400);
-            }
+            $validated = $request->validated();
 
             $blogHead = BlogHead::find($id);
 
@@ -82,7 +54,7 @@ class BlogHeadController extends Controller
 
             DB::beginTransaction();
 
-            $blogHead->update($request->all());
+            $blogHead->update($validated);
 
             DB::commit();
 

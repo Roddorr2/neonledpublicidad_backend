@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\WhatsAppCampaignController;
 use App\Http\Controllers\Api\WhatsappWebhookController;
 use App\Http\Controllers\Api\PlantillasWhatsappController;
 use App\Http\Controllers\Api\PlantillasEmailController;
+use App\Http\Controllers\Api\PopupConfigController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:register');
@@ -73,6 +74,9 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 // Route::get('/productos', [ProductosController::class, 'get']);
 Route::get('/productos/{id}', [ProductosController::class, 'getById']);
 Route::get('/productos_compacto', [ProductosController::class, 'getCompact']);
+
+// Ruta pública popup
+Route::get('/public/popup-configs/producto/{id_producto}', [PopupConfigController::class, 'showByProductoPublic']);
 
 /**
  * Endpoints de propuestas sin middleware (temporal)
@@ -161,6 +165,14 @@ Route::middleware('auth:sanctum')->group(function () {
             ->whereNumber('id');
         Route::post('/plantillas/email/{id}/actualizar', [PlantillasEmailController::class, 'actualizar'])
             ->whereNumber('id');
+
+        // Popup Configs CRUD
+        Route::get('/popup-configs', [PopupConfigController::class, 'index']);
+        Route::get('/popup-configs/{id}', [PopupConfigController::class, 'show']);
+        Route::get('/popup-configs/producto/{id_producto}', [PopupConfigController::class, 'showByProducto']);
+        Route::post('/popup-configs', [PopupConfigController::class, 'store']);
+        Route::post('/popup-configs/{id}/actualizar', [PopupConfigController::class, 'update']);
+        Route::delete('/popup-configs/{id}', [PopupConfigController::class, 'destroy']);
     });
 
     //rutas create blog

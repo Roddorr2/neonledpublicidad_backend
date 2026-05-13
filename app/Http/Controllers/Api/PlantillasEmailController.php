@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePlantillaEmailRequest;
 use App\Models\PlantillaEmail;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
 class PlantillasEmailController extends Controller
@@ -53,30 +53,11 @@ class PlantillasEmailController extends Controller
     /**
      * Actualiza plantilla email (multipart/form-data opcional para imagen).
      */
-    public function actualizar(Request $request, $id)
+    public function actualizar(UpdatePlantillaEmailRequest $request, $id)
     {
         $plantilla = PlantillaEmail::find($id);
         if (! $plantilla) {
             return response()->json(['success' => false, 'message' => 'Plantilla no encontrada'], 404);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'nullable|string|max:255',
-            'asunto' => 'required|string|max:255',
-            'encabezado' => 'required|string|max:255',
-            'mensaje' => 'required|string|max:10000',
-            'mensaje_boton' => 'nullable|string|max:255',
-            'url_boton' => 'nullable|url|max:2048',
-            'footer' => 'nullable|string|max:10000',
-            'red_facebook' => 'nullable|url|max:2048',
-            'red_tiktok' => 'nullable|url|max:2048',
-            'red_instagram' => 'nullable|url|max:2048',
-            'red_linkedin' => 'nullable|url|max:2048',
-            'imagen' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
         }
 
         try {

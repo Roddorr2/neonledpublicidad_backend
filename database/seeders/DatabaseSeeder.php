@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             BlogBodySeeder::class,
             TarjetaSeeder::class,
             BlogSeeder::class,
-            ServicioSeeder::class,
+            ProductoSeeder::class,
             ModalservicioSeeder::class,
             WatModalSeeder::class,
             MailModalSeeder::class,
@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             ContactanosSeeder::class,
             ClienteSeeder::class,
             PropuestaSeeder::class,
+            PopupConfigSeeder::class,
         ]);
     }
 }
