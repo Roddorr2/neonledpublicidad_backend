@@ -18,7 +18,7 @@ class ProductosController extends Controller
     public function get()
     {
         try {
-            $productosPaginados = Productos::with('empleado')->orderBy('id_producto', 'asc')->paginate(7);
+            $productosPaginados = Productos::with('empleado')->orderBy('id_producto', 'asc')->paginate(20);
             $productosMapeados = $productosPaginados->getCollection()->map(function ($producto) {
                 $images = [];
 
