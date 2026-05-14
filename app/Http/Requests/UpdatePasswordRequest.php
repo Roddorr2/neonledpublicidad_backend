@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdatePasswordRequest extends FormRequest
@@ -33,8 +33,8 @@ class UpdatePasswordRequest extends FormRequest
     {
         return [
             'password.required' => 'La contraseña es obligatoria.',
-            'password.string' => 'La contraseña debe ser una cadena de texto.',
-            'password.min' => 'La contraseña debe tener al menos 4 caracteres.',
+            'password.string'   => 'La contraseña debe ser una cadena de texto.',
+            'password.min'      => 'La contraseña debe tener al menos 4 caracteres.',
         ];
     }
 
@@ -42,7 +42,7 @@ class UpdatePasswordRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

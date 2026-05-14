@@ -15,7 +15,7 @@ return new class extends Migration
             // Intentar eliminar FK antigua si existe
             try {
                 $table->dropForeign(['id_servicio']);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // FK puede no existir aún; ignorar
             }
 
@@ -35,7 +35,7 @@ return new class extends Migration
         Schema::table('campanias_whatsapp', function (Blueprint $table) {
             try {
                 $table->dropForeign(['id_servicio']);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // ignore
             }
 

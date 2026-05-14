@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -23,8 +23,8 @@ return new class extends Migration
                         ->onDelete('set null');
                 }
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not add FK on whatsapp_chunks: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not add FK on whatsapp_chunks: ' . $e->getMessage());
         }
 
         // Add FK from whatsapp_campaign_reservations.campaign_id -> campanias_whatsapp.id_campania
@@ -39,8 +39,8 @@ return new class extends Migration
                     $table->unique(['campaign_id', 'date'], 'uq_whatsapp_reservations_campaign_date');
                 }
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not add FK/index on whatsapp_campaign_reservations: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not add FK/index on whatsapp_campaign_reservations: ' . $e->getMessage());
         }
 
         // Add FKs on whatsapp_webhook_events
@@ -62,8 +62,8 @@ return new class extends Migration
                         ->onDelete('set null');
                 }
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not add FK on whatsapp_webhook_events: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not add FK on whatsapp_webhook_events: ' . $e->getMessage());
         }
     }
 
@@ -78,8 +78,8 @@ return new class extends Migration
                 $table->dropForeign('fk_whatsapp_events_campania');
                 $table->dropForeign('fk_whatsapp_events_modal_wat');
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not drop FKs on whatsapp_webhook_events: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not drop FKs on whatsapp_webhook_events: ' . $e->getMessage());
         }
 
         try {
@@ -87,8 +87,8 @@ return new class extends Migration
                 $table->dropUnique('uq_whatsapp_reservations_campaign_date');
                 $table->dropForeign('fk_whatsapp_reservations_campaign');
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not drop FK/index on whatsapp_campaign_reservations: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not drop FK/index on whatsapp_campaign_reservations: ' . $e->getMessage());
         }
 
         try {
@@ -96,8 +96,8 @@ return new class extends Migration
                 $table->dropForeign('fk_whatsapp_chunks_campaign');
                 $table->dropForeign('fk_whatsapp_chunks_reservation');
             });
-        } catch (\Exception $e) {
-            DB::statement("-- warning: could not drop FKs on whatsapp_chunks: " . $e->getMessage());
+        } catch (Exception $e) {
+            DB::statement('-- warning: could not drop FKs on whatsapp_chunks: ' . $e->getMessage());
         }
     }
 };

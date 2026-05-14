@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('modal_wats', 'id_plantilla_whatsapp')) {
+        if (! Schema::hasColumn('modal_wats', 'id_plantilla_whatsapp')) {
             Schema::table('modal_wats', function (Blueprint $table) {
                 $table->unsignedBigInteger('id_plantilla_whatsapp')->nullable()->after('number_message');
             });

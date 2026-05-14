@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Rol\StoreRolRequest;
-use App\Http\Requests\Rol\UpdateRolRequest;
 use App\Http\Requests\Rol\SyncPermisosRolRequest;
+use App\Http\Requests\Rol\UpdateRolRequest;
 use App\Models\Rol;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -15,6 +15,7 @@ class RolController extends Controller
     {
         try {
             $roles = Rol::select('id_rol', 'nombre')->get();
+
             return response()->json([
                 'status' => 200,
                 'data'   => $roles,
@@ -34,7 +35,7 @@ class RolController extends Controller
 
             $rol = Rol::create(['nombre' => $data['nombre']]);
 
-            if (!empty($data['permisos'])) {
+            if (! empty($data['permisos'])) {
                 $rol->permisos()->attach($data['permisos']);
             }
 
@@ -56,6 +57,7 @@ class RolController extends Controller
     {
         try {
             $rol = Rol::with('permisos')->findOrFail($id);
+
             return response()->json([
                 'status' => 200,
                 'data'   => $rol,
@@ -87,6 +89,7 @@ class RolController extends Controller
             ]);
         } catch (\Exception $e) {
             $is404 = $e instanceof ModelNotFoundException;
+
             return response()->json([
                 'status'  => $is404 ? 404 : 500,
                 'error'   => $is404 ? 'Rol no encontrado' : 'Error al actualizar rol',
@@ -116,6 +119,7 @@ class RolController extends Controller
             ]);
         } catch (\Exception $e) {
             $is404 = $e instanceof ModelNotFoundException;
+
             return response()->json([
                 'status'  => $is404 ? 404 : 500,
                 'error'   => $is404 ? 'Rol no encontrado' : 'Error al eliminar rol',
@@ -127,7 +131,7 @@ class RolController extends Controller
     public function getPermisos($id)
     {
         try {
-            $rol     = Rol::findOrFail($id);
+            $rol      = Rol::findOrFail($id);
             $permisos = $rol->permisos;
 
             return response()->json([
@@ -157,6 +161,7 @@ class RolController extends Controller
             ]);
         } catch (\Exception $e) {
             $is404 = $e instanceof ModelNotFoundException;
+
             return response()->json([
                 'status'  => $is404 ? 404 : 500,
                 'error'   => $is404 ? 'Rol no encontrado' : 'Error al actualizar permisos',

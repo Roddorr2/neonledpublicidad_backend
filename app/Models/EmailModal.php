@@ -10,7 +10,9 @@ class EmailModal extends Model
     use HasFactory;
 
     protected $table = 'modal_emails';
+
     protected $primaryKey = 'id_modal_email';
+
     protected $fillable = [
         'estado',
         'error',
@@ -18,13 +20,15 @@ class EmailModal extends Model
         'number_message',
         'fecha',
     ];
+
     protected $casts = [
         'estado' => 'boolean',
     ];
 
     public $timestamps = false;
 
-    public function modalServicio(){
-        return $this->belongsTo(modalservicios::class,'id_modalservicio', 'id_modalservicio');
+    public function modalServicio()
+    {
+        return $this->belongsTo(modalservicios::class, 'id_modalservicio', 'id_modalservicio');
     }
 }

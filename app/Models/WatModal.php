@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class WatModal extends Model
 {
     use HasFactory;
 
     protected $table = 'modal_wats';
+
     protected $primaryKey = 'id_modal_wat';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -25,11 +27,12 @@ class WatModal extends Model
     ];
 
     protected $casts = [
-        'estado' => 'boolean',
+        'estado'   => 'boolean',
         'attempts' => 'integer',
     ];
 
-    public function modalservicio(){
-        return $this->belongsTo(modalservicios::class,'id_modalservicio', 'id_modalservicio');
+    public function modalservicio()
+    {
+        return $this->belongsTo(modalservicios::class, 'id_modalservicio', 'id_modalservicio');
     }
 }

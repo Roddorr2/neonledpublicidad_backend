@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('whatsapp_webhook_events', function (Blueprint $table) {
-            if (!Schema::hasColumn('whatsapp_webhook_events', 'campania_id')) {
+            if (! Schema::hasColumn('whatsapp_webhook_events', 'campania_id')) {
                 $table->unsignedBigInteger('campania_id')->nullable()->after('chunk_id');
                 $table->index('campania_id');
             }

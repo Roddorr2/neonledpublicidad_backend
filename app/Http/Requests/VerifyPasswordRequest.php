@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class VerifyPasswordRequest extends FormRequest
@@ -25,7 +25,7 @@ class VerifyPasswordRequest extends FormRequest
     {
         return [
             //
-            'currentPassword' => 'required|string'
+            'currentPassword' => 'required|string',
         ];
     }
 
@@ -34,7 +34,7 @@ class VerifyPasswordRequest extends FormRequest
         return [
             //
             'currentPassword.required' => 'La contraseña actual es obligatoria.',
-            'currentPassword.string' => 'La contraseña actual debe ser una cadena de texto.'
+            'currentPassword.string'   => 'La contraseña actual debe ser una cadena de texto.',
         ];
     }
 
@@ -42,7 +42,7 @@ class VerifyPasswordRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

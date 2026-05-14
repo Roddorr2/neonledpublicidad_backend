@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Blog;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreBlogRequest extends FormRequest
@@ -16,12 +16,12 @@ class StoreBlogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_blog_head'    => 'required|integer|exists:blog_heads,id_blog_head',
-            'id_blog_body'    => 'required|integer|exists:blog_bodies,id_blog_body',
-            'id_blog_footer'  => 'required|integer|exists:blog_footers,id_blog_footer',
-            'fecha'           => 'required|date',
-            'id_empleado'     => 'required|integer|exists:empleados,id_empleado',
-            'link'            => 'nullable|string|max:255',
+            'id_blog_head'   => 'required|integer|exists:blog_heads,id_blog_head',
+            'id_blog_body'   => 'required|integer|exists:blog_bodies,id_blog_body',
+            'id_blog_footer' => 'required|integer|exists:blog_footers,id_blog_footer',
+            'fecha'          => 'required|date',
+            'id_empleado'    => 'required|integer|exists:empleados,id_empleado',
+            'link'           => 'nullable|string|max:255',
         ];
     }
 

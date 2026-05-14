@@ -31,13 +31,13 @@ return new class extends Migration
         Schema::table('cards', function (Blueprint $table) {
             try {
                 $table->dropIndex('cards_titulo_index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Index might not exist
             }
-            
+
             try {
                 $table->dropIndex('cards_estado_publicacion_titulo_index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Index might not exist
             }
         });

@@ -20,17 +20,18 @@ class BlogBodyController extends Controller
             DB::commit();
 
             return response()->json([
-                "status"  => 200,
-                "message" => "BlogBody creado correctamente",
-                "id"      => $blogBody->id_blog_body
+                'status'  => 200,
+                'message' => 'BlogBody creado correctamente',
+                'id'      => $blogBody->id_blog_body,
             ], 200);
 
         } catch (\Exception $ex) {
             DB::rollback();
+
             return response()->json([
-                "status"  => 500,
-                "message" => "Error al crear el blogBody",
-                "error"   => $ex->getMessage()
+                'status'  => 500,
+                'message' => 'Error al crear el blogBody',
+                'error'   => $ex->getMessage(),
             ], 500);
         }
     }
@@ -40,10 +41,10 @@ class BlogBodyController extends Controller
         try {
             $blogBody = BlogBody::find($id);
 
-            if (!$blogBody) {
+            if (! $blogBody) {
                 return response()->json([
                     'status'  => 404,
-                    'message' => 'BlogBody no encontrado'
+                    'message' => 'BlogBody no encontrado',
                 ], 404);
             }
 
@@ -56,15 +57,16 @@ class BlogBodyController extends Controller
             return response()->json([
                 'status'  => 200,
                 'message' => 'Blog Body actualizado',
-                'id'      => $blogBody->id_blog_body
+                'id'      => $blogBody->id_blog_body,
             ], 200);
 
         } catch (\Exception $ex) {
             DB::rollback();
+
             return response()->json([
-                "status"  => 500,
-                "message" => $ex->getMessage(),
-                "error"   => "Error interno del servidor"
+                'status'  => 500,
+                'message' => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -74,23 +76,23 @@ class BlogBodyController extends Controller
         try {
             $blogBody = BlogBody::with('commend_tarjeta', 'tarjetas')->find($id);
 
-            if (!$blogBody) {
+            if (! $blogBody) {
                 return response()->json([
-                    "status"  => 404,
-                    "message" => "BlogBody no encontrada"
+                    'status'  => 404,
+                    'message' => 'BlogBody no encontrada',
                 ], 404);
             }
 
             return response()->json([
-                "status" => 200,
-                "data"   => $blogBody
+                'status' => 200,
+                'data'   => $blogBody,
             ], 200);
 
         } catch (\Exception $ex) {
             return response()->json([
-                "status"  => 500,
-                "message" => "Error interno",
-                "error"   => $ex->getMessage()
+                'status'  => 500,
+                'message' => 'Error interno',
+                'error'   => $ex->getMessage(),
             ], 500);
         }
     }
@@ -100,25 +102,25 @@ class BlogBodyController extends Controller
         try {
             $blogBody = BlogBody::find($id);
 
-            if (!$blogBody) {
+            if (! $blogBody) {
                 return response()->json([
-                    "status"  => 404,
-                    "message" => "BlogBody no encontrada"
+                    'status'  => 404,
+                    'message' => 'BlogBody no encontrada',
                 ], 404);
             }
 
             $blogBody->delete();
 
             return response()->json([
-                "status"  => 200,
-                "message" => "BlogBody eliminada correctamente"
+                'status'  => 200,
+                'message' => 'BlogBody eliminada correctamente',
             ], 200);
 
         } catch (\Exception $ex) {
             return response()->json([
-                "status"  => 500,
-                "message" => "Error al eliminar el BlogBody",
-                "error"   => $ex->getMessage()
+                'status'  => 500,
+                'message' => 'Error al eliminar el BlogBody',
+                'error'   => $ex->getMessage(),
             ], 500);
         }
     }

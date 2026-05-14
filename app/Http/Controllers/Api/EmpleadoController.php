@@ -7,37 +7,35 @@ use App\Http\Requests\StoreEmpleadoRequest;
 use App\Http\Requests\UpdateEmpleadoPasswordRequest;
 use App\Http\Requests\UpdateEmpleadoProfileImageRequest;
 use App\Http\Requests\UpdateEmpleadoRequest;
+use App\Mail\CredencialesEmpleadoMail;
 use App\Models\Empleado;
 use App\Models\User;
+use App\Services\FileUploadService;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Cloudinary\Cloudinary;
-use App\Mail\CredencialesEmpleadoMail;
-use Illuminate\Support\Facades\Auth;
-use App\Services\FileUploadService;
-
+use Illuminate\Support\Facades\Validator;
 
 class EmpleadoController extends Controller
 {
-
     private const RESTRICTED_EMAILS = [
-        "joseluisjlgd123@gmail.com",
-        "keving.kpg@gmail.com",
-        "tmlighting@hotmail.com"
+        'joseluisjlgd123@gmail.com',
+        'keving.kpg@gmail.com',
+        'tmlighting@hotmail.com',
     ];
 
-    private const PRIVILEGED_EMAIL = "tmlighting@hotmail.com";
+    private const PRIVILEGED_EMAIL = 'tmlighting@hotmail.com';
 
     private function hasPermissionToModify($employeeEmail, $employeeId)
     {
-        $user = Auth::user();
+        $user                   = Auth::user();
         $authenticatedUserEmail = $user->email;
-        $empleadoUsuario = Empleado::where('id_user', $user->id)->first();
-        $editarMiPerfil = $empleadoUsuario && $empleadoUsuario->id_empleado == $employeeId;
+        $empleadoUsuario        = Empleado::where('id_user', $user->id)->first();
+        $editarMiPerfil         = $empleadoUsuario && $empleadoUsuario->id_empleado == $employeeId;
 
         if ($authenticatedUserEmail === self::PRIVILEGED_EMAIL) {
             return true;
@@ -45,31 +43,32 @@ class EmpleadoController extends Controller
         if ($editarMiPerfil) {
             return true;
         }
-        return !in_array($employeeEmail, self::RESTRICTED_EMAILS);
+
+        return ! in_array($employeeEmail, self::RESTRICTED_EMAILS);
     }
 
     private function checkPermissionMiddleware($id)
     {
         $empleado = Empleado::where('id_empleado', $id)->first();
 
-        if (!$empleado) {
+        if (! $empleado) {
             return response()->json([
-                "status" => 404,
-                "message" => "Empleado no encontrado"
+                'status'  => 404,
+                'message' => 'Empleado no encontrado',
             ], 404);
         }
 
-        if (!$this->hasPermissionToModify($empleado->email, $id)) {
-            Log::warning("Intento no autorizado de modificar empleado restringido", [
-                'target_id' => $id,
+        if (! $this->hasPermissionToModify($empleado->email, $id)) {
+            Log::warning('Intento no autorizado de modificar empleado restringido', [
+                'target_id'    => $id,
                 'target_email' => $empleado->email,
-                'user_id' => Auth::id(),
-                'user_email' => Auth::user()->email
+                'user_id'      => Auth::id(),
+                'user_email'   => Auth::user()->email,
             ]);
 
             return response()->json([
-                "status" => 403,
-                "message" => "No tienes permiso para modificar este empleado"
+                'status'  => 403,
+                'message' => 'No tienes permiso para modificar este empleado',
             ], 403);
         }
 
@@ -78,23 +77,23 @@ class EmpleadoController extends Controller
 
     public function getById($id)
     {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+            return response()->json(['status' => 422, 'message' => 'Error de validación', 'Errors' => $validate->errors()]);
         }
 
         $empleado = Empleado::with('rol')->where('id_empleado', $id)->first();
 
-        if (!$empleado) {
-            return response()->json(["status" => 404, "message" => "Empleado no encontrado"]);
+        if (! $empleado) {
+            return response()->json(['status' => 404, 'message' => 'Empleado no encontrado']);
         }
 
         return response()->json([
-            "status" => 200,
-            "data" => $empleado
+            'status' => 200,
+            'data'   => $empleado,
         ]);
     }
 
@@ -105,32 +104,32 @@ class EmpleadoController extends Controller
             $empleados->getCollection()->transform(function ($empleado) {
                 return [
                     'id_empleado' => $empleado->id_empleado,
-                    'nombre' => $empleado->nombre,
-                    'apellido' => $empleado->apellido,
-                    'email' => $empleado->email,
-                    'dni' => $empleado->dni,
-                    'telefono' => $empleado->telefono,
-                    'rol' => $empleado->rol->nombre,
+                    'nombre'      => $empleado->nombre,
+                    'apellido'    => $empleado->apellido,
+                    'email'       => $empleado->email,
+                    'dni'         => $empleado->dni,
+                    'telefono'    => $empleado->telefono,
+                    'rol'         => $empleado->rol->nombre,
                 ];
             });
 
             return response()->json([
-                "status" => 200,
-                'data' => $empleados->items(),
-                'total' => $empleados->total(),
-                'page' => $empleados->currentPage()
+                'status' => 200,
+                'data'   => $empleados->items(),
+                'total'  => $empleados->total(),
+                'page'   => $empleados->currentPage(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "status" => 500,
-                "message" => "Error interno del servidor",
-                "error" => $e->getMessage()
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }
 
     public function create(
-        //Request $request
+        // Request $request
         StoreEmpleadoRequest $request
     ) {
         /*
@@ -201,19 +200,19 @@ class EmpleadoController extends Controller
                 );
 
                 $user = User::create([
-                    'name' => $data['nombre'] . ' ' . $data['apellido'],
-                    'email' => $data['email'],
+                    'name'     => $data['nombre'] . ' ' . $data['apellido'],
+                    'email'    => $data['email'],
                     'password' => Hash::make($password),
                 ]);
 
                 $empleado = Empleado::create([
-                    'nombre' => $data['nombre'],
+                    'nombre'   => $data['nombre'],
                     'apellido' => $data['apellido'],
-                    'email' => $data['email'],
-                    'dni' => $data['dni'],
+                    'email'    => $data['email'],
+                    'dni'      => $data['dni'],
                     'telefono' => $data['telefono'] ?? null,
-                    'id_user' => $user->id,
-                    'id_rol' => $data['id_rol'],
+                    'id_user'  => $user->id,
+                    'id_rol'   => $data['id_rol'],
                 ]);
 
                 return compact('user', 'empleado', 'password');
@@ -223,16 +222,16 @@ class EmpleadoController extends Controller
                 ->send(new CredencialesEmpleadoMail($result['user'], $result['password']));
 
             return response()->json([
-                "status" => 200,
-                "message" => "Empleado creado correctamente",
-                "user" => $result['user'],
-                "empleado" => $result['empleado'],
+                'status'   => 200,
+                'message'  => 'Empleado creado correctamente',
+                'user'     => $result['user'],
+                'empleado' => $result['empleado'],
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                "status" => 500,
-                "message" => "Error al crear empleado",
-                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'status'  => 500,
+                'message' => 'Error al crear empleado',
+                'error'   => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
@@ -241,10 +240,10 @@ class EmpleadoController extends Controller
     {
 
         $apellidoIniciales = strtoupper(substr($nombre, 0, 2));
-        $nombreIniciales = strtolower(substr($apellidos, 0, 2));
-        $dniParte = substr($dni, -3);
+        $nombreIniciales   = strtolower(substr($apellidos, 0, 2));
+        $dniParte          = substr($dni, -3);
 
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
 
         $password = "{$apellidoIniciales}{$dniParte}";
@@ -259,7 +258,7 @@ class EmpleadoController extends Controller
     }
 
     public function update(
-        //Request $request,
+        // Request $request,
         UpdateEmpleadoRequest $request,
         $id
     ) {
@@ -337,10 +336,10 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::where('id_empleado', $id)->first();
 
-        if (!$empleado) {
+        if (! $empleado) {
             return response()->json([
-                "status" => 404,
-                "message" => "Empleado no encontrado"
+                'status'  => 404,
+                'message' => 'Empleado no encontrado',
             ]);
         }
 
@@ -354,8 +353,8 @@ class EmpleadoController extends Controller
             }
 
             if (isset($data['nombre']) || isset($data['apellido'])) {
-                $nombre   = $data['nombre'] ?? $empleado->nombre;
-                $apellido = $data['apellido'] ?? $empleado->apellido;
+                $nombre     = $data['nombre'] ?? $empleado->nombre;
+                $apellido   = $data['apellido'] ?? $empleado->apellido;
                 $user->name = $nombre . ' ' . $apellido;
             }
 
@@ -365,15 +364,14 @@ class EmpleadoController extends Controller
         $empleado->update($data);
 
         return response()->json([
-            "status"  => 200,
-            "message" => "Empleado actualizado correctamente",
-            "data"    => $empleado
+            'status'  => 200,
+            'message' => 'Empleado actualizado correctamente',
+            'data'    => $empleado,
         ]);
     }
 
-
     public function updateProfileImage(
-        //Request $request,
+        // Request $request,
         UpdateEmpleadoProfileImageRequest $request,
         $id
     ) {
@@ -530,21 +528,23 @@ class EmpleadoController extends Controller
         try {
             $empleado = Empleado::where('id_empleado', $id)->first();
 
-            if (!$empleado) {
+            if (! $empleado) {
                 return response()->json([
-                    "status" => 404,
-                    "message" => "Empleado no encontrado"
+                    'status'  => 404,
+                    'message' => 'Empleado no encontrado',
                 ], 404);
             }
 
             // permisos
             $permissionCheck = $this->checkPermissionMiddleware($id);
-            if ($permissionCheck) return $permissionCheck;
+            if ($permissionCheck) {
+                return $permissionCheck;
+            }
 
             if (Auth::id() !== $empleado->id_user) {
                 return response()->json([
-                    'status' => 403,
-                    'message' => 'No autorizado para este perfil'
+                    'status'  => 403,
+                    'message' => 'No autorizado para este perfil',
                 ], 403);
             }
 
@@ -557,8 +557,8 @@ class EmpleadoController extends Controller
 
                     $archivo = $request->file('imagen');
 
-                    $carpeta = "empleados/perfiles/{$id}";
-                    $ext = $archivo->getClientOriginalExtension();
+                    $carpeta  = "empleados/perfiles/{$id}";
+                    $ext      = $archivo->getClientOriginalExtension();
                     $filename = 'profile' . ($ext ? ".{$ext}" : '');
 
                     $res = $service->subir(
@@ -569,71 +569,70 @@ class EmpleadoController extends Controller
                         [
                             'delete_previous_cloud' => true,
                             'delete_previous_local' => true,
-                            'filename' => $filename,
-                            'entity_id' => $id,
+                            'filename'              => $filename,
+                            'entity_id'             => $id,
                         ]
                     );
 
                     if (empty($res['url'])) {
-                        throw new \Exception("Fallo al subir la imagen");
+                        throw new \Exception('Fallo al subir la imagen');
                     }
 
-                    $empleado->imagen_perfil = $res['public_id'] ?? null;
+                    $empleado->imagen_perfil     = $res['public_id'] ?? null;
                     $empleado->imagen_perfil_url = $res['url'];
 
                     $empleado->save();
 
                     return [
                         'public_id' => $res['public_id'] ?? null,
-                        'url' => $res['url'] ?? null,
-                        'version' => time()
+                        'url'       => $res['url'] ?? null,
+                        'version'   => time(),
                     ];
                 }
 
                 // 🟣 MODO MANUAL
-                $publicId = $request->public_id;
+                $publicId  = $request->public_id;
                 $secureUrl = $request->secure_url;
 
                 $expectedPrefix = "empleados/perfiles/{$id}/";
 
-                if (!str_starts_with($publicId, $expectedPrefix)) {
-                    throw new \Exception("Imagen no autorizada para este perfil");
+                if (! str_starts_with($publicId, $expectedPrefix)) {
+                    throw new \Exception('Imagen no autorizada para este perfil');
                 }
 
-                if (!(str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
-                    throw new \Exception("URL de imagen no válida");
+                if (! (str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
+                    throw new \Exception('URL de imagen no válida');
                 }
 
-                $empleado->imagen_perfil = $publicId;
+                $empleado->imagen_perfil     = $publicId;
                 $empleado->imagen_perfil_url = $secureUrl;
                 $empleado->save();
 
                 return [
                     'public_id' => $empleado->imagen_perfil,
-                    'url' => $empleado->imagen_perfil_url,
-                    'version' => time()
+                    'url'       => $empleado->imagen_perfil_url,
+                    'version'   => time(),
                 ];
             });
 
             return response()->json([
-                "status" => 200,
-                "message" => "Imagen actualizada correctamente",
-                "data" => $data
+                'status'  => 200,
+                'message' => 'Imagen actualizada correctamente',
+                'data'    => $data,
             ]);
         } catch (\Exception $e) {
-            Log::error("Error actualizando imagen: " . $e->getMessage());
+            Log::error('Error actualizando imagen: ' . $e->getMessage());
 
             return response()->json([
-                "status" => 500,
-                "message" => "Error al actualizar la imagen",
-                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'status'  => 500,
+                'message' => 'Error al actualizar la imagen',
+                'error'   => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
 
-
     public function updatePass(
-        //Request $request,
+        // Request $request,
         UpdateEmpleadoPasswordRequest $request,
         $id
     ) {
@@ -659,19 +658,19 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::where('id_empleado', $id)->first();
 
-        if (!$empleado) {
+        if (! $empleado) {
             return response()->json([
-                "status" => 404,
-                "message" => "Empleado no encontrado"
+                'status'  => 404,
+                'message' => 'Empleado no encontrado',
             ]);
         }
 
         $user = User::find($empleado->id_user);
 
-        if (!$user) {
+        if (! $user) {
             return response()->json([
-                "status" => 404,
-                "message" => "Usuario no encontrado"
+                'status'  => 404,
+                'message' => 'Usuario no encontrado',
             ]);
         }
 
@@ -679,33 +678,33 @@ class EmpleadoController extends Controller
         $user->save();
 
         return response()->json([
-            "status" => 200,
-            "message" => "Contraseña actualizada correctamente"
+            'status'  => 200,
+            'message' => 'Contraseña actualizada correctamente',
         ]);
     }
 
     private function updatePass1(Request $request, $id)
     {
-        $validate = Validator::make(["id" => $request->id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $request->id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+            return response()->json(['status' => 422, 'message' => 'Error de validación', 'Errors' => $validate->errors()]);
         }
 
         $validate = Validator::make($request->all(), [
-            "password" => "required|string|min:4",
+            'password' => 'required|string|min:4',
         ]);
 
         if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors(), "data" => $request->all()]);
+            return response()->json(['status' => 422, 'message' => 'Error de validación', 'Errors' => $validate->errors(), 'data' => $request->all()]);
         }
 
-        $response = User::where(["id" => intval($id)])->update(["password" => Hash::make($request->password)]);
+        $response = User::where(['id' => intval($id)])->update(['password' => Hash::make($request->password)]);
 
         if ($response) {
-            return response()->json(["status" => 200, "message" => "Registro actualizado correctamente"]);
+            return response()->json(['status' => 200, 'message' => 'Registro actualizado correctamente']);
         }
     }
 
@@ -748,44 +747,45 @@ class EmpleadoController extends Controller
         try {
             $empleado = Empleado::with('user')->findOrFail($request->id_empleado);
 
-            if (!$empleado->user) {
+            if (! $empleado->user) {
                 return response()->json([
-                    'valid' => false,
-                    'message' => 'No se encontró el usuario asociado al empleado'
+                    'valid'   => false,
+                    'message' => 'No se encontró el usuario asociado al empleado',
                 ], 404);
             }
 
-            if (!Hash::check($request->currentPassword, $empleado->user->password)) {
+            if (! Hash::check($request->currentPassword, $empleado->user->password)) {
                 return response()->json([
-                    'valid' => false,
-                    'message' => 'La contraseña actual es incorrecta'
+                    'valid'   => false,
+                    'message' => 'La contraseña actual es incorrecta',
                 ], 400);
             }
 
             return response()->json([
-                'valid' => true,
-                'message' => 'Contraseña verificada correctamente'
+                'valid'   => true,
+                'message' => 'Contraseña verificada correctamente',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Ocurrió un error al procesar la solicitud',
-                'message' => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'error'   => 'Ocurrió un error al procesar la solicitud',
+                'message' => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
 
     public function delete(Request $request, $id)
     {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            Log::error("Validación fallida: ", $validate->errors()->toArray());
+            Log::error('Validación fallida: ', $validate->errors()->toArray());
+
             return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "errors" => $validate->errors()
+                'status'  => 422,
+                'message' => 'Error de validación',
+                'errors'  => $validate->errors(),
             ], 422);
         }
 
@@ -796,27 +796,27 @@ class EmpleadoController extends Controller
 
         $empleado = Empleado::where('id_empleado', $id)->first();
 
-        if (!$empleado) {
+        if (! $empleado) {
             return response()->json([
-                "status" => 404,
-                "message" => "Empleado no encontrado"
+                'status'  => 404,
+                'message' => 'Empleado no encontrado',
             ], 404);
         }
 
-
         $user = User::find($empleado->id_user);
         if ($user) {
-            Log::info("Eliminando usuario vinculado con ID: " . $user->id);
+            Log::info('Eliminando usuario vinculado con ID: ' . $user->id);
             $user->delete();
         }
 
         Log::info("Eliminando empleado con ID: $id");
         $empleado->delete();
 
-        Log::info("Empleado eliminado correctamente");
+        Log::info('Empleado eliminado correctamente');
+
         return response()->json([
-            "status" => 200,
-            "message" => "Empleado eliminado correctamente"
+            'status'  => 200,
+            'message' => 'Empleado eliminado correctamente',
         ], 200);
     }
 
@@ -825,10 +825,10 @@ class EmpleadoController extends Controller
         try {
             $empleado = Empleado::where('id_empleado', $id)->first();
 
-            if (!$empleado) {
+            if (! $empleado) {
                 return response()->json([
-                    'status' => 404,
-                    'message' => 'Empleado no encontrado'
+                    'status'  => 404,
+                    'message' => 'Empleado no encontrado',
                 ], 404);
             }
 
@@ -845,7 +845,7 @@ class EmpleadoController extends Controller
                 try {
                     $service->eliminarPublicId($empleado->imagen_perfil);
                 } catch (\Exception $e) {
-                    Log::warning("Error al eliminar imagen de Cloudinary: " . $e->getMessage());
+                    Log::warning('Error al eliminar imagen de Cloudinary: ' . $e->getMessage());
                 }
             }
 
@@ -859,24 +859,24 @@ class EmpleadoController extends Controller
                 }
             }
 
-            $empleado->imagen_perfil = null;
+            $empleado->imagen_perfil     = null;
             $empleado->imagen_perfil_url = null;
             $empleado->save();
 
             return response()->json([
-                'status' => 200,
-                'message' => 'Imagen eliminada correctamente'
+                'status'  => 200,
+                'message' => 'Imagen eliminada correctamente',
             ]);
         } catch (\Exception $e) {
-            Log::error("Error eliminando imagen de perfil: " . $e->getMessage(), [
+            Log::error('Error eliminando imagen de perfil: ' . $e->getMessage(), [
                 'exception' => $e,
-                'trace' => $e->getTraceAsString()
+                'trace'     => $e->getTraceAsString(),
             ]);
 
             return response()->json([
-                'status' => 500,
+                'status'  => 500,
                 'message' => 'Error al eliminar la imagen',
-                'error' => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor'
+                'error'   => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor',
             ], 500);
         }
     }

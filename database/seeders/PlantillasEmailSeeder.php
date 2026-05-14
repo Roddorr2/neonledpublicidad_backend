@@ -15,60 +15,60 @@ class PlantillasEmailSeeder extends Seeder
     {
         $services = Config::get('email_content.services', []);
 
-        if (empty($services) || !is_array($services)) {
+        if (empty($services) || ! is_array($services)) {
             return;
         }
 
         $rows = [];
-        $now = now();
+        $now  = now();
 
         foreach ($services as $idProducto => $serviceData) {
             $messages = $serviceData['messages'] ?? [];
-            if (!is_array($messages)) {
+            if (! is_array($messages)) {
                 continue;
             }
 
             foreach ($messages as $numeroPlantilla => $messageData) {
-                if (!is_array($messageData)) {
+                if (! is_array($messageData)) {
                     continue;
                 }
 
-                $subject = (string) ($messageData['subject'] ?? '');
-                $title = (string) ($messageData['title'] ?? $subject);
-                $message = (string) ($messageData['message'] ?? '');
-                $extra = (string) ($messageData['extra'] ?? '');
+                $subject     = (string)($messageData['subject'] ?? '');
+                $title       = (string)($messageData['title'] ?? $subject);
+                $message     = (string)($messageData['message'] ?? '');
+                $extra       = (string)($messageData['extra'] ?? '');
                 $fullMessage = $this->buildMensaje($message, $extra);
-                $imagePath = (string) ($messageData['image'] ?? '');
-                $imageUrl = $this->buildAbsoluteImageUrl($imagePath);
+                $imagePath   = (string)($messageData['image'] ?? '');
+                $imageUrl    = $this->buildAbsoluteImageUrl($imagePath);
 
                 if ($subject === '' || $fullMessage === '') {
                     continue;
                 }
 
                 $rows[] = [
-                    'id_producto' => (int) $idProducto,
-                    'numero_plantilla' => (int) $numeroPlantilla,
-                    'nombre' => $title !== '' ? $title : "Plantilla {$idProducto}-{$numeroPlantilla}",
-                    'asunto' => $subject,
-                    'encabezado' => $title,
-                    'imagen_url' => $imageUrl,
-                    'mensaje' => $fullMessage,
-                    'mensaje_boton' => null,
-                    'url_boton' => null,
-                    'footer' => null,
-                    'red_facebook' => null,
-                    'red_tiktok' => null,
-                    'red_instagram' => null,
-                    'red_linkedin' => null,
-                    'created_by' => null,
-                    'updated_by' => null,
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'id_producto'      => (int)$idProducto,
+                    'numero_plantilla' => (int)$numeroPlantilla,
+                    'nombre'           => $title !== '' ? $title : "Plantilla {$idProducto}-{$numeroPlantilla}",
+                    'asunto'           => $subject,
+                    'encabezado'       => $title,
+                    'imagen_url'       => $imageUrl,
+                    'mensaje'          => $fullMessage,
+                    'mensaje_boton'    => null,
+                    'url_boton'        => null,
+                    'footer'           => null,
+                    'red_facebook'     => null,
+                    'red_tiktok'       => null,
+                    'red_instagram'    => null,
+                    'red_linkedin'     => null,
+                    'created_by'       => null,
+                    'updated_by'       => null,
+                    'created_at'       => $now,
+                    'updated_at'       => $now,
                 ];
             }
         }
 
-        if (!empty($rows)) {
+        if (! empty($rows)) {
             DB::table('plantillas_email')->upsert(
                 $rows,
                 ['id_producto', 'numero_plantilla'],
@@ -94,15 +94,16 @@ class PlantillasEmailSeeder extends Seeder
             return $path;
         }
 
-        $baseUrl = rtrim((string) config('app.url'), '/');
+        $baseUrl        = rtrim((string)config('app.url'), '/');
         $normalizedPath = '/' . ltrim($path, '/');
+
         return $baseUrl . $normalizedPath;
     }
 
     private function buildMensaje(string $message, string $extra): string
     {
         $message = trim($message);
-        $extra = trim($extra);
+        $extra   = trim($extra);
 
         if ($message !== '' && $extra !== '') {
             return $message . "\n\n" . $extra;

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Mail\MailService;
 use App\Models\EmailModal;
 use App\Models\modalservicios;
-use App\Mail\MailService;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,17 +18,17 @@ class ModalMailController extends Controller
 
         $modal_mail = EmailModal::find($id);
 
-        if (!$modal_mail) {
+        if (! $modal_mail) {
             return response()->json(['message' => 'Mensaje no encontrado'], 404);
         }
 
         $modal = modalservicios::find($modal_mail->id_modalservicio);
 
-        try{
+        try {
             $data = [
-                'nombre' => $modal->nombre,
+                'nombre'   => $modal->nombre,
                 'telefono' => $modal->telefono,
-                'correo' => $modal->correo,
+                'correo'   => $modal->correo,
             ];
 
             Mail::to($modal->correo)->send(
@@ -37,17 +37,17 @@ class ModalMailController extends Controller
 
             $modal_mail->update([
                 'estado' => 1,
-                'fecha' => now(),
+                'fecha'  => now(),
             ]);
 
             return response()->json($modal_mail, 200);
-
-        }catch(Exception $e){
+        } catch (Exception $e) {
             $modal_mail->update([
                 'estado' => 1,
-                'error' => 'Enviado con error, el correo no existe',
-                'fecha' => now(),
+                'error'  => 'Enviado con error, el correo no existe',
+                'fecha'  => now(),
             ]);
+
             return response()->json(['message' => 'Error al enviar el correo'], 500);
         }
     }
@@ -63,19 +63,19 @@ class ModalMailController extends Controller
         }
 
         $modal_mail = EmailModal::find($id);
-        if (!$modal_mail) {
+        if (! $modal_mail) {
             return response()->json(['message' => 'Mensaje no encontrado'], 404);
         }
 
         $modal_mail->update([
             'estado' => 1,
-            'error' => $request->error,
-            'fecha' => now(),
+            'error'  => $request->error,
+            'fecha'  => now(),
         ]);
 
         return response()->json([
-            'message' => 'Error reportado exitosamente',
-            'modal_mail' => $modal_mail
+            'message'    => 'Error reportado exitosamente',
+            'modal_mail' => $modal_mail,
         ], 200);
     }
 }

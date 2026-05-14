@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('role_permission')) {
+        if (Schema::hasTable('role_permission')) {
             return;
         }
 
-Schema::create('role_permission', function (Blueprint $table) {
+        Schema::create('role_permission', function (Blueprint $table) {
             $table->unsignedBigInteger('id_rol');
             $table->unsignedBigInteger('id_permiso');
-            
+
             $table->foreign('id_rol')->references('id_rol')->on('roles')->onDelete('cascade');
             $table->foreign('id_permiso')->references('id_permiso')->on('permisos')->onDelete('cascade');
-            
+
             $table->primary(['id_rol', 'id_permiso']);
         });
     }

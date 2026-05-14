@@ -25,16 +25,16 @@ class WhatsappChunk extends Model
     ];
 
     protected $casts = [
-        'meta' => 'array',
-        'scheduled_at' => 'datetime',
-        'sent_at' => 'datetime',
-        'completed_at' => 'datetime',
+        'meta'             => 'array',
+        'scheduled_at'     => 'datetime',
+        'sent_at'          => 'datetime',
+        'completed_at'     => 'datetime',
         'recipients_count' => 'integer',
-        'attempts' => 'integer',
-        'max_attempts' => 'integer',
-        'chunk_index' => 'integer',
-        'campaign_id' => 'integer',
-        'parent_chunk_id' => 'integer',
+        'attempts'         => 'integer',
+        'max_attempts'     => 'integer',
+        'chunk_index'      => 'integer',
+        'campaign_id'      => 'integer',
+        'parent_chunk_id'  => 'integer',
     ];
 
     public function isPending()

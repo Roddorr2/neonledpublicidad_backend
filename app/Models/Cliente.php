@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\HasContactInfo;
+use App\Traits\HasFullName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Traits\HasFullName;
-use App\Traits\HasContactInfo;
 
 class Cliente extends Model
 {
-    use HasFactory, HasFullName, HasContactInfo;
+    use HasContactInfo, HasFactory, HasFullName;
+
     protected $table = 'clientes';
+
     public $timestamps = false;
+
     // protected $primaryKey = 'id_cliente';
     protected $fillable = [
         'nombre',

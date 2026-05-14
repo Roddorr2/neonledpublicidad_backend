@@ -12,6 +12,7 @@ class ReclamacionesController extends Controller
     public function get()
     {
         $reclamaciones = Reclamacion::orderBy('id_reclamacion', 'asc')->paginate(4);
+
         return response()->json($reclamaciones, 200);
     }
 
@@ -31,9 +32,9 @@ class ReclamacionesController extends Controller
 
     public function create(StoreReclamacionRequest $request)
     {
-        $datos                         = $request->validated();
-        $datos['fechaReclamo']         = now();
-        $datos['estadoReclamo']        = 'PENDIENTE';
+        $datos                  = $request->validated();
+        $datos['fechaReclamo']  = now();
+        $datos['estadoReclamo'] = 'PENDIENTE';
 
         $reclamacion = Reclamacion::create($datos);
 

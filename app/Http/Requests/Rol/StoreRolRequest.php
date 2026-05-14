@@ -16,8 +16,8 @@ class StoreRolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'    => ['required', 'string', 'max:255', 'unique:roles,nombre'],
-            'permisos'  => ['nullable', 'array'],
+            'nombre'     => ['required', 'string', 'max:255', 'unique:roles,nombre'],
+            'permisos'   => ['nullable', 'array'],
             'permisos.*' => ['exists:permisos,id_permiso'],
         ];
     }
@@ -25,12 +25,12 @@ class StoreRolRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required'    => 'El nombre del rol es obligatorio.',
-            'nombre.string'      => 'El nombre debe ser una cadena de texto.',
-            'nombre.max'         => 'El nombre no puede superar los 255 caracteres.',
-            'nombre.unique'      => 'Ya existe un rol con ese nombre.',
-            'permisos.array'     => 'Los permisos deben ser un arreglo.',
-            'permisos.*.exists'  => 'Uno o más permisos seleccionados no existen.',
+            'nombre.required'   => 'El nombre del rol es obligatorio.',
+            'nombre.string'     => 'El nombre debe ser una cadena de texto.',
+            'nombre.max'        => 'El nombre no puede superar los 255 caracteres.',
+            'nombre.unique'     => 'Ya existe un rol con ese nombre.',
+            'permisos.array'    => 'Los permisos deben ser un arreglo.',
+            'permisos.*.exists' => 'Uno o más permisos seleccionados no existen.',
         ];
     }
 

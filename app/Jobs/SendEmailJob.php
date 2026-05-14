@@ -9,16 +9,19 @@ use Throwable;
 class SendEmailJob extends BaseJob
 {
     public $correo;
+
     public $data;
+
     public $idProducto;
+
     public $tipoCorreo;
 
     public function __construct($correo, $data, $idProducto, $tipoCorreo)
     {
         parent::__construct();
-        
-        $this->correo = $correo;
-        $this->data = $data;
+
+        $this->correo     = $correo;
+        $this->data       = $data;
         $this->idProducto = $idProducto;
         $this->tipoCorreo = $tipoCorreo;
     }
@@ -29,10 +32,10 @@ class SendEmailJob extends BaseJob
             Mail::to($this->correo)->send(
                 new MailService($this->tipoCorreo, $this->data, $this->idProducto)
             );
-            
+
             $this->logInfo('Email sent successfully', [
                 'email' => $this->correo,
-                'tipo' => $this->tipoCorreo,
+                'tipo'  => $this->tipoCorreo,
             ]);
         } catch (Throwable $e) {
             $this->handleFailure($e);

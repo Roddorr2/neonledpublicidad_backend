@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test rápido de Cloudinary - ejecutar con: php test_cloudinary.php
  * Verifica credenciales y capacidad de upload
@@ -14,10 +15,10 @@ echo "=== TEST DE CLOUDINARY ===\n\n";
 
 // 1. Verificar variables de entorno
 $vars = [
-    'CLOUDINARY_URL' => $_ENV['CLOUDINARY_URL'] ?? null,
+    'CLOUDINARY_URL'        => $_ENV['CLOUDINARY_URL'] ?? null,
     'CLOUDINARY_CLOUD_NAME' => $_ENV['CLOUDINARY_CLOUD_NAME'] ?? null,
-    'CLOUDINARY_KEY' => $_ENV['CLOUDINARY_KEY'] ?? null,
-    'CLOUDINARY_SECRET' => $_ENV['CLOUDINARY_SECRET'] ?? null,
+    'CLOUDINARY_KEY'        => $_ENV['CLOUDINARY_KEY'] ?? null,
+    'CLOUDINARY_SECRET'     => $_ENV['CLOUDINARY_SECRET'] ?? null,
 ];
 
 echo "1. VARIABLES DE ENTORNO:\n";
@@ -34,7 +35,7 @@ echo "\n";
 echo "2. EXTENSIONES PHP:\n";
 $extensions = ['curl', 'json', 'fileinfo', 'gd'];
 foreach ($extensions as $ext) {
-    echo "   " . (extension_loaded($ext) ? "[OK]" : "[NO]") . " ext-{$ext}\n";
+    echo '   ' . (extension_loaded($ext) ? '[OK]' : '[NO]') . " ext-{$ext}\n";
 }
 echo "\n";
 
@@ -54,7 +55,7 @@ try {
     ]);
     echo "   [OK] Instancia creada con HTTP\n";
 } catch (Exception $e) {
-    echo "   [FALLO] " . $e->getMessage() . "\n";
+    echo '   [FALLO] ' . $e->getMessage() . "\n";
     exit(1);
 }
 echo "\n";
@@ -62,7 +63,7 @@ echo "\n";
 // 4. Crear archivo temporal (PNG mínimo 1x1px)
 echo "4. CREAR ARCHIVO TEMPORAL:\n";
 $pngBytes = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==');
-$tmpFile = tempnam(sys_get_temp_dir(), 'cloudinary_test_');
+$tmpFile  = tempnam(sys_get_temp_dir(), 'cloudinary_test_');
 file_put_contents($tmpFile, $pngBytes);
 $size = filesize($tmpFile);
 echo "   [OK] {$tmpFile} ({$size} bytes)\n\n";
@@ -71,24 +72,24 @@ echo "   [OK] {$tmpFile} ({$size} bytes)\n\n";
 echo "5. SUBIR IMAGEN A CLOUDINARY:\n";
 try {
     $result = $cloudinary->uploadApi()->upload($tmpFile, [
-        'folder' => 'test_diagnostico',
+        'folder'    => 'test_diagnostico',
         'public_id' => 'test_' . time(),
     ]);
 
     echo "   [OK] Upload exitoso!\n";
-    echo "   Tipo de resultado: " . gettype($result) . "\n";
+    echo '   Tipo de resultado: ' . gettype($result) . "\n";
     if (is_object($result)) {
-        echo "   Clase: " . get_class($result) . "\n";
+        echo '   Clase: ' . get_class($result) . "\n";
     }
-    
+
     // Verificar acceso como array
     if (is_array($result) || $result instanceof ArrayAccess) {
-        echo "   secure_url: " . ($result['secure_url'] ?? 'NO EXISTE') . "\n";
-        echo "   public_id:  " . ($result['public_id'] ?? 'NO EXISTE') . "\n";
-        echo "   format:     " . ($result['format'] ?? 'NO EXISTE') . "\n";
+        echo '   secure_url: ' . ($result['secure_url'] ?? 'NO EXISTE') . "\n";
+        echo '   public_id:  ' . ($result['public_id'] ?? 'NO EXISTE') . "\n";
+        echo '   format:     ' . ($result['format'] ?? 'NO EXISTE') . "\n";
     } else {
         echo "   [WARN] resultado NO es array/ArrayAccess\n";
-        echo "   Dump: " . print_r($result, true) . "\n";
+        echo '   Dump: ' . print_r($result, true) . "\n";
     }
 
     // Limpiar de Cloudinary
@@ -96,13 +97,13 @@ try {
         $cloudinary->uploadApi()->destroy($result['public_id']);
         echo "   [OK] Imagen de test eliminada\n";
     } catch (Exception $e) {
-        echo "   [WARN] No se pudo eliminar: " . $e->getMessage() . "\n";
+        echo '   [WARN] No se pudo eliminar: ' . $e->getMessage() . "\n";
     }
 
 } catch (Exception $e) {
-    echo "   [FALLO] " . $e->getMessage() . "\n";
-    echo "   Clase: " . get_class($e) . "\n";
-    
+    echo '   [FALLO] ' . $e->getMessage() . "\n";
+    echo '   Clase: ' . get_class($e) . "\n";
+
     $msg = $e->getMessage();
     if (str_contains($msg, 'Invalid API Key')) {
         echo "\n   >>> DIAGNOSTICO: API Key inválida - verifica CLOUDINARY_KEY\n";

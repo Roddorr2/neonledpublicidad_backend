@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasContactInfo;
+use App\Traits\HasFullName;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Cloudinary\Cloudinary;
-use App\Traits\HasFullName;
-use App\Traits\HasContactInfo;
-class   Empleado extends Model
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Empleado extends Model
 {
-    use HasFactory, SoftDeletes, HasFullName, HasContactInfo;
+    use HasContactInfo, HasFactory, HasFullName, SoftDeletes;
 
     protected $table = 'empleados';
+
     protected $primaryKey = 'id_empleado';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -29,7 +31,6 @@ class   Empleado extends Model
         'id_user',
         'id_rol',
     ];
-
 
     public function user(): BelongsTo
     {
@@ -45,6 +46,7 @@ class   Empleado extends Model
     {
         return cache()->remember("special-access-{$this->id_empleado}", 3600, function () {
             $allowedIds = config('special_access.employee_ids', []);
+
             return in_array($this->id_empleado, $allowedIds);
         });
     }

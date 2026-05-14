@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Modal;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreModalRequest extends FormRequest
@@ -26,17 +26,17 @@ class StoreModalRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required'      => 'El nombre es obligatorio.',
-            'nombre.string'        => 'El nombre debe ser texto.',
-            'nombre.max'           => 'El nombre no puede superar los 100 caracteres.',
+            'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.string'   => 'El nombre debe ser texto.',
+            'nombre.max'      => 'El nombre no puede superar los 100 caracteres.',
 
-            'telefono.required'    => 'El teléfono es obligatorio.',
-            'telefono.string'      => 'El teléfono debe ser texto.',
-            'telefono.max'         => 'El teléfono no puede superar los 9 caracteres.',
+            'telefono.required' => 'El teléfono es obligatorio.',
+            'telefono.string'   => 'El teléfono debe ser texto.',
+            'telefono.max'      => 'El teléfono no puede superar los 9 caracteres.',
 
-            'correo.required'      => 'El correo es obligatorio.',
-            'correo.email'         => 'El correo no tiene un formato válido.',
-            'correo.max'           => 'El correo no puede superar los 200 caracteres.',
+            'correo.required' => 'El correo es obligatorio.',
+            'correo.email'    => 'El correo no tiene un formato válido.',
+            'correo.max'      => 'El correo no puede superar los 200 caracteres.',
 
             'id_producto.required' => 'El producto es obligatorio.',
             'id_producto.integer'  => 'El id del producto debe ser un número entero.',
@@ -50,7 +50,7 @@ class StoreModalRequest extends FormRequest
         throw new HttpResponseException(
             response()->json([
                 'error'   => 'Error en la validación',
-                'details' => $validator->errors()
+                'details' => $validator->errors(),
             ], 400)
         );
     }

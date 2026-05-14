@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class CommendTarjeta extends Model
 {
     use HasFactory;
 
     protected $table = 'commend_tarjetas';
+
     protected $primaryKey = 'id_commend_tarjeta';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -22,7 +24,8 @@ class CommendTarjeta extends Model
         'texto5',
     ];
 
-    public function blog_body(){
+    public function blog_body()
+    {
         return $this->belongsTo(BlogBody::class, 'id_commend_tarjeta', 'id_commend_tarjeta');
     }
 }

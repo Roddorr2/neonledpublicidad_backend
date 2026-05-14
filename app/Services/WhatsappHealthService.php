@@ -33,9 +33,9 @@ class WhatsappHealthService
      */
     private static function performHealthCheck()
     {
-        $url = whatsapp_url('/api/whatsapp/health');
-        $apiKey = whatsapp_api_key();
-        $maxRetries = 2;
+        $url          = whatsapp_url('/api/whatsapp/health');
+        $apiKey       = whatsapp_api_key();
+        $maxRetries   = 2;
         $retryDelayMs = 100;
 
         for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
@@ -45,22 +45,22 @@ class WhatsappHealthService
                     ->post($url, []); // POST to /health endpoint
 
                 if ($response->successful()) {
-                    $data = $response->json();
-                    $connected = data_get($data, 'connected', false);
+                    $data                = $response->json();
+                    $connected           = data_get($data, 'connected', false);
                     $webhooksOperational = data_get($data, 'webhooksOperational', false);
-                    $apiKeyValid = data_get($data, 'apiKeyValid', false);
-                    
+                    $apiKeyValid         = data_get($data, 'apiKeyValid', false);
+
                     Log::debug('whatsapp.health_check.success', [
-                        'connected' => $connected,
+                        'connected'           => $connected,
                         'webhooksOperational' => $webhooksOperational,
-                        'apiKeyValid' => $apiKeyValid
+                        'apiKeyValid'         => $apiKeyValid,
                     ]);
-                    
+
                     return [
-                        'connected' => (bool) $connected,
-                        'webhooksOperational' => (bool) $webhooksOperational,
-                        'apiKeyValid' => (bool) $apiKeyValid,
-                        'error' => null
+                        'connected'           => (bool)$connected,
+                        'webhooksOperational' => (bool)$webhooksOperational,
+                        'apiKeyValid'         => (bool)$apiKeyValid,
+                        'error'               => null,
                     ];
                 }
 
@@ -68,49 +68,52 @@ class WhatsappHealthService
                 if ($response->status() >= 500) {
                     if ($attempt < $maxRetries) {
                         usleep($retryDelayMs * 1000);
+
                         continue;
                     }
 
                     return [
-                        'connected' => false,
+                        'connected'           => false,
                         'webhooksOperational' => false,
-                        'apiKeyValid' => true,
-                        'error' => 'Service returned HTTP ' . $response->status()
+                        'apiKeyValid'         => true,
+                        'error'               => 'Service returned HTTP ' . $response->status(),
                     ];
                 }
 
                 // 4xx errors (API key invalid, etc) - don't retry
                 return [
-                    'connected' => false,
+                    'connected'           => false,
                     'webhooksOperational' => false,
-                    'apiKeyValid' => false,
-                    'error' => 'API Key validation failed (HTTP ' . $response->status() . ')'
+                    'apiKeyValid'         => false,
+                    'error'               => 'API Key validation failed (HTTP ' . $response->status() . ')',
                 ];
             } catch (\Exception $e) {
                 if ($attempt < $maxRetries) {
                     usleep($retryDelayMs * 1000);
+
                     continue;
                 }
 
                 Log::warning('whatsapp.health_check.failed', [
-                    'error' => $e->getMessage(),
-                    'attempt' => $attempt,
-                    'max_retries' => $maxRetries
+                    'error'       => $e->getMessage(),
+                    'attempt'     => $attempt,
+                    'max_retries' => $maxRetries,
                 ]);
+
                 return [
-                    'connected' => false,
+                    'connected'           => false,
                     'webhooksOperational' => false,
-                    'apiKeyValid' => true,
-                    'error' => $e->getMessage()
+                    'apiKeyValid'         => true,
+                    'error'               => $e->getMessage(),
                 ];
             }
         }
 
         return [
-            'connected' => false,
+            'connected'           => false,
             'webhooksOperational' => false,
-            'apiKeyValid' => true,
-            'error' => 'Health check exhausted retries'
+            'apiKeyValid'         => true,
+            'error'               => 'Health check exhausted retries',
         ];
     }
 
@@ -122,11 +125,11 @@ class WhatsappHealthService
     {
         try {
             $chunk = \App\Models\WhatsappChunk::find($chunkId);
-            if (!$chunk) {
+            if (! $chunk) {
                 return [];
             }
 
-            $recipients = data_get($chunk->meta, 'recipients', []);
+            $recipients  = data_get($chunk->meta, 'recipients', []);
             $expectedIds = array_values(array_filter(array_map(function ($r) {
                 return $r['id_modalservicio'] ?? null;
             }, $recipients)));
@@ -135,7 +138,7 @@ class WhatsappHealthService
                 return [];
             }
 
-            $finalStates = ['sent','delivered','failed','undelivered','rejected','expired'];
+            $finalStates = ['sent', 'delivered', 'failed', 'undelivered', 'rejected', 'expired'];
 
             // Fetch raw webhook events and extract id_modalservicio safely in PHP
             $events = \Illuminate\Support\Facades\DB::table('whatsapp_webhook_events')
@@ -147,9 +150,9 @@ class WhatsappHealthService
             foreach ($events as $event) {
                 try {
                     $rawData = json_decode($event->raw ?? '{}', true);
-                    $id = $rawData['id_modalservicio'] ?? null;
+                    $id      = $rawData['id_modalservicio'] ?? null;
                     if ($id !== null) {
-                        $seen[(int) $id] = true;
+                        $seen[(int)$id] = true;
                     }
                 } catch (\Exception $je) {
                     // Skip malformed JSON in individual events
@@ -158,9 +161,11 @@ class WhatsappHealthService
             }
 
             $seenIds = array_keys($seen);
+
             return array_values(array_diff($expectedIds, $seenIds));
         } catch (\Exception $e) {
             Log::error('whatsapp.get_missing_recipients.failed', ['chunk_id' => $chunkId, 'error' => $e->getMessage()]);
+
             return [];
         }
     }

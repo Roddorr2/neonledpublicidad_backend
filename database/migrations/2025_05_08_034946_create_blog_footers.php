@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('blog_footers')) {
+        if (Schema::hasTable('blog_footers')) {
             return;
         }
 
-Schema::create('blog_footers', function (Blueprint $table) {
+        Schema::create('blog_footers', function (Blueprint $table) {
             $table->id('id_blog_footer');
             $table->string('titulo');
             $table->text('descripcion');

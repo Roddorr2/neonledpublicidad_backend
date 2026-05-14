@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('blog_auditoria')) {
+        if (Schema::hasTable('blog_auditoria')) {
             return;
         }
 
-Schema::create('blog_auditoria', function (Blueprint $table) {
+        Schema::create('blog_auditoria', function (Blueprint $table) {
             $table->id('id_blog_auditoria');
             $table->unsignedBigInteger('id_empleado');
             $table->unsignedBigInteger('id_blog');

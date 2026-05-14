@@ -31,17 +31,16 @@ class UpdateEmpleadoPasswordRequest extends FormRequest
     {
         return [
             'password.required' => 'La contraseña es obligatoria.',
-            'password.min' => 'La contraseña debe tener al menos 4 caracteres.',
+            'password.min'      => 'La contraseña debe tener al menos 4 caracteres.',
         ];
     }
 
     protected function failedValidation($validator)
     {
         throw new \Illuminate\Http\Exceptions\HttpResponseException(response()->json([
-            'status' => 422,
+            'status'  => 422,
             'message' => 'Error de validación',
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }
-

@@ -38,15 +38,15 @@ class PopupConfig extends Model
     ];
 
     protected $casts = [
-        'trigger_time' => 'integer',
-        'left_opacity' => 'integer',
-        'right_opacity' => 'integer',
+        'trigger_time'   => 'integer',
+        'left_opacity'   => 'integer',
+        'right_opacity'  => 'integer',
         'mobile_opacity' => 'integer',
     ];
 
     public function producto(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Productos::class, 'id_producto', 'id_producto');
+        return $this->belongsTo(Productos::class, 'id_producto', 'id_producto');
     }
 
     public function createdBy(): BelongsTo

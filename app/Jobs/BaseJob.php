@@ -106,9 +106,9 @@ abstract class BaseJob implements ShouldQueue
     {
         $this->logError('Job execution failed', [
             'exception_class' => get_class($e),
-            'message' => $e->getMessage(),
-            'line' => $e->getLine(),
-            'file' => $e->getFile(),
+            'message'         => $e->getMessage(),
+            'line'            => $e->getLine(),
+            'file'            => $e->getFile(),
         ]);
     }
 
@@ -119,7 +119,7 @@ abstract class BaseJob implements ShouldQueue
     {
         $this->logError('Job permanently failed', [
             'exception' => get_class($exception),
-            'message' => $exception->getMessage(),
+            'message'   => $exception->getMessage(),
         ]);
     }
 
@@ -129,8 +129,8 @@ abstract class BaseJob implements ShouldQueue
     protected function getJobInfo(): array
     {
         return [
-            'name' => $this->jobName,
-            'tries' => $this->tries,
+            'name'    => $this->jobName,
+            'tries'   => $this->tries,
             'timeout' => $this->timeout,
             'backoff' => $this->backoff,
         ];

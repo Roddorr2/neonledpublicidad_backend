@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Servicio extends Model
 {
@@ -15,16 +13,18 @@ class Servicio extends Model
     protected $fillable = [
         'id_servicio',
         'nombre',
-        'descripcion'
+        'descripcion',
     ];
 
     public $timestamps = false;
 
-    public function reclamacion(){
+    public function reclamacion()
+    {
         return $this->hasMany(Reclamacion::class, 'id_servicio');
     }
 
-    public function campanias(){
+    public function campanias()
+    {
         return $this->hasMany(Campania::class, 'id_servicio', 'id_servicio');
     }
 }

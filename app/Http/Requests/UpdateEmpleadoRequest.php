@@ -56,20 +56,20 @@ class UpdateEmpleadoRequest extends FormRequest
     {
         return [
             'nombre.string' => 'El nombre debe ser texto.',
-            'nombre.max' => 'El nombre no debe superar los 255 caracteres.',
+            'nombre.max'    => 'El nombre no debe superar los 255 caracteres.',
 
             'apellido.string' => 'El apellido debe ser texto.',
-            'apellido.max' => 'El apellido no debe superar los 255 caracteres.',
+            'apellido.max'    => 'El apellido no debe superar los 255 caracteres.',
 
-            'email.email' => 'El correo electrónico no es válido.',
-            'email.max' => 'El correo electrónico no debe superar los 255 caracteres.',
+            'email.email'  => 'El correo electrónico no es válido.',
+            'email.max'    => 'El correo electrónico no debe superar los 255 caracteres.',
             'email.unique' => 'El correo electrónico ya está en uso.',
 
-            'dni.max' => 'El DNI no debe superar los 20 caracteres.',
+            'dni.max'    => 'El DNI no debe superar los 20 caracteres.',
             'dni.unique' => 'El DNI ya está registrado.',
 
             'telefono.string' => 'El teléfono debe ser texto.',
-            'telefono.max' => 'El teléfono no debe superar los 20 caracteres.',
+            'telefono.max'    => 'El teléfono no debe superar los 20 caracteres.',
 
             'id_rol.exists' => 'El rol seleccionado no es válido.',
         ];
@@ -79,9 +79,7 @@ class UpdateEmpleadoRequest extends FormRequest
     {
         throw new \Illuminate\Http\Exceptions\HttpResponseException(response()->json([
             'status' => 422,
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-
-

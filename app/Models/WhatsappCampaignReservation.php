@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class WhatsappCampaignReservation extends Model
 {
@@ -18,7 +18,7 @@ class WhatsappCampaignReservation extends Model
 
     protected $casts = [
         'reserved_slots' => 'integer',
-        'date' => 'date',
+        'date'           => 'date',
     ];
 
     /**
@@ -26,14 +26,12 @@ class WhatsappCampaignReservation extends Model
      * Returns the reservation model on success, or false on insufficient capacity.
      * This operation is atomic.
      *
-     * @param int|null $campaignId
-     * @param Carbon $date
-     * @param int $n
+     * @param  int|null                          $campaignId
      * @return WhatsappCampaignReservation|false
      */
     public static function reserveSlots($campaignId, Carbon $date, int $n)
     {
-        $maxPerDay = config('whatsapp.daily_limit', 50);
+        $maxPerDay  = config('whatsapp.daily_limit', 50);
         $dateString = $date->format('Y-m-d');
 
         return DB::transaction(function () use ($campaignId, $dateString, $n, $maxPerDay) {
@@ -45,8 +43,8 @@ class WhatsappCampaignReservation extends Model
 
             if (! $reservation) {
                 $reservation = self::create([
-                    'campaign_id' => $campaignId,
-                    'date' => $dateString,
+                    'campaign_id'    => $campaignId,
+                    'date'           => $dateString,
                     'reserved_slots' => 0,
                 ]);
             }

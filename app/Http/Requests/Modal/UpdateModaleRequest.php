@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Modal;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateModalRequest extends FormRequest
@@ -33,7 +33,7 @@ class UpdateModalRequest extends FormRequest
         throw new HttpResponseException(
             response()->json([
                 'error'   => 'Error en la validación',
-                'details' => $validator->errors()
+                'details' => $validator->errors(),
             ], 400)
         );
     }

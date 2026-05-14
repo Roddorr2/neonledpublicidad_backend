@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
 
 class ForgotPasswordRequest extends FormRequest
 {
@@ -33,9 +32,10 @@ class ForgotPasswordRequest extends FormRequest
     {
         return [
             'email.required' => 'El correo electrónico es obligatorio.',
-            'email.email' => 'El correo electrónico no tiene un formato válido.',
+            'email.email'    => 'El correo electrónico no tiene un formato válido.',
         ];
     }
+
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -47,9 +47,8 @@ class ForgotPasswordRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            //'message' => 'Errores de validación',
-            'errors' => $validator->errors()
+            // 'message' => 'Errores de validación',
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-

@@ -19,7 +19,7 @@ class UpdateRolRequest extends FormRequest
         $id = $this->route('id') ?? $this->route('rol');
 
         return [
-            'nombre'     => [
+            'nombre' => [
                 'required',
                 'string',
                 'max:255',
@@ -33,12 +33,12 @@ class UpdateRolRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required'    => 'El nombre del rol es obligatorio.',
-            'nombre.string'      => 'El nombre debe ser una cadena de texto.',
-            'nombre.max'         => 'El nombre no puede superar los 255 caracteres.',
-            'nombre.unique'      => 'Ya existe otro rol con ese nombre.',
-            'permisos.array'     => 'Los permisos deben ser un arreglo.',
-            'permisos.*.exists'  => 'Uno o más permisos seleccionados no existen.',
+            'nombre.required'   => 'El nombre del rol es obligatorio.',
+            'nombre.string'     => 'El nombre debe ser una cadena de texto.',
+            'nombre.max'        => 'El nombre no puede superar los 255 caracteres.',
+            'nombre.unique'     => 'Ya existe otro rol con ese nombre.',
+            'permisos.array'    => 'Los permisos deben ser un arreglo.',
+            'permisos.*.exists' => 'Uno o más permisos seleccionados no existen.',
         ];
     }
 

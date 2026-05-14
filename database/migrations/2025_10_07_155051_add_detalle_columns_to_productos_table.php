@@ -85,7 +85,7 @@ return new class extends Migration
             if (Schema::hasColumn('productos', 'id_empleado')) {
                 try {
                     $table->dropForeign(['id_empleado']);
-                } catch (\Throwable $e) {
+                } catch (Throwable $e) {
                     // Ignore when foreign key was not created in this environment.
                 }
                 $table->dropColumn('id_empleado');

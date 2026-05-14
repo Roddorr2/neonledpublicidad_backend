@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class PlantillaEmail extends Model
 {
     protected $table = 'plantillas_email';
+
     protected $primaryKey = 'id_plantilla_email';
+
     public $incrementing = true;
 
     protected $fillable = [

@@ -4,16 +4,15 @@
 // FUNCIONES RELACIONADAS CON WHATSAPP
 // =========================================
 
-if (!function_exists('formatearTelefonoWhatsApp')) {
+if (! function_exists('formatearTelefonoWhatsApp')) {
     /**
      * Formatea un número de teléfono para WhatsApp.
      * Añade el código de país 51 (Perú) si no lo tiene.
      * Elimina espacios, guiones y otros caracteres no numéricos.
      *
-     * @param string $telefono El número de teléfono a formatear.
+     * @param  string $telefono El número de teléfono a formatear.
      * @return string El número formateado con código de país.
      */
-    
     function formatearTelefonoWhatsApp($telefono)
     {
         if (empty($telefono)) {
@@ -33,14 +32,14 @@ if (!function_exists('formatearTelefonoWhatsApp')) {
     }
 }
 
-if (!function_exists('validarTelefonoPeruano')) {
+if (! function_exists('validarTelefonoPeruano')) {
     /**
      * Valida si un número de teléfono peruano es válido.
      * Los números móviles en Perú tienen 9 dígitos y empiezan con 9.
      * Acepta números con o sin código de país 51.
      *
-     * @param string $telefono El número de teléfono a validar (con o sin código de país).
-     * @return bool True si es válido, false en caso contrario.
+     * @param  string $telefono El número de teléfono a validar (con o sin código de país).
+     * @return bool   True si es válido, false en caso contrario.
      */
     function validarTelefonoPeruano($telefono)
     {
@@ -55,12 +54,12 @@ if (!function_exists('validarTelefonoPeruano')) {
     }
 }
 
-if (!function_exists('whatsapp_url')) {
+if (! function_exists('whatsapp_url')) {
     /**
      * Construye la URL completa para un endpoint de la API de WhatsApp.
      * Combina la URL base del servicio WhatsApp con la ruta especificada.
      *
-     * @param string $path Ruta del endpoint (ej: '/api/whatsapp/health').
+     * @param  string $path Ruta del endpoint (ej: '/api/whatsapp/health').
      * @return string La URL completa del endpoint.
      */
     function whatsapp_url(string $path): string
@@ -69,7 +68,7 @@ if (!function_exists('whatsapp_url')) {
     }
 }
 
-if (!function_exists('whatsapp_api_key')) {
+if (! function_exists('whatsapp_api_key')) {
     /**
      * Obtiene la API key del servicio WhatsApp desde la configuración.
      * Retorna una cadena vacía si no está configurada.
@@ -86,23 +85,22 @@ if (!function_exists('whatsapp_api_key')) {
 // FUNCIONES PARA MANEJO DE ARRAYS
 // =========================================
 
-if (!function_exists('chunksArray')) {
+if (! function_exists('chunksArray')) {
     /**
      * Divide un array en chunks (lotes) del tamaño especificado.
      * Útil para procesar arrays grandes en lotes.
      *
-     * @param array $array El array a dividir.
-     * @param int $size El tamaño de cada chunk (por defecto 50).
+     * @param  array $array El array a dividir.
+     * @param  int   $size  El tamaño de cada chunk (por defecto 50).
      * @return array Un array de arrays (chunks).
      */
     function chunksArray($array, $size = 50)
     {
-        //return array_chunk($array, $size);
-        if($size<=0){
+        // return array_chunk($array, $size);
+        if ($size <= 0) {
             return [];
         }
+
         return array_chunk($array, $size);
     }
 }
-
-

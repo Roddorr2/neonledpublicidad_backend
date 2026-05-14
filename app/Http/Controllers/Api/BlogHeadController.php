@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\BlogHead;
-use Illuminate\Support\Facades\DB;
-use Cloudinary\Cloudinary;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreBlogHeadRequest;
 use App\Http\Requests\UpdateBlogHeadRequest;
+use App\Models\BlogHead;
+use Illuminate\Support\Facades\DB;
 
 class BlogHeadController extends Controller
 {
     public function create(StoreBlogHeadRequest $request)
     {
-        try{
+        try {
             $validated = $request->validated();
 
             DB::beginTransaction();
@@ -24,31 +22,33 @@ class BlogHeadController extends Controller
             DB::commit();
 
             return response()->json([
-                "status" => 200,
-                "message" => "BlogHead creado correctamente",
-                "id" => $blogHead->id_blog_head
+                'status'  => 200,
+                'message' => 'BlogHead creado correctamente',
+                'id'      => $blogHead->id_blog_head,
             ], 200);
 
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             DB::rollback();
+
             return response()->json([
-                "status" => 500,
-                "message" => "Error interno del servidor",
-                "error" => $ex->getMessage()
-                ], 500);
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => $ex->getMessage(),
+            ], 500);
         }
     }
 
-    public function update(UpdateBlogHeadRequest $request, int $id){
-        try{
+    public function update(UpdateBlogHeadRequest $request, int $id)
+    {
+        try {
             $validated = $request->validated();
 
             $blogHead = BlogHead::find($id);
 
-            if (!$blogHead){
+            if (! $blogHead) {
                 return response()->json([
-                    'status'=> 404,
-                    'message'=> 'BlogHead no encontrado'
+                    'status'  => 404,
+                    'message' => 'BlogHead no encontrado',
                 ], 404);
             }
 
@@ -59,71 +59,73 @@ class BlogHeadController extends Controller
             DB::commit();
 
             return response()->json([
-                'status'=> 200,
-                'message'=> 'BlogHead actualizado',
-                'id'=> $blogHead->id_blog_head
+                'status'  => 200,
+                'message' => 'BlogHead actualizado',
+                'id'      => $blogHead->id_blog_head,
             ], 200);
 
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             DB::rollback();
+
             return response()->json([
-                'status'=> 500,
-                'message'=> 'Error interno del servidor',
-                'error'=> $ex->getMessage()
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => $ex->getMessage(),
             ], 500);
         }
     }
 
-
-    public function show(int $id){
-        try{
+    public function show(int $id)
+    {
+        try {
 
             $blogHead = BlogHead::find($id);
-            if (!$blogHead) {
+            if (! $blogHead) {
                 return response()->json([
-                    "status" => 404,
-                    "message" => "BlogHead no encontrado"
-                ],404);
+                    'status'  => 404,
+                    'message' => 'BlogHead no encontrado',
+                ], 404);
             }
 
             return response()->json([
-                "status" => 200,
-                "data" => $blogHead
+                'status' => 200,
+                'data'   => $blogHead,
             ], 200);
 
-        }catch(\Exception $ex){
+        } catch (\Exception $ex) {
             return response()->json([
-                "status" => 500,
-                "message" => "Error interno del servidor",
-                "error" => $ex->getMessage()
-                ], 500);
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => $ex->getMessage(),
+            ], 500);
         }
     }
 
     public function destroy($id)
     {
-        try{
+        try {
 
             $blogHead = BlogHead::find($id);
 
-            if (!$blogHead) {
+            if (! $blogHead) {
                 return response()->json([
-                    "status" => 404,
-                    "message" => "BlogHead no encontrado"
+                    'status'  => 404,
+                    'message' => 'BlogHead no encontrado',
                 ]);
             }
             $blogHead->delete();
-            return response()->json([
-                "status" => 200,
-                "message" => "BlogHead eliminado correctamente"
-                ], 200);
 
-        }catch(\Exception $ex){
             return response()->json([
-                "status" => 500,
-                "message" => "Error al eliminar el blogHead",
-                "error" => $ex->getMessage()
-                ], 500);
+                'status'  => 200,
+                'message' => 'BlogHead eliminado correctamente',
+            ], 200);
+
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al eliminar el blogHead',
+                'error'   => $ex->getMessage(),
+            ], 500);
         }
     }
 }

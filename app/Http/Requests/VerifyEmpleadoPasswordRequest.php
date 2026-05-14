@@ -23,7 +23,7 @@ class VerifyEmpleadoPasswordRequest extends FormRequest
     {
         return [
             'currentPassword' => 'required|string',
-            'id_empleado' => 'required|exists:empleados,id_empleado',
+            'id_empleado'     => 'required|exists:empleados,id_empleado',
         ];
     }
 
@@ -31,21 +31,19 @@ class VerifyEmpleadoPasswordRequest extends FormRequest
     {
         return [
             'currentPassword.required' => 'La contraseña actual es obligatoria.',
-            'currentPassword.string' => 'La contraseña debe ser texto.',
+            'currentPassword.string'   => 'La contraseña debe ser texto.',
 
             'id_empleado.required' => 'El ID del empleado es obligatorio.',
-            'id_empleado.exists' => 'El empleado no existe.',
+            'id_empleado.exists'   => 'El empleado no existe.',
         ];
     }
 
     protected function failedValidation($validator)
     {
         throw new \Illuminate\Http\Exceptions\HttpResponseException(response()->json([
-            'status' => 422,
+            'status'  => 422,
             'message' => 'Error de validación',
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }
-
-

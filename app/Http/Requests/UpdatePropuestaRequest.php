@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdatePropuestaRequest extends FormRequest
@@ -24,9 +24,9 @@ class UpdatePropuestaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'nullable|string|max:255',
+            'nombre'      => 'nullable|string|max:255',
             'descripcion' => 'nullable|string',
-            'id_cliente' => 'nullable|numeric|exists:clientes,id'
+            'id_cliente'  => 'nullable|numeric|exists:clientes,id',
         ];
     }
 
@@ -34,12 +34,12 @@ class UpdatePropuestaRequest extends FormRequest
     {
         return [
             'nombre.string' => 'El nombre debe ser una cadena de texto',
-            'nombre.max' => 'El nombre no puede tener más de 255 caracteres',
+            'nombre.max'    => 'El nombre no puede tener más de 255 caracteres',
 
             'descripcion.string' => 'La descripción debe ser una cadena de texto',
 
             'id_cliente.numeric' => 'El ID del cliente debe ser un número',
-            'id_cliente.exists' => 'El cliente no existe'
+            'id_cliente.exists'  => 'El cliente no existe',
         ];
     }
 
@@ -47,7 +47,7 @@ class UpdatePropuestaRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

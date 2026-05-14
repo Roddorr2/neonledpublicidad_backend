@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('propuestas')) {
+        if (Schema::hasTable('propuestas')) {
             return;
         }
 
-Schema::create('propuestas', function (Blueprint $table) {
+        Schema::create('propuestas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
             $table->string('titulo');

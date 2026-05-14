@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateProfileImageRequest extends FormRequest
@@ -25,8 +25,8 @@ class UpdateProfileImageRequest extends FormRequest
     {
         return [
             //
-            'imagen' => 'nullable|image|max:2048',
-            'public_id' => 'required_without:imagen|string',
+            'imagen'     => 'nullable|image|max:2048',
+            'public_id'  => 'required_without:imagen|string',
             'secure_url' => 'required_without:imagen|url',
         ];
     }
@@ -37,15 +37,15 @@ class UpdateProfileImageRequest extends FormRequest
             //
             // imagen
             'imagen.image' => 'El archivo debe ser una imagen válida.',
-            'imagen.max' => 'La imagen no debe superar los 2MB.',
+            'imagen.max'   => 'La imagen no debe superar los 2MB.',
 
             // public_id
             'public_id.required_without' => 'El campo public_id es obligatorio cuando no se envía una imagen.',
-            'public_id.string' => 'El public_id debe ser una cadena de texto.',
+            'public_id.string'           => 'El public_id debe ser una cadena de texto.',
 
             // secure_url
             'secure_url.required_without' => 'El campo secure_url es obligatorio cuando no se envía una imagen.',
-            'secure_url.url' => 'El campo secure_url debe ser una URL válida.',
+            'secure_url.url'              => 'El campo secure_url debe ser una URL válida.',
         ];
     }
 
@@ -53,7 +53,7 @@ class UpdateProfileImageRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

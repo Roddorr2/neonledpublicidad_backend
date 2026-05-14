@@ -15,6 +15,7 @@ class PermisoController extends Controller
     {
         try {
             $permisos = Permiso::all();
+
             return response()->json([
                 'status' => 200,
                 'data'   => $permisos,
@@ -54,6 +55,7 @@ class PermisoController extends Controller
     {
         try {
             $permiso = Permiso::findOrFail($id);
+
             return response()->json([
                 'status' => 200,
                 'data'   => $permiso,
@@ -86,6 +88,7 @@ class PermisoController extends Controller
             ]);
         } catch (\Exception $e) {
             $is404 = $e instanceof ModelNotFoundException;
+
             return response()->json([
                 'status'  => $is404 ? 404 : 500,
                 'error'   => $is404 ? 'Permiso no encontrado' : 'Error al actualizar permiso',
@@ -106,6 +109,7 @@ class PermisoController extends Controller
             ]);
         } catch (\Exception $e) {
             $is404 = $e instanceof ModelNotFoundException;
+
             return response()->json([
                 'status'  => $is404 ? 404 : 500,
                 'error'   => $is404 ? 'Permiso no encontrado' : 'Error al eliminar permiso',

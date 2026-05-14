@@ -9,15 +9,17 @@ use Illuminate\Support\Facades\Validator;
 
 class ServicioController extends Controller
 {
-    public function get(){
+    public function get()
+    {
         return Servicio::orderBy('id_servicio', 'desc')
-                        ->paginate(20);
+            ->paginate(20);
     }
 
-    public function create(Request $request){
-        $validator = Validator::make($request->all(),[
-            'nombre' => 'required|string|max:100',
-            'descripcion' => 'required|string|max:200'
+    public function create(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nombre'      => 'required|string|max:100',
+            'descripcion' => 'required|string|max:200',
         ]);
 
         if ($validator->fails()) {
@@ -27,7 +29,7 @@ class ServicioController extends Controller
         $servicio = Servicio::create($request->all());
 
         return response()->json([
-            'message' => 'Servicio creado exitosamente'
+            'message' => 'Servicio creado exitosamente',
         ], 201);
     }
 
@@ -36,25 +38,25 @@ class ServicioController extends Controller
         try {
             // Validar datos
             $validator = Validator::make($request->all(), [
-                'nombre' => 'required|string|max:100',
-                'descripcion' => 'required|string|max:200'
+                'nombre'      => 'required|string|max:100',
+                'descripcion' => 'required|string|max:200',
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
-                    'status' => false,
+                    'status'  => false,
                     'message' => 'Error de validación',
-                    'errors' => $validator->errors()
+                    'errors'  => $validator->errors(),
                 ], 422);
             }
 
             // Buscar servicio
             $servicio = Servicio::findOrFail($id);
 
-            if (!$servicio) {
+            if (! $servicio) {
                 return response()->json([
-                    'status' => false,
-                    'message' => 'Servicio no encontrado'
+                    'status'  => false,
+                    'message' => 'Servicio no encontrado',
                 ], 404);
             }
 
@@ -65,31 +67,33 @@ class ServicioController extends Controller
             $servicio->save();
 
             return response()->json([
-                'status' => true,
+                'status'  => true,
                 'message' => 'Servicio actualizado exitosamente',
-                'data' => $servicio
+                'data'    => $servicio,
             ], 200);
 
         } catch (\Exception $e) {
             return response()->json([
-                'status' => false,
+                'status'  => false,
                 'message' => 'Error al actualizar el servicio',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         $servicio = Servicio::find($id);
-        if(!$servicio) {
+        if (! $servicio) {
             return response()->json([
-                'message' => 'Servicio no encontrado'
+                'message' => 'Servicio no encontrado',
             ], 404);
         }
 
         $servicio->delete();
+
         return response()->json([
-            'message' => 'Servicio eliminado exitosamente'
+            'message' => 'Servicio eliminado exitosamente',
         ]);
     }
 }

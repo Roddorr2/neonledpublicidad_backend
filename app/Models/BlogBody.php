@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class BlogBody extends Model
 {
     use HasFactory;
+
     protected $table = 'blog_bodies';
+
     protected $primaryKey = 'id_blog_body';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -34,15 +37,18 @@ class BlogBody extends Model
         'titulo_tarjeta',
     ];
 
-    public function blog(){
+    public function blog()
+    {
         return $this->hasOne(Blog::class, 'id_blog_body', 'id_blog_body');
     }
 
-    public function commend_tarjeta(){
+    public function commend_tarjeta()
+    {
         return $this->hasOne(CommendTarjeta::class, 'id_commend_tarjeta', 'id_commend_tarjeta');
     }
 
-    public function tarjetas(){
+    public function tarjetas()
+    {
         return $this->hasMany(Tarjeta::class, 'id_blog_body', 'id_blog_body');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateContactoEstadoRequest extends FormRequest
@@ -25,7 +25,7 @@ class UpdateContactoEstadoRequest extends FormRequest
     {
         return [
             //
-            'estado' => ['required', 'boolean']
+            'estado' => ['required', 'boolean'],
         ];
     }
 
@@ -33,7 +33,7 @@ class UpdateContactoEstadoRequest extends FormRequest
     {
         return [
             'estado.required' => 'El estado es obligatorio',
-            'estado.boolean' => 'El estado debe ser verdadero o falso'
+            'estado.boolean'  => 'El estado debe ser verdadero o falso',
         ];
     }
 
@@ -41,9 +41,8 @@ class UpdateContactoEstadoRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            //'message' => 'Errores de validación',
-            'errors' => $validator->errors()
+            // 'message' => 'Errores de validación',
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-

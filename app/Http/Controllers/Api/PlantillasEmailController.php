@@ -14,6 +14,7 @@ class PlantillasEmailController extends Controller
     public function index()
     {
         $plantillas = PlantillaEmail::orderBy('id_producto')->orderBy('numero_plantilla')->get();
+
         return response()->json(['success' => true, 'data' => $plantillas]);
     }
 
@@ -32,7 +33,7 @@ class PlantillasEmailController extends Controller
      */
     public function showByProductoNumero(Request $request, $id_producto, $numero_plantilla)
     {
-        $apiKey = $request->header('x-api-key') ?? $request->header('X-API-Key');
+        $apiKey         = $request->header('x-api-key') ?? $request->header('X-API-Key');
         $expectedApiKey = env('EMAIL_SERVICE_API_KEY', env('WHATSAPP_SERVICE_API_KEY'));
 
         if (! $apiKey || ! $expectedApiKey || $apiKey !== $expectedApiKey) {
@@ -61,36 +62,37 @@ class PlantillasEmailController extends Controller
         }
 
         try {
-            $plantilla->nombre = $request->input('nombre', $plantilla->nombre);
-            $plantilla->asunto = $request->input('asunto');
-            $plantilla->encabezado = $request->input('encabezado');
-            $plantilla->mensaje = $request->input('mensaje');
+            $plantilla->nombre        = $request->input('nombre', $plantilla->nombre);
+            $plantilla->asunto        = $request->input('asunto');
+            $plantilla->encabezado    = $request->input('encabezado');
+            $plantilla->mensaje       = $request->input('mensaje');
             $plantilla->mensaje_boton = $request->input('mensaje_boton');
-            $plantilla->url_boton = $request->input('url_boton');
-            $plantilla->footer = $request->input('footer');
-            $plantilla->red_facebook = $request->input('red_facebook');
-            $plantilla->red_tiktok = $request->input('red_tiktok');
+            $plantilla->url_boton     = $request->input('url_boton');
+            $plantilla->footer        = $request->input('footer');
+            $plantilla->red_facebook  = $request->input('red_facebook');
+            $plantilla->red_tiktok    = $request->input('red_tiktok');
             $plantilla->red_instagram = $request->input('red_instagram');
-            $plantilla->red_linkedin = $request->input('red_linkedin');
+            $plantilla->red_linkedin  = $request->input('red_linkedin');
 
             if ($request->hasFile('imagen')) {
-                $archivo = $request->file('imagen');
-                $uploader = new FileUploadService();
-                $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
+                $archivo  = $request->file('imagen');
+                $uploader = new FileUploadService;
+                $ext      = $archivo->getClientOriginalExtension() ?: 'jpg';
                 $filename = "template_{$plantilla->id_producto}_{$plantilla->numero_plantilla}.{$ext}";
 
                 $resultado = $uploader->subir($archivo, 'plantillas_email', null, $plantilla->imagen_url, [
                     'delete_previous_cloud' => false,
                     'delete_previous_local' => true,
-                    'filename' => $filename,
-                    'entity_id' => $plantilla->id_producto,
+                    'filename'              => $filename,
+                    'entity_id'             => $plantilla->id_producto,
                 ]);
 
                 if (empty($resultado['url'])) {
                     Log::error('PlantillasEmailController: fallo al subir imagen', [
                         'plantilla_id' => $plantilla->id_plantilla_email,
-                        'resultado' => $resultado,
+                        'resultado'    => $resultado,
                     ]);
+
                     return response()->json(['success' => false, 'message' => 'Fallo al subir la imagen. No se actualizó la plantilla.'], 500);
                 }
 
@@ -103,14 +105,15 @@ class PlantillasEmailController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Plantilla email actualizada exitosamente',
-                'data' => $plantilla,
+                'data'    => $plantilla,
             ]);
         } catch (\Exception $e) {
             Log::error('Error actualizando plantilla email', ['error' => $e->getMessage()]);
+
             return response()->json([
                 'success' => false,
                 'message' => 'Error al actualizar plantilla email',
-                'error' => $e->getMessage(),
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }

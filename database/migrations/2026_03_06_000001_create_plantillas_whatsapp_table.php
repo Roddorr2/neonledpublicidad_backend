@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('mensaje');
             $table->string('imagen_url', 500)->nullable();
             $table->string('imagen_public_id')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users','id')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users','id')->nullOnDelete();
+            $table->foreignId('created_by')->nullable()->constrained('users', 'id')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users', 'id')->nullOnDelete();
             $table->timestamps();
-            $table->unique(['id_producto','numero_plantilla']);
+            $table->unique(['id_producto', 'numero_plantilla']);
         });
     }
 

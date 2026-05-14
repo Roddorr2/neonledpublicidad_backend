@@ -2,16 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Rol;
-use App\Models\Permiso;
 use App\Models\PopupConfig;
-use App\Models\Subservicio;
+use App\Models\Rol;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class PopupConfigTest extends TestCase
 {
@@ -28,9 +25,10 @@ class PopupConfigTest extends TestCase
 
     private function createUserWithRole($roleName)
     {
-        $rol = Rol::where('nombre', $roleName)->first();
+        $rol  = Rol::where('nombre', $roleName)->first();
         $user = User::factory()->create();
         $user->roles()->attach($rol);
+
         return $user;
     }
 
@@ -103,18 +101,18 @@ class PopupConfigTest extends TestCase
         Sanctum::actingAs($user);
 
         $data = [
-            'id_servicio' => 1,
-            'title_text' => 'Test Title',
-            'title_color' => '#FFFFFF',
-            'button_text' => 'Test Button',
-            'button_color' => '#000000',
-            'service_color' => '#FF0000',
-            'service_color_2' => '#00FF00',
+            'id_servicio'        => 1,
+            'title_text'         => 'Test Title',
+            'title_color'        => '#FFFFFF',
+            'button_text'        => 'Test Button',
+            'button_color'       => '#000000',
+            'service_color'      => '#FF0000',
+            'service_color_2'    => '#00FF00',
             'gradient_direction' => 'to right',
-            'trigger_time' => 5,
-            'left_opacity' => 80,
-            'right_opacity' => 90,
-            'mobile_opacity' => 70,
+            'trigger_time'       => 5,
+            'left_opacity'       => 80,
+            'right_opacity'      => 90,
+            'mobile_opacity'     => 70,
         ];
 
         $response = $this->postJson('/api/popup-configs', $data);
@@ -140,14 +138,14 @@ class PopupConfigTest extends TestCase
         Sanctum::actingAs($user);
 
         $data = [
-            'id_servicio' => 1,
-            'title_text' => str_repeat('a', 81), // too long
-            'title_color' => '#FFFFFF',
-            'button_text' => 'Test',
-            'button_color' => '#000000',
-            'service_color' => '#FF0000',
+            'id_servicio'        => 1,
+            'title_text'         => str_repeat('a', 81), // too long
+            'title_color'        => '#FFFFFF',
+            'button_text'        => 'Test',
+            'button_color'       => '#000000',
+            'service_color'      => '#FF0000',
             'gradient_direction' => 'to right',
-            'trigger_time' => 5,
+            'trigger_time'       => 5,
         ];
 
         $response = $this->postJson('/api/popup-configs', $data);
@@ -162,14 +160,14 @@ class PopupConfigTest extends TestCase
         Sanctum::actingAs($user);
 
         $data = [
-            'id_servicio' => 1,
-            'title_text' => 'Test',
-            'title_color' => 'invalid',
-            'button_text' => 'Test',
-            'button_color' => '#000000',
-            'service_color' => '#FF0000',
+            'id_servicio'        => 1,
+            'title_text'         => 'Test',
+            'title_color'        => 'invalid',
+            'button_text'        => 'Test',
+            'button_color'       => '#000000',
+            'service_color'      => '#FF0000',
             'gradient_direction' => 'to right',
-            'trigger_time' => 5,
+            'trigger_time'       => 5,
         ];
 
         $response = $this->postJson('/api/popup-configs', $data);
@@ -184,14 +182,14 @@ class PopupConfigTest extends TestCase
         Sanctum::actingAs($user);
 
         $data = [
-            'id_servicio' => 1,
-            'title_text' => 'Test',
-            'title_color' => '#FFFFFF',
-            'button_text' => 'Test',
-            'button_color' => '#000000',
-            'service_color' => '#FF0000',
+            'id_servicio'        => 1,
+            'title_text'         => 'Test',
+            'title_color'        => '#FFFFFF',
+            'button_text'        => 'Test',
+            'button_color'       => '#000000',
+            'service_color'      => '#FF0000',
             'gradient_direction' => 'to right',
-            'trigger_time' => 10, // invalid
+            'trigger_time'       => 10, // invalid
         ];
 
         $response = $this->postJson('/api/popup-configs', $data);
@@ -208,7 +206,7 @@ class PopupConfigTest extends TestCase
         $config = PopupConfig::first();
 
         $data = [
-            'title_text' => 'Updated Title',
+            'title_text'   => 'Updated Title',
             'trigger_time' => 8,
         ];
 

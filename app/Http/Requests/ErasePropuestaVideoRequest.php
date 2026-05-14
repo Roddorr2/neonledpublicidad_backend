@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ErasePropuestaVideoRequest extends FormRequest
@@ -25,8 +25,8 @@ class ErasePropuestaVideoRequest extends FormRequest
     {
         return [
             'id_cliente' => 'required|numeric|exists:clientes,id',
-            'filename' => 'required|string',
-            'extension' => 'required|string'
+            'filename'   => 'required|string',
+            'extension'  => 'required|string',
         ];
     }
 
@@ -34,14 +34,14 @@ class ErasePropuestaVideoRequest extends FormRequest
     {
         return [
             'id_cliente.required' => 'El ID del cliente es obligatorio',
-            'id_cliente.numeric' => 'El ID del cliente debe ser un número',
-            'id_cliente.exists' => 'El cliente no existe',
+            'id_cliente.numeric'  => 'El ID del cliente debe ser un número',
+            'id_cliente.exists'   => 'El cliente no existe',
 
             'filename.required' => 'El nombre del archivo es obligatorio',
-            'filename.string' => 'El nombre del archivo debe ser una cadena de texto',
+            'filename.string'   => 'El nombre del archivo debe ser una cadena de texto',
 
             'extension.required' => 'La extensión del archivo es obligatoria',
-            'extension.string' => 'La extensión debe ser una cadena de texto'
+            'extension.string'   => 'La extensión debe ser una cadena de texto',
         ];
     }
 
@@ -49,7 +49,7 @@ class ErasePropuestaVideoRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

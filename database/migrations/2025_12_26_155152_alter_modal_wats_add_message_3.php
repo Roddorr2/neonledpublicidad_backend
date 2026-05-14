@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('modal_wats', function (Blueprint $table) {
-            $table->enum('number_message', [1,2,3])->change();
+            $table->enum('number_message', [1, 2, 3])->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('modal_wats', function (Blueprint $table) {
-            $table->enum('number_message', [1,2])->change();
+            $table->enum('number_message', [1, 2])->change();
         });
     }
 };

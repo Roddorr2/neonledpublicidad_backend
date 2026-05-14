@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Blog\DestroyBlogRequest;
 use App\Http\Requests\Blog\StoreBlogRequest;
 use App\Http\Requests\Blog\UpdateBlogRequest;
-use App\Http\Requests\Blog\DestroyBlogRequest;
 use App\Models\Blog;
 use App\Models\BlogBody;
 use App\Models\BlogHead;
 use App\Services\AuditoriaService;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
     public function index()
     {
         $blogs = Blog::with('card')->get();
+
         return response()->json($blogs, 200);
     }
 
@@ -29,23 +30,23 @@ class BlogController extends Controller
 
             DB::beginTransaction();
 
-            if ($request->has('link') && !empty($request->link)) {
+            if ($request->has('link') && ! empty($request->link)) {
                 $link = Str::slug($request->link);
             } else {
                 $blogHead = BlogHead::findOrFail($request->id_blog_head);
-                $titulo = $blogHead->titulo ?? "blog";
-                $link = Str::slug($titulo);
+                $titulo   = $blogHead->titulo ?? 'blog';
+                $link     = Str::slug($titulo);
             }
 
             $baseLink = $link;
-            $counter = 1;
-            while (Blog::where("link", $link)->exists()) {
+            $counter  = 1;
+            while (Blog::where('link', $link)->exists()) {
                 $link = $baseLink . '-' . $counter;
                 $counter++;
             }
 
-            $data = $request->all();
-            $data["link"] = $link;
+            $data         = $request->all();
+            $data['link'] = $link;
 
             $blog = Blog::create($data);
 
@@ -59,14 +60,15 @@ class BlogController extends Controller
             DB::commit();
 
             return response()->json([
-                "status"  => 200,
-                "message" => "Blog creado correctamente",
-                "id"      => $blog->id_blog,
-                "link"    => $link
+                'status'  => 200,
+                'message' => 'Blog creado correctamente',
+                'id'      => $blog->id_blog,
+                'link'    => $link,
             ], 200);
 
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -79,34 +81,34 @@ class BlogController extends Controller
 
             $blog = Blog::find($id);
 
-            if (!$blog) {
+            if (! $blog) {
                 return response()->json([
                     'status'  => 404,
-                    'message' => 'Blog no encontrado'
+                    'message' => 'Blog no encontrado',
                 ], 404);
             }
 
             DB::beginTransaction();
 
-            if ($request->has('link') && !empty($request->link)) {
+            if ($request->has('link') && ! empty($request->link)) {
                 $link = Str::slug($request->link);
             } else {
                 $blogHead = BlogHead::findOrFail($request->id_blog_head);
-                $titulo = $blogHead->titulo ?? "blog";
-                $link = Str::slug($titulo);
+                $titulo   = $blogHead->titulo ?? 'blog';
+                $link     = Str::slug($titulo);
             }
 
             $baseLink = $link;
-            $counter = 1;
-            while (Blog::where("link", $link)
-                       ->where("id_blog", "!=", $id)
-                       ->exists()) {
+            $counter  = 1;
+            while (Blog::where('link', $link)
+                ->where('id_blog', '!=', $id)
+                ->exists()) {
                 $link = $baseLink . '-' . $counter;
                 $counter++;
             }
 
-            $data = $request->all();
-            $data["link"] = $link;
+            $data         = $request->all();
+            $data['link'] = $link;
 
             $blog->update($data);
 
@@ -124,11 +126,12 @@ class BlogController extends Controller
                 'status'  => 200,
                 'message' => 'Blog actualizado',
                 'id'      => $blog->id_blog,
-                'link'    => $link
+                'link'    => $link,
             ], 200);
 
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -138,16 +141,16 @@ class BlogController extends Controller
         try {
             $blog = Blog::with('card')->find($id);
 
-            if (!$blog) {
+            if (! $blog) {
                 return response()->json([
-                    "status"  => 404,
-                    "message" => "Blog no encontrado"
+                    'status'  => 404,
+                    'message' => 'Blog no encontrado',
                 ], 400);
             }
 
             return response()->json([
-                "status" => 200,
-                'data'   => $blog
+                'status' => 200,
+                'data'   => $blog,
             ], 200);
 
         } catch (\Exception $e) {
@@ -159,17 +162,17 @@ class BlogController extends Controller
     {
         $blog = Blog::with(['card', 'body', 'head'])->where('link', $link)->first();
 
-        if (!$blog) {
+        if (! $blog) {
             return response()->json([
-                "status"  => 400,
-                "message" => "Blog no encontrado"
+                'status'  => 400,
+                'message' => 'Blog no encontrado',
             ], 400);
         }
 
         return response()->json([
-            "status"  => 200,
-            "message" => "Blog encontrado",
-            "blog"    => $blog
+            'status'  => 200,
+            'message' => 'Blog encontrado',
+            'blog'    => $blog,
         ], 200);
     }
 
@@ -180,10 +183,10 @@ class BlogController extends Controller
 
             $blog = Blog::with(['card', 'head'])->find($id);
 
-            if (!$blog) {
+            if (! $blog) {
                 return response()->json([
                     'status'  => 404,
-                    'message' => 'Blog no encontrado'
+                    'message' => 'Blog no encontrado',
                 ], 404);
             }
 
@@ -206,22 +209,22 @@ class BlogController extends Controller
                 Storage::disk('public')->deleteDirectory($relativePath);
             }
 
-            $card_object = new CardController();
+            $card_object = new CardController;
             $card_object->destroy($blog->card->id_card);
 
             $blog->delete();
 
-            $blog_head = new BlogHeadController();
+            $blog_head = new BlogHeadController;
             $blog_head->destroy($id_header_blog);
 
-            $blog_footer = new BlogFooterController();
+            $blog_footer = new BlogFooterController;
             $blog_footer->destroy($id_footer_blog);
 
-            $tarjeta = new TarjetaController();
+            $tarjeta = new TarjetaController;
             $tarjeta->destroyAll($id_body_blog);
 
             $blog_body_model = BlogBody::find($id_body_blog);
-            $commend_tarjeta = new CommendTarjetaController();
+            $commend_tarjeta = new CommendTarjetaController;
             $commend_tarjeta->destroy($blog_body_model->id_commend_tarjeta);
 
             $blog_body_model->delete();
@@ -229,12 +232,13 @@ class BlogController extends Controller
             DB::commit();
 
             return response()->json([
-                "status"  => 200,
-                "message" => "Blog eliminado correctamente"
+                'status'  => 200,
+                'message' => 'Blog eliminado correctamente',
             ], 200);
 
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

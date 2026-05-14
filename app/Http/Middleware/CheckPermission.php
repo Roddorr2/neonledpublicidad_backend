@@ -2,30 +2,29 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Rol;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\Permiso;
-use App\Models\Rol;
 
 class CheckPermission
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next, ...$permissions): Response
     {
-        if (!$request->user()) {
+        if (! $request->user()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No autorizado'
+                'status'  => 'error',
+                'message' => 'No autorizado',
             ], 401);
         }
 
-        $user = $request->user();
+        $user      = $request->user();
         $userRoles = $user->currentAccessToken()->abilities;
 
         // Obtener slugs de permisos requeridos
@@ -37,8 +36,8 @@ class CheckPermission
         }
 
         return response()->json([
-            'status' => 'error',
-            'message' => 'No tiene los permisos necesarios para acceder a este recurso'
+            'status'  => 'error',
+            'message' => 'No tiene los permisos necesarios para acceder a este recurso',
         ], 403);
     }
 
@@ -46,9 +45,8 @@ class CheckPermission
      * Verifica si el usuario tiene al menos uno de los permisos requeridos.
      * Utiliza caché para evitar múltiples consultas a la base de datos.
      *
-     * @param array $roleNames Nombres de roles del usuario
+     * @param array $roleNames       Nombres de roles del usuario
      * @param array $permissionSlugs Slugs de permisos requeridos
-     * @return bool
      */
     private function hasPermission(array $roleNames, array $permissionSlugs): bool
     {
@@ -69,7 +67,7 @@ class CheckPermission
      * Obtiene todos los permisos para los roles del usuario usando caché.
      * Una sola consulta para todos los permisos en lugar de N+M consultas.
      *
-     * @param array $roleNames Nombres de roles
+     * @param  array $roleNames Nombres de roles
      * @return array Array de slugs de permisos
      */
     private function getUserPermissions(array $roleNames): array
@@ -84,7 +82,7 @@ class CheckPermission
             return Rol::whereIn('nombre', $roleNames)
                 ->with('permisos:id_permiso,slug')
                 ->get()
-                ->flatMap(fn($rol) => $rol->permisos->pluck('slug'))
+                ->flatMap(fn ($rol) => $rol->permisos->pluck('slug'))
                 ->unique()
                 ->values()
                 ->all();

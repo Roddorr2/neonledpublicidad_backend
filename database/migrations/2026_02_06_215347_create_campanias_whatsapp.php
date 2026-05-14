@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('campanias_whatsapp')) {
+        if (Schema::hasTable('campanias_whatsapp')) {
             return;
         }
 
-Schema::create('campanias_whatsapp', function (Blueprint $table) {
+        Schema::create('campanias_whatsapp', function (Blueprint $table) {
             $table->id('id_campania');
             $table->unsignedBigInteger('id_servicio');
             $table->text('parrafo');
@@ -28,7 +28,7 @@ Schema::create('campanias_whatsapp', function (Blueprint $table) {
             $table->timestamp('fecha_inicio')->nullable();
             $table->timestamp('fecha_fin')->nullable();
             $table->timestamps();
-            
+
             // La columna conserva el nombre `id_servicio` por compatibilidad,
             // pero referencia a `productos.id_producto` (id de producto) según el nuevo modelo de datos.
             $table->foreign('id_servicio')->references('id_producto')->on('productos')->onDelete('cascade');

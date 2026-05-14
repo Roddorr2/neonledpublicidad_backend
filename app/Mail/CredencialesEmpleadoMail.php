@@ -11,22 +11,23 @@ class CredencialesEmpleadoMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+
     public $password;
 
     public function __construct($user, $password)
     {
-        $this->user = $user;
+        $this->user     = $user;
         $this->password = $password;
     }
 
     public function build()
     {
         return $this->subject('Tus credenciales de acceso')
-                    ->view('mails.credenciales')
-                    ->with([
-                        'nombre' => $this->user->name,
-                        'email' => $this->user->email,
-                        'password' => $this->password
-                    ]);
+            ->view('mails.credenciales')
+            ->with([
+                'nombre'   => $this->user->name,
+                'email'    => $this->user->email,
+                'password' => $this->password,
+            ]);
     }
 }

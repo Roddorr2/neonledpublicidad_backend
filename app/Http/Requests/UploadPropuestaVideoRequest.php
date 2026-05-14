@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UploadPropuestaVideoRequest extends FormRequest
@@ -24,19 +24,19 @@ class UploadPropuestaVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'videos' => 'required|array',
-            'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt'
+            'videos'   => 'required|array',
+            'videos.*' => 'file|max:51200|mimetypes:video/mp4,video/webm,video/ogg,application/octet-stream,video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi,video/qt',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'videos.required' => 'Los videos son obligatorios',
-            'videos.array' => 'Los videos deben ser un arreglo',
-            'videos.*.file' => 'Cada video debe ser un archivo válido',
-            'videos.*.max' => 'Cada video no puede ser mayor a 50MB',
-            'videos.*.mimetypes' => 'Los videos deben ser de tipo: mp4, webm, ogg, avi, mov, etc.'
+            'videos.required'    => 'Los videos son obligatorios',
+            'videos.array'       => 'Los videos deben ser un arreglo',
+            'videos.*.file'      => 'Cada video debe ser un archivo válido',
+            'videos.*.max'       => 'Cada video no puede ser mayor a 50MB',
+            'videos.*.mimetypes' => 'Los videos deben ser de tipo: mp4, webm, ogg, avi, mov, etc.',
         ];
     }
 
@@ -44,7 +44,7 @@ class UploadPropuestaVideoRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

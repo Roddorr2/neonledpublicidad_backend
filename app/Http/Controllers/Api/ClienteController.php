@@ -13,26 +13,25 @@ use App\Mail\CredencialesEmpleadoMail;
 use App\Models\Cliente;
 use App\Models\Rol;
 use App\Models\User;
-use Cloudinary\Cloudinary;
 use App\Services\FileUploadService;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
-
     private function createPassword(string $nombre, string $apellidos)
     {
 
         $apellidoIniciales = strtoupper(substr($nombre, 0, 2));
-        $nombreIniciales = strtolower(substr($apellidos, 0, 2));
+        $nombreIniciales   = strtolower(substr($apellidos, 0, 2));
 
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
 
         $password = "{$apellidoIniciales}";
@@ -47,7 +46,7 @@ class ClienteController extends Controller
     }
 
     public function create(
-        //Request $request
+        // Request $request
         StoreClienteRequest $request
     ) {
         try {
@@ -74,26 +73,26 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
 
-            //$generatedPassword = $this->createPassword($request->nombre, $request->apellido);
+            // $generatedPassword = $this->createPassword($request->nombre, $request->apellido);
             $generatedPassword = $this->createPassword($data['nombre'], $data['apellido']);
 
-            $user = \App\Models\User::create([
-                "name" => $data['nombre'] . " " . $data['apellido'],
-                "email" => $data['email'],
-                "password" => $generatedPassword
+            $user = User::create([
+                'name'     => $data['nombre'] . ' ' . $data['apellido'],
+                'email'    => $data['email'],
+                'password' => $generatedPassword,
             ]);
 
             $rol = Rol::where('nombre', 'cliente')->firstOrFail();
 
             $customer = Cliente::create([
-                "nombre" => $data['nombre'],
-                "apellido" => $data['apellido'],
-                "email" => $data['email'],
-                "telefono" => $data['telefono'],
-                "distrito" => $data['distrito'] ?? null,
-                "id_user" => $user->id,
-                //"id_rol" => Rol::where('nombre', 'cliente')->first()->id_rol
-                "id_rol" => $rol->id_rol
+                'nombre'   => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'email'    => $data['email'],
+                'telefono' => $data['telefono'],
+                'distrito' => $data['distrito'] ?? null,
+                'id_user'  => $user->id,
+                // "id_rol" => Rol::where('nombre', 'cliente')->first()->id_rol
+                'id_rol' => $rol->id_rol,
             ]);
 
             /**
@@ -104,39 +103,40 @@ class ClienteController extends Controller
             DB::commit();
 
             return response()->json([
-                "status" => 201,
-                "message" => "Cliente creado exitosamente",
-                "cliente" => $customer,
+                'status'  => 201,
+                'message' => 'Cliente creado exitosamente',
+                'cliente' => $customer,
             ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json([
-                "status" => 500,
-                "message" => "Error al crear cliente",
-                "error" => $e->getMessage()
+                'status'  => 500,
+                'message' => 'Error al crear cliente',
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }
 
     public function getById($id)
     {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+            return response()->json(['status' => 422, 'message' => 'Error de validación', 'Errors' => $validate->errors()]);
         }
 
         $cliente = Cliente::with('rol')->find($id);
 
-        if (!$cliente) {
-            return response()->json(["status" => 404, "message" => "Cliente no encontrado"]);
+        if (! $cliente) {
+            return response()->json(['status' => 404, 'message' => 'Cliente no encontrado']);
         }
 
         return response()->json([
-            "status" => 200,
-            "data" => $cliente
+            'status' => 200,
+            'data'   => $cliente,
         ]);
     }
 
@@ -166,33 +166,33 @@ class ClienteController extends Controller
             $clientesData = $clientes->map(function ($cliente) {
                 return [
                     'id_cliente' => $cliente->id,
-                    'nombre' => $cliente->nombre,
-                    'apellido' => $cliente->apellido,
-                    'email' => $cliente->email,
-                    'telefono' => $cliente->telefono,
-                    'rol' => $cliente->rol->nombre,
-                    'distrito' => $cliente->distrito,
-                    'propuestas' => $cliente->propuestas_count
+                    'nombre'     => $cliente->nombre,
+                    'apellido'   => $cliente->apellido,
+                    'email'      => $cliente->email,
+                    'telefono'   => $cliente->telefono,
+                    'rol'        => $cliente->rol->nombre,
+                    'distrito'   => $cliente->distrito,
+                    'propuestas' => $cliente->propuestas_count,
                 ];
             });
 
             return response()->json([
-                "status" => 200,
-                'data' => $clientesData,
-                'total' => $request->has('all') ? count($clientesData) : $clientes->total(),
-                'page' => $request->has('all') ? 1 : $clientes->currentPage()
+                'status' => 200,
+                'data'   => $clientesData,
+                'total'  => $request->has('all') ? count($clientesData) : $clientes->total(),
+                'page'   => $request->has('all') ? 1 : $clientes->currentPage(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "status" => 500,
-                "message" => "Error interno del servidor",
-                "error" => $e->getMessage()
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }
 
     public function update(
-        //Request $request,
+        // Request $request,
         UpdateClienteRequest $request,
         $id
     ) {
@@ -260,7 +260,7 @@ class ClienteController extends Controller
         $data = $request->validated();
 
         $cliente = Cliente::findOrFail($id);
-        $user = User::find($cliente->id_user);
+        $user    = User::find($cliente->id_user);
 
         if ($user) {
             if (isset($data['email'])) {
@@ -268,8 +268,8 @@ class ClienteController extends Controller
             }
 
             if (isset($data['nombre']) || isset($data['apellido'])) {
-                $nombre = $data['nombre'] ?? $cliente->nombre;
-                $apellido = $data['apellido'] ?? $cliente->apellido;
+                $nombre     = $data['nombre'] ?? $cliente->nombre;
+                $apellido   = $data['apellido'] ?? $cliente->apellido;
                 $user->name = $nombre . ' ' . $apellido;
             }
 
@@ -279,15 +279,14 @@ class ClienteController extends Controller
         $cliente->update($data);
 
         return response()->json([
-            "status"  => 200,
-            "message" => "Cliente actualizado correctamente",
-            "data"    => $cliente
+            'status'  => 200,
+            'message' => 'Cliente actualizado correctamente',
+            'data'    => $cliente,
         ]);
     }
 
-
     public function updateProfileImage(
-        //Request $request,
+        // Request $request,
         UpdateProfileImageRequest $request,
         $id
     ) {
@@ -392,21 +391,21 @@ class ClienteController extends Controller
         try {
 
             $cliente = Cliente::where('id', $id)->first();
-            if (!$cliente) {
+            if (! $cliente) {
                 return response()->json([
-                    "status" => 404,
-                    "message" => "Cliente no encontrado"
+                    'status'  => 404,
+                    'message' => 'Cliente no encontrado',
                 ], 404);
             }
 
             $data = DB::transaction(function () use ($cliente, $request) {
 
-                $uploader = new FileUploadService();
+                $uploader = new FileUploadService;
 
                 if ($request->hasFile('imagen')) {
 
-                    $archivo = $request->file('imagen');
-                    $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
+                    $archivo  = $request->file('imagen');
+                    $ext      = $archivo->getClientOriginalExtension() ?: 'jpg';
                     $filename = "cliente_{$cliente->id}_" . time() . ".{$ext}";
 
                     $res = $uploader->subir(
@@ -417,15 +416,15 @@ class ClienteController extends Controller
                         [
                             'delete_previous_cloud' => true,
                             'delete_previous_local' => true,
-                            'filename' => $filename,
+                            'filename'              => $filename,
                         ]
                     );
 
                     if (empty($res['url'])) {
-                        throw new \Exception("Fallo al subir la imagen");
+                        throw new \Exception('Fallo al subir la imagen');
                     }
 
-                    $cliente->imagen_perfil = $res['public_id'] ?? $cliente->imagen_perfil;
+                    $cliente->imagen_perfil     = $res['public_id'] ?? $cliente->imagen_perfil;
                     $cliente->imagen_perfil_url = $res['url'];
                 } else {
 
@@ -433,7 +432,7 @@ class ClienteController extends Controller
                         $uploader->eliminarPublicId($cliente->imagen_perfil);
                     }
 
-                    $cliente->imagen_perfil = $request->public_id;
+                    $cliente->imagen_perfil     = $request->public_id;
                     $cliente->imagen_perfil_url = $request->secure_url;
                 }
 
@@ -441,43 +440,43 @@ class ClienteController extends Controller
 
                 return [
                     'public_id' => $cliente->imagen_perfil,
-                    'url' => $cliente->imagen_perfil_url,
-                    'version' => time()
+                    'url'       => $cliente->imagen_perfil_url,
+                    'version'   => time(),
                 ];
             });
 
             return response()->json([
-                "status" => 200,
-                "message" => "Imagen actualizada correctamente",
-                "data" => $data
+                'status'  => 200,
+                'message' => 'Imagen actualizada correctamente',
+                'data'    => $data,
             ]);
         } catch (\Exception $e) {
-            Log::error("Error actualizando imagen: " . $e->getMessage(), [
-                'exception' => $e
+            Log::error('Error actualizando imagen: ' . $e->getMessage(), [
+                'exception' => $e,
             ]);
 
             return response()->json([
-                "status" => 500,
-                "message" => "Error al actualizar la imagen",
-                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'status'  => 500,
+                'message' => 'Error al actualizar la imagen',
+                'error'   => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
 
     public function updatePass(Request $request, $id)
     {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+            return response()->json(['status' => 422, 'message' => 'Error de validación', 'Errors' => $validate->errors()]);
         }
 
         $cliente = Cliente::where('id', $id)->first();
 
-        if (!$cliente) {
-            return response()->json(["status" => 404, "message" => "Cliente no encontrado"]);
+        if (! $cliente) {
+            return response()->json(['status' => 404, 'message' => 'Cliente no encontrado']);
         }
 
         $userId = $cliente->id_user;
@@ -486,7 +485,7 @@ class ClienteController extends Controller
     }
 
     private function updatePass1(
-        //Request $request,
+        // Request $request,
         UpdatePasswordRequest $request,
         $id
     ) {
@@ -514,7 +513,6 @@ class ClienteController extends Controller
         }
         */
 
-
         /*
         $user = User::findOrFail($id);
 
@@ -535,8 +533,8 @@ class ClienteController extends Controller
         $user->save();
 
         return response()->json([
-            "status" => 200,
-            "message" => "Registro actualizado correctamente"
+            'status'  => 200,
+            'message' => 'Registro actualizado correctamente',
         ]);
     }
 
@@ -583,53 +581,54 @@ class ClienteController extends Controller
         try {
             $data = $request->validated();
 
-            if (!$cliente->user) {
+            if (! $cliente->user) {
                 return response()->json([
-                    'valid' => false,
-                    'message' => 'No se encontró el usuario asociado al cliente'
+                    'valid'   => false,
+                    'message' => 'No se encontró el usuario asociado al cliente',
                 ], 404);
             }
 
-            if (!Hash::check($data['currentPassword'], $cliente->user->password)) {
+            if (! Hash::check($data['currentPassword'], $cliente->user->password)) {
                 return response()->json([
-                    'valid' => false,
-                    'message' => 'La contraseña actual es incorrecta'
+                    'valid'   => false,
+                    'message' => 'La contraseña actual es incorrecta',
                 ], 400);
             }
 
             return response()->json([
-                'valid' => true,
-                'message' => 'Contraseña verificada correctamente'
+                'valid'   => true,
+                'message' => 'Contraseña verificada correctamente',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Ocurrió un error al procesar la solicitud',
-                'message' => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'error'   => 'Ocurrió un error al procesar la solicitud',
+                'message' => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
 
     public function delete($id)
     {
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
+        $validate = Validator::make(['id' => $id], [
+            'id' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
-            Log::error("Validación fallida: ", $validate->errors()->toArray());
+            Log::error('Validación fallida: ', $validate->errors()->toArray());
+
             return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "errors" => $validate->errors()
+                'status'  => 422,
+                'message' => 'Error de validación',
+                'errors'  => $validate->errors(),
             ], 422);
         }
 
         $cliente = Cliente::find($id);
 
-        if (!$cliente) {
+        if (! $cliente) {
             return response()->json([
-                "status" => 404,
-                "message" => "Cliente no encontrado"
+                'status'  => 404,
+                'message' => 'Cliente no encontrado',
             ], 404);
         }
 
@@ -638,13 +637,13 @@ class ClienteController extends Controller
             $folderPath = "cliente/{$id}/";
 
             if (Storage::disk('public')->exists($folderPath)) {
-                Log::info("Eliminando carpeta del cliente: " . $folderPath);
+                Log::info('Eliminando carpeta del cliente: ' . $folderPath);
                 Storage::disk('public')->deleteDirectory($folderPath);
             }
 
             $user = User::find($cliente->id_user);
             if ($user) {
-                Log::info("Eliminando usuario vinculado con ID: " . $user->id);
+                Log::info('Eliminando usuario vinculado con ID: ' . $user->id);
                 $user->delete();
             }
 
@@ -653,19 +652,20 @@ class ClienteController extends Controller
 
             DB::commit();
 
-            Log::info("Cliente eliminado correctamente");
+            Log::info('Cliente eliminado correctamente');
+
             return response()->json([
-                "status" => 200,
-                "message" => "Cliente eliminado correctamente"
+                'status'  => 200,
+                'message' => 'Cliente eliminado correctamente',
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error("Error al eliminar cliente: " . $e->getMessage());
+            Log::error('Error al eliminar cliente: ' . $e->getMessage());
 
             return response()->json([
-                "status" => 500,
-                "message" => "Error al eliminar el cliente",
-                "error" => $e->getMessage()
+                'status'  => 500,
+                'message' => 'Error al eliminar el cliente',
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }
@@ -675,10 +675,10 @@ class ClienteController extends Controller
         try {
             $cliente = Cliente::find($id);
 
-            if (!$cliente) {
+            if (! $cliente) {
                 return response()->json([
-                    'status' => 404,
-                    'message' => 'Cliente no encontrado'
+                    'status'  => 404,
+                    'message' => 'Cliente no encontrado',
                 ], 404);
             }
 
@@ -686,40 +686,40 @@ class ClienteController extends Controller
                 Log::info('Intentando eliminar imagen de perfil:', ['public_id' => $cliente->imagen_perfil]);
 
                 try {
-                    $cloudinary = new Cloudinary();
+                    $cloudinary = new Cloudinary;
 
                     $result = $cloudinary->uploadApi()->destroy($cliente->imagen_perfil);
                     Log::info('Resultado de eliminación:', ['result' => $result]);
                 } catch (\Exception $e) {
-                    Log::warning("Error al eliminar imagen de Cloudinary: " . $e->getMessage());
+                    Log::warning('Error al eliminar imagen de Cloudinary: ' . $e->getMessage());
                     // Continuamos con la actualización en la base de datos
                 }
 
-                $cliente->imagen_perfil = null;
+                $cliente->imagen_perfil     = null;
                 $cliente->imagen_perfil_url = null;
                 $cliente->save();
             }
 
             return response()->json([
-                'status' => 200,
-                'message' => 'Imagen eliminada correctamente'
+                'status'  => 200,
+                'message' => 'Imagen eliminada correctamente',
             ]);
         } catch (\Exception $e) {
-            Log::error("Error eliminando imagen de perfil: " . $e->getMessage(), [
+            Log::error('Error eliminando imagen de perfil: ' . $e->getMessage(), [
                 'exception' => $e,
-                'trace' => $e->getTraceAsString()
+                'trace'     => $e->getTraceAsString(),
             ]);
 
             return response()->json([
-                'status' => 500,
+                'status'  => 500,
                 'message' => 'Error al eliminar la imagen',
-                'error' => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor'
+                'error'   => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor',
             ], 500);
         }
     }
 
     public function updateProfile(
-        //Request $request
+        // Request $request
         UpdateProfileRequest $request
     ) {
         /*
@@ -789,13 +789,13 @@ class ClienteController extends Controller
         */
         try {
             $user = $request->user();
-            //$cliente = $user->cliente; // mejor si tienes relación
+            // $cliente = $user->cliente; // mejor si tienes relación
             $cliente = Cliente::where('id_user', $user->id)->first();
 
-            if (!$cliente) {
+            if (! $cliente) {
                 return response()->json([
-                    "status" => 404,
-                    "message" => "Cliente no encontrado"
+                    'status'  => 404,
+                    'message' => 'Cliente no encontrado',
                 ], 404);
             }
 
@@ -804,31 +804,30 @@ class ClienteController extends Controller
             DB::transaction(function () use ($user, $cliente, $data) {
 
                 $user->update([
-                    "name"  => $data['nombre'] . " " . $data['apellido'],
-                    "email" => $data['email']
+                    'name'  => $data['nombre'] . ' ' . $data['apellido'],
+                    'email' => $data['email'],
                 ]);
 
                 $cliente->update([
-                    "nombre"   => $data['nombre'],
-                    "apellido" => $data['apellido'],
-                    "email"    => $data['email'],
-                    "telefono" => $data['telefono'],
-                    "distrito" => $data['distrito'] ?? null
+                    'nombre'   => $data['nombre'],
+                    'apellido' => $data['apellido'],
+                    'email'    => $data['email'],
+                    'telefono' => $data['telefono'],
+                    'distrito' => $data['distrito'] ?? null,
                 ]);
             });
 
             return response()->json([
-                "status" => 200,
-                "message" => "Perfil actualizado exitosamente",
-                "cliente" => $cliente
+                'status'  => 200,
+                'message' => 'Perfil actualizado exitosamente',
+                'cliente' => $cliente,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "status" => 500,
-                "message" => "Error al actualizar perfil",
-                "error" => config('app.debug') ? $e->getMessage() : 'Error interno'
+                'status'  => 500,
+                'message' => 'Error al actualizar perfil',
+                'error'   => config('app.debug') ? $e->getMessage() : 'Error interno',
             ], 500);
         }
     }
 }
-

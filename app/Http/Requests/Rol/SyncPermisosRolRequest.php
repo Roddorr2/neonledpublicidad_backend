@@ -24,9 +24,9 @@ class SyncPermisosRolRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'permisos.required'  => 'Debes enviar al menos un permiso.',
-            'permisos.array'     => 'Los permisos deben ser un arreglo.',
-            'permisos.*.exists'  => 'Uno o más permisos seleccionados no existen.',
+            'permisos.required' => 'Debes enviar al menos un permiso.',
+            'permisos.array'    => 'Los permisos deben ser un arreglo.',
+            'permisos.*.exists' => 'Uno o más permisos seleccionados no existen.',
         ];
     }
 

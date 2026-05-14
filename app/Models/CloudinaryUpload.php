@@ -9,12 +9,12 @@ class CloudinaryUpload extends Model
     protected $table = 'cloudinary_uploads';
 
     protected $fillable = [
-        'public_id', 'secure_url', 'user_id', 'used', 'expires_at', 'metadata'
+        'public_id', 'secure_url', 'user_id', 'used', 'expires_at', 'metadata',
     ];
 
     protected $casts = [
-        'used' => 'boolean',
-        'metadata' => 'array',
-        'expires_at' => 'datetime'
+        'used'       => 'boolean',
+        'metadata'   => 'array',
+        'expires_at' => 'datetime',
     ];
 }

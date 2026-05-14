@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreContactoRequest extends FormRequest
@@ -33,7 +33,7 @@ class StoreContactoRequest extends FormRequest
                     if (preg_match('/[0-9]/', $value)) {
                         $fail('Nombre no puede tener numeros');
                     }
-                }
+                },
             ],
             'apellido' => [
                 function ($attribute, $value, $fail) {
@@ -43,23 +43,23 @@ class StoreContactoRequest extends FormRequest
                     if (preg_match('/[0-9]/', $value)) {
                         $fail('Apellido no puede tener numeros');
                     }
-                }
+                },
             ],
             'telefono' => [
                 'required',
                 function ($attribute, $value, $fail) {
-                    if (!validarTelefonoPeruano($value)) {
+                    if (! validarTelefonoPeruano($value)) {
                         $fail('Formato de telefono invalido');
                     }
-                }
+                },
             ],
             'distrito' => ['required'],
-            'email' => [
+            'email'    => [
                 'required',
-                'email'
+                'email',
             ],
             'tipo_reclamo' => ['required', 'in:CONSULTA,RECLAMO'],
-            'mensaje' => ['required']
+            'mensaje'      => ['required'],
         ];
     }
 
@@ -67,12 +67,12 @@ class StoreContactoRequest extends FormRequest
     {
         return [
             'email.required' => 'El correo es obligatorio',
-            'email.email' => 'El correo es inválido',
+            'email.email'    => 'El correo es inválido',
 
             'tipo_reclamo.required' => 'El tipo de reclamo es obligatorio',
-            'tipo_reclamo.in' => 'El tipo de reclamo debe ser CONSULTA o RECLAMO',
+            'tipo_reclamo.in'       => 'El tipo de reclamo debe ser CONSULTA o RECLAMO',
 
-            'mensaje.required'=>'Mensaje es obligatorio'
+            'mensaje.required' => 'Mensaje es obligatorio',
         ];
     }
 
@@ -80,8 +80,8 @@ class StoreContactoRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            //'message' => 'Errores de validación',
-            'errors' => $validator->errors()
+            // 'message' => 'Errores de validación',
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

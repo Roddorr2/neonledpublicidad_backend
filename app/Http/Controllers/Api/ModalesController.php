@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Mail\ModalMail;
-use App\Models\WatModal;
-use App\Mail\MailService;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Modal\StoreModalRequest;
+use App\Http\Requests\Modal\UpdateModalRequest;
+use App\Jobs\SendEmailJob;
+use App\Jobs\SendWhatsAppJob;
 use App\Models\EmailModal;
 use App\Models\modalservicios;
 use App\Models\PlantillaWhatsapp;
-use App\Http\Requests\Modal\StoreModalRequest;
-use App\Http\Requests\Modal\UpdateModalRequest;
+use App\Models\WatModal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use App\Jobs\SendEmailJob;
-use App\Jobs\SendWhatsAppJob;
 
 class ModalesController extends Controller
 {
     public function get(Request $request)
     {
-        $modals = Modalservicios::orderBy('id_modalservicio', 'asc')->paginate(4);
+        $modals = modalservicios::orderBy('id_modalservicio', 'asc')->paginate(4);
+
         return response()->json($modals, 200);
     }
 
@@ -34,7 +32,7 @@ class ModalesController extends Controller
         return response()->json([
             'mails'  => $modals_mails,
             'wats'   => $modal_wats,
-            'status' => 200
+            'status' => 200,
         ], 200);
     }
 
@@ -125,23 +123,24 @@ class ModalesController extends Controller
 
             return response()->json([
                 'status'  => 201,
-                'message' => 'Modal guardado exitosamente'
+                'message' => 'Modal guardado exitosamente',
             ], 201);
 
         } catch (\Exception $error) {
             DB::rollback();
+
             return response()->json([
                 'error'   => 'Error al crear el registro',
-                'details' => $error->getMessage()
+                'details' => $error->getMessage(),
             ], 500);
         }
     }
 
     public function getById(int $id)
     {
-        $modal = Modalservicios::where('id_modalservicio', $id)->first();
+        $modal = modalservicios::where('id_modalservicio', $id)->first();
 
-        if (!$modal) {
+        if (! $modal) {
             return response()->json(['error' => 'Modal no encontrado'], 404);
         }
 
@@ -152,7 +151,7 @@ class ModalesController extends Controller
     {
         $modal = modalservicios::find($id);
 
-        if (!$modal) {
+        if (! $modal) {
             return response()->json(['error' => 'Modal no encontrado'], 404);
         }
 
@@ -168,7 +167,7 @@ class ModalesController extends Controller
     {
         $modal = modalservicios::find($id);
 
-        if (!$modal) {
+        if (! $modal) {
             return response()->json(['error' => 'Modal no encontrado'], 404);
         }
 

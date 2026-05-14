@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UploadPropuestaImageRequest extends FormRequest
@@ -24,18 +24,18 @@ class UploadPropuestaImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'files' => 'nullable|array',
-            'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif'
+            'files'   => 'nullable|array',
+            'files.*' => 'file|max:20480|mimetypes:image/jpeg,image/jpg,image/png,image/gif,image/webp,image/avif,image/pjpeg,image/jfif',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'files.array' => 'Los archivos deben ser un arreglo',
-            'files.*.file' => 'Cada archivo debe ser un archivo válido',
-            'files.*.max' => 'Cada imagen no puede ser mayor a 20MB',
-            'files.*.mimetypes' => 'Las imágenes deben ser de tipo: jpeg, jpg, png, gif, webp, avif, pjpeg, jfif'
+            'files.array'       => 'Los archivos deben ser un arreglo',
+            'files.*.file'      => 'Cada archivo debe ser un archivo válido',
+            'files.*.max'       => 'Cada imagen no puede ser mayor a 20MB',
+            'files.*.mimetypes' => 'Las imágenes deben ser de tipo: jpeg, jpg, png, gif, webp, avif, pjpeg, jfif',
         ];
     }
 
@@ -43,7 +43,7 @@ class UploadPropuestaImageRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'errors' => $validator->errors()
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

@@ -14,6 +14,7 @@ class PlantillasWhatsappController extends Controller
     public function index()
     {
         $plantillas = PlantillaWhatsapp::orderBy('id_producto')->orderBy('numero_plantilla')->get();
+
         return response()->json(['success' => true, 'data' => $plantillas]);
     }
 
@@ -23,6 +24,7 @@ class PlantillasWhatsappController extends Controller
         if (! $p) {
             return response()->json(['success' => false, 'message' => 'Plantilla no encontrada'], 404);
         }
+
         return response()->json(['success' => true, 'data' => $p]);
     }
 
@@ -62,10 +64,10 @@ class PlantillasWhatsappController extends Controller
 
             if ($request->hasFile('imagen')) {
                 $archivo      = $request->file('imagen');
-                $uploader     = new FileUploadService();
+                $uploader     = new FileUploadService;
                 $ext          = $archivo->getClientOriginalExtension() ?: 'jpg';
-                $safeProducto = preg_replace('/[^A-Za-z0-9_-]/', '_', (string) $plantilla->id_producto);
-                $safeNumero   = preg_replace('/[^A-Za-z0-9_-]/', '_', (string) $plantilla->numero_plantilla);
+                $safeProducto = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$plantilla->id_producto);
+                $safeNumero   = preg_replace('/[^A-Za-z0-9_-]/', '_', (string)$plantilla->numero_plantilla);
                 $timestamp    = time();
                 $filename     = "plantilla_{$safeProducto}_{$safeNumero}_{$timestamp}.{$ext}";
                 $carpeta      = "plantillas/whatsapp/producto-{$safeProducto}/plantilla-{$safeNumero}";
@@ -81,6 +83,7 @@ class PlantillasWhatsappController extends Controller
                         'plantilla_id' => $plantilla->id,
                         'resultado'    => $resultado,
                     ]);
+
                     return response()->json([
                         'success' => false,
                         'message' => 'Fallo al subir la imagen. No se actualizó la plantilla.',
@@ -101,6 +104,7 @@ class PlantillasWhatsappController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error actualizando plantilla', ['error' => $e->getMessage()]);
+
             return response()->json([
                 'success' => false,
                 'message' => 'Error al actualizar plantilla',

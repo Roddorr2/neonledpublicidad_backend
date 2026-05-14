@@ -1,4 +1,5 @@
 <?php
+
 return [
     'services' => [
 
@@ -9,7 +10,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Letras acrílicas que elevan tu marca ✨',
-                    'title' => '¡Letreros de Acrílico!',
+                    'title'   => '¡Letreros de Acrílico!',
                     'message' => '<p>¿Quieres que tu negocio destaque desde el primer vistazo?</p>
                                 <p>Nuestras <strong>letras acrílicas en PMMA</strong> ofrecen un acabado limpio, resistente y
                                 totalmente personalizable según tu tipografía y estilo. Puedes potenciar su
@@ -29,7 +30,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'Haz que tu marca brille como nunca antes',
-                    'title' => '¡Letreros de Acrílico!',
+                    'title'   => '¡Letreros de Acrílico!',
                     'message' => '<p>🌟¿Quieres que tu negocio tenga una imagen fresca y profesional?
                                 Nuestras letras acrílicas 3D están hechas con materiales de alta calidad y 
                                 cuentan con tecnología LED que ilumina tu mensaje en cualquier momento. 
@@ -41,7 +42,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'Es hora de darle vida a tu marca!',
-                    'title' => '¡Letreros de Acrílico!',
+                    'title'   => '¡Letreros de Acrílico!',
                     'message' => '<p">Estamos emocionados de acompañarte en tu proyecto. No esperes más y da 
                                 el primer paso para transformar tu espacio con nuestras letras acrílicas 
                                 luminosas.</p>',
@@ -64,7 +65,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Dale un toque de lujo a tu marca ✨',
-                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'title'   => '¡Letreros De Aluminio Dorados 3D!',
                     'message' => '<p">Nuestras <strong>letras de aluminio dorado 3D</strong> te brindan un acabado metálico 
                     brillante que simula el oro iluminando cualquier ambiente con elegancia . Su diseño 
                     preciso y resistente te da un efecto visual cálido y sofisticado para logotipos, 
@@ -84,7 +85,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'Transforma tu espacio y negocio con ese brillo elegante dorado que deseas',
-                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'title'   => '¡Letreros De Aluminio Dorados 3D!',
                     'message' => '<p>Un acabado dorado brillante puede hacer toda la diferencia en la imagen de tu marca.
                                 Nuestras letras metálicas doradas 3D ofrecen un brillo elegante y duradero.<br><br>
                                 🏢Ideales para logotipos, murales y escaparates que requieren ese detalle especial que 
@@ -95,7 +96,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'Autenticidad para tu marca 🌟!',
-                    'title' => '¡Letreros De Aluminio Dorados 3D!',
+                    'title'   => '¡Letreros De Aluminio Dorados 3D!',
                     'message' => '<p>Hay marcas que se ven bien… y otras que se sienten premium desde el primer vistazo.<p>
                                 <p>Nuestras letras de aluminio doradas 3D están diseñadas para transmitir elegancia, prestigio y solidez, 
                                 gracias a su acabado metálico brillante y su diseño tridimensional de alta calidad. Son el detalle 
@@ -127,7 +128,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Elegancia y presencia en letras de aluminio 3D ✨',
-                    'title' => 'Letras de aluminio plateadas 3D',
+                    'title'   => 'Letras de aluminio plateadas 3D',
                     'message' => '<p>¿Buscas que tu negocio destaque desde el primer vistazo?</p>
                                 <p>Nuestras <strong>letras de aluminio plateadas 3D</strong> ofrecen un acabado moderno, 
                                 elegante y altamente resistente, ideales para proyectar una imagen 
@@ -154,7 +155,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'Letras de aluminio plateadas 3D',
-                    'title' => 'Letras de aluminio plateadas 3D',
+                    'title'   => 'Letras de aluminio plateadas 3D',
                     'message' => '<p>Queremos ayudarte a reflejar la personalidad innovadora de tu marca con nuestras letras de aluminio plateado 3D.</p>
                                 <p>🌟 Resistentes, duraderas y con acabados brillantes o satinados</p>',
                     'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-2.jpg',
@@ -163,10 +164,10 @@ return [
                 ],
                 3 => [
                     'subject' => 'Dale un aire futurista a tu marca',
-                    'title' => 'Letras de aluminio plateadas 3D',
+                    'title'   => 'Letras de aluminio plateadas 3D',
                     'message' => 'Nos encanta contar contigo. Lleva tu imagen al siguiente nivel con nuestro estilo elegante y moderno en letras plateadas.<br>',
-                    'image' => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-3.jpg',
-                    'extra' => 'Estamos a un clic de ayudarte → <a href="https://www.ledneonpublicidad.com/" target="_blank">www.ledneonpublicidad.com.</a><br>
+                    'image'   => '/assets/3-letras-aluminio-plateadas-3d/flyer-modal-3-3.jpg',
+                    'extra'   => 'Estamos a un clic de ayudarte → <a href="https://www.ledneonpublicidad.com/" target="_blank">www.ledneonpublicidad.com.</a><br>
                                 Síguenos en:<br>
                                 📸 <strong>Instagram:</strong> @neonledpublicidad<br>
                                 📘 <strong>Facebook:</strong> Neon LED Publicidad<br>
@@ -183,7 +184,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Haz que tu negocio destaque día y noche',
-                    'title' => '¡Letreros luminosos!',
+                    'title'   => '¡Letreros luminosos!',
                     'message' => '<p>Gracias por tu interés en <strong>Neon LED Publicidad</strong>.</p>
                                 <p>Sabemos que, en un mercado lleno de opciones, <strong>quien no se ve… no se recuerda</strong>.</p>
                                 <p>¿Tu negocio pasa desapercibido cuando cae la noche? 🌙<br>
@@ -208,8 +209,8 @@ return [
                                 Síguenos y descubre más ideas',
                 ],
                 2 => [
-                    'subject' => '✨ Haz que tu marca brille día y noche con nuestros Letreros Luminosos 💡',//no hubo cambio
-                    'title' => '¡Letreros luminosos!',
+                    'subject' => '✨ Haz que tu marca brille día y noche con nuestros Letreros Luminosos 💡', // no hubo cambio
+                    'title'   => '¡Letreros luminosos!',
                     'message' => '<p>¿Sabías que un letrero luminoso bien diseñado puede atraer clientes incluso cuando tu negocio está cerrado? ✨</p>
                                 <p>Nuestros <strong>letreros luminosos personalizados</strong> están pensados para que tu marca destaque de día y de noche. Combinamos 
                                 diseño, iluminación LED eficiente y materiales resistentes para crear letreros que no solo se ven bien, sino que 
@@ -230,8 +231,8 @@ return [
                 ],
                 3 => [
                     'subject' => '✨ De un letrero común... a una marca que ilumina su camino',
-                    'title' => '¡Letreros luminosos!',
-                    'message' =>  '<p>Cada día que tu negocio no se ve, es una oportunidad perdida.
+                    'title'   => '¡Letreros luminosos!',
+                    'message' => '<p>Cada día que tu negocio no se ve, es una oportunidad perdida.
                                 <strong>Un letrero luminoso</strong> no es un gasto, es una inversión que trabaja por ti las 24 horas.</p>
                                 <p>Nos encargamos de todo: diseño, fabricación e instalación, adaptándonos a la 
                                 imagen de tu marca y al espacio que tengas disponible.</p>
@@ -258,7 +259,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Ilumina tu marca con Neón LED',
-                    'title' => '¡Neon LED!',
+                    'title'   => '¡Neon LED!',
                     'message' => '<p>Gracias por escribirnos a <strong>Neon LED Publicidad</strong>.<br>
                                 Tu marca tiene personalidad… <strong>déjala brillar</strong> ✨</p>
                                 <p>Un espacio sin luz ni carácter se olvida fácilmente.<br>
@@ -277,7 +278,7 @@ return [
                 ],
                 2 => [
                     'subject' => '💡 Dale personalidad a tu espacio con nuestros Neones LED Personalizados ✨',
-                    'title' => '¡Neón LED!',
+                    'title'   => '¡Neón LED!',
                     'message' => '<p>Las letras de neón LED son la opción perfecta si buscas un estilo moderno, llamativo y eficiente. ⚡<br>
                                 Ofrecen una iluminación brillante con bajo consumo energético, mayor durabilidad y múltiples opciones 
                                 de personalización en colores y formas</p>
@@ -296,7 +297,7 @@ return [
                 ],
                 3 => [
                     'subject' => '✨ De paredes vacías... a espacios con alma y color 🌈',
-                    'title' => '¡Neón LED!',
+                    'title'   => '¡Neón LED!',
                     'message' => '<p>Tu negocio merece una iluminación que esté a la altura de lo que ofreces.<br>
                                 Con nuestras <strong>letras de neón LED personalizadas</strong>, obtienes visibilidad, estilo y eficiencia en un solo producto.</p>
                                 <p>Es una solución moderna que se adapta a cualquier espacio y comunica innovación desde el primer segundo.<br>
@@ -323,7 +324,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Dale vida a tus espacios con impresión en vinilo',
-                    'title' => '¡Impresión  en Vinilo!',
+                    'title'   => '¡Impresión  en Vinilo!',
                     'message' => '<p>Gracias por confiar en <strong>Neon LED Publicidad</strong>.<br>
                                 Cada espacio es una oportunidad para comunicar tu marca.<br><br>
 
@@ -347,8 +348,8 @@ return [
                 ],
                 2 => [
                     'subject' => '🎨 Transforma tus paredes con nuestra Impresión en Vinilo Premium',
-                    'title' => '¡Impresión en vinilo!',
-                    'message' =>  '<p>¿Quieres darle vida a tus espacios sin hacer grandes cambios?<br>
+                    'title'   => '¡Impresión en vinilo!',
+                    'message' => '<p>¿Quieres darle vida a tus espacios sin hacer grandes cambios?<br>
                                 Los <strong>viniles impresos personalizados</strong> son una forma práctica, creativa y efectiva de comunicar tu marca o renovar tu ambiente.</p>
                                 <p>Nuestros viniles decorativos se adaptan a cualquier estilo y superficie lisa, permitiéndote mostrar mensajes, diseños o logotipos con acabados precisos y de alta calidad.<br>
                                 Son ideales tanto para interiores como para negocios que buscan destacar su identidad visual.</p>
@@ -373,7 +374,7 @@ return [
                 ],
                 3 => [
                     'subject' => '✨ De paredes vacías... a espacios llenos de identidad',
-                    'title' => '¡Impresión en vinilo!',
+                    'title'   => '¡Impresión en vinilo!',
                     'message' => '<p>Cada pared, vitrina o superficie puede convertirse en una oportunidad para comunicar tu marca.<br>
                                 Con nuestra <strong>impresión en vinilo adhesivo</strong>, logras impacto visual inmediato sin obras ni complicaciones.</p>
                                 <p>Los viniles decorativos son una solución <strong>flexible, funcional y económica</strong> para destacar promociones,
@@ -405,7 +406,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => '🚀 Transforma tu espacio con un Menú Board que vende por ti',
-                    'title' => '¡Menu Board!',
+                    'title'   => '¡Menu Board!',
                     'message' => '<p>Imagina que cada cliente que entra a tu negocio ve tu carta clara, ordenada y visualmente irresistible.<br>
                                 Eso es exactamente lo que logran nuestros <strong>Menú Boards personalizados</strong>.</p>
                                 <p>Hoy en día, los negocios gastronómicos que más venden tienen algo en común:<br>
@@ -430,7 +431,7 @@ return [
                 ],
                 2 => [
                     'subject' => '✨ Dale vida a tu restaurante con un Menú Board: Transforma tu espacio y vende más 🍔',
-                    'title' => '¡Menu Board!',
+                    'title'   => '¡Menu Board!',
                     'message' => '<p>Hola <strong>[Nombre del cliente]</strong>, 👋</p>
                                 <p>¡Gracias por interesarte en nuestros <strong>Menú Boards personalizados</strong>!<br>
                                 Sabemos que en la industria gastronómica, cada detalle cuenta… y tu menú es la carta de presentación de tu negocio.</p>
@@ -452,7 +453,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'Convierte tu Menú en una experiencia visual que tus clientes recordarán✨',
-                    'title' => '¡Menu Board!',
+                    'title'   => '¡Menu Board!',
                     'message' => '<p>Hola <strong>[Nombre del cliente]</strong>, 👋</p>
                                 <p>Sabemos que en muchos restaurantes, los menús tradicionales o carteles poco visibles no logran captar la atención de los clientes.</p>
                                 <p>Imagina ahora tu local con un <strong>Menú Board LED personalizado</strong>, moderno y brillante,
@@ -482,7 +483,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Haz que tu marca se vea profesional con Letras MDF personalizadas ✨',
-                    'title' => '¡Letras Pintadas en MDF!',
+                    'title'   => '¡Letras Pintadas en MDF!',
                     'message' => '<p ">¡Nos alegra muchísimo tenerte aquí!<br>
                                 En Neon LED Publicidad, creemos que cada marca tiene una historia… y la tuya merece ser vista, recordada y admirada. ✨<br><br>
                                 Nos especializamos en crear experiencias visuales únicas que hacen brillar los negocios y los sueños de nuestros clientes.<br>
@@ -502,7 +503,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'Haz que tu marca destaque con nuestras Letras MDF personalizadas ✨',
-                    'title' => '¡Letras Pintadas en MDF!',
+                    'title'   => '¡Letras Pintadas en MDF!',
                     'message' => '<p>¿Tu marca se ve tan profesional como realmente es?<br>
                                 La forma en que presentas tu nombre, logo o mensaje influye directamente en cómo te perciben tus clientes.</p>
                                 <p>Las <strong>Letras pintadas en MDF</strong> son una solución visual versátil y elegante para destacar cualquier espacio.</p>
@@ -535,7 +536,7 @@ return [
                 ],
                 3 => [
                     'subject' => '✨ De un espacio común… a una marca que destaca con estilo',
-                    'title' => '¡Letras Pintadas en MDF!',
+                    'title'   => '¡Letras Pintadas en MDF!',
                     'message' => '<p>¡Tu marca puede tener una historia increíble!<br>
                                 Sin embargo, muchas marcas con un buen producto o servicio no logran reflejarlo visualmente.</p>
                                 <p>Letreros genéricos, señalización poco visible o espacios sin personalidad hacen que un negocio pase desapercibido
@@ -571,7 +572,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => '¡Bienvenido a Neon LED Publicidad! El brillo de tu marca comienza aquí ✨',
-                    'title' => '¡Monitores de Publicidad!',
+                    'title'   => '¡Monitores de Publicidad!',
                     'message' => '<p>Hola [Nombre del cliente] 👋</p>
                                 <p>¿Cuántas personas pasan frente a tu negocio sin detenerse?<br>
                                 Con los <strong>monitores de publicidad digital</strong>, tu mensaje deja de ser estático y se convierte
@@ -607,7 +608,7 @@ return [
                 ],
                 2 => [
                     'subject' => '💡 Tu marca merece verse en alta definición',
-                    'title' => '¡Monitores de Publicidad!',
+                    'title'   => '¡Monitores de Publicidad!',
                     'message' => '<p>Imagina que cada persona que pasa frente a tu negocio detiene su mirada.<br>
                                 Eso ocurre cuando usas <strong>monitores de publicidad digital</strong>: pantallas que transforman
                                 cualquier espacio en una experiencia visual moderna y profesional.</p>
@@ -633,7 +634,7 @@ return [
                 ],
                 3 => [
                     'subject' => '✨ De mensajes estáticos… a pantallas que hablan por tu marca',
-                    'title' => '¡Monitores de Publicidad!',
+                    'title'   => '¡Monitores de Publicidad!',
                     'message' => '<p>Tu publicidad puede estar cumpliendo su función, pero…<br>
                                 ¿realmente está captando la atención?</p>
                                 <p>Muchos negocios aún comunican sus promociones y mensajes con
@@ -674,7 +675,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => 'Registro',
+                    'title'   => 'Registro',
                     'message' => '<p>¿Buscas captar la atención de tus clientes desde el primer vistazo?</p>
                                 <p>Nuestras <strong>Pantallas LED</strong> son ideales para comunicar mensajes con
                                 <strong>alto impacto visual</strong>: brillo potente, resolución nítida y presencia profesional
@@ -710,7 +711,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => 'Pantallas LED',
+                    'title'   => 'Pantallas LED',
                     'message' => '<p>Te ayudamos a elegir el mejor <strong>letrero, cartel o valla publicitaria</strong>
                                 con una <strong>Pantalla LED</strong>.</p>
                                 <p>Con esta tecnología tendrás beneficios a corto, mediano y largo plazo:</p>
@@ -730,7 +731,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'title'   => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '<p>Estás a un solo paso de realizar una <strong>buena inversión</strong>.
                                 Con nuestras <strong>Pantallas LED</strong>, tu marca logra mayor presencia
                                 dentro del mercado al que pertenece.</p>
@@ -765,7 +766,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => 'Registro',
+                    'title'   => 'Registro',
                     'message' => '<p>¿Listo para una presentación que sorprenda desde el primer segundo?</p>
                                 <p>Las <strong>pantallas holográficas</strong> proyectan imágenes en
                                 <strong>3D flotantes</strong>, creando un efecto futurista perfecto para
@@ -798,7 +799,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => 'Holográficos',
+                    'title'   => 'Holográficos',
                     'message' => '<p>¡Hola [Nombre del cliente]! 👋🏼</p>
                                 <p>Los sistemas <strong>holográficos</strong> ya no son un sueño ni una idea del futuro.</p>
                                 <p>Con nuestros holográficos, puedes transformar imágenes planas en
@@ -830,7 +831,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'title'   => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '<p>¡Hola [Nombre del cliente]! 👋🏼</p>
                                 <p>Estás a un solo paso de realizar una inversión inteligente.</p>
                                 <p>Usando <strong>gráficos holográficos</strong>, tu marca puede lograr
@@ -876,7 +877,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Pixel LED: diseño moderno con movimiento, color y personalidad .',
-                    'title' => 'PIXEL LED',
+                    'title'   => 'PIXEL LED',
                     'message' => '<p>Los <strong>Pixel LED</strong> permiten crear textos, animaciones,
                                 formas dinámicas y diseños creativos llenos de color y personalidad.</p>
                                 <p>Son sistemas modulares ideales para <strong>barras, tiendas, eventos,
@@ -910,7 +911,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => 'Pixel LED',
+                    'title'   => 'Pixel LED',
                     'message' => '<p><strong>Pixel LED</strong> es la mejor innovación que puedes incorporar a tu marca.</p>
                                 <p>Combina tus espacios con una <strong>gama de luces de diferentes colores</strong>,
                                 diseñadas para que cada punto de luz ilumine exactamente como tú lo prefieras.</p>
@@ -946,7 +947,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'LA VISTA LO ES TODO, Y EN NEÓN LED PUBLICIDAD ES LO QUE TENEMOS.',
-                    'title' => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
+                    'title'   => '💡Ve para creer, y en Neón LED Publicidad lo hacemos creíble.',
                     'message' => '<p>¡Hola <strong>{nombre del cliente}</strong>! 👋🏼</p>
                                 <p>Estás a un solo paso de realizar una <strong>inversión inteligente</strong>.</p>
                                 <p>Usando <strong>luces Pixel LED</strong>, tu marca gana mayor presencia dentro del
@@ -991,7 +992,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => '“Ilumina tus espacios y crea experiencias que se recuerdan”',
-                    'title' => 'Sillas luminosas!',
+                    'title'   => 'Sillas luminosas!',
                     'message' => '<p>Las <strong>Sillas Luminosas LED</strong> combinan diseño, iluminación y funcionalidad,
                                 convirtiéndose en un elemento visual que eleva la percepción de tu marca
                                 desde el primer contacto.</p>
@@ -1032,7 +1033,7 @@ return [
                 ],
                 2 => [
                     'subject' => '🪑  Iluminación premium para eventos corporativos: Sillas Luminosas para fortalecer tu experiencia de marca ✨',
-                    'title' => 'Sillas luminosas!',
+                    'title'   => 'Sillas luminosas!',
                     'message' => '<p>Estimado equipo,</p>
                                 <p>Reciban un cordial saludo.</p>
                                 <p>Desde <strong>Neón LED Publicidad</strong>, especialistas en soluciones de iluminación
@@ -1087,7 +1088,7 @@ return [
                 ],
                 3 => [
                     'subject' => '🪑 Gracias por confiar en nosotros - Tenemos novedades EXCLUSIVAS para ti ✨',
-                    'title' => 'Sillas luminosas!',
+                    'title'   => 'Sillas luminosas!',
                     'message' => '<p>Desde <strong>Neón LED Publicidad</strong> queremos agradecerte por confiar en
                                 nuestros productos y permitirnos ser parte de tus proyectos.
                                 Para nosotros, cada cliente representa una alianza valiosa,
@@ -1137,7 +1138,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Convierte tu techo en el principal atractivo de tu espacio',
-                    'title' => 'Techos Led!',
+                    'title'   => 'Techos Led!',
                     'message' => '<p>Diseñados para negocios que buscan diferenciarse desde arriba,
                                 los <strong>Techos LED</strong> crean atmósferas únicas, mejoran la percepción
                                 del espacio y elevan la imagen de marca desde el primer vistazo.</p>
@@ -1184,7 +1185,7 @@ return [
                 ],
                 2 => [
                     'subject' => '🌌 Solución premium en ambientación: Techos LED para elevar la experiencia de tus clientes 💫',
-                    'title' => 'Techos Led!',
+                    'title'   => 'Techos Led!',
                     'message' => '<p>Estimado equipo,</p>
                                 <p>Reciban un cordial saludo.<br>
                                 Desde <strong>Neon LED Publicidad</strong>, especialistas en proyectos de
@@ -1237,7 +1238,7 @@ return [
                 ],
                 3 => [
                     'subject' => '🌌 Transforma cualquier ambiente con nuestros Techos LED ✨ Innovación y estilo en un solo sistema ✨',
-                    'title' => 'Techos Led!',
+                    'title'   => 'Techos Led!',
                     'message' => '<p>Esperamos que estés teniendo un excelente día.<br>
                                 Si buscas una forma <strong>moderna, inmersiva y visualmente impactante</strong>
                                 de renovar tus espacios, en <strong>Neon LED Publicidad</strong> te presentamos
@@ -1299,7 +1300,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => '“Neón en vidrio: el brillo auténtico que hace única a tu marca”',
-                    'title' => 'Letras de Neón en Tubos de Vidrio!',
+                    'title'   => 'Letras de Neón en Tubos de Vidrio!',
                     'message' => '<p>
                                     El neón en tubos de vidrio transmite <strong>personalidad, estilo y presencia</strong>,
                                     convirtiendo tu marca en un punto focal que atrae miradas y se queda en la memoria
@@ -1346,7 +1347,7 @@ return [
                 ],
                 2 => [
                     'subject' => '🔤 Solución en letras neón de vidrio para potenciar espacios comerciales ✨',
-                    'title' => 'Letras de Neon en Tubos de Vidrio!',
+                    'title'   => 'Letras de Neon en Tubos de Vidrio!',
                     'message' => '<p>
                                     En <strong>Neon Led Publicidad</strong> trabajamos con empresas que buscan
                                     diferenciar sus espacios comerciales y fortalecer su identidad visual
@@ -1402,7 +1403,7 @@ return [
                 ],
                 3 => [
                     'subject' => '🔤 ¡Tu logo puede brillar en neón! 💥',
-                    'title' => 'Letras de Neon en Tubos de Vidrio!',
+                    'title'   => 'Letras de Neon en Tubos de Vidrio!',
                     'message' => '<p>
                                     En <strong>Neon Led Publicidad</strong> creamos
                                     <strong>letras neón en tubos de vidrio</strong> que no solo iluminan
@@ -1461,7 +1462,7 @@ return [
             'messages' => [
                 1 => [
                     'subject' => 'Cajas luminosas que hacen visible tu marca dia y noche',
-                    'title' => 'Cajas Luminosas!',
+                    'title'   => 'Cajas Luminosas!',
                     'message' => '<p>
                                     Gracias por tu interes en nuestras <strong>cajas luminosas personalizadas</strong>.
                                     Son una excelente opcion para destacar fachadas, vitrinas y puntos de venta
@@ -1487,7 +1488,7 @@ return [
                 ],
                 2 => [
                     'subject' => 'Haz que te encuentren mas rapido con una caja luminosa',
-                    'title' => 'Cajas Luminosas!',
+                    'title'   => 'Cajas Luminosas!',
                     'message' => '<p>
                                     Una <strong>caja luminosa bien disenada</strong> mejora la presencia de tu negocio
                                     y facilita que tus clientes te identifiquen desde lejos.
@@ -1512,7 +1513,7 @@ return [
                 ],
                 3 => [
                     'subject' => 'Tu marca encendida 24/7 con cajas luminosas de alto impacto',
-                    'title' => 'Cajas Luminosas!',
+                    'title'   => 'Cajas Luminosas!',
                     'message' => '<p>
                                     Si buscas una solucion visual efectiva para diferenciarte de tu competencia,
                                     nuestras <strong>cajas luminosas</strong> son la opcion ideal.

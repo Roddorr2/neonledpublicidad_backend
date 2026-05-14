@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class WhatsappDailyQuotaService
 {
@@ -14,9 +14,9 @@ class WhatsappDailyQuotaService
 
     /**
      * Obtiene el total de envíos confirmados por webhook HOY
-     * 
-     * @param Carbon|null $date Fecha a contar (default: hoy)
-     * @return int Total de envíos confirmados
+     *
+     * @param  Carbon|null $date Fecha a contar (default: hoy)
+     * @return int         Total de envíos confirmados
      */
     public function getEnviosDia(?Carbon $date = null): int
     {
@@ -30,17 +30,17 @@ class WhatsappDailyQuotaService
 
     /**
      * Obtiene el límite diario de envíos
-     * 
+     *
      * @return int Límite configurado
      */
     public function getLimiteDiario(): int
     {
-        return (int) config('whatsapp.daily_limit', 50);
+        return (int)config('whatsapp.daily_limit', 50);
     }
 
     /**
      * Obtiene el porcentaje de cuota consumida del día
-     * 
+     *
      * @return float Porcentaje de 0 a 100
      */
     public function getPercentajeConsumido(): float
@@ -53,7 +53,7 @@ class WhatsappDailyQuotaService
 
     /**
      * Obtiene envíos restantes del día
-     * 
+     *
      * @return int Envíos disponibles
      */
     public function getEnviosRestantes(): int
@@ -66,7 +66,7 @@ class WhatsappDailyQuotaService
 
     /**
      * Verifica si se alcanzó el límite diario
-     * 
+     *
      * @return bool True si se alcanzó o superó el límite
      */
     public function isLimitReached(): bool
@@ -76,28 +76,28 @@ class WhatsappDailyQuotaService
 
     /**
      * Obtiene estadísticas completas del día
-     * 
+     *
      * @return array Array con todas las métricas
      */
     public function getDailyStats(): array
     {
-        $enviosDia = $this->getEnviosDia();
+        $enviosDia    = $this->getEnviosDia();
         $limiteDiario = $this->getLimiteDiario();
-        $porcentaje = $this->getPercentajeConsumido();
-        $restantes = $this->getEnviosRestantes();
+        $porcentaje   = $this->getPercentajeConsumido();
+        $restantes    = $this->getEnviosRestantes();
 
         return [
-            'envios_hoy' => $enviosDia,
-            'limite_diario' => $limiteDiario,
-            'porcentaje' => round($porcentaje, 2),
-            'restantes' => $restantes,
+            'envios_hoy'       => $enviosDia,
+            'limite_diario'    => $limiteDiario,
+            'porcentaje'       => round($porcentaje, 2),
+            'restantes'        => $restantes,
             'limite_alcanzado' => $this->isLimitReached(),
         ];
     }
 
     /**
      * Obtiene el conteo de envíos por estado (para análisis)
-     * 
+     *
      * @return array Array con conteo por status
      */
     public function getEnviosPorEstado(): array
@@ -113,13 +113,12 @@ class WhatsappDailyQuotaService
 
     /**
      * Verifica si hay quota disponible para enviar
-     * 
-     * @param int $cantidad Cantidad de envíos a verificar
+     *
+     * @param  int  $cantidad Cantidad de envíos a verificar
      * @return bool True si hay suficiente cuota
      */
     public function hasQuota(int $cantidad = 1): bool
     {
         return ($this->getEnviosDia() + $cantidad) <= $this->getLimiteDiario();
     }
-
 }
