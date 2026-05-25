@@ -82,6 +82,12 @@ class PermisosSeeder extends Seeder
             'Crear productos' => 'Permite crear productos',
             'Editar productos' => 'Permite editar productos',
             'Eliminar productos' => 'Permite eliminar productos',
+
+             // Pop-Ups se agrego para popups
+            'Ver popups'      => 'Permite ver configuraciones de pop-ups',
+            'Crear popups'    => 'Permite crear configuraciones de pop-ups',
+            'Editar popups'   => 'Permite editar configuraciones de pop-ups',
+            'Eliminar popups' => 'Permite eliminar configuraciones de pop-ups',
         ];
 
         foreach ($permisos as $nombre => $descripcion) {
@@ -141,6 +147,14 @@ class PermisosSeeder extends Seeder
                 'Eliminar blogs',
                 'Crear blogs',
                 'Crear tarjetas',
+
+                //  En $rolesPermisos['marketing'], agrega los 4 permisos:
+//    (Marketing puede gestionar popups al igual que blogs/campañas)
+ 
+            'Ver popups',
+            'Crear popups',
+            'Editar popups',
+            'Eliminar popups',
 
                 'Permisos generales',
             ],

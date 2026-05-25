@@ -76,7 +76,7 @@ class FileUploadService
                         if ($publicIdAnterior && ($opciones['delete_previous_cloud'] ?? true)) {
                             try {
                                 if (class_exists(\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class)) {
-                                    \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::destroy($publicIdAnterior);
+                                    \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->destroy($publicIdAnterior);
                                 } else {
                                     $cloudinary->uploadApi()->destroy($publicIdAnterior);
                                 }
@@ -275,7 +275,7 @@ class FileUploadService
 
         try {
             if (class_exists(\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class)) {
-                \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::destroy($publicId);
+                \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->destroy($publicId);
             } else {
                 $cloudinary = app(Cloudinary::class);
                 $cloudinary->uploadApi()->destroy($publicId);

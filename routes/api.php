@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\WhatsAppCampaignController;
 use App\Http\Controllers\Api\WhatsappWebhookController;
 use App\Http\Controllers\Api\PlantillasWhatsappController;
 use App\Http\Controllers\Api\PlantillasEmailController;
+use App\Http\Controllers\Api\PopupConfigController;
 
 // rutas públicas
 Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:register');
@@ -73,6 +74,10 @@ Route::get('/modales/send_wat/{id}', [ModalWatController::class, "sendWat"]);
 // Route::get('/productos', [ProductosController::class, 'get']);
 Route::get('/productos/{id}', [ProductosController::class, 'getById']);
 Route::get('/productos_compacto', [ProductosController::class, 'getCompact']);
+
+// Pop-Up público — sin autenticación, consumido por ServicePopup.jsx en páginas de producto
+Route::get('/public/popup-configs/producto/{id_producto}', [PopupConfigController::class, 'showPublic'])
+    ->whereNumber('id_producto');
 
 /**
  * Endpoints de propuestas sin middleware (temporal)
@@ -160,6 +165,18 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/plantillas/email/{id}', [PlantillasEmailController::class, 'show'])
             ->whereNumber('id');
         Route::post('/plantillas/email/{id}/actualizar', [PlantillasEmailController::class, 'actualizar'])
+            ->whereNumber('id');
+
+        // Pop-Up Configs (dashboard) — la ruta específica /producto/{id} va ANTES de /{id}
+        Route::get('/popup-configs', [PopupConfigController::class, 'index']);
+        Route::get('/popup-configs/producto/{id_producto}', [PopupConfigController::class, 'showByProducto'])
+            ->whereNumber('id_producto');
+        Route::get('/popup-configs/{id}', [PopupConfigController::class, 'show'])
+            ->whereNumber('id');
+        Route::post('/popup-configs', [PopupConfigController::class, 'store']);
+        Route::post('/popup-configs/{id}/actualizar', [PopupConfigController::class, 'update'])
+            ->whereNumber('id');
+        Route::delete('/popup-configs/{id}', [PopupConfigController::class, 'destroy'])
             ->whereNumber('id');
     });
 

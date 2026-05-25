@@ -37,6 +37,10 @@ class DatabaseSeeder extends Seeder
             ContactanosSeeder::class,
             ClienteSeeder::class,
             PropuestaSeeder::class,
+
+            //se agrego esto: PopupConfigSeeder AL FINAL (después de ProductoSeeder)
+//          para que los productos ya existan cuando se ejecute
+            PopupConfigSeeder::class,
         ]);
     }
 }
