@@ -38,9 +38,27 @@ class FileUploadService
             $useCloudinary = env('CLOUDINARY_URL') || (env('CLOUDINARY_CLOUD_NAME') && env('CLOUDINARY_KEY') && env('CLOUDINARY_SECRET'));
 
             if ($useCloudinary) {
+                $cloudinary = null;
                 $resultado = null;
+                
                 try {
+                    // Intentar obtener la instancia de Cloudinary
+                    try {
+                        $cloudinary = app(Cloudinary::class);
+                    } catch (\Throwable $e) {
+                        // Fallback: crear instancia manual
+                        $cloudinary = new Cloudinary([
+                            'cloud' => [
+                                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                                'api_key'    => env('CLOUDINARY_KEY'),
+                                'api_secret' => env('CLOUDINARY_SECRET'),
+                            ],
+                            'url' => ['secure' => true],
+                        ]);
+                    }
+
                     $uploadOptions = ['folder' => $carpeta];
+                    
                     // allow upload_preset via options or env (for unsigned uploads)
                     if (! empty($opciones['upload_preset'])) {
                         $uploadOptions['upload_preset'] = $opciones['upload_preset'];
@@ -48,27 +66,9 @@ class FileUploadService
                         $uploadOptions['upload_preset'] = env('CLOUDINARY_UPLOAD_PRESET');
                     }
 
-                    if (class_exists(\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class)) {
-                        $resultado = \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->upload($entrada->getRealPath(), $uploadOptions);
-                    } else {
-                        // Intentar resolver singleton/app binding primero
-                        try {
-                            $cloudinary = app(Cloudinary::class);
-                        } catch (\Throwable $e) {
-                            // Fallback: crear instancia manual
-                            $cloudinary = new Cloudinary([
-                                'cloud' => [
-                                    'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-                                    'api_key'    => env('CLOUDINARY_KEY'),
-                                    'api_secret' => env('CLOUDINARY_SECRET'),
-                                ],
-                                'url' => ['secure' => false],
-                                'api' => ['upload_prefix' => 'http://api.cloudinary.com'],
-                            ]);
-                        }
-
-                        $resultado = $cloudinary->uploadApi()->upload($entrada->getRealPath(), $uploadOptions);
-                    }
+                    // Realizar la subida
+                    $resultado = $cloudinary->uploadApi()->upload($entrada->getRealPath(), $uploadOptions);
+                    
                 } catch (\Exception $e) {
                     Log::error('FileUploadService: excepción al subir a Cloudinary', ['error' => $e->getMessage()]);
                 }
@@ -77,9 +77,7 @@ class FileUploadService
                     // eliminar anterior en Cloudinary si aplica
                     if ($publicIdAnterior && ($opciones['delete_previous_cloud'] ?? true)) {
                         try {
-                            if (class_exists(\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class)) {
-                                \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::destroy($publicIdAnterior);
-                            } else {
+                            if ($cloudinary) {
                                 $cloudinary->uploadApi()->destroy($publicIdAnterior);
                             }
                         } catch (\Exception $e) {
@@ -93,7 +91,7 @@ class FileUploadService
                         try {
                             $rec = CloudinaryUpload::where('public_id', $publicId)->first();
                             if ($rec && ! $rec->used) {
-                                $rec->used       = true;
+                                $rec->used = true;
                                 $rec->secure_url = $resultado['secure_url'];
                                 $rec->save();
                             }
@@ -106,11 +104,12 @@ class FileUploadService
                 }
 
                 // Si Cloudinary falló o no devolvió URL, intentar fallback a almacenamiento local
-                Log::warning('FileUploadService: Cloudinary falló, intentando fallback a almacenamiento local', ['resultado' => $resultado]);
+                Log::warning('FileUploadService: Cloudinary falló, intentando fallback a almacenamiento local');
+                
                 // Fallback: store locally under structured folders
                 $localFolder = $this->buildLocalFolderPath($carpeta, $opciones);
-                // If a desired filename is provided, store with that name
                 $filename = $opciones['filename'] ?? null;
+                
                 if ($filename) {
                     $rutaFallback = Storage::disk('public')->putFileAs($localFolder, $entrada, $filename);
                 } else {
@@ -118,10 +117,20 @@ class FileUploadService
                 }
 
                 if ($rutaFallback) {
+                    // eliminar anterior local si la URL previa apunta a /storage/
+                    if ($urlAnterior && str_contains($urlAnterior, '/storage/')) {
+                        try {
+                            $relativa = str_replace(asset('storage/'), '', $urlAnterior);
+                            Storage::disk('public')->delete($relativa);
+                        } catch (\Exception $e) {
+                            Log::warning('FileUploadService: no se pudo eliminar archivo local previo: ' . $e->getMessage());
+                        }
+                    }
+
                     // Derivar un public_id local consistente (sin extensión) si se guardó con filename
                     $publicIdFallback = null;
                     if (! empty($filename)) {
-                        $base             = pathinfo($filename, PATHINFO_FILENAME);
+                        $base = pathinfo($filename, PATHINFO_FILENAME);
                         $publicIdFallback = trim($localFolder, '/') . '/' . $base;
                     } else {
                         // intentar derivar del nombre de archivo devuelto
@@ -140,11 +149,13 @@ class FileUploadService
             // Si no hay Cloudinary, almacenar localmente en disco público
             $localFolder = $this->buildLocalFolderPath($carpeta, $opciones);
             $filename    = $opciones['filename'] ?? null;
+            
             if ($filename) {
                 $ruta = Storage::disk('public')->putFileAs($localFolder, $entrada, $filename);
             } else {
                 $ruta = Storage::disk('public')->putFile($localFolder, $entrada);
             }
+            
             if ($ruta) {
                 // eliminar anterior local si la URL previa apunta a /storage/
                 if ($urlAnterior && str_contains($urlAnterior, '/storage/')) {
@@ -159,7 +170,7 @@ class FileUploadService
                 // Derivar public_id local consistente (sin extensión)
                 $publicIdFallback = null;
                 if (! empty($filename)) {
-                    $base             = pathinfo($filename, PATHINFO_FILENAME);
+                    $base = pathinfo($filename, PATHINFO_FILENAME);
                     $publicIdFallback = trim($localFolder, '/') . '/' . $base;
                 } else {
                     $base = pathinfo($ruta, PATHINFO_FILENAME);
@@ -172,6 +183,7 @@ class FileUploadService
             }
 
             return ['url' => '', 'public_id' => null];
+            
         } catch (\Exception $e) {
             Log::error('FileUploadService: error subiendo archivo', ['error' => $e->getMessage()]);
 
@@ -211,9 +223,11 @@ class FileUploadService
         $year  = date('Y');
         $month = date('m');
         $parts = [$base, trim($carpeta, '/'), $year, $month];
+        
         if (! empty($opciones['entity_id'])) {
             $parts[] = (string)$opciones['entity_id'];
         }
+        
         // Filtrar segmentos vacíos y unir con '/'
         $segments = array_filter($parts, fn ($p) => $p !== null && $p !== '');
 
@@ -280,7 +294,7 @@ class FileUploadService
 
         try {
             if (class_exists(\CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class)) {
-                \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::destroy($publicId);
+                \CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::uploadApi()->destroy($publicId);
             } else {
                 $cloudinary = app(Cloudinary::class);
                 $cloudinary->uploadApi()->destroy($publicId);

@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PopupConfig extends Model
 {
     protected $table = 'popup_configs';
-
     protected $primaryKey = 'id_popup_config';
+    public $incrementing = true;
 
     protected $fillable = [
         'id_producto',
@@ -22,15 +22,15 @@ class PopupConfig extends Model
         'gradient_direction',
         'trigger_time',
         'left_image_url',
-        'left_public_id',
+        'left_image_public_id',
         'left_opacity',
         'left_alt',
         'right_image_url',
-        'right_public_id',
+        'right_image_public_id',
         'right_opacity',
         'right_alt',
         'mobile_image_url',
-        'mobile_public_id',
+        'mobile_image_public_id',
         'mobile_opacity',
         'mobile_alt',
         'created_by',
@@ -44,23 +44,31 @@ class PopupConfig extends Model
         'mobile_opacity' => 'integer',
     ];
 
-    public function producto(): BelongsTo
+    // Ocultar los public_ids de Cloudinary en las respuestas públicas
+    protected $hidden = [
+        'left_image_public_id',
+        'right_image_public_id',
+        'mobile_image_public_id',
+    ];
+
+    public function producto()
     {
         return $this->belongsTo(Productos::class, 'id_producto', 'id_producto');
     }
 
-    public function createdBy(): BelongsTo
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
-    public function updatedBy(): BelongsTo
+    public function updatedBy()
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
-    public function scopeByProducto($query, $id)
+    // Scope: buscar por id_producto
+    public function scopeByProducto(Builder $query, int $idProducto)
     {
-        return $query->where('id_producto', $id);
+        return $query->where('id_producto', $idProducto);
     }
 }

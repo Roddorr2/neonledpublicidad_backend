@@ -28,7 +28,7 @@ class BlogFooterController extends Controller
             ], 200);
         } catch (\Exception $ex) {
             DB::rollback();
-            \Log::error('BlogFooter create error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
+            \Log::error::error('BlogFooter create error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
