@@ -21,16 +21,16 @@ class UpdateBlogFooterRequest extends FormRequest
             'public_image2' => 'nullable|string',
             'url_image2'    => 'nullable|string',
             'public_image3' => 'nullable|string',
-            'url_image3'    => 'nullable|string',
-            'alt_image1'    => 'nullable|string|min:60|max:120',
-            'title_image1'  => 'nullable|string|min:50|max:70',
-            'alt_image2'    => 'nullable|string|min:60|max:120',
-            'title_image2'  => 'nullable|string|min:50|max:70',
-            'alt_image3'    => 'nullable|string|min:60|max:120',
-            'title_image3'  => 'nullable|string|min:50|max:70',
-            'estado'        => 'nullable|boolean',
-            'keyword'       => 'nullable|string',
-            'link'          => 'nullable|string',
+            'url_image3' => 'nullable|string',
+            'alt_image1' => 'nullable|string',
+            'title_image1' => 'nullable|string',
+            'alt_image2' => 'nullable|string',
+            'title_image2' => 'nullable|string',
+            'alt_image3' => 'nullable|string',
+            'title_image3' => 'nullable|string',
+            'estado' => 'nullable|boolean',
+            'keyword' => 'nullable|string',
+            'link' => 'nullable|string'
         ];
     }
 }
