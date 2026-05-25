@@ -70,7 +70,7 @@ class PopupConfigController extends Controller
             'service_color'      => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'service_color_2'    => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'gradient_direction' => 'required|string|max:20',
-            'trigger_time'       => 'required|integer|in:3,5,8,12,20,30,60',
+            'trigger_time'       => 'required|integer|in:3,5,8',
             'left_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'left_opacity'       => 'nullable|integer|min:0|max:100',
             'left_alt'           => 'nullable|string|max:255',
