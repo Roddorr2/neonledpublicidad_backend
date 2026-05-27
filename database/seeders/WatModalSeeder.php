@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\WatModal;
 
 class WatModalSeeder extends Seeder
 {
@@ -24,7 +24,6 @@ class WatModalSeeder extends Seeder
                 'number_message'   => 2,
                 'fecha'            => now(),
             ],
-
             [
                 'estado'           => 1,
                 'error'            => '',
@@ -39,7 +38,6 @@ class WatModalSeeder extends Seeder
                 'number_message'   => 2,
                 'fecha'            => now(),
             ],
-
             [
                 'estado'           => 0,
                 'error'            => '',
@@ -54,7 +52,6 @@ class WatModalSeeder extends Seeder
                 'number_message'   => 2,
                 'fecha'            => now(),
             ],
-
             [
                 'estado'           => 1,
                 'error'            => '',
@@ -71,6 +68,26 @@ class WatModalSeeder extends Seeder
             ],
         ];
 
-        DB::table('modal_wats')->insert($wat_modals);
+        $creados = 0;
+        $actualizados = 0;
+
+        foreach ($wat_modals as $data) {
+            $modal = WatModal::updateOrCreate(
+                [
+                    // Atributos para buscar si ya existe
+                    'id_modalservicio' => $data['id_modalservicio'],
+                    'number_message'   => $data['number_message'],
+                ],
+                $data // Datos a insertar o actualizar
+            );
+
+            if ($modal->wasRecentlyCreated) {
+                $creados++;
+            } else {
+                $actualizados++;
+            }
+        }
+
+        $this->command->info("WatModalSeeder: {$creados} creados, {$actualizados} actualizados.");
     }
 }

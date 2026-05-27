@@ -13,14 +13,12 @@ use App\Models\Productos;
  * Los colores de servicio son distintos por producto para que
  * el marketing pueda identificarlos fácilmente al editar.
  *
- * Usa updateOrCreate para ser idempotente (se puede re-ejecutar sin duplicar).
  */
 class PopupConfigSeeder extends Seeder
 {
     public function run(): void
     {
         // Configuraciones por defecto indexadas por nombre de producto
-        // (el ID real lo resolvemos dinámicamente para no asumir orden fijo)
         $defaults = [
             'LETRAS DE ACRÍLICO' => [
                 'service_color'   => '#1E3A5F',
@@ -82,7 +80,6 @@ class PopupConfigSeeder extends Seeder
                 'service_color'   => '#1E1040',
                 'service_color_2' => '#0F0820',
             ],
-              
             'CAJAS LUMINOSAS' => [
                 'service_color'   => '#1A3020',
                 'service_color_2' => '#0D1810',
@@ -97,29 +94,58 @@ class PopupConfigSeeder extends Seeder
             'button_color'       => '#F97316',
             'gradient_direction' => 'to bottom',
             'trigger_time'       => 8,
+            'trigger_type'       => 'time',
+            'layout'             => 'left-image',
+            'show_logo'          => true,
             'left_opacity'       => 85,
             'right_opacity'      => 100,
             'mobile_opacity'     => 100,
+            'left_text'          => null,
+            'left_alt'           => null,
+            'right_alt'          => null,
+            'mobile_alt'         => null,
+            'created_by'         => 1,
+            'updated_by'         => 1,
         ];
 
-        // Obtener todos los productos existentes en la BD
+        // Obtener todos los productos existentes
         $productos = Productos::all()->keyBy('nombre');
+        $procesados = 0;
+        $creados = 0;
+        $actualizados = 0;
 
         foreach ($defaults as $nombreProducto => $colores) {
             $producto = $productos->get($nombreProducto);
 
             if (!$producto) {
-                // El producto no existe todavía (BD vacía en este punto del seed)
-                $this->command->warn("PopupConfigSeeder: producto '{$nombreProducto}' no encontrado, omitido.");
+                $this->command->warn("PopupConfigSeeder: Producto '{$nombreProducto}' no encontrado, omitido.");
                 continue;
             }
 
-            PopupConfig::updateOrCreate(
+            // Merge con los colores específicos del producto
+            $data = array_merge($base, $colores, [
+                'id_producto' => $producto->id_producto,
+            ]);
+
+            // Usar firstOrCreate o updateOrCreate según exista o no
+            $popup = PopupConfig::updateOrCreate(
                 ['id_producto' => $producto->id_producto],
-                array_merge($base, $colores)
+                $data
             );
+
+            if ($popup->wasRecentlyCreated) {
+                $creados++;
+            } else {
+                // Verificar si realmente hubo cambios
+                $dirty = $popup->getDirty();
+                if (!empty($dirty)) {
+                    $actualizados++;
+                }
+            }
+            
+            $procesados++;
         }
 
-        $this->command->info('PopupConfigSeeder: ' . count($defaults) . ' configuraciones procesadas.');
+        $this->command->info("PopupConfigSeeder: {$procesados} procesados, {$creados} creados, {$actualizados} actualizados.");
     }
 }

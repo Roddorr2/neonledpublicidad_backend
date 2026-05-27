@@ -14,6 +14,7 @@ class EmpleadoSeeder extends Seeder
     {
         $empleados = [
             [
+                'id_empleado' => 1,
                 'nombre'   => 'Kevin Esteeven',
                 'apellido' => 'Parimango Gomez',
                 'email'    => 'keving.kpg@gmail.com',
@@ -23,6 +24,7 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
             [
+                'id_empleado' => 2,
                 'nombre'   => 'Jose Luis',
                 'apellido' => 'Gutierrez',
                 'email'    => 'joseluisjlgd123@gmail.com',
@@ -32,6 +34,7 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
             [
+                'id_empleado' => 3,
                 'nombre'   => 'Juan Carlos',
                 'apellido' => 'Molina Orrego',
                 'email'    => 'tmlighting@hotmail.com',
@@ -41,6 +44,7 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
             [
+                'id_empleado' => 4,
                 'nombre'   => 'Krizzia Martina',
                 'apellido' => 'Saavedra Navarro',
                 'email'    => 'krizzia_saavedra201@hotmail.com',
@@ -50,6 +54,7 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
             [
+                'id_empleado' => 5,
                 'nombre'   => 'Gonzalo Fernando',
                 'apellido' => 'Gallardo Huertas',
                 'email'    => 'gogozgallardo22@gmail.com',
@@ -59,6 +64,7 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
             [
+                'id_empleado' => 6,
                 'nombre'   => 'Piero Alexander',
                 'apellido' => 'Catacora Mamani',
                 'email'    => 'pierocatacorayt13@gmail.com',
@@ -66,7 +72,9 @@ class EmpleadoSeeder extends Seeder
                 'telefono' => '985237799',
                 'id_user'  => 6,
                 'id_rol'   => 1,
-            ], [
+            ],
+            [
+                'id_empleado' => 7,
                 'nombre'   => 'Diego Arturo',
                 'apellido' => 'Torres Pacherres',
                 'email'    => 'diego_torres_11@hotmail.com',
@@ -76,6 +84,12 @@ class EmpleadoSeeder extends Seeder
                 'id_rol'   => 1,
             ],
         ];
-        DB::table('empleados')->insert($empleados);
+
+        foreach ($empleados as $empleado) {
+            DB::table('empleados')->updateOrInsert(
+                ['id_empleado' => $empleado['id_empleado']],
+                $empleado 
+            );
+        }
     }
 }

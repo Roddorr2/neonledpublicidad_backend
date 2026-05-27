@@ -13,8 +13,9 @@ class ProductoSeeder extends Seeder
     public function run(): void
     {
         $productos = [
-            // LETRAS DE ACRÍLICO (rescata info de "Letras en Acrílico")
+            // LETRAS DE ACRÍLICO
             [
+                'id_producto'               => 1,
                 'id_empleado'               => 1,
                 'nombre'                    => 'LETRAS DE ACRÍLICO',
                 'descripcion'               => 'Letras corpóreas en acrílico para fachadas',
@@ -36,8 +37,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => 'Durabilidad promedio de 6 años',
                 'estado'                    => 1,
             ],
-            // LETRAS DE ALUMINIO DORADAS 3D (sin info previa)
+            // LETRAS DE ALUMINIO DORADAS 3D
             [
+                'id_producto'               => 2,
                 'id_empleado'               => 2,
                 'nombre'                    => 'LETRAS DE ALUMINIO DORADAS 3D',
                 'descripcion'               => '',
@@ -59,8 +61,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // LETRAS DE ALUMINIO PLATEADAS 3D (sin info previa)
+            // LETRAS DE ALUMINIO PLATEADAS 3D
             [
+                'id_producto'               => 3,
                 'id_empleado'               => 1,
                 'nombre'                    => 'LETRAS DE ALUMINIO PLATEADAS 3D',
                 'descripcion'               => '',
@@ -82,8 +85,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // LETREROS LUMINOSOS (sin info previa)
+            // LETREROS LUMINOSOS
             [
+                'id_producto'               => 4,
                 'id_empleado'               => 2,
                 'nombre'                    => 'LETREROS LUMINOSOS',
                 'descripcion'               => '',
@@ -105,8 +109,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // NEÓN LED (sin info previa)
+            // NEÓN LED
             [
+                'id_producto'               => 5,
                 'id_empleado'               => 1,
                 'nombre'                    => 'NEÓN LED',
                 'descripcion'               => '',
@@ -128,8 +133,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // IMPRESIÓN EN VINILO (sin info previa)
+            // IMPRESIÓN EN VINILO
             [
+                'id_producto'               => 6,
                 'id_empleado'               => 2,
                 'nombre'                    => 'IMPRESIÓN EN VINILO',
                 'descripcion'               => '',
@@ -151,8 +157,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // MENÚ BOARD (sin info previa)
+            // MENÚ BOARD
             [
+                'id_producto'               => 7,
                 'id_empleado'               => 1,
                 'nombre'                    => 'MENÚ BOARD',
                 'descripcion'               => '',
@@ -174,8 +181,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // LETRAS PINTADAS EN MDF (sin info previa)
+            // LETRAS PINTADAS EN MDF
             [
+                'id_producto'               => 8,
                 'id_empleado'               => 2,
                 'nombre'                    => 'LETRAS PINTADAS EN MDF',
                 'descripcion'               => '',
@@ -197,8 +205,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // MONITORES DE PUBLICIDAD (sin info previa)
+            // MONITORES DE PUBLICIDAD
             [
+                'id_producto'               => 9,
                 'id_empleado'               => 1,
                 'nombre'                    => 'MONITORES DE PUBLICIDAD',
                 'descripcion'               => '',
@@ -220,8 +229,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // PANTALLAS LED (rescata info de "Panel LED 60x60")
+            // PANTALLAS LED
             [
+                'id_producto'               => 10,
                 'id_empleado'               => 2,
                 'nombre'                    => 'PANTALLAS LED',
                 'descripcion'               => 'Panel LED de alta eficiencia para iluminación comercial',
@@ -243,8 +253,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => 'Vida útil estimada de 50,000 horas',
                 'estado'                    => 1,
             ],
-            // HOLOGRÁFICO (sin info previa)
+            // HOLOGRÁFICO
             [
+                'id_producto'               => 11,
                 'id_empleado'               => 1,
                 'nombre'                    => 'HOLOGRÁFICO',
                 'descripcion'               => '',
@@ -266,8 +277,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // PIXEL LED (sin info previa)
+            // PIXEL LED
             [
+                'id_producto'               => 12,
                 'id_empleado'               => 2,
                 'nombre'                    => 'PIXEL LED',
                 'descripcion'               => '',
@@ -289,8 +301,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // SILLAS LUMINOSAS (sin info previa)
+            // SILLAS LUMINOSAS
             [
+                'id_producto'               => 13,
                 'id_empleado'               => 1,
                 'nombre'                    => 'SILLAS LUMINOSAS',
                 'descripcion'               => '',
@@ -312,8 +325,9 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // TECHOS LED (sin info previa)
+            // TECHOS LED
             [
+                'id_producto'               => 14,
                 'id_empleado'               => 2,
                 'nombre'                    => 'TECHOS LED',
                 'descripcion'               => '',
@@ -335,55 +349,61 @@ class ProductoSeeder extends Seeder
                 'durabilidad_descrip'       => '',
                 'estado'                    => 1,
             ],
-            // LETRAS DE NEÓN EN TUBOS DE VIDRIO (sin info previa)
+            // LETRAS DE NEÓN EN TUBOS DE VIDRIO
             [
-                "id_empleado" => 1,
-                "nombre" => "LETRAS DE NEÓN EN TUBOS DE VIDRIO",
-                "descripcion" => "",
-                "path_main" => "neon_vidrio_main.jpg",
-                "path_background" => "neon_vidrio_bg.jpg",
-                "path1" => "neon_vidrio1.jpg",
-                "tituloimg1" => "",
-                "descripcionimg1" => "",
-                "path2" => "neon_vidrio2.jpg",
-                "tituloimg2" => "",
-                "descripcionimg2" => "",
-                "path3" => "neon_vidrio3.jpg",
-                "tituloimg3" => "",
-                "descripcionimg3" => "",
-                "caracteristicas_descrip" => "",
-                "ventajas_descrip" => "",
-                "consumoenergetico_descrip" => "",
-                "iluminacion_descrip" => "",
-                "durabilidad_descrip" => "",
-                "estado" => 1
+                'id_producto'               => 15,
+                'id_empleado'               => 1,
+                'nombre'                    => 'LETRAS DE NEÓN EN TUBOS DE VIDRIO',
+                'descripcion'               => '',
+                'path_main'                 => 'neon_vidrio_main.jpg',
+                'path_background'           => 'neon_vidrio_bg.jpg',
+                'path1'                     => 'neon_vidrio1.jpg',
+                'tituloimg1'                => '',
+                'descripcionimg1'           => '',
+                'path2'                     => 'neon_vidrio2.jpg',
+                'tituloimg2'                => '',
+                'descripcionimg2'           => '',
+                'path3'                     => 'neon_vidrio3.jpg',
+                'tituloimg3'                => '',
+                'descripcionimg3'           => '',
+                'caracteristicas_descrip'   => '',
+                'ventajas_descrip'          => '',
+                'consumoenergetico_descrip' => '',
+                'iluminacion_descrip'       => '',
+                'durabilidad_descrip'       => '',
+                'estado'                    => 1,
             ],
             // CAJAS LUMINOSAS
             [
-                "id_empleado" => 2,
-                "nombre" => "CAJAS LUMINOSAS",
-                "descripcion" => "",
-                "path_main" => "cajas_luminosas_main.jpg",
-                "path_background" => "cajas_luminosas_bg.jpg",
-                "path1" => "cajas_luminosas1.jpg",
-                "tituloimg1" => "",
-                "descripcionimg1" => "",
-                "path2" => "cajas_luminosas2.jpg",
-                "tituloimg2" => "",
-                "descripcionimg2" => "",
-                "path3" => "cajas_luminosas3.jpg",
-                "tituloimg3" => "",
-                "descripcionimg3" => "",
-                "caracteristicas_descrip" => "",
-                "ventajas_descrip" => "",
-                "consumoenergetico_descrip" => "",
-                "iluminacion_descrip" => "",
-                "durabilidad_descrip" => "",
-                "estado" => 1
-            ]
+                'id_producto'               => 16,
+                'id_empleado'               => 2,
+                'nombre'                    => 'CAJAS LUMINOSAS',
+                'descripcion'               => '',
+                'path_main'                 => 'cajas_luminosas_main.jpg',
+                'path_background'           => 'cajas_luminosas_bg.jpg',
+                'path1'                     => 'cajas_luminosas1.jpg',
+                'tituloimg1'                => '',
+                'descripcionimg1'           => '',
+                'path2'                     => 'cajas_luminosas2.jpg',
+                'tituloimg2'                => '',
+                'descripcionimg2'           => '',
+                'path3'                     => 'cajas_luminosas3.jpg',
+                'tituloimg3'                => '',
+                'descripcionimg3'           => '',
+                'caracteristicas_descrip'   => '',
+                'ventajas_descrip'          => '',
+                'consumoenergetico_descrip' => '',
+                'iluminacion_descrip'       => '',
+                'durabilidad_descrip'       => '',
+                'estado'                    => 1,
+            ],
         ];
-        
 
-        DB::table('productos')->insert($productos);
+        foreach ($productos as $producto) {
+            DB::table('productos')->updateOrInsert(
+                ['id_producto' => $producto['id_producto']],
+                $producto
+            );
+        }
     }
 }
