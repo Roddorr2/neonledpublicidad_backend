@@ -632,29 +632,13 @@ class EmpleadoController extends Controller
     }
 
     public function updatePass(
-        // Request $request,
         UpdateEmpleadoPasswordRequest $request,
         $id
     ) {
-        /*
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json(["status" => 422, "message" => "Error de validación", "Errors" => $validate->errors()]);
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
         }
-
-        $empleado = Empleado::where('id_empleado', $id)->first();
-
-        if (!$empleado) {
-            return response()->json(["status" => 404, "message" => "Empleado no encontrado"]);
-        }
-
-        $userId = $empleado->id_user;
-
-        return $this->updatePass1($request, $userId);
-        */
 
         $empleado = Empleado::where('id_empleado', $id)->first();
 

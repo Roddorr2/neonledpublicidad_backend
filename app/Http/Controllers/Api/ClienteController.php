@@ -16,6 +16,7 @@ use App\Models\User;
 use App\Services\FileUploadService;
 use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -25,6 +26,56 @@ use Illuminate\Support\Facades\Validator;
 
 class ClienteController extends Controller
 {
+    private const PRIVILEGED_ROLES = ['administrador', 'superadmin'];
+
+    private function checkPermissionMiddleware($id)
+    {
+        $cliente = Cliente::where('id', $id)->first();
+
+        if (! $cliente) {
+            return response()->json([
+                'status'  => 404,
+                'message' => 'Cliente no encontrado',
+            ], 404);
+        }
+
+        $user = Auth::user();
+
+        if (! $user) {
+            return response()->json([
+                'status'  => 401,
+                'message' => 'Usuario no autenticado',
+            ], 401);
+        }
+
+        $userRoles = $user->currentAccessToken()->abilities ?? [];
+
+        foreach (self::PRIVILEGED_ROLES as $privilegedRole) {
+            if (in_array($privilegedRole, $userRoles, true)) {
+                return null;
+            }
+        }
+
+        $authenticatedUserId = $user->id;
+        $targetUserId = $cliente->id_user;
+
+        if ($authenticatedUserId !== $targetUserId) {
+            Log::warning('Intento no autorizado de modificar cliente', [
+                'target_id'      => $id,
+                'target_user_id' => $targetUserId,
+                'user_id'        => $authenticatedUserId,
+                'user_roles'     => $userRoles,
+            ]);
+
+            return response()->json([
+                'status'  => 403,
+                'message' => 'No tienes permiso para modificar este cliente',
+            ], 403);
+        }
+
+        return null;
+    }
+
     private function createPassword(string $nombre, string $apellidos)
     {
 
@@ -196,67 +247,11 @@ class ClienteController extends Controller
         UpdateClienteRequest $request,
         $id
     ) {
-        /*
-        $validate = Validator::make(["id" => $id], [
-            "id" => "required|numeric",
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                "status" => 422,
-                "message" => "Error de validación",
-                "Errors" => $validate->errors()
-            ]);
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
         }
 
-        $cliente = Cliente::find($id);
-
-        if (!$cliente) {
-            return response()->json([
-                "status" => 404,
-                "message" => "Cliente no encontrado"
-            ]);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'nombre'    => 'sometimes|string|max:255',
-            'apellido'  => 'sometimes|string|max:255',
-            "email" => "sometimes|email|unique:users|unique:clientes",
-            'telefono'  => 'nullable|string|max:14',
-            'distrito'  => 'nullable|string|max:191',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $user = User::find($cliente->id_user);
-
-        if ($user) {
-            if ($request->has('email') && $request->email != $cliente->email) {
-                $user->email = $request->email;
-            }
-
-            if (
-                ($request->has('nombre') && $request->nombre != $cliente->nombre) ||
-                ($request->has('apellido') && $request->apellido != $cliente->apellido)
-            ) {
-                $nombre   = $request->has('nombre') ? $request->nombre : $cliente->nombre;
-                $apellido = $request->has('apellido') ? $request->apellido : $cliente->apellido;
-                $user->name = $nombre . ' ' . $apellido;
-            }
-
-            $user->save();
-        }
-
-        $cliente->update($request->all());
-
-        return response()->json([
-            "status"  => 200,
-            "message" => "Cliente actualizado correctamente",
-            "data"    => $cliente
-        ]);
-        */
         $data = $request->validated();
 
         $cliente = Cliente::findOrFail($id);
@@ -286,110 +281,15 @@ class ClienteController extends Controller
     }
 
     public function updateProfileImage(
-        // Request $request,
         UpdateProfileImageRequest $request,
         $id
     ) {
-        /*
-        // Support multipart upload via server-side FileUploadService or client-provided public_id
-        try {
-            $cliente = Cliente::where('id', $id)->first();
-            if (!$cliente) {
-                return response()->json([
-                    "status" => 404,
-                    "message" => "Cliente no encontrado"
-                ], 404);
-            }
-
-            DB::beginTransaction();
-
-            if ($request->hasFile('imagen')) {
-                $archivo = $request->file('imagen');
-                $uploader = new FileUploadService();
-                $ext = $archivo->getClientOriginalExtension() ?: 'jpg';
-                $filename = "cliente_{$id}_" . time() . ".{$ext}";
-
-                $res = $uploader->subir($archivo, 'clientes', $cliente->imagen_perfil, $cliente->imagen_perfil_url, [
-                    'delete_previous_cloud' => true,
-                    'delete_previous_local' => true,
-                    'filename' => $filename,
-                ]);
-
-                if (empty($res['url'])) {
-                    DB::rollBack();
-                    return response()->json(["status" => 500, "message" => "Fallo al subir la imagen"], 500);
-                }
-
-                $cliente->imagen_perfil = $res['public_id'] ?? $cliente->imagen_perfil;
-                $cliente->imagen_perfil_url = $res['url'];
-                $cliente->save();
-
-                DB::commit();
-
-                return response()->json([
-                    "status" => 200,
-                    "message" => "Imagen actualizada correctamente",
-                    "data" => [
-                        'public_id' => $cliente->imagen_perfil,
-                        'url' => $cliente->imagen_perfil_url,
-                        'version' => time()
-                    ]
-                ]);
-            }
-
-            // Backwards-compatible: client sends public_id + secure_url
-            $validate = Validator::make($request->all(), [
-                'public_id' => 'required|string',
-                'secure_url' => 'required|url'
-            ]);
-
-            if ($validate->fails()) {
-                DB::rollBack();
-                return response()->json([
-                    "status" => 422,
-                    "message" => "Error de validación",
-                    "errors" => $validate->errors()
-                ], 422);
-            }
-
-            // Attempt to remove previous cloud image via centralized service
-            $uploader = new FileUploadService();
-            if ($cliente->imagen_perfil) {
-                $uploader->eliminarPublicId($cliente->imagen_perfil);
-            }
-
-            $cliente->imagen_perfil = $request->public_id;
-            $cliente->imagen_perfil_url = $request->secure_url;
-            $cliente->save();
-
-            DB::commit();
-
-            return response()->json([
-                "status" => 200,
-                "message" => "Imagen actualizada correctamente",
-                "data" => [
-                    'public_id' => $cliente->imagen_perfil,
-                    'url' => $cliente->imagen_perfil_url,
-                    'version' => time()
-                ]
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Error actualizando imagen: " . $e->getMessage(), [
-                'exception' => $e,
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                "status" => 500,
-                "message" => "Error al actualizar la imagen",
-                "error" => env('APP_DEBUG') ? $e->getMessage() : 'Error interno del servidor'
-            ], 500);
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
         }
-        */
 
         try {
-
             $cliente = Cliente::where('id', $id)->first();
             if (! $cliente) {
                 return response()->json([
@@ -465,6 +365,11 @@ class ClienteController extends Controller
 
     public function updatePass(Request $request, $id)
     {
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
+        }
+
         $validate = Validator::make(['id' => $id], [
             'id' => 'required|numeric',
         ]);
@@ -609,6 +514,11 @@ class ClienteController extends Controller
 
     public function delete($id)
     {
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
+        }
+
         $validate = Validator::make(['id' => $id], [
             'id' => 'required|numeric',
         ]);
@@ -672,6 +582,11 @@ class ClienteController extends Controller
 
     public function deleteProfileImage($id)
     {
+        $permissionCheck = $this->checkPermissionMiddleware($id);
+        if ($permissionCheck) {
+            return $permissionCheck;
+        }
+
         try {
             $cliente = Cliente::find($id);
 

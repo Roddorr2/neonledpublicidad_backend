@@ -25,7 +25,7 @@ class CheckPermission
         }
 
         $user      = $request->user();
-        $userRoles = $user->currentAccessToken()->abilities;
+        $userRoles = $user->currentAccessToken()?->abilities ?? [];
 
         // Obtener slugs de permisos requeridos
         $requiredPermissionSlugs = array_values($permissions);
@@ -50,6 +50,13 @@ class CheckPermission
      */
     private function hasPermission(array $roleNames, array $permissionSlugs): bool
     {
+        // Si los abilities son nombres de roles (no slugs), verificar si coinciden
+        foreach ($permissionSlugs as $slug) {
+            if (in_array($slug, $roleNames, true)) {
+                return true;
+            }
+        }
+
         // Obtener todos los permisos asociados a los roles del usuario (con caché)
         $userPermissions = $this->getUserPermissions($roleNames);
 
