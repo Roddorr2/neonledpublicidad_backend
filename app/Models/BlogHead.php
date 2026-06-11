@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class BlogHead extends Model
 {
     use HasFactory;
+
     protected $table = 'blog_heads';
+
     protected $primaryKey = 'id_blog_head';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -21,7 +24,7 @@ class BlogHead extends Model
         'alt',
         'title',
         'meta_title',
-        'meta_descripcion'
+        'meta_descripcion',
     ];
 
     // public function blog(){

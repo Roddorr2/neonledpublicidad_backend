@@ -1,14 +1,13 @@
 <?php
 
-use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
-use App\Http\Middleware\CheckRole;
-use App\Http\Middleware\CheckPermission;
-use Illuminate\Http\Exceptions\ThrottleRequestsException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,19 +18,19 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'abilities' => CheckAbilities::class,
-            'ability' => CheckForAnyAbility::class,
-            'role' => CheckRole::class,
+            'abilities'  => CheckAbilities::class,
+            'ability'    => CheckForAnyAbility::class,
+            'role'       => CheckRole::class,
             'permission' => CheckPermission::class,
         ]);
         $middleware->statefulApi();
 
-        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
+        $middleware->append(Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (ThrottleRequestsException $e, $request) {
             return response()->json([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Demasiados intentos fallidos. Intenta más tarde.',
             ], 429);
         });

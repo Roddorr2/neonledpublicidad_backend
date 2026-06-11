@@ -13,12 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('cards', function (Blueprint $table) {
-            
             $table->index('titulo');
             $table->index(['estado_publicacion', 'titulo']);
         });
 
-        // MySQL/MariaDB requiere prefijo de longitud para indexar columnas TEXT.
+        // MySQL/MariaDB requiere prefijo de longitud para indexar columnas TEXT
         if (! $this->indexExists('cards', 'cards_descripcion_index')) {
             DB::statement('ALTER TABLE `cards` ADD INDEX `cards_descripcion_index` (`descripcion`(255))');
         }
@@ -32,13 +31,13 @@ return new class extends Migration
         Schema::table('cards', function (Blueprint $table) {
             try {
                 $table->dropIndex('cards_titulo_index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Index might not exist
             }
-            
+
             try {
                 $table->dropIndex('cards_estado_publicacion_titulo_index');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Index might not exist
             }
         });

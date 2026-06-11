@@ -1,0 +1,45 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "ordered_imports": true,
+        "fully_qualified_strict_types": true,
+        "class_attributes_separation": {
+            "elements": {
+                "const": "one",
+                "method": "one",
+                "property": "one",
+                "trait_import": "none"
+            }
+        },
+        "scripts": {
+            "pint": "pint"
+        },
+        "no_extra_blank_lines": {
+            "tokens": ["extra", "return", "throw", "use"]
+        },
+        "binary_operator_spaces": {
+            "operators": {
+                "=>": "align_single_space_minimal",
+                "=": "align_single_space_minimal"
+            }
+        },
+        "concat_space": {
+            "spacing": "one"
+        },
+        "cast_spaces": {
+            "space": "none"
+        },
+        "phpdoc_align": {
+            "align": "vertical",
+            "tags": [
+                "method",
+                "param",
+                "property",
+                "return",
+                "throws",
+                "type",
+                "var"
+            ]
+        }
+    }
+}

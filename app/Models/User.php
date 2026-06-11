@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -11,9 +12,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable;
 
     public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,18 +46,27 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
-    public function empleado()
+    public function empleado(): HasOne
     {
         return $this->hasOne(Empleado::class, 'id_user', 'id');
     }
 
-    public function cliente()
+    public function cliente(): HasOne
     {
         return $this->hasOne(Cliente::class, 'id_user', 'id');
     }
 
+    public function getNombre(): string
+    {
+        return $this->name ?? 'Sin nombre';
+    }
+
+    public function esEmpleado(): bool
+    {
+        return $this->empleado()->exists();
+    }
 }

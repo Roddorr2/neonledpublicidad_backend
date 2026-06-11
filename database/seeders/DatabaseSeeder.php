@@ -1,9 +1,9 @@
 <?php
 
 namespace Database\Seeders;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Contactanos;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,25 +21,28 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RolSeeder::class,
             PermisosSeeder::class,
+            EmpleadoSeeder::class,
             BlogHeaderSeeder::class,
             CommendTarjetaSeeder::class,
             BlogBodySeeder::class,
             BlogFooterSeeder::class,
             BlogSeeder::class,
             TarjetaSeeder::class,
+            BlogSeeder::class,
+            ProductoSeeder::class,
             ServicioSeeder::class,
             ModalservicioSeeder::class,
             WatModalSeeder::class,
             MailModalSeeder::class,
             ReclamacionSeeder::class,
             ContactanosSeeder::class,
-            EmpleadoSeeder::class,
             ProductoSeeder::class,
             PlantillasEmailSeeder::class,
             PlantillasWhatsappSeeder::class,
             CardSeeder::class,
             ClienteSeeder::class,
             PropuestaSeeder::class,
+            PopupConfigSeeder::class,
         ]);
         
         // Rehabilitar foreign key checks

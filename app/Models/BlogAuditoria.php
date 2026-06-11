@@ -1,14 +1,16 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class BlogAuditoria extends Model
 {
     use HasFactory;
 
     protected $table = 'blog_auditoria';
+
     protected $primaryKey = 'id_blog_auditoria';
 
     public $timestamps = false;
@@ -17,7 +19,7 @@ class BlogAuditoria extends Model
         'id_blog',
         'id_empleado',
         'accion',
-        'titulo', //new
+        'titulo', // new
         'descripcion',
         'fecha_hora',
     ];

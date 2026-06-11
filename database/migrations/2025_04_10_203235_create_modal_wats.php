@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('modal_wats')) {
+        if (Schema::hasTable('modal_wats')) {
             return;
         }
 
-Schema::create('modal_wats', function (Blueprint $table) {
+        Schema::create('modal_wats', function (Blueprint $table) {
             $table->id('id_modal_wat');
             $table->boolean('estado')->default(0);
             $table->string('error', 500)->nullable();

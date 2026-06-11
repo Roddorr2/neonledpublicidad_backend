@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('empleados')) {
+        if (Schema::hasTable('empleados')) {
             return;
         }
 
-Schema::create('empleados', function (Blueprint $table) {
-            $table->id('id_empleado'); 
-            $table->string('nombre'); 
-            $table->string('apellido'); 
-            $table->string('email')->unique(); 
+        Schema::create('empleados', function (Blueprint $table) {
+            $table->id('id_empleado');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('email')->unique();
             $table->string('dni')->unique();
-            $table->string('telefono')->nullable(); 
+            $table->string('telefono')->nullable();
             $table->string('imagen_perfil')->nullable();
             $table->string('imagen_perfil_url')->nullable();
             $table->foreignId('id_user')->nullable()->references('id')->on('users')->onDelete('cascade');

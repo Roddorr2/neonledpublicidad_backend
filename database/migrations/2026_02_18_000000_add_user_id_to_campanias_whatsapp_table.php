@@ -34,13 +34,13 @@ return new class extends Migration
         Schema::table('campanias_whatsapp', function (Blueprint $table) {
             try {
                 $table->dropForeign(['user_id']);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // Ignore if FK does not exist in this environment.
             }
 
             try {
                 $table->dropIndex(['user_id']);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // Ignore if index does not exist in this environment.
             }
 

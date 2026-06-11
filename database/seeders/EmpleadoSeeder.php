@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,71 +14,82 @@ class EmpleadoSeeder extends Seeder
     {
         $empleados = [
             [
-                'nombre' => 'Admin',
-                'apellido' => 'Staging',
-                'email' => 'admin@staging.neonled.com',
-                'dni' => '99999999',
-                'telefono' => '999999999',
-                'id_user' => 1,
-                'id_rol' => 1,
+                'id_empleado' => 1,
+                'nombre'   => 'Kevin Esteeven',
+                'apellido' => 'Parimango Gomez',
+                'email'    => 'keving.kpg@gmail.com',
+                'dni'      => '72899618',
+                'telefono' => '929686486',
+                'id_user'  => 1,
+                'id_rol'   => 1,
             ],
             [
-                'nombre' => 'Jose Luis',
-                'apellido' => 'Test',
-                'email' => 'joseluis@staging.neonled.com',
-                'dni' => '88888888',
-                'telefono' => '988888888',
-                'id_user' => 2,
-                'id_rol' => 2,
+                'id_empleado' => 2,
+                'nombre'   => 'Jose Luis',
+                'apellido' => 'Gutierrez',
+                'email'    => 'joseluisjlgd123@gmail.com',
+                'dni'      => '75308553',
+                'telefono' => '927249150',
+                'id_user'  => 2,
+                'id_rol'   => 1,
             ],
             [
-                'nombre' => 'Juan Carlos',
-                'apellido' => 'Test',
-                'email' => 'juancarlos@staging.neonled.com',
-                'dni' => '77777777',
-                'telefono' => '977777777',
-                'id_user' => 3,
-                'id_rol' => 3,
+                'id_empleado' => 3,
+                'nombre'   => 'Juan Carlos',
+                'apellido' => 'Molina Orrego',
+                'email'    => 'tmlighting@hotmail.com',
+                'dni'      => '10299639',
+                'telefono' => '936910425',
+                'id_user'  => 3,
+                'id_rol'   => 1,
             ],
             [
-                'nombre' => 'Krizzia Martina',
-                'apellido' => 'Test',
-                'email' => 'krizzia@staging.neonled.com',
-                'dni' => '66666666',
-                'telefono' => '966666666',
-                'id_user' => 4,
-                'id_rol' => 3,
+                'id_empleado' => 4,
+                'nombre'   => 'Krizzia Martina',
+                'apellido' => 'Saavedra Navarro',
+                'email'    => 'krizzia_saavedra201@hotmail.com',
+                'dni'      => '72851260',
+                'telefono' => '938405611',
+                'id_user'  => 4,
+                'id_rol'   => 1,
             ],
             [
-                'nombre' => 'Gonzalo Fernando',
-                'apellido' => 'Test',
-                'email' => 'gonzalo@staging.neonled.com',
-                'dni' => '55555555',
-                'telefono' => '955555555',
-                'id_user' => 5,
-                'id_rol' => 2,
+                'id_empleado' => 5,
+                'nombre'   => 'Gonzalo Fernando',
+                'apellido' => 'Gallardo Huertas',
+                'email'    => 'gogozgallardo22@gmail.com',
+                'dni'      => '73068386',
+                'telefono' => '924783666',
+                'id_user'  => 5,
+                'id_rol'   => 1,
             ],
             [
-                'nombre' => 'Piero Alexander',
-                'apellido' => 'Test',
-                'email' => 'piero@staging.neonled.com',
-                'dni' => '44444444',
-                'telefono' => '944444444',
-                'id_user' => 6,
-                'id_rol' => 1,
-            ] , [
-                'nombre' => 'Diego Arturo',
-                'apellido' => 'Test',
-                'email' => 'diego@staging.neonled.com',
-                'dni' => '33333333',
-                'telefono' => '933333333',
-                'id_user' => 7,
-                'id_rol' => 2,
-            ]
+                'id_empleado' => 6,
+                'nombre'   => 'Piero Alexander',
+                'apellido' => 'Catacora Mamani',
+                'email'    => 'pierocatacorayt13@gmail.com',
+                'dni'      => '70430224',
+                'telefono' => '985237799',
+                'id_user'  => 6,
+                'id_rol'   => 1,
+            ],
+            [
+                'id_empleado' => 7,
+                'nombre'   => 'Diego Arturo',
+                'apellido' => 'Torres Pacherres',
+                'email'    => 'diego_torres_11@hotmail.com',
+                'dni'      => '48314547',
+                'telefono' => '986377441',
+                'id_user'  => 7,
+                'id_rol'   => 1,
+            ],
         ];
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        DB::table('empleados')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        DB::table('empleados')->insert($empleados);
+
+        foreach ($empleados as $empleado) {
+            DB::table('empleados')->updateOrInsert(
+                ['id_empleado' => $empleado['id_empleado']],
+                $empleado 
+            );
+        }
     }
 }

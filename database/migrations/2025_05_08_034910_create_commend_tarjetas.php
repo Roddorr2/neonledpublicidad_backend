@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('commend_tarjetas')) {
+        if (Schema::hasTable('commend_tarjetas')) {
             return;
         }
 
-Schema::create('commend_tarjetas', function (Blueprint $table) {
+        Schema::create('commend_tarjetas', function (Blueprint $table) {
             $table->id('id_commend_tarjeta');
             $table->string('titulo');
             $table->string('texto1');

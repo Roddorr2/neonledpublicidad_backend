@@ -14,12 +14,13 @@ class CloudinaryController extends Controller
      */
     public function signature(Request $request)
     {
-        $carpeta = $request->query('folder') ?? $request->query('carpeta') ?? 'uploads';
+        $carpeta  = $request->query('folder') ?? $request->query('carpeta') ?? 'uploads';
         $publicId = $request->query('public_id') ?? null;
-        $userId = $request->user()?->id ?? null;
+        $userId   = $request->user()?->id ?? null;
 
         $uploader = app(\App\Services\FileUploadService::class);
-        $res = $uploader->generarFirmaReserva($carpeta, $publicId, $userId, 120);
+        $res      = $uploader->generarFirmaReserva($carpeta, $publicId, $userId, 120);
+
         return response()->json($res);
     }
 
@@ -32,28 +33,36 @@ class CloudinaryController extends Controller
         $payload = $request->all();
         Log::info('Cloudinary webhook received', $payload);
 
-        $secret = env('CLOUDINARY_SECRET') ?: config('services.cloudinary.secret');
-        $publicId = $payload['public_id'] ?? null;
-        $version = $payload['version'] ?? null;
+        $secret    = env('CLOUDINARY_SECRET') ?: config('services.cloudinary.secret');
+        $publicId  = $payload['public_id'] ?? null;
+        $version   = $payload['version'] ?? null;
         $signature = $payload['signature'] ?? null;
         $timestamp = $payload['timestamp'] ?? null;
 
-        if (!$signature || !$publicId) {
+        if (! $signature || ! $publicId) {
             Log::warning('Cloudinary webhook missing signature or public_id', $payload);
+
             return response('Missing signature or public_id', 400);
         }
 
         // Build the string to sign similarly to Cloudinary: include present params in canonical order
         $toSignParts = [];
-        if ($publicId) $toSignParts[] = "public_id={$publicId}";
-        if ($version) $toSignParts[] = "version={$version}";
-        if ($timestamp) $toSignParts[] = "timestamp={$timestamp}";
+        if ($publicId) {
+            $toSignParts[] = "public_id={$publicId}";
+        }
+        if ($version) {
+            $toSignParts[] = "version={$version}";
+        }
+        if ($timestamp) {
+            $toSignParts[] = "timestamp={$timestamp}";
+        }
         $toSign = implode('&', $toSignParts);
 
         $calculated = sha1($toSign . ($secret ?? ''));
 
-        if (!hash_equals($calculated, $signature)) {
+        if (! hash_equals($calculated, $signature)) {
             Log::warning('Cloudinary webhook signature mismatch', ['calculated' => $calculated, 'received' => $signature]);
+
             return response('Invalid signature', 403);
         }
 
@@ -62,6 +71,7 @@ class CloudinaryController extends Controller
             $now = time();
             if (abs($now - (int)$timestamp) > 300) {
                 Log::warning('Cloudinary webhook timestamp outside tolerance', ['timestamp' => $timestamp]);
+
                 return response('Stale timestamp', 403);
             }
         }

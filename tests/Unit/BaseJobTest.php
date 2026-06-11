@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Jobs\BaseJob;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
-use Throwable;
 
 class ConcreteJob extends BaseJob
 {
@@ -19,7 +18,7 @@ class BaseJobTest extends TestCase
 {
     public function test_base_job_has_default_properties()
     {
-        $job = new ConcreteJob();
+        $job = new ConcreteJob;
 
         $this->assertEquals(3, $job->tries);
         $this->assertEquals(60, $job->backoff);
@@ -28,11 +27,11 @@ class BaseJobTest extends TestCase
 
     public function test_base_job_sets_job_name_correctly()
     {
-        $job = new ConcreteJob();
+        $job = new ConcreteJob;
 
         // Acceder a jobName via reflection
         $reflection = new \ReflectionClass($job);
-        $property = $reflection->getProperty('jobName');
+        $property   = $reflection->getProperty('jobName');
         $property->setAccessible(true);
 
         $this->assertEquals('ConcreteJob', $property->getValue($job));
@@ -43,7 +42,7 @@ class BaseJobTest extends TestCase
         Log::shouldReceive('info')
             ->once();
 
-        $job = new ConcreteJob();
+        $job = new ConcreteJob;
         $job->handle();
     }
 
@@ -55,7 +54,7 @@ class BaseJobTest extends TestCase
             })
             ->once();
 
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'logWarning');
         $reflection->setAccessible(true);
         $reflection->invoke($job, 'Warning test', []);
@@ -69,7 +68,7 @@ class BaseJobTest extends TestCase
             })
             ->once();
 
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'logError');
         $reflection->setAccessible(true);
         $reflection->invoke($job, 'Error test', []);
@@ -83,7 +82,7 @@ class BaseJobTest extends TestCase
             })
             ->once();
 
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'logDebug');
         $reflection->setAccessible(true);
         $reflection->invoke($job, 'Debug test', []);
@@ -91,7 +90,7 @@ class BaseJobTest extends TestCase
 
     public function test_should_retry_returns_true_when_under_limit()
     {
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'shouldRetry');
         $reflection->setAccessible(true);
 
@@ -101,7 +100,7 @@ class BaseJobTest extends TestCase
 
     public function test_should_retry_returns_false_when_at_limit()
     {
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'shouldRetry');
         $reflection->setAccessible(true);
 
@@ -111,7 +110,7 @@ class BaseJobTest extends TestCase
 
     public function test_get_retry_delay_returns_backoff()
     {
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'getRetryDelay');
         $reflection->setAccessible(true);
 
@@ -121,7 +120,7 @@ class BaseJobTest extends TestCase
 
     public function test_get_job_info_returns_array()
     {
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'getJobInfo');
         $reflection->setAccessible(true);
 
@@ -150,7 +149,7 @@ class BaseJobTest extends TestCase
             })
             ->once();
 
-        $job = new ConcreteJob();
+        $job        = new ConcreteJob;
         $reflection = new \ReflectionMethod($job, 'handleFailure');
         $reflection->setAccessible(true);
 
@@ -166,7 +165,7 @@ class BaseJobTest extends TestCase
             })
             ->once();
 
-        $job = new ConcreteJob();
+        $job       = new ConcreteJob;
         $exception = new \Exception('Permanent failure');
         $job->failed($exception);
     }

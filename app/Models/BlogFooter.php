@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class BlogFooter extends Model
 {
     use HasFactory;
 
     protected $table = 'blog_footers';
+
     protected $primaryKey = 'id_blog_footer';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -30,10 +32,11 @@ class BlogFooter extends Model
         'title_image3',
         'estado',
         'keyword',
-        'link'
+        'link',
     ];
 
-    public function blog(){
+    public function blog()
+    {
         return $this->hasOne(Blog::class, 'id_blog_footer', 'id_blog_footer');
     }
 }

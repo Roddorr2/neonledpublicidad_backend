@@ -11,7 +11,7 @@ return [
 
     // Ventana de envío por día (hora local)
     'window_start' => env('WHATSAPP_WINDOW_START', '08:00'),
-    'window_end' => env('WHATSAPP_WINDOW_END', '23:00'),
+    'window_end'   => env('WHATSAPP_WINDOW_END', '23:00'),
 
     // Chunk settings
     'chunk_size' => env('WHATSAPP_CHUNK_SIZE', 20),

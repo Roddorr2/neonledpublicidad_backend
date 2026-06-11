@@ -9,19 +9,19 @@ class PlantillasWhatsappSeeder extends Seeder
 {
     public function run()
     {
-        $now = now();
+        $now               = now();
         $messagesByProduct = $this->messagesByProduct();
-        $rows = [];
+        $rows              = [];
 
         foreach ($messagesByProduct as $idProducto => $messages) {
             foreach ($messages as $numeroPlantilla => $mensaje) {
                 $rows[] = [
-                    'id_producto' => (int) $idProducto,
-                    'numero_plantilla' => (int) $numeroPlantilla,
-                    'nombre' => null,
-                    'mensaje' => trim($mensaje),
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'id_producto'      => (int)$idProducto,
+                    'numero_plantilla' => (int)$numeroPlantilla,
+                    'nombre'           => null,
+                    'mensaje'          => trim($mensaje),
+                    'created_at'       => $now,
+                    'updated_at'       => $now,
                 ];
             }
         }
@@ -72,13 +72,13 @@ class PlantillasWhatsappSeeder extends Seeder
                 3 => "⭐ Tu carta, con imagen profesional\n Diseño moderno, resistente y adaptable a cualquier concepto gastronómico. Un menú board bien diseñado comunica calidad, organización y confianza.",
             ],
             8 => [
-                1 => "👋 ¡Bienvenido! Nuestros monitores de publicidad digital muestran contenido dinámico y de alto impacto. Ideales para promociones, menús digitales y publicidad comercial.",
-                2 => "Capta más miradas en segundos 👀 Los monitores digitales comunican promociones en tiempo real y mejoran la experiencia del cliente. Más atención, más recordación.",
+                1 => '👋 ¡Bienvenido! Nuestros monitores de publicidad digital muestran contenido dinámico y de alto impacto. Ideales para promociones, menús digitales y publicidad comercial.',
+                2 => 'Capta más miradas en segundos 👀 Los monitores digitales comunican promociones en tiempo real y mejoran la experiencia del cliente. Más atención, más recordación.',
                 3 => "Moderniza tu negocio con pantallas digitales 🚀\nActualiza contenido al instante, reduce impresos y proyecta una imagen innovadora.\nPublicidad que sí se nota.",
             ],
             9 => [
-                1 => "¡Hola! Nuestras letras pintadas en MDF son personalizadas, resistentes y con acabados premium. Ideales para interiores, marcas, stands y decoración comercial. Tú eliges tamaño, color y estilo 🎨",
-                2 => "¿Buscas que tu marca se note? ✨ Las letras MDF pintadas aportan volumen, elegancia y presencia visual inmediata. Perfectas para locales, recepciones y vitrinas.",
+                1 => '¡Hola! Nuestras letras pintadas en MDF son personalizadas, resistentes y con acabados premium. Ideales para interiores, marcas, stands y decoración comercial. Tú eliges tamaño, color y estilo 🎨',
+                2 => '¿Buscas que tu marca se note? ✨ Las letras MDF pintadas aportan volumen, elegancia y presencia visual inmediata. Perfectas para locales, recepciones y vitrinas.',
                 3 => "Haz que tu espacio hable por tu marca 🔥\nNuestras letras MDF combinan diseño, precisión y personalización total.\nUna inversión estética que eleva tu imagen profesional.",
             ],
             10 => [
@@ -87,9 +87,9 @@ class PlantillasWhatsappSeeder extends Seeder
                 3 => "💎Valor que se percibe\nLas pantallas LED transforman la forma en que tu marca se comunica. Aportan una imagen moderna, sólida y confiable, ayudando a que tu negocio destaque y genere mayor impacto visual frente a su público.",
             ],
             11 => [
-                1 => "🚀 Bienvenido/a. Nuestros hologramas convierten tus ideas en experiencias visuales únicas. Conoce soluciones innovadoras que destacan tu producto desde el primer instante.",
-                2 => "Los negocios que usan hologramas 3D logran que la gente se detenga un 50% más de tiempo frente a su vitrina. 🤯 Es la herramienta perfecta para que tu marca no solo se vea, sino que se recuerde por mucho tiempo. 🚀",
-                3 => "Ser de los primeros en usar tecnología 3D te pone pasos adelante de tu competencia. ✨ Es publicidad que se hace sola: ¡tus clientes grabarán el letrero y lo compartirán en redes! 🤳",
+                1 => '🚀 Bienvenido/a. Nuestros hologramas convierten tus ideas en experiencias visuales únicas. Conoce soluciones innovadoras que destacan tu producto desde el primer instante.',
+                2 => 'Los negocios que usan hologramas 3D logran que la gente se detenga un 50% más de tiempo frente a su vitrina. 🤯 Es la herramienta perfecta para que tu marca no solo se vea, sino que se recuerde por mucho tiempo. 🚀',
+                3 => 'Ser de los primeros en usar tecnología 3D te pone pasos adelante de tu competencia. ✨ Es publicidad que se hace sola: ¡tus clientes grabarán el letrero y lo compartirán en redes! 🤳',
             ],
             12 => [
                 1 => "Refleja tu personalidad 💡✨\nFabricadas y adaptadas a medida para cualquier ambiente, nuestros túneles led cuentan con pixeles leds de alta luminosidad que generan un efecto dinámico y de profundidad 3D. Además, puedes personalizar los colores y patrones para reflejar tu estilo único.",
@@ -103,13 +103,18 @@ class PlantillasWhatsappSeeder extends Seeder
             ],
             14 => [
                 1 => "✨ Techos LED personalizados que integran diseño arquitectónico e iluminación eficiente.\n Luz uniforme, regulable y adaptable en tamaño, intensidad y tono cálido o frío.",
-                2 => "🚀 Crea ambientes con mayor amplitud, ideales para tiendas o espacios sin ventanas. Transforma lugares oscuros en entornos modernos con mayor confort visual y sensación de altura.",
+                2 => '🚀 Crea ambientes con mayor amplitud, ideales para tiendas o espacios sin ventanas. Transforma lugares oscuros en entornos modernos con mayor confort visual y sensación de altura.',
                 3 => "⭐ Diseño minimalista y funcional\nOfrecen un acabado premium que se integra al techo sin cables a la vista. Es la solución más estética y duradera para renovar cualquier espacio.",
             ],
             15 => [
                 1 => "✨ Letras de Neón en tubos de vidrio artesanales.\nLuz continua y vibrante, moldeadas a mano con acabados únicos.\nTotalmente personalizables en texto, tamaño y color.",
                 2 => "✨ Impacto visual que se nota\n Las Letras de Neón en Vidrio mejoran la visibilidad de tu negocio, especialmente de noche, haciendo que tu local sea fácil de identificar y recordar.",
                 3 => "Las Letras de Neón en tubos de vidrio atraen miradas y diferencian tu marca 🔥\nEleva la imagen de tu negocio y genera mayor interés de clientes.",
+            ],
+            16 => [
+                1 => "✨ Cajas luminosas personalizadas\nFabricadas con estructura resistente e iluminación LED de alta eficiencia. Son ideales para fachadas y puntos de venta que necesitan máxima visibilidad.",
+                2 => "👀 Haz que tu negocio se vea desde lejos\nLas cajas luminosas atraen miradas de día y de noche, mejoran la recordación de marca y proyectan una imagen profesional.",
+                3 => "🚀 Tu marca encendida 24/7\nCon acabados a medida, bajo consumo y gran impacto visual, las cajas luminosas son una inversión efectiva para destacar frente a la competencia.",
             ],
         ];
     }

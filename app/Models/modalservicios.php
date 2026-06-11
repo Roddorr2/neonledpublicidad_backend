@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class modalservicios extends Model
 {
     protected $table = 'modalservicios';
+
     protected $primaryKey = 'id_modalservicio';
 
     protected $fillable = [
@@ -15,7 +16,7 @@ class modalservicios extends Model
         'correo',
         'id_producto',
         'fecha',
-        'estado'
+        'estado',
     ];
 
     public $timestamps = false;
@@ -30,9 +31,9 @@ class modalservicios extends Model
     {
         return $this->hasMany(WatModal::class, 'id_modalservicio', 'id_modalservicio');
     }
+
     public function emailModal()
     {
         return $this->hasMany(EmailModal::class, 'id_modalservicio', 'id_modalservicio');
     }
-
 }

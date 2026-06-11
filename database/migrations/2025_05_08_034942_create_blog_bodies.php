@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('blog_bodies')) {
+        if (Schema::hasTable('blog_bodies')) {
             return;
         }
 
-Schema::create('blog_bodies', function (Blueprint $table) {
+        Schema::create('blog_bodies', function (Blueprint $table) {
             $table->id('id_blog_body');
             $table->string('titulo');
             $table->text('descripcion');
-            $table->foreignId( 'id_commend_tarjeta')->unique()->nullable()->references('id_commend_tarjeta')->on('commend_tarjetas')->onDelete('cascade');
+            $table->foreignId('id_commend_tarjeta')->unique()->nullable()->references('id_commend_tarjeta')->on('commend_tarjetas')->onDelete('cascade');
             $table->text('public_image1');
             $table->text('url_image1')->nullable();
             $table->text('public_image2');

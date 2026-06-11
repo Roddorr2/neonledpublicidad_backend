@@ -8,9 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 
 class SendWhatsAppCampaignJob implements ShouldQueue
 {
@@ -22,10 +20,15 @@ class SendWhatsAppCampaignJob implements ShouldQueue
     public $tries = 3;
 
     public $campaniaId;
+
     public $chunkNumber;
+
     public $recipients;
+
     public $message;
+
     public $imageUrl;
+
     public $idProducto;
 
     /**
@@ -33,13 +36,13 @@ class SendWhatsAppCampaignJob implements ShouldQueue
      */
     public function __construct($campaniaId, $chunkNumber, $recipients, $message, $imageUrl, $idProducto)
     {
-        $this->campaniaId = $campaniaId;
+        $this->campaniaId  = $campaniaId;
         $this->chunkNumber = $chunkNumber;
-        $this->recipients = $recipients;
-        $this->message = $message;
-        $this->imageUrl = $imageUrl;
-        $this->idProducto = $idProducto;
-        
+        $this->recipients  = $recipients;
+        $this->message     = $message;
+        $this->imageUrl    = $imageUrl;
+        $this->idProducto  = $idProducto;
+
         // Establecer la cola usando el método del trait Queueable
         $this->onQueue('whatsapp');
     }
@@ -51,10 +54,11 @@ class SendWhatsAppCampaignJob implements ShouldQueue
     {
         // Instead of sending directly, create whatsapp_chunks via PlannerService
         try {
-            $recipientsArray = array_map(function($recipient) {
+            $recipientsArray = array_map(function ($recipient) {
                 // normalize object or array
                 $telefono = is_object($recipient) ? ($recipient->telefono ?? null) : ($recipient['telefono'] ?? null);
-                $id = is_object($recipient) ? ($recipient->id_modalservicio ?? ($recipient->id ?? null)) : ($recipient['id_modalservicio'] ?? ($recipient['id'] ?? null));
+                $id       = is_object($recipient) ? ($recipient->id_modalservicio ?? ($recipient->id ?? null)) : ($recipient['id_modalservicio'] ?? ($recipient['id'] ?? null));
+
                 return ['id_modalservicio' => $id, 'telefono' => $telefono, 'nombre' => is_object($recipient) ? ($recipient->nombre ?? null) : ($recipient['nombre'] ?? null)];
             }, $this->recipients);
 

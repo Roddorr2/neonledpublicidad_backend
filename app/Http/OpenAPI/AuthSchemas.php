@@ -6,12 +6,12 @@ use OpenApi\Attributes as OA;
 
 /**
  * Esquemas reutilizables para documentación de Autenticación
- * 
+ *
  * Este archivo contiene definiciones de esquemas OpenAPI comunes
  * que pueden ser referenciados desde los controladores para evitar repetición.
  */
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'LoginRequest',
 //    type: 'object',
 //    required: ['email', 'password'],
@@ -31,10 +31,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Contraseña del usuario'
 //        ),
 //    ]
-//)]
-//class LoginRequest {}
+// )]
+// class LoginRequest {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'RegisterRequest',
 //    type: 'object',
 //    required: ['nombre', 'apellido', 'email', 'dni', 'id_rol'],
@@ -79,10 +79,10 @@ use OpenApi\Attributes as OA;
 //            description: 'ID del rol a asignar'
 //        ),
 //    ]
-//)]
-//class RegisterRequest {}
+// )]
+// class RegisterRequest {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'ChangePasswordRequest',
 //    type: 'object',
 //    required: ['currentPassword', 'newPassword'],
@@ -103,10 +103,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Nueva contraseña (mínimo 8 caracteres)'
 //        ),
 //    ]
-//)]
-//class ChangePasswordRequest {}
+// )]
+// class ChangePasswordRequest {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'ResetPasswordRequest',
 //    type: 'object',
 //    required: ['email'],
@@ -119,10 +119,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Email del usuario para reset'
 //        ),
 //    ]
-//)]
-//class ResetPasswordRequest {}
+// )]
+// class ResetPasswordRequest {}
 //
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'UpdatePasswordRequest',
 //    type: 'object',
 //    required: ['token', 'password', 'password_confirmation'],
@@ -150,10 +150,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Confirmación de nueva contraseña (debe coincidir)'
 //        ),
 //    ]
-//)]
-//class UpdatePasswordRequest {}
+// )]
+// class UpdatePasswordRequest {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'AuthSuccessResponse',
 //    type: 'object',
 //    properties: [
@@ -209,10 +209,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Token de autenticación Bearer'
 //        ),
 //    ]
-//)]
-//class AuthSuccessResponse {}
+// )]
+// class AuthSuccessResponse {}
 //
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'LoginSuccessResponse',
 //    type: 'object',
 //    properties: [
@@ -249,10 +249,10 @@ use OpenApi\Attributes as OA;
 //            type: 'string'
 //        ),
 //    ]
-//)]
-//class LoginSuccessResponse {}
+// )]
+// class LoginSuccessResponse {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'ChangePasswordSuccessResponse',
 //    type: 'object',
 //    properties: [
@@ -263,10 +263,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Mensaje de confirmación'
 //        ),
 //    ]
-//)]
-//class ChangePasswordSuccessResponse {}
+// )]
+// class ChangePasswordSuccessResponse {}
 
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'AuthErrorResponse',
 //    type: 'object',
 //    properties: [
@@ -286,10 +286,10 @@ use OpenApi\Attributes as OA;
 //            description: 'Detalles del error (solo en desarrollo)'
 //        ),
 //    ]
-//)]
-//class AuthErrorResponse {}
+// )]
+// class AuthErrorResponse {}
 //
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'ValidationErrorResponse',
 //    type: 'object',
 //    properties: [
@@ -312,10 +312,10 @@ use OpenApi\Attributes as OA;
 //            ]
 //        ),
 //    ]
-//)]
-//class ValidationErrorResponse {}
+// )]
+// class ValidationErrorResponse {}
 //
-//#[OA\Schema(
+// #[OA\Schema(
 //    schema: 'UserResponse',
 //    type: 'object',
 //    properties: [
@@ -353,5 +353,5 @@ use OpenApi\Attributes as OA;
 //            description: 'Permisos del rol'
 //        ),
 //    ]
-//)]
-//class UserResponse {}
+// )]
+// class UserResponse {}

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-                if (Schema::hasTable('roles')) {
+        if (Schema::hasTable('roles')) {
             return;
         }
 
-Schema::create('roles', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id('id_rol');
-            $table->string('nombre')->unique()->nullable(false);            
+            $table->string('nombre')->unique()->nullable(false);
         });
     }
 

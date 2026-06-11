@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
     use HasFactory;
+
     protected $table = 'cards';
+
     protected $primaryKey = 'id_card';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,14 +23,15 @@ class Card extends Model
         'id_plantilla',
         'id_blog',
         'id_empleado',
-        'estado_publicacion'
+        'estado_publicacion',
     ];
 
     // public function blog(){
     //     return $this->hasOne(Blog::class, 'id_blog', 'id_blog');
     // }
 
-    public function empleado(){
+    public function empleado()
+    {
         return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
     }
 

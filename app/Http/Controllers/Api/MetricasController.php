@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Blog;
+use App\Models\BlogAuditoria;
 use App\Models\Card;
 use App\Models\Empleado;
-use App\Models\BlogAuditoria;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -20,8 +19,8 @@ class MetricasController extends Controller
     private function resolveMonthYear(Request $request)
     {
         // Limites razonables: mes 1..12, año entre 1970 y (año actual + 1)
-        $currentYear = (int) Carbon::now()->year;
-        $validated = $request->validate([
+        $currentYear = (int)Carbon::now()->year;
+        $validated   = $request->validate([
             'month' => ['nullable', 'integer', 'min:1', 'max:12'],
             'year'  => ['nullable', 'integer', 'min:2000', 'max:' . ($currentYear + 5)],
         ]);
@@ -32,6 +31,7 @@ class MetricasController extends Controller
 
         return [$month, $year];
     }
+
     /* ============================================================
      * 1. METRICAS BLOGS
      * ============================================================
@@ -43,16 +43,16 @@ class MetricasController extends Controller
 
         $count = BlogAuditoria::where('accion', 'CREAR')
             ->whereYear('fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('fecha_hora', $month))
             ->count();
 
         return response()->json([
-            "status" => 200,
-            "data" => [
-                "month" => $month,
-                "year" => $year,
-                "total_blogs" => $count
-            ]
+            'status' => 200,
+            'data'   => [
+                'month'       => $month,
+                'year'        => $year,
+                'total_blogs' => $count,
+            ],
         ]);
     }
 
@@ -63,13 +63,13 @@ class MetricasController extends Controller
         $startDate = Carbon::now()->subMonths(11)->startOfMonth();
 
         $raw = BlogAuditoria::selectRaw(
-                "YEAR(fecha_hora) as y, MONTH(fecha_hora) as m, COUNT(*) as total"
-            )
+            'YEAR(fecha_hora) as y, MONTH(fecha_hora) as m, COUNT(*) as total'
+        )
             ->where('accion', 'CREAR')
             ->whereBetween('fecha_hora', [$startDate, $endDate])
             ->groupBy('y', 'm')
             ->get()
-            ->keyBy(fn($i) => $i->y . '-' . str_pad($i->m, 2, '0', STR_PAD_LEFT));
+            ->keyBy(fn ($i) => $i->y . '-' . str_pad($i->m, 2, '0', STR_PAD_LEFT));
 
         $data = [];
         for ($i = 0; $i < 12; $i++) {
@@ -77,14 +77,14 @@ class MetricasController extends Controller
             $key  = $date->format('Y-m');
 
             $data[] = [
-                "month" => $date->format('F Y'),
-                "total_blogs" => $raw[$key]->total ?? 0
+                'month'       => $date->format('F Y'),
+                'total_blogs' => $raw[$key]->total ?? 0,
             ];
         }
 
         return response()->json([
-            "status" => 200,
-            "data" => $data
+            'status' => 200,
+            'data'   => $data,
         ]);
     }
 
@@ -92,23 +92,24 @@ class MetricasController extends Controller
     public function top5MothsWithMoreBlogs()
     {
         $data = BlogAuditoria::selectRaw(
-                "YEAR(fecha_hora) as y, MONTH(fecha_hora) as m, COUNT(*) as total"
-            )
+            'YEAR(fecha_hora) as y, MONTH(fecha_hora) as m, COUNT(*) as total'
+        )
             ->where('accion', 'CREAR')
             ->groupBy('y', 'm')
             ->orderByDesc('total')
             ->limit(5)
             ->get()
-            ->map(fn($i) => [
-                "month" => Carbon::create($i->y, $i->m)->format('F Y'),
-                "total_blogs" => $i->total
-            ]);
+            ->map(fn ($i) => [
+            'month'       => Carbon::create($i->y, $i->m)->format('F Y'),
+            'total_blogs' => $i->total,
+        ]);
 
         return response()->json([
-            "status" => 200,
-            "data" => $data
+            'status' => 200,
+            'data'   => $data,
         ]);
     }
+
     /* ============================================================
      * 2. METRICAS POR PLANTILLA
      * ============================================================
@@ -130,13 +131,13 @@ class MetricasController extends Controller
             ->where('cards.id_plantilla', $plantilla)
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->select('cards.*')
             ->get();
 
         return response()->json([
-            "status" => 200,
-            "data" => $cards
+            'status' => 200,
+            'data'   => $cards,
         ]);
     }
 
@@ -156,12 +157,12 @@ class MetricasController extends Controller
             ->where('cards.id_plantilla', $plantilla)
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->count();
 
         return response()->json([
-            "status" => 200,
-            "count" => $count
+            'status' => 200,
+            'count'  => $count,
         ]);
     }
 
@@ -169,24 +170,25 @@ class MetricasController extends Controller
     public function tableCardsByIdPlantilla(Request $request)
     {
         [$month, $year] = $this->resolveMonthYear($request);
-        $counts = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
+        $counts         = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->selectRaw('cards.id_plantilla, count(*) as count_cards')
             ->groupBy('cards.id_plantilla')
             ->pluck('count_cards', 'id_plantilla');
 
-        $data = collect([1, 2, 3])->map(fn($i) => [
+        $data = collect([1, 2, 3])->map(fn ($i) => [
             'id_plantilla' => $i,
             'count_cards'  => $counts[$i] ?? 0,
         ]);
-        
+
         return response()->json([
-            "status" => 200,
-            "data" => $data
+            'status' => 200,
+            'data'   => $data,
         ]);
     }
+
     /* ============================================================
      * 3. METRICAS POR EMPLEADO
      * ============================================================
@@ -210,13 +212,13 @@ class MetricasController extends Controller
             ->where('cards.id_empleado', $id)
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->select('cards.*')
             ->get();
 
         return response()->json([
-            "status" => 200,
-            "data" => $cards
+            'status' => 200,
+            'data'   => $cards,
         ]);
     }
 
@@ -238,12 +240,12 @@ class MetricasController extends Controller
             ->where('cards.id_empleado', $id)
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->count();
 
         return response()->json([
-            "status" => 200,
-            "count" => $count
+            'status' => 200,
+            'count'  => $count,
         ]);
     }
 
@@ -256,7 +258,7 @@ class MetricasController extends Controller
         $counts = Card::join('blog_auditoria as ba', 'ba.id_blog', '=', 'cards.id_blog')
             ->where('ba.accion', 'CREAR')
             ->whereYear('ba.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('ba.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('ba.fecha_hora', $month))
             ->select('cards.id_empleado', DB::raw('count(*) as total'))
             ->groupBy('cards.id_empleado')
             ->pluck('total', 'id_empleado');
@@ -266,17 +268,18 @@ class MetricasController extends Controller
         $data = [];
         foreach ($empleados as $empleado) {
             $data[] = [
-                "id_empleado" => $empleado->id_empleado,
-                "nombre_empleado" => $empleado->nombre,
-                "count_cards" => $counts[$empleado->id_empleado] ?? 0
+                'id_empleado'     => $empleado->id_empleado,
+                'nombre_empleado' => $empleado->nombre,
+                'count_cards'     => $counts[$empleado->id_empleado] ?? 0,
             ];
         }
 
         return response()->json([
-            "status" => 200,
-            "data" => $data
+            'status' => 200,
+            'data'   => $data,
         ]);
     }
+
     /* ============================================================
      * 4. TIEMPO CREACIÓN → EDICIÓN
      * ============================================================
@@ -289,18 +292,18 @@ class MetricasController extends Controller
         $data = BlogAuditoria::from('blog_auditoria as crear')
             ->join('blog_auditoria as editar', function ($join) {
                 $join->on('crear.id_blog', '=', 'editar.id_blog')
-                     ->where('editar.accion', '=', 'ACTUALIZAR');
+                    ->where('editar.accion', '=', 'ACTUALIZAR');
             })
             ->where('crear.accion', 'CREAR')
             ->whereYear('crear.fecha_hora', $year)
-            ->when($month, fn($q) => $q->whereMonth('crear.fecha_hora', $month))
+            ->when($month, fn ($q) => $q->whereMonth('crear.fecha_hora', $month))
             ->selectRaw('crear.id_blog, TIMESTAMPDIFF(MINUTE, crear.fecha_hora, MIN(editar.fecha_hora)) as tiempo_minutos')
             ->groupBy('crear.id_blog', 'crear.fecha_hora')
             ->get();
 
         return response()->json([
-            "status" => 200,
-            "data" => $data
+            'status' => 200,
+            'data'   => $data,
         ]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,10 +14,10 @@ class BlogHeaderSeeder extends Seeder
     {
         $blog_heads = [
             [
-                'titulo' => 'Tu Bar, en la Mira',
-                'texto_frase' => 'Ilumina tu espacio, cautiva a tus clientes',
+                'titulo'            => 'Tu Bar, en la Mira',
+                'texto_frase'       => 'Ilumina tu espacio, cautiva a tus clientes',
                 'texto_descripcion' => 'Transforma la atmósfera de tu bar con luces neón LED vibrantes y llenas de estilo.',
-                'public_image'=>'/blog/letra_neonled2.png'
+                'public_image'      => '/blog/letra_neonled.png',
             ],
         ];
 

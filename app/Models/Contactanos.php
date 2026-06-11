@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Contactanos extends Model
 {
     use HasFactory;
 
     protected $table = 'contactanos';
+
     protected $primaryKey = 'id_contactanos';
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -25,5 +27,4 @@ class Contactanos extends Model
         'fecha_hora',
         'fecha_hora_actualizacion',
     ];
-    
 }

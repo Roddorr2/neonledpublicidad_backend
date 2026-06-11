@@ -25,8 +25,9 @@ class Campania extends Model
         'progress_version',
         'progress_milestone_updated_at',
         'fecha_inicio',
-        'fecha_fin'
+        'fecha_fin',
     ];
+
     /**
      * Relación con el usuario creador (auditoría)
      */
@@ -36,14 +37,14 @@ class Campania extends Model
     }
 
     protected $casts = [
-        'fecha_inicio' => 'datetime',
-        'fecha_fin' => 'datetime',
-        'total_destinatarios' => 'integer',
-        'envios_exitosos' => 'integer',
-        'envios_fallidos' => 'integer',
-        'envios_pendientes' => 'integer',
-        'progress_milestone' => 'integer',
-        'progress_version' => 'integer',
+        'fecha_inicio'                  => 'datetime',
+        'fecha_fin'                     => 'datetime',
+        'total_destinatarios'           => 'integer',
+        'envios_exitosos'               => 'integer',
+        'envios_fallidos'               => 'integer',
+        'envios_pendientes'             => 'integer',
+        'progress_milestone'            => 'integer',
+        'progress_version'              => 'integer',
         'progress_milestone_updated_at' => 'datetime',
     ];
 
@@ -71,7 +72,7 @@ class Campania extends Model
         if ($this->total_destinatarios === 0) {
             return 0;
         }
-        
+
         return round((($this->envios_exitosos + $this->envios_fallidos) / $this->total_destinatarios) * 100, 2);
     }
 
@@ -84,11 +85,12 @@ class Campania extends Model
 
     public function canBeStarted(): bool
     {
-        if (!in_array($this->estado, ['borrador', 'pendiente', 'pausada_hasta_mañana'])) {
+        if (! in_array($this->estado, ['borrador', 'pendiente', 'pausada_hasta_mañana'])) {
             return false;
         }
 
         $active = self::getActiveCampaign();
-        return !$active || $active->id_campania === $this->id_campania;
+
+        return ! $active || $active->id_campania === $this->id_campania;
     }
 }

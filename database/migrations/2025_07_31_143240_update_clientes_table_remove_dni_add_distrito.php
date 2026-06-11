@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::table('clientes', function (Blueprint $table) {
+        Schema::table('clientes', function (Blueprint $table) {
             $table->dropColumn('dni');
             $table->string('distrito')->nullable();
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-      Schema::table('clientes', function (Blueprint $table) {
+        Schema::table('clientes', function (Blueprint $table) {
             $table->string('dni')->unique();
             $table->dropColumn('distrito');
         });

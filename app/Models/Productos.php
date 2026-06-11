@@ -24,11 +24,13 @@ class Productos extends Model
         'consumoenergetico_descrip',
         'iluminacion_descrip',
         'durabilidad_descrip',
-        'estado'
+        'estado',
     ];
 
     public $timestamps = false;
+
     const CREATED_AT = 'created_at';
+
     const UPDATED_AT = null;
 
     public function empleado()

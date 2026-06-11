@@ -28,11 +28,17 @@ class PermisosSeeder extends Seeder
             'Eliminar modales' => 'Permite eliminar modales',
             'Enviar mensajes' => 'Enviar modales de Emails y WhatsApp',
 
-            // Servicios (se puede descomentar en caso se implementen los servicios em el dashboard; las rutas ya están incluidas en el api.php)
+            // Pop-Ups
+            'Ver pop-ups' => 'Permite ver configuraciones de pop-ups',
+            'Crear pop-ups' => 'Permite crear nuevos pop-ups',
+            'Editar pop-ups' => 'Permite editar pop-ups existentes',
+            'Eliminar pop-ups' => 'Permite eliminar pop-ups',
+
+            // Servicios
             'Ver servicios' => 'Permite ver los servicios',
-            //'Crear servicios' => 'Permite crear nuevos servicios',
-            //'Editar servicios' => 'Permite editar servicios existentes',
-            //'Eliminar servicios' => 'Permite eliminar servicios existentes',
+
+            // Productos
+            'Ver productos' => 'Permite ver los productos',
 
             // Roles
             'Ver roles' => 'Permite ver la lista de roles',
@@ -52,12 +58,6 @@ class PermisosSeeder extends Seeder
             'Editar empleados' => 'Permite modificar empleados existentes',
             'Eliminar empleados' => 'Permite eliminar empleados existentes',
 
-            // Clientes
-            'Ver cliente' => 'Permite ver la lista de clientes',
-            'Crear cliente' => 'Permite crear nuevos clientes',
-            'Editar cliente' => 'Permite modificar clientes existentes',
-            'Eliminar cliente' => 'Permite eliminar clientes existentes',
-
             // Blogs
             'Ver blogs' => 'Permite ver la gestión de blogs',
             'Crear blogs' => 'Permite crear contenido de blogs',
@@ -68,22 +68,10 @@ class PermisosSeeder extends Seeder
             'Crear tarjetas' => 'Permite crear tarjetas',
             'Eliminar tarjetas' => 'Permite eliminar tarjetas',
 
-            //Propuestas
-            'ver propuestas cliente' => 'Permite ver sus propuestas al cliente',
-            'Ver propuestas'=>'Permite  ver propuestas',
-            'Crear propuestas'=>'Permite crear propuestas',
-            'Editar propuestas'=>'Permite editar propuestas',
-            'Eliminar propuestas'=>'Permite eliminar propuestas',
-
             'Permisos generales' => 'Permite acceder a los permisos básicos',
-
-            //Productos
-            'Ver productos' => 'Permite ver los productos',
-            'Crear productos' => 'Permite crear productos',
-            'Editar productos' => 'Permite editar productos',
-            'Eliminar productos' => 'Permite eliminar productos',
         ];
 
+        // Crear/actualizar permisos (idempotente)
         foreach ($permisos as $nombre => $descripcion) {
             Permiso::updateOrCreate(
                 ['nombre' => $nombre],
@@ -92,72 +80,52 @@ class PermisosSeeder extends Seeder
         }
 
         $rolesPermisos = [
-            'administrador' => array_keys($permisos), // todos
+            'administrador' => array_keys($permisos),
+            
             'ventas' => [
                 'Ver contactos',
                 'Editar contactos',
-
                 'Ver modales',
                 'Editar modales',
-
                 'Ver reclamaciones',
                 'Editar reclamaciones',
-
                 'Enviar mensajes',
+                'Ver productos',
                 'Permisos generales',
-
-                /**
-                 * Empleados de ventas podrán ver y gestionar propuestas a clientes
-                 */
-
-                 // 'Crear propuestas',
-                // 'Editar propuestas',
-                // 'Eliminar propuestas',
-                'Ver cliente',
-                'Crear cliente',
-                'Editar cliente',
-                'Eliminar cliente',
-
-                'Ver propuestas cliente',
-                'Ver propuestas',
-                'Crear propuestas',
-                'Editar propuestas',
-                'Eliminar propuestas',
             ],
+            
             'marketing' => [
                 'Ver contactos',
                 'Editar contactos',
-
+                'Ver productos',
                 'Ver modales',
                 'Editar modales',
-
                 'Ver reclamaciones',
                 'Editar reclamaciones',
-
                 'Enviar mensajes',
-
+                'Ver pop-ups',
+                'Crear pop-ups',
+                'Editar pop-ups',
+                'Eliminar pop-ups',
                 'Ver blogs',
                 'Editar blogs',
                 'Eliminar blogs',
                 'Crear blogs',
                 'Crear tarjetas',
-
                 'Permisos generales',
-            ],
-           'cliente' => [
-                'Ver propuestas cliente'
-                // 'Crear propuestas',
-                // 'Editar propuestas',
-                // 'Eliminar propuestas',
             ],
         ];
 
+        // Asignar permisos a roles (idempotente con syncWithoutDetaching)
         foreach ($rolesPermisos as $nombreRol => $permisosAsignados) {
             $rol = Rol::firstOrCreate(['nombre' => $nombreRol]);
 
             $permisosIds = Permiso::whereIn('nombre', $permisosAsignados)->pluck('id_permiso')->toArray();
 
-            $rol->permisos()->sync($permisosIds);
+            // syncWithoutDetaching NO elimina permisos existentes, solo agrega los que faltan
+            $rol->permisos()->syncWithoutDetaching($permisosIds);
         }
+
+        $this->command->info('Permisos y roles configurados correctamente.');
     }
 }
