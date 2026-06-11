@@ -147,7 +147,13 @@ class CardController extends Controller
         try {
             DB::beginTransaction();
 
-            $card = Card::create($request->validated());
+            $data = $request->validated();
+
+            if ($data['id_blog'] == 1) {
+                $data['estado_publicacion'] = true;
+            }
+
+            $card = Card::create($data);
 
             DB::commit();
 
