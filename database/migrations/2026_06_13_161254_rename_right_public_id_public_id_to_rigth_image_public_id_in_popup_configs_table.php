@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('popup_configs', function (Blueprint $table) {
             $table->renameColumn('right_public_id', 'right_image_public_id');
+            $table->renameColumn('left_public_id', 'left_image_public_id');
         });
     }
 
