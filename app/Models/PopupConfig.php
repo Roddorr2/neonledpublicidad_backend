@@ -13,9 +13,13 @@ class PopupConfig extends Model
 
     protected $fillable = [
         'id_producto',
+
+        // ── Compartidos (texto) ─────────────────────────────────────────────
         'title_text',
-        'title_color',
         'button_text',
+
+        // ── Desktop ─────────────────────────────────────────────────────────
+        'title_color',
         'button_color',
         'service_color',
         'service_color_2',
@@ -29,27 +33,41 @@ class PopupConfig extends Model
         'right_image_public_id',
         'right_opacity',
         'right_alt',
+
+        // ── Mobile ──────────────────────────────────────────────────────────
+        'mobile_trigger_time',
+        'mobile_title_color',
+        'mobile_button_color',
+        'mobile_service_color',
+        'mobile_service_color_2',
+        'mobile_gradient_direction',
         'mobile_image_url',
         'mobile_image_public_id',
         'mobile_opacity',
         'mobile_alt',
+
         'created_by',
         'updated_by',
     ];
 
     protected $casts = [
+        // Desktop
         'trigger_time'   => 'integer',
         'left_opacity'   => 'integer',
         'right_opacity'  => 'integer',
-        'mobile_opacity' => 'integer',
+        // Mobile
+        'mobile_trigger_time' => 'integer',
+        'mobile_opacity'      => 'integer',
     ];
 
-    // Ocultar los public_ids de Cloudinary en las respuestas públicas
+    // Ocultar public_ids de Cloudinary en respuestas públicas
     protected $hidden = [
         'left_image_public_id',
         'right_image_public_id',
         'mobile_image_public_id',
     ];
+
+    // ── Relaciones ───────────────────────────────────────────────────────────
 
     public function producto()
     {
@@ -66,7 +84,8 @@ class PopupConfig extends Model
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
-    // Scope: buscar por id_producto
+    // ── Scopes ───────────────────────────────────────────────────────────────
+
     public function scopeByProducto(Builder $query, int $idProducto)
     {
         return $query->where('id_producto', $idProducto);
