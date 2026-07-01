@@ -111,10 +111,18 @@ Route::middleware('auth:sanctum')->group(function () {
     //  Route::post('/cliente/verify-password', [ClienteController::class, 'verifyPassword']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
 
-    // imágenes
-    Route::post('/empleados/{id}/image', [EmpleadoController::class, 'updateProfileImage']);
-    Route::delete('/empleados/{id}/image', [EmpleadoController::class, 'deleteProfileImage']);
-    // Cloudinary signature endpoint (authenticated)
+    // -------------------- PERFIL PROPIO (todos los autenticados) --------------------
+    // Cada usuario puede actualizar su propio perfil
+    Route::put('/mi-perfil/empleado', [EmpleadoController::class, 'updateOwnProfile']);
+    Route::post('/mi-perfil/empleado/image', [EmpleadoController::class, 'updateOwnProfileImage']);
+    Route::delete('/mi-perfil/empleado/image', [EmpleadoController::class, 'deleteOwnProfileImage']);
+
+    // Cliente: actualizar su propio perfil
+    Route::put('/mi-perfil/cliente', [ClienteController::class, 'updateProfile']);
+    Route::post('/mi-perfil/cliente/image', [ClienteController::class, 'updateOwnProfileImage']);
+    Route::delete('/mi-perfil/cliente/image', [ClienteController::class, 'deleteOwnProfileImage']);
+
+    // -------------------- CLOUDINARY --------------------
     Route::get('/cloudinary/signature', [CloudinaryController::class, 'signature']);
     // Route::post('/cliente/{id}/image', [ClienteController::class, 'updateProfileImage']);
     // Route::delete('/cliente/{id}/image', [ClienteController::class, 'deleteProfileImage']);

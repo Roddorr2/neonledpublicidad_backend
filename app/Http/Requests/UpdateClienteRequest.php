@@ -28,8 +28,6 @@ class UpdateClienteRequest extends FormRequest
         $clienteId = $this->route('id'); // obtiene el parámetro de la URL
 
         return [
-            'id' => ['required', 'numeric', 'exists:clientes,id'],
-
             'nombre'   => ['sometimes', 'string', 'max:255'],
             'apellido' => ['sometimes', 'string', 'max:255'],
 
@@ -63,10 +61,6 @@ class UpdateClienteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.required' => 'El id es obligatorio',
-            'id.numeric'  => 'El id debe ser numérico',
-            'id.exists'   => 'El cliente no existe',
-
             'email.email'  => 'El correo es inválido',
             'email.unique' => 'El correo ya está en uso',
 
