@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CheckPermission;
 use App\Http\Middleware\CheckRole;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -28,6 +29,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (AuthenticationException $e, $request) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Unauthenticated.',
+            ], 401);
+        });
+
         $exceptions->render(function (ThrottleRequestsException $e, $request) {
             return response()->json([
                 'status'  => 'error',
