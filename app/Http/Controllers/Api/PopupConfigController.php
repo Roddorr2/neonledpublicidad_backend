@@ -13,9 +13,6 @@ class PopupConfigController extends Controller
 {
     // ─── Helpers privados ────────────────────────────────────────────────────
 
-    /**
-     * Sube una imagen usando FileUploadService (igual que PlantillasWhatsappController).
-     */
     private function subirImagen($archivo, int $idProducto, string $slot): array
     {
         $ext      = $archivo->getClientOriginalExtension() ?: 'jpg';
@@ -28,9 +25,6 @@ class PopupConfigController extends Controller
         ]);
     }
 
-    /**
-     * Reemplaza una imagen (borra la anterior en Cloudinary y sube la nueva).
-     */
     private function reemplazarImagen($archivo, int $idProducto, string $slot, ?string $publicIdAnterior, ?string $urlAnterior): array
     {
         $ext      = $archivo->getClientOriginalExtension() ?: 'jpg';
@@ -45,9 +39,6 @@ class PopupConfigController extends Controller
         ]);
     }
 
-    /**
-     * Borra una imagen de Cloudinary usando el método oficial del proyecto.
-     */
     private function borrarImagen(?string $publicId): void
     {
         if (empty($publicId)) return;
@@ -62,28 +53,42 @@ class PopupConfigController extends Controller
 
     private function reglasValidacion(bool $esCreacion = true): array
     {
+        $hex     = ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'];
+        $hexReq  = ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'];
+        $imgRule = 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120';
+
         $reglas = [
-            'title_text'         => 'required|string|min:5|max:80',
-            'title_color'        => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'button_text'        => 'required|string|min:2|max:25',
-            'button_color'       => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'service_color'      => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'service_color_2'    => ['nullable', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            // ── Texto (compartido) ───────────────────────────────────────────
+            'title_text'  => 'required|string|min:5|max:80',
+            'button_text' => 'required|string|min:2|max:25',
+
+            // ── Desktop ─────────────────────────────────────────────────────
+            'title_color'        => $hexReq,
+            'button_color'       => $hexReq,
+            'service_color'      => $hexReq,
+            'service_color_2'    => $hex,
             'gradient_direction' => 'required|string|max:20',
-            'trigger_time'       => 'required|integer|in:3,5,8',
-            'left_image'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'trigger_time'       => 'required|integer|between:1,100',
+            'left_image'         => $imgRule,
             'left_opacity'       => 'nullable|integer|min:0|max:100',
-            'left_alt'           => 'nullable|string|max:255',
-            // remove_left_image: si viene "1" se borra la imagen izquierda
+            'left_alt'           => 'nullable|string|max:80',
             'remove_left_image'  => 'nullable|in:0,1',
-            'right_image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'right_image'        => $imgRule,
             'right_opacity'      => 'nullable|integer|min:0|max:100',
-            'right_alt'          => 'nullable|string|max:255',
+            'right_alt'          => 'nullable|string|max:80',
             'remove_right_image' => 'nullable|in:0,1',
-            'mobile_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'mobile_opacity'     => 'nullable|integer|min:0|max:100',
-            'mobile_alt'         => 'nullable|string|max:255',
-            'remove_mobile_image'=> 'nullable|in:0,1',
+
+            // ── Mobile ──────────────────────────────────────────────────────
+            'mobile_trigger_time'       => 'required|integer|between:1,100',
+            'mobile_title_color'        => $hexReq,
+            'mobile_button_color'       => $hexReq,
+            'mobile_service_color'      => $hexReq,
+            'mobile_service_color_2'    => $hex,
+            'mobile_gradient_direction' => 'required|string|max:20',
+            'mobile_image'              => $imgRule,
+            'mobile_opacity'            => 'nullable|integer|min:0|max:100',
+            'mobile_alt'                => 'nullable|string|max:80',
+            'remove_mobile_image'       => 'nullable|in:0,1',
         ];
 
         if ($esCreacion) {
@@ -91,6 +96,74 @@ class PopupConfigController extends Controller
         }
 
         return $reglas;
+    }
+
+    // ─── Helper: extraer campos del request ──────────────────────────────────
+
+    private function extractData(Request $request, bool $isNew, ?PopupConfig $config = null): array
+    {
+        return [
+            // Texto (compartido)
+            'title_text'  => $request->input('title_text'),
+            'button_text' => $request->input('button_text'),
+
+            // Desktop
+            'title_color'        => $request->input('title_color'),
+            'button_color'       => $request->input('button_color'),
+            'service_color'      => $request->input('service_color'),
+            'service_color_2'    => $request->input('service_color_2'),
+            'gradient_direction' => $request->input('gradient_direction'),
+            'trigger_time'       => (int) $request->input('trigger_time'),
+            'left_opacity'       => (int) ($request->input('left_opacity') ?? ($config?->left_opacity ?? 85)),
+            'left_alt'           => $request->input('left_alt'),
+            'right_opacity'      => (int) ($request->input('right_opacity') ?? ($config?->right_opacity ?? 100)),
+            'right_alt'          => $request->input('right_alt'),
+
+            // Mobile
+            'mobile_trigger_time'       => (int) $request->input('mobile_trigger_time'),
+            'mobile_title_color'        => $request->input('mobile_title_color'),
+            'mobile_button_color'       => $request->input('mobile_button_color'),
+            'mobile_service_color'      => $request->input('mobile_service_color'),
+            'mobile_service_color_2'    => $request->input('mobile_service_color_2'),
+            'mobile_gradient_direction' => $request->input('mobile_gradient_direction'),
+            'mobile_opacity'            => (int) ($request->input('mobile_opacity') ?? ($config?->mobile_opacity ?? 100)),
+            'mobile_alt'                => $request->input('mobile_alt'),
+        ];
+    }
+
+    // ─── Helper: procesar imágenes ───────────────────────────────────────────
+
+    private function procesarImagenes(Request $request, array &$data, int $idProducto, bool $isNew, ?PopupConfig $config = null): ?array
+    {
+        foreach (['left', 'right', 'mobile'] as $slot) {
+            if ($request->hasFile("{$slot}_image")) {
+                if ($isNew) {
+                    $resultado = $this->subirImagen($request->file("{$slot}_image"), $idProducto, $slot);
+                } else {
+                    $resultado = $this->reemplazarImagen(
+                        $request->file("{$slot}_image"),
+                        $idProducto,
+                        $slot,
+                        $config?->{"{$slot}_image_public_id"},
+                        $config?->{"{$slot}_image_url"}
+                    );
+                }
+
+                if (empty($resultado['url'])) {
+                    return ['error' => "Fallo al subir la imagen {$slot}."];
+                }
+
+                $data["{$slot}_image_url"]       = $resultado['url'];
+                $data["{$slot}_image_public_id"] = $resultado['public_id'] ?? null;
+
+            } elseif (!$isNew && $request->input("remove_{$slot}_image") == '1') {
+                $this->borrarImagen($config?->{"{$slot}_image_public_id"});
+                $data["{$slot}_image_url"]       = null;
+                $data["{$slot}_image_public_id"] = null;
+            }
+        }
+
+        return null; // sin error
     }
 
     // ─── ENDPOINTS PRIVADOS ───────────────────────────────────────────────────
@@ -138,35 +211,14 @@ class PopupConfigController extends Controller
         try {
             $idProducto = (int) $request->input('id_producto');
 
-            $data = [
-                'id_producto'        => $idProducto,
-                'title_text'         => $request->input('title_text'),
-                'title_color'        => $request->input('title_color'),
-                'button_text'        => $request->input('button_text'),
-                'button_color'       => $request->input('button_color'),
-                'service_color'      => $request->input('service_color'),
-                'service_color_2'    => $request->input('service_color_2'),
-                'gradient_direction' => $request->input('gradient_direction'),
-                'trigger_time'       => (int) $request->input('trigger_time'),
-                'left_opacity'       => (int) ($request->input('left_opacity') ?? 85),
-                'left_alt'           => $request->input('left_alt'),
-                'right_opacity'      => (int) ($request->input('right_opacity') ?? 100),
-                'right_alt'          => $request->input('right_alt'),
-                'mobile_opacity'     => (int) ($request->input('mobile_opacity') ?? 100),
-                'mobile_alt'         => $request->input('mobile_alt'),
-                'created_by'         => $request->user()?->id,
-                'updated_by'         => $request->user()?->id,
-            ];
+            $data = $this->extractData($request, true);
+            $data['id_producto'] = $idProducto;
+            $data['created_by']  = $request->user()?->id;
+            $data['updated_by']  = $request->user()?->id;
 
-            foreach (['left', 'right', 'mobile'] as $slot) {
-                if ($request->hasFile("{$slot}_image")) {
-                    $resultado = $this->subirImagen($request->file("{$slot}_image"), $idProducto, $slot);
-                    if (empty($resultado['url'])) {
-                        return response()->json(['success' => false, 'message' => "Fallo al subir la imagen {$slot}."], 500);
-                    }
-                    $data["{$slot}_image_url"]       = $resultado['url'];
-                    $data["{$slot}_image_public_id"] = $resultado['public_id'] ?? null;
-                }
+            $error = $this->procesarImagenes($request, $data, $idProducto, true);
+            if ($error) {
+                return response()->json(['success' => false, 'message' => $error['error']], 500);
             }
 
             $config = PopupConfig::create($data);
@@ -199,50 +251,15 @@ class PopupConfigController extends Controller
         try {
             $idProducto = (int) $config->id_producto;
 
-            $config->title_text         = $request->input('title_text');
-            $config->title_color        = $request->input('title_color');
-            $config->button_text        = $request->input('button_text');
-            $config->button_color       = $request->input('button_color');
-            $config->service_color      = $request->input('service_color');
-            $config->service_color_2    = $request->input('service_color_2');
-            $config->gradient_direction = $request->input('gradient_direction');
-            $config->trigger_time       = (int) $request->input('trigger_time');
-            $config->left_opacity       = (int) ($request->input('left_opacity') ?? $config->left_opacity);
-            $config->left_alt           = $request->input('left_alt');
-            $config->right_opacity      = (int) ($request->input('right_opacity') ?? $config->right_opacity);
-            $config->right_alt          = $request->input('right_alt');
-            $config->mobile_opacity     = (int) ($request->input('mobile_opacity') ?? $config->mobile_opacity);
-            $config->mobile_alt         = $request->input('mobile_alt');
-            $config->updated_by         = $request->user()?->id;
+            $data = $this->extractData($request, false, $config);
+            $data['updated_by'] = $request->user()?->id;
 
-            foreach (['left', 'right', 'mobile'] as $slot) {
-                $removeKey = "remove_{$slot}_image";
-
-                if ($request->hasFile("{$slot}_image")) {
-                    // Subir nueva imagen (reemplaza la anterior en Cloudinary)
-                    $resultado = $this->reemplazarImagen(
-                        $request->file("{$slot}_image"),
-                        $idProducto,
-                        $slot,
-                        $config->{"{$slot}_image_public_id"},
-                        $config->{"{$slot}_image_url"}
-                    );
-                    if (empty($resultado['url'])) {
-                        return response()->json(['success' => false, 'message' => "Fallo al subir la imagen {$slot}."], 500);
-                    }
-                    $config->{"{$slot}_image_url"}       = $resultado['url'];
-                    $config->{"{$slot}_image_public_id"} = $resultado['public_id'] ?? null;
-
-                } elseif ($request->input($removeKey) == '1') {
-                    // El frontend indica explícitamente que se eliminó la imagen
-                    $this->borrarImagen($config->{"{$slot}_image_public_id"});
-                    $config->{"{$slot}_image_url"}       = null;
-                    $config->{"{$slot}_image_public_id"} = null;
-                }
-                // Si no viene archivo NI remove_*=1, la imagen existente se conserva sin cambios
+            $error = $this->procesarImagenes($request, $data, $idProducto, false, $config);
+            if ($error) {
+                return response()->json(['success' => false, 'message' => $error['error']], 500);
             }
 
-            $config->save();
+            $config->fill($data)->save();
             $config->load('producto:id_producto,nombre');
 
             return response()->json([
