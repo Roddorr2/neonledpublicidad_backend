@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Permiso;
 use App\Models\Rol;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 class PermisosSeeder extends Seeder
@@ -13,65 +13,83 @@ class PermisosSeeder extends Seeder
     {
         $permisos = [
             // Contactos
-            'Ver contactos' => 'Permite ver los contactos',
-            'Editar contactos' => 'Permite editar contactos',
+            'Ver contactos'      => 'Permite ver los contactos',
+            'Editar contactos'   => 'Permite editar contactos',
             'Eliminar contactos' => 'Permite eliminar contactos',
 
             // Reclamaciones
-            'Ver reclamaciones' => 'Permite ver las reclamaciones',
-            'Editar reclamaciones' => 'Permite editar reclamaciones',
+            'Ver reclamaciones'      => 'Permite ver las reclamaciones',
+            'Editar reclamaciones'   => 'Permite editar reclamaciones',
             'Eliminar reclamaciones' => 'Permite eliminar reclamaciones',
 
             // Modales
-            'Ver modales' => 'Permite ver los modales',
-            'Editar modales' => 'Permite editar modales',
+            'Ver modales'      => 'Permite ver los modales',
+            'Editar modales'   => 'Permite editar modales',
             'Eliminar modales' => 'Permite eliminar modales',
-            'Enviar mensajes' => 'Enviar modales de Emails y WhatsApp',
+            'Enviar mensajes'  => 'Enviar modales de Emails y WhatsApp',
 
-            // Pop-Ups
-            'Ver pop-ups' => 'Permite ver configuraciones de pop-ups',
-            'Crear pop-ups' => 'Permite crear nuevos pop-ups',
-            'Editar pop-ups' => 'Permite editar pop-ups existentes',
-            'Eliminar pop-ups' => 'Permite eliminar pop-ups',
-
-            // Servicios
+            // Servicios (se puede descomentar en caso se implementen los servicios em el dashboard; las rutas ya están incluidas en el api.php)
             'Ver servicios' => 'Permite ver los servicios',
-
-            // Productos
-            'Ver productos' => 'Permite ver los productos',
+            // 'Crear servicios' => 'Permite crear nuevos servicios',
+            // 'Editar servicios' => 'Permite editar servicios existentes',
+            // 'Eliminar servicios' => 'Permite eliminar servicios existentes',
 
             // Roles
-            'Ver roles' => 'Permite ver la lista de roles',
-            'Crear roles' => 'Permite crear nuevos roles',
-            'Editar roles' => 'Permite modificar roles existentes',
+            'Ver roles'      => 'Permite ver la lista de roles',
+            'Crear roles'    => 'Permite crear nuevos roles',
+            'Editar roles'   => 'Permite modificar roles existentes',
             'Eliminar roles' => 'Permite eliminar roles existentes',
 
             // Permisos
-            'Ver permisos' => 'Permite ver la lista de permisos',
-            'Crear permisos' => 'Permite crear nuevos permisos',
-            'Editar permisos' => 'Permite modificar permisos existentes',
+            'Ver permisos'      => 'Permite ver la lista de permisos',
+            'Crear permisos'    => 'Permite crear nuevos permisos',
+            'Editar permisos'   => 'Permite modificar permisos existentes',
             'Eliminar permisos' => 'Permite eliminar permisos existentes',
 
             // Empleados
-            'Ver empleados' => 'Permite ver la lista de empleados',
-            'Crear empleados' => 'Permite crear nuevos empleados',
-            'Editar empleados' => 'Permite modificar empleados existentes',
+            'Ver empleados'      => 'Permite ver la lista de empleados',
+            'Crear empleados'    => 'Permite crear nuevos empleados',
+            'Editar empleados'   => 'Permite modificar empleados existentes',
             'Eliminar empleados' => 'Permite eliminar empleados existentes',
 
+            // Clientes
+            'Ver cliente'      => 'Permite ver la lista de clientes',
+            'Crear cliente'    => 'Permite crear nuevos clientes',
+            'Editar cliente'   => 'Permite modificar clientes existentes',
+            'Eliminar cliente' => 'Permite eliminar clientes existentes',
+
             // Blogs
-            'Ver blogs' => 'Permite ver la gestión de blogs',
-            'Crear blogs' => 'Permite crear contenido de blogs',
-            'Editar blogs' => 'Permite editar contenido de blogs',
+            'Ver blogs'      => 'Permite ver la gestión de blogs',
+            'Crear blogs'    => 'Permite crear contenido de blogs',
+            'Editar blogs'   => 'Permite editar contenido de blogs',
             'Eliminar blogs' => 'Permite eliminar contenido de blogs',
 
             // Tarjetas
-            'Crear tarjetas' => 'Permite crear tarjetas',
+            'Crear tarjetas'    => 'Permite crear tarjetas',
             'Eliminar tarjetas' => 'Permite eliminar tarjetas',
 
+            // Propuestas
+            'ver propuestas cliente' => 'Permite ver sus propuestas al cliente',
+            'Ver propuestas'         => 'Permite  ver propuestas',
+            'Crear propuestas'       => 'Permite crear propuestas',
+            'Editar propuestas'      => 'Permite editar propuestas',
+            'Eliminar propuestas'    => 'Permite eliminar propuestas',
+
             'Permisos generales' => 'Permite acceder a los permisos básicos',
+
+            // Productos
+            'Ver productos'      => 'Permite ver los productos',
+            'Crear productos'    => 'Permite crear productos',
+            'Editar productos'   => 'Permite editar productos',
+            'Eliminar productos' => 'Permite eliminar productos',
+
+             // Pop-Ups se agrego para popups
+            'Ver popups'      => 'Permite ver configuraciones de pop-ups',
+            'Crear popups'    => 'Permite crear configuraciones de pop-ups',
+            'Editar popups'   => 'Permite editar configuraciones de pop-ups',
+            'Eliminar popups' => 'Permite eliminar configuraciones de pop-ups',
         ];
 
-        // Crear/actualizar permisos (idempotente)
         foreach ($permisos as $nombre => $descripcion) {
             Permiso::updateOrCreate(
                 ['nombre' => $nombre],
@@ -80,52 +98,80 @@ class PermisosSeeder extends Seeder
         }
 
         $rolesPermisos = [
-            'administrador' => array_keys($permisos),
-            
-            'ventas' => [
+            'administrador' => array_keys($permisos), // todos
+            'ventas'        => [
                 'Ver contactos',
                 'Editar contactos',
+
                 'Ver modales',
                 'Editar modales',
+
                 'Ver reclamaciones',
                 'Editar reclamaciones',
+
                 'Enviar mensajes',
-                'Ver productos',
                 'Permisos generales',
+
+                /**
+                 * Empleados de ventas podrán ver y gestionar propuestas a clientes
+                 */
+
+                // 'Crear propuestas',
+                // 'Editar propuestas',
+                // 'Eliminar propuestas',
+                'Ver cliente',
+                'Crear cliente',
+                'Editar cliente',
+                'Eliminar cliente',
+
+                'Ver propuestas cliente',
+                'Ver propuestas',
+                'Crear propuestas',
+                'Editar propuestas',
+                'Eliminar propuestas',
             ],
-            
             'marketing' => [
                 'Ver contactos',
                 'Editar contactos',
-                'Ver productos',
+
                 'Ver modales',
                 'Editar modales',
+
                 'Ver reclamaciones',
                 'Editar reclamaciones',
+
                 'Enviar mensajes',
-                'Ver pop-ups',
-                'Crear pop-ups',
-                'Editar pop-ups',
-                'Eliminar pop-ups',
+
                 'Ver blogs',
                 'Editar blogs',
                 'Eliminar blogs',
                 'Crear blogs',
                 'Crear tarjetas',
+
+                //  En $rolesPermisos['marketing'], agrega los 4 permisos:
+//    (Marketing puede gestionar popups al igual que blogs/campañas)
+ 
+            'Ver popups',
+            'Crear popups',
+            'Editar popups',
+            'Eliminar popups',
+
                 'Permisos generales',
+            ],
+            'cliente' => [
+                'Ver propuestas cliente',
+                // 'Crear propuestas',
+                // 'Editar propuestas',
+                // 'Eliminar propuestas',
             ],
         ];
 
-        // Asignar permisos a roles (idempotente con syncWithoutDetaching)
         foreach ($rolesPermisos as $nombreRol => $permisosAsignados) {
             $rol = Rol::firstOrCreate(['nombre' => $nombreRol]);
 
             $permisosIds = Permiso::whereIn('nombre', $permisosAsignados)->pluck('id_permiso')->toArray();
 
-            // syncWithoutDetaching NO elimina permisos existentes, solo agrega los que faltan
-            $rol->permisos()->syncWithoutDetaching($permisosIds);
+            $rol->permisos()->sync($permisosIds);
         }
-
-        $this->command->info('Permisos y roles configurados correctamente.');
     }
 }
