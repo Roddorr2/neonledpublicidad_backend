@@ -209,12 +209,12 @@ class EmpleadoController extends Controller
 
                 $publicId = $request->public_id;
                 $secureUrl = $request->secure_url;
-                $expectedPrefix = "empleados/perfiles/{$empleado->id_empleado}/";
 
-                if (!str_starts_with($publicId, $expectedPrefix)) {
-                    throw new \Exception('Imagen no autorizada para este perfil');
+                if (empty($publicId)) {
+                    throw new \Exception('public_id de imagen no proporcionado');
                 }
 
+                // Validar que la URL sea de Cloudinary o almacenamiento local
                 if (!(str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
                     throw new \Exception('URL de imagen no válida');
                 }
@@ -532,12 +532,12 @@ class EmpleadoController extends Controller
 
                 $publicId = $request->public_id;
                 $secureUrl = $request->secure_url;
-                $expectedPrefix = "empleados/perfiles/{$id}/";
 
-                if (!str_starts_with($publicId, $expectedPrefix)) {
-                    throw new \Exception('Imagen no autorizada para este perfil');
+                if (empty($publicId)) {
+                    throw new \Exception('public_id de imagen no proporcionado');
                 }
 
+                // Validar que la URL sea de Cloudinary o almacenamiento local
                 if (!(str_contains($secureUrl, 'res.cloudinary.com') || str_contains($secureUrl, '/storage/'))) {
                     throw new \Exception('URL de imagen no válida');
                 }
