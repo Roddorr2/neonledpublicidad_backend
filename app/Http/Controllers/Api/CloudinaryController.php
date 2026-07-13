@@ -25,6 +25,23 @@ class CloudinaryController extends Controller
     }
 
     /**
+     * Firma cualquier conjunto de parametros que envie el widget de subida (next-cloudinary
+     * CldUploadWidget con uploadSignature). Usado para subidas firmadas client-direct.
+     */
+    public function firmarParametros(Request $request)
+    {
+        $paramsToSign = $request->input('paramsToSign', []);
+
+        ksort($paramsToSign);
+        $toSign = urldecode(http_build_query($paramsToSign));
+        $secret = env('CLOUDINARY_SECRET') ?: config('services.cloudinary.secret');
+
+        return response()->json([
+            'signature' => sha1($toSign . ($secret ?? '')),
+        ]);
+    }
+
+    /**
      * Webhook endpoint for Cloudinary upload notifications.
      * Validates signature and timestamp, then logs payload.
      */

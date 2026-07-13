@@ -103,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // -------------------- CLOUDINARY --------------------
     Route::get('/cloudinary/signature', [CloudinaryController::class, 'signature']);
+    Route::post('/cloudinary/sign-params', [CloudinaryController::class, 'firmarParametros']);
 
     // -------------------- BLOGS Y TARJETAS --------------------
     Route::middleware('permission:ver-blogs')->group(function () {
