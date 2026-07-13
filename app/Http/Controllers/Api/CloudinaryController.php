@@ -32,8 +32,20 @@ class CloudinaryController extends Controller
     {
         $paramsToSign = $request->input('paramsToSign', []);
 
-        ksort($paramsToSign);
-        $toSign = urldecode(http_build_query($paramsToSign));
+        $params = [];
+        foreach ($paramsToSign as $key => $value) {
+            if (! isset($value) || $value === '') {
+                continue;
+            }
+            $params[$key] = is_array($value) ? implode(',', $value) : $value;
+        }
+
+        ksort($params);
+        $toSign = implode('&', array_map(
+            fn ($key, $value) => "{$key}={$value}",
+            array_keys($params),
+            array_values($params)
+        ));
         $secret = env('CLOUDINARY_SECRET') ?: config('services.cloudinary.secret');
 
         return response()->json([
