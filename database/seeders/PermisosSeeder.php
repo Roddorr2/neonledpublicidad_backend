@@ -68,6 +68,12 @@ class PermisosSeeder extends Seeder
             'Crear tarjetas' => 'Permite crear tarjetas',
             'Eliminar tarjetas' => 'Permite eliminar tarjetas',
 
+            // Testimonios
+            'Ver testimonios' => 'Permite ver la lista de testimonios',
+            'Crear testimonios' => 'Permite crear nuevos testimonios',
+            'Editar testimonios' => 'Permite editar testimonios existentes (incluye reordenar y activar/desactivar)',
+            'Eliminar testimonios' => 'Permite eliminar testimonios',
+
             'Permisos generales' => 'Permite acceder a los permisos básicos',
         ];
 
@@ -112,6 +118,10 @@ class PermisosSeeder extends Seeder
                 'Eliminar blogs',
                 'Crear blogs',
                 'Crear tarjetas',
+                'Ver testimonios',
+                'Crear testimonios',
+                'Editar testimonios',
+                'Eliminar testimonios',
                 'Permisos generales',
             ],
         ];

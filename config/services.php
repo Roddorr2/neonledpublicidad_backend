@@ -41,5 +41,14 @@ return [
         'api_key'               => env('WHATSAPP_SERVICE_API_KEY'),
         'rate_limit_per_minute' => env('WHATSAPP_RATE_LIMIT', 30),
     ],
+    // Reseñas de Google Business (Places API - Place Details) para el
+    // carrusel de testimonios en /nosotros. Requiere Place ID + API Key
+    // con "Places API" habilitada en Google Cloud Console.
+   // 'google_places' => [
+       // 'api_key'      => env('GOOGLE_PLACES_API_KEY'),
+        //'place_id'     => env('GOOGLE_PLACES_ID'),
+        // Segundos que se cachea la respuesta antes de volver a llamar a Google
+        //'cache_ttl'    => env('GOOGLE_PLACES_CACHE_TTL', 86400), // 24h por defecto
+   // ],
 
 ];
