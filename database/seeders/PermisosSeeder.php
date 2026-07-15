@@ -74,6 +74,11 @@ class PermisosSeeder extends Seeder
             'Crear propuestas'       => 'Permite crear propuestas',
             'Editar propuestas'      => 'Permite editar propuestas',
             'Eliminar propuestas'    => 'Permite eliminar propuestas',
+            // Testimonios
+            'Ver testimonios' => 'Permite ver la lista de testimonios',
+            'Crear testimonios' => 'Permite crear nuevos testimonios',
+            'Editar testimonios' => 'Permite editar testimonios existentes (incluye reordenar y activar/desactivar)',
+            'Eliminar testimonios' => 'Permite eliminar testimonios',
 
             'Permisos generales' => 'Permite acceder a los permisos básicos',
 
@@ -150,12 +155,15 @@ class PermisosSeeder extends Seeder
 
                 //  En $rolesPermisos['marketing'], agrega los 4 permisos:
 //    (Marketing puede gestionar popups al igual que blogs/campañas)
- 
             'Ver popups',
             'Crear popups',
             'Editar popups',
             'Eliminar popups',
 
+                'Ver testimonios',
+                'Crear testimonios',
+                'Editar testimonios',
+                'Eliminar testimonios',
                 'Permisos generales',
             ],
             'cliente' => [
