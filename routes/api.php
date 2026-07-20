@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\CloudinaryController;
 use App\Http\Controllers\Api\CommendTarjetaController;
 use App\Http\Controllers\Api\ContactanosController;
 use App\Http\Controllers\Api\EmpleadoController;
+use App\Http\Controllers\Api\GoogleReviewsController;
+use App\Http\Controllers\Api\TestimonioController;
 use App\Http\Controllers\Api\MetricasController;
 use App\Http\Controllers\Api\ModalesController;
 use App\Http\Controllers\Api\ModalMailController;
@@ -47,6 +49,13 @@ Route::post('/modales', [ModalesController::class, 'create']);
 
 // Cloudinary webhook (public)
 Route::post('/cloudinary/webhook', [CloudinaryController::class, 'webhook']);
+
+// Testimonios de Google Business (cacheados en backend) para el carrusel de /nosotros
+Route::get('/testimonios-google', [GoogleReviewsController::class, 'index'])
+    ->middleware('throttle:60,1');
+
+// Testimonios propios (creados desde el dashboard) para el carrusel de /nosotros
+Route::get('/testimonios', [TestimonioController::class, 'publico']);
 
 // Webhook endpoint (protegido por X-API-Key en el controlador)
 Route::post('/whatsapp/webhook/status', [WhatsappWebhookController::class, 'status'])
@@ -103,6 +112,27 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // -------------------- CLOUDINARY --------------------
     Route::get('/cloudinary/signature', [CloudinaryController::class, 'signature']);
+    Route::post('/cloudinary/sign-params', [CloudinaryController::class, 'firmarParametros']);
+
+    // -------------------- TESTIMONIOS (dashboard) --------------------
+    // Ver: administrador y marketing (ver permisos en PermisosSeeder)
+    Route::middleware('permission:ver-testimonios')->group(function () {
+        Route::get('/testimonios/admin', [TestimonioController::class, 'index']);
+    });
+
+    Route::middleware('permission:crear-testimonios')->group(function () {
+        Route::post('/testimonios', [TestimonioController::class, 'store']);
+    });
+
+    Route::middleware('permission:editar-testimonios')->group(function () {
+        Route::post('/testimonios/reordenar', [TestimonioController::class, 'reordenar']);
+        Route::patch('/testimonios/{id}/toggle-activo', [TestimonioController::class, 'toggleActivo']);
+        Route::post('/testimonios/{id}', [TestimonioController::class, 'update']); // POST + _method=PUT (por el archivo)
+    });
+
+    Route::middleware('permission:eliminar-testimonios')->group(function () {
+        Route::delete('/testimonios/{id}', [TestimonioController::class, 'destroy']);
+    });
 
     // -------------------- BLOGS Y TARJETAS --------------------
     Route::middleware('permission:ver-blogs')->group(function () {
