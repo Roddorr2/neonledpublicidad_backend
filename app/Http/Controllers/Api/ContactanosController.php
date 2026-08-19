@@ -65,6 +65,10 @@ class ContactanosController extends Controller
         */
         $data = $request->validated();
 
+        // La API recibe "tipo_reclamo", pero la columna en la BD se llama "detalle_reclamacion".
+        $data['detalle_reclamacion'] = $data['tipo_reclamo'];
+        unset($data['tipo_reclamo']);
+
         $data['estado']     = 0; // Estado inicial (pendiente)
         $data['fecha_hora'] = Carbon::now();
 

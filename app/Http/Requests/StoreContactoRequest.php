@@ -58,7 +58,7 @@ class StoreContactoRequest extends FormRequest
                 'required',
                 'email',
             ],
-            'tipo_reclamo' => ['required', 'in:CONSULTA,RECLAMO'],
+            'tipo_reclamo' => ['required', 'in:CONSULTA,RECLAMO,SUGERENCIA'],
             'mensaje'      => ['required'],
         ];
     }
@@ -70,7 +70,7 @@ class StoreContactoRequest extends FormRequest
             'email.email'    => 'El correo es inválido',
 
             'tipo_reclamo.required' => 'El tipo de reclamo es obligatorio',
-            'tipo_reclamo.in'       => 'El tipo de reclamo debe ser CONSULTA o RECLAMO',
+            'tipo_reclamo.in'       => 'El tipo de reclamo debe ser CONSULTA, RECLAMO o SUGERENCIA',
 
             'mensaje.required' => 'Mensaje es obligatorio',
         ];
