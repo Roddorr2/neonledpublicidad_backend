@@ -265,13 +265,15 @@ class PropuestaController extends Controller
                 'message' => 'Propuesta registrada y todas las imágenes guardadas correctamente',
                 'id'      => $propuesta->id,
             ], 200);
-        } catch (Exception $ex) {
+        } catch (\Throwable $ex) {
             DB::rollBack();
-            Log::info($ex->getMessage());
+            Log::error('Error al crear propuesta: ' . $ex->getMessage(), [
+                'exception' => $ex,
+            ]);
 
             return response()->json([
                 'status' => 500,
-                'error'  => $ex->getMessage(),
+                'error'  => config('app.debug') ? $ex->getMessage() : 'No se pudo registrar la propuesta.',
             ], 500);
         }
     }
