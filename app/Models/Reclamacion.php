@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
 
 class Reclamacion extends Model
 {
@@ -15,12 +16,15 @@ class Reclamacion extends Model
     protected $fillable = [
         'nombre',
         'apellido',
+        'tipoDocumento',
+        'dni',
         'email',
         'telefono',
         'departamento',
         'direccion',
         'distrito',
         'id_servicio',
+        'tipoReclamo',
         'fechaIncidente',
         'montoReclamado',
         'descripcionServicio',
@@ -29,6 +33,15 @@ class Reclamacion extends Model
         'fechaReclamo',
         'estadoReclamo',
     ];
+    protected $casts = [
+        'fechaReclamo' => 'datetime',
+        'fechaIncidente' => 'datetime', 
+    ];
+
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
     public function servicio()
     {
