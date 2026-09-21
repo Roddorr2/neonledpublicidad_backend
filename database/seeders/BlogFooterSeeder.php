@@ -22,6 +22,9 @@ class BlogFooterSeeder extends Seeder
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('blog_footers')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('blog_footers')->insert($blog_footers);
     }
 }

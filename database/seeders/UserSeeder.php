@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -15,58 +15,57 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name'     => 'Kevin',
-                'email'    => 'keving.kpg@gmail.com',
-                'password' => Hash::make('F@Q#n64QuJm%'),
+                'name' => 'Admin Staging',
+                'email' => 'admin@staging.neonled.com',
             ],
             [
-                'name'     => 'Jose Luis',
-                'email'    => 'joseluisjlgd123@gmail.com',
-                'password' => Hash::make('j8#m2%Q2g2SW'),
+                'name' => 'Jose Luis',
+                'email' => 'joseluis@staging.neonled.com',
             ],
             [
-                'name'     => 'Juan Carlos',
-                'email'    => 'tmlighting@hotmail.com',
-                'password' => Hash::make('Vqw&Kk4o$Q7c'),
+                'name' => 'Juan Carlos',
+                'email' => 'juancarlos@staging.neonled.com',
             ],
             [
-                'name'     => 'Krizzia Martina',
-                'email'    => 'krizzia_saavedra201@hotmail.com',
-                'password' => Hash::make('2XQsrPELv$&Y'),
+                'name' => 'Krizzia Martina',
+                'email' => 'krizzia@staging.neonled.com',
             ],
             [
-                'name'     => 'Gonzalo Fernando',
-                'email'    => 'gogozgallardo22@gmail.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Gonzalo Fernando',
+                'email' => 'gonzalo@staging.neonled.com',
             ],
             [
-                'name'     => 'Piero Alexander',
-                'email'    => 'pierocatacorayt13@gmail.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Piero Alexander',
+                'email' => 'piero@staging.neonled.com',
             ],
             [
-                'name'     => 'Diego Torres',
-                'email'    => 'diego_torres_11@hotmail.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Diego Torres',
+                'email' => 'diego@staging.neonled.com',
             ],
             [
-                'name'     => 'Juan Perez',
-                'email'    => 'juan.perez@example.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Juan Perez',
+                'email' => 'cliente.juan@staging.neonled.com',
             ],
             [
-                'name'     => 'Ana Garcia',
-                'email'    => 'ana.garcia@example.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Ana Garcia',
+                'email' => 'cliente.ana@staging.neonled.com',
             ],
             [
-                'name'     => 'Luis Torres',
-                'email'    => 'luis.torres@example.com',
-                'password' => Hash::make('12345678'),
+                'name' => 'Luis Torres',
+                'email' => 'cliente.luis@staging.neonled.com',
             ],
-
         ];
 
-        DB::table('users')->insert($users);
+        foreach ($users as $user) {
+            User::updateOrCreate(
+                ['email' => $user['email']],
+                [
+                    'name' => $user['name'],
+                    'password' => Hash::make('staging_password_123'),
+                ]
+            );
+        }
+
+        $this->command->info('Usuarios creados/actualizados correctamente.');
     }
 }
