@@ -309,7 +309,7 @@
                 </div>
             </div>
 
-            <a href="{{ url('https://www.ledneonpublicidad.com/login/') }}" class="cta-button">
+            <a href="{{ url('https://ledneonpublicidad.com/login/') }}" class="cta-button">
                 Iniciar sesión ahora
             </a>
 
