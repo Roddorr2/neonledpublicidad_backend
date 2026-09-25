@@ -47,6 +47,9 @@ class ClienteSeeder extends Seeder
                 'id_rol'            => 4,
             ],
         ];
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('clientes')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('clientes')->insert($clientes);
     }
 }
