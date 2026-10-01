@@ -37,6 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // sin capturar y termina en un 500 con página HTML en vez de un 401 JSON.
         $middleware->redirectGuestsTo(fn () => null);
 
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
         $middleware->append(Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
