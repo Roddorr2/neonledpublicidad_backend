@@ -72,7 +72,7 @@ class PlantillasWhatsappSeeder extends Seeder
                 3 => "⭐ Tu carta, con imagen profesional\n Diseño moderno, resistente y adaptable a cualquier concepto gastronómico. Un menú board bien diseñado comunica calidad, organización y confianza.",
             ],
             8 => [
-                1 => '👋 ¡Bienvenido! Nuestros monitores de publicidad digital muestran contenido dinámico y de alto impacto. Ideales para promociones, menús digitales y publicidad comercial.',
+                1 => '👋¡Bienvenido! Nuestros monitores de publicidad digital muestran contenido dinámico y de alto impacto. Ideales para promociones, menús digitales y publicidad comercial.',
                 2 => 'Capta más miradas en segundos 👀 Los monitores digitales comunican promociones en tiempo real y mejoran la experiencia del cliente. Más atención, más recordación.',
                 3 => "Moderniza tu negocio con pantallas digitales 🚀\nActualiza contenido al instante, reduce impresos y proyecta una imagen innovadora.\nPublicidad que sí se nota.",
             ],

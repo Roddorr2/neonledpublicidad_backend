@@ -10,6 +10,8 @@ use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 
+use App\Http\Middleware\RemoveXPoweredBy;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -27,6 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
 
         $middleware->append(Illuminate\Http\Middleware\HandleCors::class);
+        $middleware->append(\App\Http\Middleware\RemoveXPoweredBy::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (AuthenticationException $e, $request) {
