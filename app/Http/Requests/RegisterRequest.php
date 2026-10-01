@@ -29,7 +29,7 @@ class RegisterRequest extends FormRequest
             'email'    => 'required|string|email|max:255|unique:empleados,email|unique:users,email',
             'dni'      => 'required|string|max:20|unique:empleados,dni',
             'telefono' => 'nullable|string|max:20',
-            'id_rol'   => 'required|exists:roles,id_rol',
+
         ];
     }
 
@@ -63,9 +63,6 @@ class RegisterRequest extends FormRequest
             'telefono.string' => 'El teléfono debe ser una cadena de texto.',
             'telefono.max'    => 'El teléfono no debe superar los 20 caracteres.',
 
-            // id_rol
-            'id_rol.required' => 'El campo rol es obligatorio.',
-            'id_rol.exists'   => 'El rol seleccionado no es válido.',
         ];
     }
 
