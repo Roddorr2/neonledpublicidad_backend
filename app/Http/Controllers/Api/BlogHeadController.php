@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBlogHeadRequest;
 use App\Http\Requests\UpdateBlogHeadRequest;
 use App\Models\BlogHead;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BlogHeadController extends Controller
 {
@@ -30,10 +31,12 @@ class BlogHeadController extends Controller
         } catch (\Exception $ex) {
             DB::rollback();
 
+            Log::error('Error al crear blogHead: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -67,10 +70,12 @@ class BlogHeadController extends Controller
         } catch (\Exception $ex) {
             DB::rollback();
 
+            Log::error('Error al actualizar blogHead: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -93,10 +98,12 @@ class BlogHeadController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('Error al consultar blogHead: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -121,10 +128,12 @@ class BlogHeadController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('Error al eliminar blogHead: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error al eliminar el blogHead',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }

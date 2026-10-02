@@ -94,8 +94,20 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], $status);
             }
 
+            if ($e instanceof \Illuminate\Database\QueryException || $e instanceof \PDOException) {
+                Log::error('Error de base de datos en API: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'url'       => $request->fullUrl(),
+                ]);
+
+                return response()->json([
+                    'status'  => 500,
+                    'message' => 'Ha ocurrido un error al procesar la solicitud en la base de datos.',
+                ], 500);
+            }
+
             // Error realmente inesperado: se loguea con traza completa y se
-            // responde 500 en JSON (nunca la página HTML de depuración).
+            // responde 500 en JSON (nunca la página HTML de depuración ni detalles sensibles).
             Log::error('Error no controlado en API: ' . $e->getMessage(), [
                 'exception' => $e,
                 'url'       => $request->fullUrl(),
@@ -103,7 +115,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json([
                 'status'  => 500,
-                'message' => config('app.debug') ? $e->getMessage() : 'Ha ocurrido un error interno en el servidor.',
+                'message' => config('app.debug') && ! ($e instanceof \Illuminate\Database\QueryException || $e instanceof \PDOException)
+                    ? $e->getMessage()
+                    : 'Ha ocurrido un error interno en el servidor.',
             ], 500);
         });
     })->create();
