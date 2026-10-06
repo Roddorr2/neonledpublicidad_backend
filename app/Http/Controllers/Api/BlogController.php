@@ -14,6 +14,32 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+/**
+ * Controlador de Gestión de Artículos de Blog (API).
+ *
+ * =========================================================================================
+ * GUÍA DE ALINEACIÓN SEO Y ARQUITECTURA DE ENLACES (SEO-13 / DevOps & SEO Tech)
+ * =========================================================================================
+ * 1. Estructura de URLs Canónicas en Frontend (Next.js App Router):
+ *    - La ruta pública canónica esperada por el cliente web es estrictamente:
+ *      https://www.ledneonpublicidad.com/blog/plantilla{id_plantilla}/{slug}/
+ *    - Donde:
+ *      * {id_plantilla}: Identificador de la plantilla asignada en la tarjeta del blog ($blog->card->id_plantilla).
+ *        Actualmente se soportan las rutas dinámicas: /blog/plantilla1/[slug], /blog/plantilla2/[slug], /blog/plantilla3/[slug].
+ *      * {slug}: Corresponde al campo 'link' guardado en esta tabla ($blog->link).
+ *    - NUNCA compartir ni generar URLs con parámetros obsoletos tipo '?blog=...' en sitemaps o enlaces externos.
+ *
+ * 2. Reglas Editoriales para Redactores y Administradores de Contenido:
+ *    - Inmutabilidad de Slugs Indexados:
+ *      Una vez que un artículo es publicado e indexado por Googlebot, su slug ('link') NO debe cambiarse arbitrariamente.
+ *    - Coordinación Obligatoria con SEO ante Modificaciones o Bajas:
+ *      Si por razones de fuerza mayor se modifica el 'link' (slug) de un blog existente o se elimina el artículo:
+ *      a) Notificar inmediatamente al equipo de SEO / DevOps.
+ *      b) Registrar una regla de redirección 301 permanente en 'next.config.mjs' (async redirects()) apuntando
+ *         la URL antigua hacia la nueva URL del artículo o hacia la página de producto/categoría afín.
+ *      c) Evitar la generación de respuestas 404 (Not Found) que penalizan el posicionamiento orgánico del dominio.
+ * =========================================================================================
+ */
 class BlogController extends Controller
 {
     public function index()
@@ -23,6 +49,11 @@ class BlogController extends Controller
         return response()->json($blogs, 200);
     }
 
+    /**
+     * Registra un nuevo blog y genera un slug ('link') único y seguro para SEO.
+     *
+     * URL resultante esperada en frontend: /blog/plantilla{id_plantilla}/{link}/
+     */
     public function create(StoreBlogRequest $request)
     {
         try {
@@ -73,6 +104,13 @@ class BlogController extends Controller
         }
     }
 
+    /**
+     * Actualiza el blog y su slug ('link').
+     *
+     * ADVERTENCIA SEO: Si el 'link' cambia para un blog ya indexado, se debe coordinar
+     * de inmediato una redirección 301 en Next.js (next.config.mjs) desde el slug anterior
+     * hacia el nuevo slug para prevenir errores 404.
+     */
     public function update(UpdateBlogRequest $request, $id)
     {
         try {
@@ -176,6 +214,13 @@ class BlogController extends Controller
         ], 200);
     }
 
+    /**
+     * Elimina el blog y sus recursos asociados.
+     *
+     * ADVERTENCIA SEO: Al eliminar un blog indexado, se debe registrar una redirección 301
+     * en Next.js (next.config.mjs) desde su URL canónica hacia la categoría o producto correspondiente,
+     * y remover la URL del sitemap para no generar respuestas 404 en Googlebot.
+     */
     public function destroy(int $id, DestroyBlogRequest $request)
     {
         try {

@@ -265,13 +265,15 @@ class PropuestaController extends Controller
                 'message' => 'Propuesta registrada y todas las imágenes guardadas correctamente',
                 'id'      => $propuesta->id,
             ], 200);
-        } catch (Exception $ex) {
+        } catch (\Throwable $ex) {
             DB::rollBack();
-            Log::info($ex->getMessage());
+            Log::error('Error al crear propuesta: ' . $ex->getMessage(), [
+                'exception' => $ex,
+            ]);
 
             return response()->json([
                 'status' => 500,
-                'error'  => $ex->getMessage(),
+                'error'  => config('app.debug') ? $ex->getMessage() : 'No se pudo registrar la propuesta.',
             ], 500);
         }
     }
@@ -288,29 +290,51 @@ class PropuestaController extends Controller
             }
 
             $imagenes = collect();
-            $allDirs  = Storage::disk('public')->allDirectories('cliente');
-            foreach ($allDirs as $dir) {
-                if (Str::is("cliente/*/propuestas/{$id}/imagenes", $dir)) {
-                    $files    = Storage::disk('public')->files($dir);
-                    $imagenes = collect($files)->filter(function ($file) {
-                        return preg_match('/\.(webp)$/i', $file);
-                    })->map(function ($file) {
-                        return Storage::url($file);
-                    })->values();
+            $directPath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/imagenes";
+            if (Storage::disk('public')->exists($directPath)) {
+                $files    = Storage::disk('public')->files($directPath);
+                $imagenes = collect($files)->filter(function ($file) {
+                    return preg_match('/\.(webp|jpg|jpeg|png|gif|avif)$/i', $file);
+                })->map(function ($file) {
+                    return Storage::url($file);
+                })->values();
+            } else {
+                $allDirs  = Storage::disk('public')->allDirectories('cliente');
+                foreach ($allDirs as $dir) {
+                    if (Str::is("cliente/*/propuestas/{$id}/imagenes", $dir)) {
+                        $files    = Storage::disk('public')->files($dir);
+                        $imagenes = collect($files)->filter(function ($file) {
+                            return preg_match('/\.(webp|jpg|jpeg|png|gif|avif)$/i', $file);
+                        })->map(function ($file) {
+                            return Storage::url($file);
+                        })->values();
 
-                    break;
+                        break;
+                    }
                 }
             }
+
             $videos = collect();
-            foreach ($allDirs as $dir) {
-                if (Str::is("cliente/*/propuestas/{$id}/videos", $dir)) {
-                    $files  = Storage::disk('public')->files($dir);
-                    $videos = collect($files)->filter(function ($file) {
-                        return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
-                    })->map(function ($file) {
-                        return Storage::url($file);
-                    })->values();
-                    break;
+            $directVideoPath = "cliente/{$propuesta->id_cliente}/propuestas/{$id}/videos";
+            if (Storage::disk('public')->exists($directVideoPath)) {
+                $files  = Storage::disk('public')->files($directVideoPath);
+                $videos = collect($files)->filter(function ($file) {
+                    return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                })->map(function ($file) {
+                    return Storage::url($file);
+                })->values();
+            } else {
+                $allDirs = $allDirs ?? Storage::disk('public')->allDirectories('cliente');
+                foreach ($allDirs as $dir) {
+                    if (Str::is("cliente/*/propuestas/{$id}/videos", $dir)) {
+                        $files  = Storage::disk('public')->files($dir);
+                        $videos = collect($files)->filter(function ($file) {
+                            return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                        })->map(function ($file) {
+                            return Storage::url($file);
+                        })->values();
+                        break;
+                    }
                 }
             }
 
@@ -350,31 +374,51 @@ class PropuestaController extends Controller
             }
 
             $imagenes = collect();
-            $allDirs  = Storage::disk('public')->allDirectories('cliente');
+            $directPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/imagenes";
+            if (Storage::disk('public')->exists($directPath)) {
+                $files    = Storage::disk('public')->files($directPath);
+                $imagenes = collect($files)->filter(function ($file) {
+                    return preg_match('/\.(webp|jpg|jpeg|png|gif|avif)$/i', $file);
+                })->map(function ($file) {
+                    return Storage::url($file);
+                })->values();
+            } else {
+                $allDirs  = Storage::disk('public')->allDirectories('cliente');
+                foreach ($allDirs as $dir) {
+                    if (Str::is("cliente/*/propuestas/{$id_propuesta}/imagenes", $dir)) {
+                        $files    = Storage::disk('public')->files($dir);
+                        $imagenes = collect($files)->filter(function ($file) {
+                            return preg_match('/\.(webp|jpg|jpeg|png|gif|avif)$/i', $file);
+                        })->map(function ($file) {
+                            return Storage::url($file);
+                        })->values();
 
-            foreach ($allDirs as $dir) {
-                if (Str::is("cliente/*/propuestas/{$id_propuesta}/imagenes", $dir)) {
-                    $files    = Storage::disk('public')->files($dir);
-                    $imagenes = collect($files)->filter(function ($file) {
-                        return preg_match('/\.(webp)$/i', $file);
-                    })->map(function ($file) {
-                        return Storage::url($file);
-                    })->values();
-
-                    break;
+                        break;
+                    }
                 }
             }
 
             $videos = collect();
-            foreach ($allDirs as $dir) {
-                if (Str::is("cliente/{$id_cliente}/propuestas/{$id_propuesta}/videos", $dir)) {
-                    $files  = Storage::disk('public')->files($dir);
-                    $videos = collect($files)->filter(function ($file) {
-                        return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
-                    })->map(function ($file) {
-                        return Storage::url($file);
-                    })->values();
-                    break;
+            $directVideoPath = "cliente/{$id_cliente}/propuestas/{$id_propuesta}/videos";
+            if (Storage::disk('public')->exists($directVideoPath)) {
+                $files  = Storage::disk('public')->files($directVideoPath);
+                $videos = collect($files)->filter(function ($file) {
+                    return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                })->map(function ($file) {
+                    return Storage::url($file);
+                })->values();
+            } else {
+                $allDirs = $allDirs ?? Storage::disk('public')->allDirectories('cliente');
+                foreach ($allDirs as $dir) {
+                    if (Str::is("cliente/{$id_cliente}/propuestas/{$id_propuesta}/videos", $dir)) {
+                        $files  = Storage::disk('public')->files($dir);
+                        $videos = collect($files)->filter(function ($file) {
+                            return preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $file);
+                        })->map(function ($file) {
+                            return Storage::url($file);
+                        })->values();
+                        break;
+                    }
                 }
             }
 

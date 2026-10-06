@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Cliente;
 use App\Models\Propuesta;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PropuestaSeeder extends Seeder
 {
@@ -22,12 +23,16 @@ class PropuestaSeeder extends Seeder
             return;
         }
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Propuesta::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
         foreach ($clientes as $cliente) {
             // Generar 2 propuestas por cliente
             for ($i = 1; $i <= 2; $i++) {
                 Propuesta::create([
-                    'id_cliente'  => $cliente->id,
-                    'nombre'      => "Propuesta {$i} de {$cliente->nombre}",
+                    'id_cliente' => $cliente->id,
+                    'nombre' => "Propuesta {$i} de {$cliente->nombre}",
                     'descripcion' => "Esta es una descripción genérica para la propuesta {$i} del cliente {$cliente->nombre} {$cliente->apellido}.",
                 ]);
             }

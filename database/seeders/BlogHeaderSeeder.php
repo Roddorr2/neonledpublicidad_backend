@@ -21,6 +21,9 @@ class BlogHeaderSeeder extends Seeder
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('blog_heads')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('blog_heads')->insert($blog_heads);
     }
 }

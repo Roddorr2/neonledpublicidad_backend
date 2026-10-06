@@ -16,10 +16,17 @@ class UpdateTestimonioRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre'  => 'sometimes|required|string|max:150',
+            'nombre'  => [
+                'sometimes',
+                'required',
+                'string',
+                'min:2',
+                'max:150',
+                'regex:/^(?=.*\pL)[\pL\pN\s\.\,\'\-\&\/]+$/u',
+            ],
             'texto'   => 'sometimes|required|string|max:600',
             'rating'  => 'sometimes|required|integer|min:1|max:5',
-            'fecha'   => 'nullable|date',
+            'fecha'   => 'nullable|date|before_or_equal:today',
             'avatar'  => 'nullable|image|max:2048',
             'activo'  => 'nullable|boolean',
             'orden'   => 'nullable|integer|min:0',
@@ -29,18 +36,21 @@ class UpdateTestimonioRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombre.required' => 'El nombre del cliente es obligatorio.',
-            'nombre.max'      => 'El nombre no puede superar los 150 caracteres.',
-            'texto.required'  => 'El texto del testimonio es obligatorio.',
-            'texto.max'       => 'El texto no puede superar los 600 caracteres.',
-            'rating.integer'  => 'La calificación debe ser un número entero.',
-            'rating.min'      => 'La calificación mínima es 1.',
-            'rating.max'      => 'La calificación máxima es 5.',
-            'fecha.date'      => 'La fecha no es válida.',
-            'avatar.image'    => 'El avatar debe ser una imagen.',
-            'avatar.max'      => 'El avatar no puede superar los 2MB.',
-            'activo.boolean'  => 'El estado activo debe ser verdadero o falso.',
-            'orden.integer'   => 'El orden debe ser un número entero.',
+            'nombre.required'        => 'El nombre del cliente es obligatorio.',
+            'nombre.min'             => 'El nombre debe tener al menos 2 caracteres.',
+            'nombre.max'             => 'El nombre no puede superar los 150 caracteres.',
+            'nombre.regex'           => 'El nombre contiene caracteres inválidos o no incluye letras válidas.',
+            'texto.required'         => 'El texto del testimonio es obligatorio.',
+            'texto.max'              => 'El texto no puede superar los 600 caracteres.',
+            'rating.integer'         => 'La calificación debe ser un número entero.',
+            'rating.min'             => 'La calificación mínima es 1.',
+            'rating.max'             => 'La calificación máxima es 5.',
+            'fecha.date'             => 'La fecha no es válida.',
+            'fecha.before_or_equal'  => 'La fecha a mostrar no puede ser futura.',
+            'avatar.image'           => 'El avatar debe ser una imagen.',
+            'avatar.max'             => 'El avatar no puede superar los 2MB.',
+            'activo.boolean'         => 'El estado activo debe ser verdadero o falso.',
+            'orden.integer'          => 'El orden debe ser un número entero.',
         ];
     }
 

@@ -21,6 +21,9 @@ class CommendTarjetaSeeder extends Seeder
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('commend_tarjetas')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('commend_tarjetas')->insert($commend_tarjetas);
     }
 }

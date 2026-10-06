@@ -33,7 +33,7 @@ class ReclamacionesController extends Controller
     public function create(StoreReclamacionRequest $request)
     {
         $datos                  = $request->validated();
-        $datos['fechaReclamo']  = now();
+        $datos['fechaReclamo']  = now('America/Lima');
         $datos['estadoReclamo'] = 'PENDIENTE';
 
         $reclamacion = Reclamacion::create($datos);

@@ -21,6 +21,9 @@ class CardSeeder extends Seeder
             ],
         ];
 
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('cards')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         DB::table('cards')->insert($cards);
     }
 }

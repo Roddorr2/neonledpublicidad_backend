@@ -18,12 +18,33 @@ class StoreReclamacionRequest extends FormRequest
         return [
             'nombre'                   => ['required', 'string', 'max:100'],
             'apellido'                 => ['required', 'string', 'max:100'],
+            'tipoDocumento'            => ['required', 'string', 'in:DNI,CE,Pasaporte'],
+            'dni'                      => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $tipo = $this->input('tipoDocumento');
+
+                    if ($tipo === 'DNI' && !preg_match('/^\d{8}$/', $value)) {
+                        $fail('El DNI debe tener exactamente 8 dígitos.');
+                    }
+
+                    if ($tipo === 'CE' && !preg_match('/^[a-zA-Z0-9]{9,12}$/', $value)) {
+                        $fail('El Carné de Extranjería debe tener entre 9 y 12 caracteres alfanuméricos.');
+                    }
+
+                    if ($tipo === 'Pasaporte' && !preg_match('/^[a-zA-Z0-9]{5,20}$/', $value)) {
+                        $fail('El pasaporte debe tener entre 5 y 20 caracteres alfanuméricos.');
+                    }
+                },
+            ],
             'email'                    => ['required', 'email', 'max:100'],
             'telefono'                 => ['required', 'string', 'max:20'],
             'departamento'             => ['nullable', 'string', 'max:100'],
             'direccion'                => ['required', 'string', 'max:250'],
             'distrito'                 => ['required', 'string', 'max:250'],
             'id_servicio'              => ['required', 'integer', 'exists:servicios,id_servicio'],
+            'tipoReclamo'              => ['required', 'string', 'in:Reclamo,Queja'],
             'fechaIncidente'           => ['required', 'date'],
             'montoReclamado'           => ['nullable', 'numeric'],
             'descripcionServicio'      => ['required', 'string', 'max:1050'],
@@ -60,6 +81,11 @@ class StoreReclamacionRequest extends FormRequest
             'checkReclamoForm.boolean'          => 'El campo checkReclamoForm debe ser verdadero o falso.',
             'aceptaPoliticaPrivacidad.required' => 'Debes aceptar la política de privacidad.',
             'aceptaPoliticaPrivacidad.boolean'  => 'El campo aceptaPoliticaPrivacidad debe ser verdadero o falso.',
+            'tipoDocumento.required' => 'Debes indicar el tipo de documento.',
+            'tipoDocumento.in'       => 'El tipo de documento debe ser DNI, CE o Pasaporte.',
+            'dni.required'           => 'El número de documento es obligatorio.',
+            'tipoReclamo.required'   => 'Debes indicar si es un reclamo o una queja.',
+            'tipoReclamo.in'         => 'El tipo debe ser Reclamo o Queja.',
         ];
     }
 
