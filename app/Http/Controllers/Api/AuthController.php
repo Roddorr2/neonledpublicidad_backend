@@ -100,6 +100,8 @@ class AuthController extends Controller
                 'password' => Hash::make('1234'),
             ]);
 
+            $rol = Rol::where('nombre','cliente')->firstOrFail();
+
             // crear empleado
             $empleado = Empleado::create([
                 'nombre'   => $data['nombre'],
@@ -108,12 +110,11 @@ class AuthController extends Controller
                 'dni'      => $data['dni'],
                 'telefono' => $data['telefono'] ?? null,
                 'id_user'  => $user->id,
-                'id_rol'   => $data['id_rol'],
+                'id_rol'   => $rol->id_rol,
             ]);
 
             DB::commit();
 
-            $rol   = Rol::find($data['id_rol']);
             $token = $user->createToken('auth_token', [$rol->nombre])->plainTextToken;
 
             return response()->json([
@@ -596,7 +597,9 @@ class AuthController extends Controller
         ], 429)->header('Retry-After', (string) $waitSeconds);
     }
 
-    private function validarTurnstile(string $token, string $ip): bool { return true; try {
+    private function validarTurnstile(string $token, string $ip): bool
+    {
+        try {
             $response = Http::withoutVerifying()->asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
                 'secret'   => env('TURNSTILE_SECRET_KEY'),
                 'response' => $token,
