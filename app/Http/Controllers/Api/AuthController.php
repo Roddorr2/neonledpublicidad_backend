@@ -597,7 +597,9 @@ class AuthController extends Controller
         ], 429)->header('Retry-After', (string) $waitSeconds);
     }
 
-    private function validarTurnstile(string $token, string $ip): bool { return true; try {
+    private function validarTurnstile(string $token, string $ip): bool
+    {
+        try {
             $response = Http::withoutVerifying()->asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
                 'secret'   => env('TURNSTILE_SECRET_KEY'),
                 'response' => $token,
