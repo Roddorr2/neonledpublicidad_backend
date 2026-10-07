@@ -7,6 +7,7 @@ use App\Http\Requests\Tarjeta\StoreTarjetaRequest;
 use App\Http\Requests\Tarjeta\UpdateTarjetaRequest;
 use App\Models\Tarjeta;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class TarjetaController extends Controller
@@ -18,7 +19,13 @@ class TarjetaController extends Controller
 
             return response()->json($tarjetas, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al listar tarjetas: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al consultar tarjetas',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -33,7 +40,13 @@ class TarjetaController extends Controller
 
             return response()->json($tarjetas, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al consultar tarjetas de blog_body: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -54,7 +67,13 @@ class TarjetaController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al crear tarjeta: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al crear la tarjeta',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -84,7 +103,13 @@ class TarjetaController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al actualizar tarjeta: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al actualizar la tarjeta',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -104,7 +129,13 @@ class TarjetaController extends Controller
                 'message' => 'Tarjeta eliminada correctamente',
             ], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al eliminar tarjeta: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al eliminar la tarjeta',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -123,7 +154,13 @@ class TarjetaController extends Controller
                 'deleted' => $deletedRows,
             ], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al eliminar tarjetas por blog_body: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error al eliminar las tarjetas',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 }

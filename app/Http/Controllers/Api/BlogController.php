@@ -11,6 +11,7 @@ use App\Models\BlogBody;
 use App\Models\BlogHead;
 use App\Services\AuditoriaService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -100,7 +101,15 @@ class BlogController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al crear blog: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Ha ocurrido un error interno al procesar el blog.',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -170,7 +179,15 @@ class BlogController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al actualizar blog: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Ha ocurrido un error interno al actualizar el blog.',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -192,7 +209,15 @@ class BlogController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al obtener blog: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Ha ocurrido un error interno al obtener el blog.',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -284,7 +309,15 @@ class BlogController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al eliminar blog: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Ha ocurrido un error interno al eliminar el blog.',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 }
