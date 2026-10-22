@@ -7,6 +7,7 @@ use App\Http\Requests\BlogBody\StoreBlogBodyRequest;
 use App\Http\Requests\BlogBody\UpdateBlogBodyRequest;
 use App\Models\BlogBody;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BlogBodyController extends Controller
 {
@@ -28,10 +29,12 @@ class BlogBodyController extends Controller
         } catch (\Exception $ex) {
             DB::rollback();
 
+            Log::error('Error al crear blogBody: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error al crear el blogBody',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -63,9 +66,11 @@ class BlogBodyController extends Controller
         } catch (\Exception $ex) {
             DB::rollback();
 
+            Log::error('Error al actualizar blogBody: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
-                'message' => $ex->getMessage(),
+                'message' => 'Error al actualizar el blogBody',
                 'error'   => 'Error interno del servidor',
             ], 500);
         }
@@ -89,10 +94,12 @@ class BlogBodyController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('Error al consultar blogBody: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -117,10 +124,12 @@ class BlogBodyController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('Error al eliminar blogBody: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error al eliminar el BlogBody',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreBlogFooterRequest;
 use App\Http\Requests\UpdateBlogFooterRequest;
 use App\Models\BlogFooter;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BlogFooterController extends Controller
 {
@@ -28,11 +29,11 @@ class BlogFooterController extends Controller
             ], 200);
         } catch (\Exception $ex) {
             DB::rollback();
-            \Log::error::error('BlogFooter create error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
+            Log::error('BlogFooter create error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -57,9 +58,6 @@ class BlogFooterController extends Controller
 
             DB::commit();
 
-        }catch(\Exception $ex){
-            DB::rollback();
-            \Log::error('BlogFooter update error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
             return response()->json([
                 'status'  => 200,
                 'message' => 'BlogFooter actualizado',
@@ -68,10 +66,12 @@ class BlogFooterController extends Controller
 
         } catch (\Exception $ex) {
             DB::rollback();
+            Log::error('BlogFooter update error: ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
 
             return response()->json([
                 'status'  => 500,
-                'message' => $ex->getMessage(),
+                'message' => 'Error al actualizar el blogFooter',
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -94,10 +94,12 @@ class BlogFooterController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('BlogFooter show error: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error interno del servidor',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
@@ -122,10 +124,12 @@ class BlogFooterController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('BlogFooter delete error: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error al eliminar el blogFooter',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }

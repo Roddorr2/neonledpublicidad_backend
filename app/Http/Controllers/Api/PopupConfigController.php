@@ -231,8 +231,8 @@ class PopupConfigController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            Log::error('PopupConfigController@store: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error al crear el Pop-Up', 'error' => $e->getMessage()], 500);
+            Log::error('PopupConfigController@store: ' . $e->getMessage(), ['exception' => $e]);
+            return response()->json(['success' => false, 'message' => 'Error al crear el Pop-Up', 'error' => 'Error interno del servidor'], 500);
         }
     }
 
@@ -269,8 +269,8 @@ class PopupConfigController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('PopupConfigController@update: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error al actualizar el Pop-Up', 'error' => $e->getMessage()], 500);
+            Log::error('PopupConfigController@update: ' . $e->getMessage(), ['exception' => $e]);
+            return response()->json(['success' => false, 'message' => 'Error al actualizar el Pop-Up', 'error' => 'Error interno del servidor'], 500);
         }
     }
 
@@ -289,8 +289,8 @@ class PopupConfigController extends Controller
             return response()->json(['success' => true, 'message' => 'Pop-Up eliminado correctamente']);
 
         } catch (\Exception $e) {
-            Log::error('PopupConfigController@destroy: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'Error al eliminar el Pop-Up', 'error' => $e->getMessage()], 500);
+            Log::error('PopupConfigController@destroy: ' . $e->getMessage(), ['exception' => $e]);
+            return response()->json(['success' => false, 'message' => 'Error al eliminar el Pop-Up', 'error' => 'Error interno del servidor'], 500);
         }
     }
 

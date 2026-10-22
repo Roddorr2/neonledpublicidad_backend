@@ -37,7 +37,7 @@ use OpenApi\Attributes as OA;
 // #[OA\Schema(
 //    schema: 'RegisterRequest',
 //    type: 'object',
-//    required: ['nombre', 'apellido', 'email', 'dni', 'id_rol'],
+
 //    properties: [
 //        new OA\Property(
 //            property: 'nombre',
@@ -73,7 +73,7 @@ use OpenApi\Attributes as OA;
 //            description: 'Teléfono del empleado (opcional)'
 //        ),
 //        new OA\Property(
-//            property: 'id_rol',
+
 //            type: 'integer',
 //            example: 2,
 //            description: 'ID del rol a asignar'

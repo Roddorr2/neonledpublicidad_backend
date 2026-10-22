@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCommendTarjetaRequest;
 use App\Http\Requests\UpdateCommendTarjetaRequest;
 use App\Models\CommendTarjeta;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CommendTarjetaController extends Controller
 {
@@ -29,7 +30,13 @@ class CommendTarjetaController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => $e->getMessage()], 500);
+            Log::error('Error al crear CommendTarjeta: ' . $e->getMessage(), ['exception' => $e]);
+
+            return response()->json([
+                'status'  => 500,
+                'message' => 'Error interno del servidor',
+                'error'   => 'Error interno del servidor',
+            ], 500);
         }
     }
 
@@ -63,11 +70,13 @@ class CommendTarjetaController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
+            Log::error('Error al actualizar CommendTarjeta: ' . $e->getMessage(), ['exception' => $e]);
+
             return response()->json(
                 [
                     'status'  => 500,
                     'message' => 'Error interno del servidor',
-                    'error'   => $e->getMessage(),
+                    'error'   => 'Error interno del servidor',
                 ], 500
             );
         }
@@ -93,10 +102,12 @@ class CommendTarjetaController extends Controller
             ], 200);
 
         } catch (\Exception $ex) {
+            Log::error('Error al eliminar CommendTarjeta: ' . $ex->getMessage(), ['exception' => $ex]);
+
             return response()->json([
                 'status'  => 500,
                 'message' => 'Error al eliminar el CommendTarjeta',
-                'error'   => $ex->getMessage(),
+                'error'   => 'Error interno del servidor',
             ], 500);
         }
     }
